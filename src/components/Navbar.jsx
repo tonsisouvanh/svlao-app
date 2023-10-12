@@ -21,7 +21,7 @@ const Navbar = () => {
   }, [theme]);
 
   return (
-    <div className="navbar bg-base-100 bg-primary">
+    <div className="navbar fixed top-0 bg-primary">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -35,14 +35,14 @@ const Navbar = () => {
             </svg>
           </label>
         </div>
-        <a className="btn btn-ghost normal-case text-2xl !text-white ">
+        <a className="btn btn-ghost normal-case text-2xl !text-white font-notosanslao ">
           LAO STU
         </a>
       </div>
       <div className="navbar-center hidden lg:flex !text-white ">
-        <ul className="menu menu-horizontal px-1 text-xl">
+        <ul className="menu menu-horizontal px-1 text-xl font-notosanslao">
           <li>
-            <Link to="/">Dashboard</Link>
+            <Link to="/">Home</Link>
           </li>
           <li>
             <Link to="/about">About</Link>
@@ -66,7 +66,10 @@ const Navbar = () => {
             </label>
           </button> */}
           <div className="dropdown">
-            <label tabIndex={0} className="btn m-1 rounded-full">
+            <label
+              tabIndex={0}
+              className="btn m-1 rounded-full font-notosanslao"
+            >
               Theme
             </label>
             <ul
@@ -85,7 +88,11 @@ const Navbar = () => {
             </ul>
           </div>
         </div>
-        <a className="btn rounded-full">Admin</a>
+        <div className="btn rounded-full font-notosanslao">
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        </div>
       </div>
     </div>
   );

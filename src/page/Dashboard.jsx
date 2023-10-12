@@ -1,14 +1,17 @@
 import { Link } from "react-router-dom";
 import { data } from "../data/data";
+const user = {
+  role: "admin",
+};
 const Dashboard = () => {
   console.log(data);
   return (
     <div>
-      <section className="text-gray-600 body-font">
+      <section className="text-gray-600 body-fon ">
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-col text-center w-full mb-20">
-            <label className="sm:text-3xl label-text text-2xl font-medium title-font mb-4 ">
-              Lists
+            <label className="text-4xl font-bold flex justify-center text-primary font-notosanslao      ">
+              ລາຍຊື່ນັກຮຽນ
             </label>
           </div>
           <div className="flex justify-center mb-20  ">
@@ -37,12 +40,26 @@ const Dashboard = () => {
                   <span className="indicator-item badge badge-secondary">
                     new
                   </span>
-                  <button className="btn join-item !bg-white">Search</button>
+                  <button className="btn join-item !bg-white mb-10">
+                    Search
+                  </button>
                 </div>
               </div>
             </div>
+            {user.role === "admin" ? (
+              <div className="flex justify-center gap-10 mb-10  font-bold text-primary font-notosanslao">
+                <Link to={"/edit"}>
+                  <button className="btn btn-info text-xl">ແປງຂໍ້ມູນ</button>
+                </Link>
+                <Link to={"/input"}>
+                  <button className="btn btn-success text-xl">
+                    ຕື່ມຂໍ້ມູນນັກຮຽນ
+                  </button>
+                </Link>
+              </div>
+            ) : null}
           </div>
-          <div className="flex flex-wrap -m-2 ">
+          <div className="flex flex-wrap -m-20 font-notosanslao ">
             {data.map((i) => (
               <div key={i.id} className="p-2 lg:w-1/3 md:w-1/2 w-full">
                 <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
@@ -57,8 +74,8 @@ const Dashboard = () => {
 
                     <div className="flex justify-end">
                       <Link to={`/detail/${i.id}`}>
-                        <button className="btn btn-primary !text-white">
-                          Detail
+                        <button className="btn btn-primary font-notosanslao !text-white">
+                          ລາຍລະອຽດນັກຮຽນ
                         </button>
                       </Link>
                     </div>

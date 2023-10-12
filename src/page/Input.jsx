@@ -1,15 +1,20 @@
-import { useParams } from "react-router-dom";
-import { data } from "../data/data";
-const StudentDetail = () => {
-  const { id } = useParams();
-  const student = data.find((stu) => stu.id === id);
+import { Link } from "react-router-dom";
+const Input = () => {
+  const student = {
+    id: 1,
+    name: "",
+    age: 20,
+    grade: "A",
+    address: "123 Main St",
+    // Add more student details as needed
+  };
 
   return (
     <div className="container font-notosanslao mx-auto mt-8">
       <div className="bg-white p-8 rounded shadow-md ">
         <div>
           <h1 className="text-4xl font-bold mb-4 flex justify-center ">
-            ລາຍລະອຽດນັກຮຽນ
+            ຕື່ມຂໍ້ມູນນັກຮຽນ
           </h1>
           <section className="text-gray-600 body-font">
             <div className="container mx-auto flex flex-col px-5 py-24 ">
@@ -18,14 +23,13 @@ const StudentDetail = () => {
                   <img
                     className="w-full h-full  mb-1 object-cover  "
                     alt="hero"
-                    src="https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg"
+                    src="https://dummyimage.com/400x400"
                   />
                 </div>
-
                 <div className="grid grid-cols-2 gap-20">
                   <div>
                     <h2 className="text-2xl font-bold">ID:</h2>
-                    <p className="font-notosanslao text-2xl">{id}</p>
+                    <p>{student.name}</p>
                   </div>
                   <div className="font-notosanslao text-2xl">
                     <h2 className="text-2xl font-bold">ເພດ:</h2>
@@ -49,9 +53,7 @@ const StudentDetail = () => {
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold">ລະດັບຮຽນ:</h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.degree}
-                    </p>
+                    <p className="font-notosanslao text-2xl">{student.major}</p>
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold">ວິຊາຮຽນ:</h2>
@@ -71,44 +73,38 @@ const StudentDetail = () => {
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold">ແຫຼ່ງທຶນ:</h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.sacolaship}
-                    </p>
+                    <p className="font-notosanslao text-2xl">{student.lt}</p>
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold">
                       ເລກທີຂໍ້ຕົກລົງກະຊວງສຶກສາລາວ, ລົງວັນທີ:
                     </h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.sacolashipLao}
-                    </p>
+                    <p className="font-notosanslao text-2xl">{student.ltt}</p>
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold">
                       ເລກທີຂໍ້ຕົກລົງກະຊວງສຶກສາຫວຽດນາມ, ລົງວັນທີ:
                     </h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.sacolashipVN}
-                    </p>
+                    <p className="font-notosanslao text-2xl">{student.lttt}</p>
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold">
                       ເລກທີຂໍ້ຕົກລົງຂອງສະຖາບັນສຶກສາ, ລົງວັນທີ:
                     </h2>
                     <p className="font-notosanslao text-2xl">
-                      {student.sacolashipSchool}
+                      {student.phoneLao}
                     </p>
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold">ປີເລີ່ມຮຽນ - ປີຈົບ:</h2>
                     <p className="font-notosanslao text-2xl">
-                      {student.startStop}
+                      {student.phone ? student.phone.phoneViet : " "}
                     </p>
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold">ແຂວງເກີດ:</h2>
                     <p className="font-notosanslao text-2xl">
-                      {student.province}
+                      {student.phone ? student.phone.phoneViet : " "}
                     </p>
                   </div>
                   <div>
@@ -116,13 +112,13 @@ const StudentDetail = () => {
                       ທີ່ຢູ່ປັດຈຸບັນໃນ ຮຈມ:
                     </h2>
                     <p className="font-notosanslao text-2xl">
-                      {student.address}
+                      {student.phone ? student.phone.phoneViet : " "}
                     </p>
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold">ເບີໂທລາວ:</h2>
                     <p className="font-notosanslao text-2xl">
-                      {student.phone ? student.phone.phoneLao : " "}
+                      {student.phone ? student.phone.phoneViet : " "}
                     </p>
                   </div>
                   <div>
@@ -133,9 +129,7 @@ const StudentDetail = () => {
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold">Link facebook:</h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.linkFB}
-                    </p>
+                    <p className="font-notosanslao text-2xl">{student.link}</p>
                   </div>
                 </div>
               </div>
@@ -143,8 +137,13 @@ const StudentDetail = () => {
           </section>
         </div>
       </div>
+      <div className="space-x-4 mt-5 flex justify-end">
+        <Link to="/">
+          <button className="btn btn-primary text-xl">SAVE</button>
+        </Link>
+      </div>
     </div>
   );
 };
 
-export default StudentDetail;
+export default Input;
