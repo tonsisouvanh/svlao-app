@@ -26,7 +26,7 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <select className="select select-bordered join-item !bg-white">
-                  <option disabled selected>
+                  <option disabled defaultValue={10}>
                     Filter
                   </option>
                   <option>10</option>
