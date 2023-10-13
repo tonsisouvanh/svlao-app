@@ -118,7 +118,7 @@ export const signOutUser = createAsyncThunk(
   },
 );
 
-const authSlice = createSlice({
+const studentSlice = createSlice({
   name: "user",
   initialState: {
     user: {},
