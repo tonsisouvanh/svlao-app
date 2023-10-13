@@ -1,106 +1,161 @@
-import { Link } from "react-router-dom";
-import { data } from "../data/data";
-const user = {
-  role: "admin",
-};
-const Dashboard = () => {
-  console.log(data);
+import { data, university } from "../data/data";
+import { useState, useEffect } from "react";
+import { AiOutlineWoman, AiOutlineMan } from "react-icons/ai";
+const About = () => {
+  const [selectedschool, setselectedschool] = useState("");
+  const [totalstudentPerSchool, settotalstudentPerSchool] = useState(0);
+  const [tongNam, settongNam] = useState(0);
+  const [tongNu, settongNu] = useState(0);
+
+  const caculateAll = () => {
+    const totalScore = data.reduce((accumulator, student) => {
+      if (student.school === selectedschool) {
+        return accumulator + 1;
+      }
+      return accumulator;
+    }, 0);
+    settotalstudentPerSchool(totalScore);
+  };
+
+  const hamTongNam = () => {
+    const totalScore = data.reduce((accumulator, student) => {
+      if (student.gender === "male" && student.school === selectedschool) {
+        return accumulator + 1;
+      }
+      return accumulator;
+    }, 0);
+    console.log(totalScore);
+    settongNam(totalScore);
+  };
+
+  const hamTongNu = () => {
+    const totalScore = data.reduce((accumulator, student) => {
+      if (student.gender === "female" && student.school === selectedschool) {
+        return accumulator + 1;
+      }
+      return accumulator;
+    }, 0);
+    console.log(totalScore);
+    settongNu(totalScore);
+  };
+
+  useEffect(() => {
+    caculateAll();
+    hamTongNam();
+    hamTongNu();
+  }, [selectedschool]);
+
   return (
-    <div>
-      <section className="text-gray-600 body-fon ">
-        <div className="container px-5 py-24 mx-auto">
-          <div className="flex flex-col text-center w-full mb-20">
-            <label className="text-4xl font-bold flex justify-center text-primary font-notosanslao      ">
-              ລາຍຊື່ນັກຮຽນ
+    <section className="body-font text-gray-600">
+      <div className="container mx-auto px-5 py-24">
+        <div className="mb-20 text-center">
+          <h1 className="title-font mb-4 text-center font-notosanslao text-2xl font-bold text-gray-900 sm:text-3xl">
+            ສັງລວມນັກຮຽນທີ່ຢູ່ຕາມໂຮງຮຽນຕ່າງໆ
+          </h1>
+        </div>
+        <div className="mb-20 flex justify-center gap-20">
+          <div className="dropdown w-96">
+            <label
+              tabIndex={0}
+              className="btn btn-lg m-1 w-full font-notosanslao"
+            >
+              ເລືອກໂຮງຮຽນ
+              {/* <HiChevronDown /> */}
             </label>
+            <ul
+              tabIndex={0}
+              className="menu dropdown-content rounded-box z-[1] w-52 bg-base-100 p-2 shadow"
+            >
+              {university.map((i) => (
+                <li onClick={() => setselectedschool(i.name)} key={i.id}>
+                  <a>{i.name}</a>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="flex justify-center mb-20  ">
-            <div className="navbar-end">
-              <div className="join flex justify-center ">
-                <div>
-                  <div>
-                    <input
-                      className="input input-bordered join-item !bg-white"
-                      placeholder="Search"
-                    />
-                  </div>
-                </div>
-                <select className="select select-bordered join-item !bg-white">
-                  <option disabled defaultValue={10}>
-                    Filter
-                  </option>
-                  <option>10</option>
-                  <option>20</option>
-                  <option>30</option>
-                  <option>40</option>
-                  <option>50</option>
-                  <option>All</option>
-                </select>
-                <div className="indicator">
-                  <span className="indicator-item badge badge-secondary">
-                    new
-                  </span>
-                  <button className="btn join-item !bg-white mb-10">
-                    Search
-                  </button>
-                </div>
+          <div className="dropdown w-96">
+            <label
+              tabIndex={0}
+              className="btn btn-lg m-1 w-full font-notosanslao"
+            >
+              ເລືອກຫໍພັກ
+              {/* <HiChevronDown /> */}
+            </label>
+            <ul
+              tabIndex={0}
+              className="menu dropdown-content rounded-box z-[1] w-52 bg-base-100 p-2 shadow"
+            >
+              {university.map((i) => (
+                <li onClick={() => setselectedschool(i.name)} key={i.id}>
+                  <a>{i.name}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="stats flex items-center justify-center  shadow">
+          <div className="stat">
+            <div className="stat-figure flex  text-primary ">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block h-8 w-8 stroke-current"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                ></path>
+              </svg>
+            </div>
+            <div className="stat-title flex gap-10 text-black ">
+              ນັກຮຽນທັງໝົດ:
+            </div>
+            <div className="stat-value text-primary">
+              {totalstudentPerSchool}
+            </div>
+          </div>
+
+          <div className="stat">
+            <div className="flex justify-center gap-10">
+              <div className="stat-title flex items-center justify-center text-black">
+                ຊາຍ
+              </div>
+              <div className="stat-value flex items-center justify-center text-primary">
+                {tongNam} <AiOutlineMan />
+              </div>
+
+              <div className="stat-title flex items-center justify-center text-black ">
+                ຍິງ
+              </div>
+              <div className="stat-value flex items-center justify-center text-secondary">
+                {tongNu} <AiOutlineWoman />
               </div>
             </div>
-            {user.role === "admin" ? (
-              <div className="flex justify-center gap-10 mb-10  font-bold text-primary font-notosanslao">
-                <Link to={"/edit"}>
-                  <button className="btn btn-info text-xl">ແປງຂໍ້ມູນ</button>
-                </Link>
-                <Link to={"/input"}>
-                  <button className="btn btn-success text-xl">
-                    ຕື່ມຂໍ້ມູນນັກຮຽນ
-                  </button>
-                </Link>
-              </div>
-            ) : null}
           </div>
-          <div className="flex flex-wrap -m-20 font-notosanslao ">
-            {data.map((i) => (
-              <div key={i.id} className="p-2 lg:w-1/3 md:w-1/2 w-full">
-                <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-                  <img
-                    alt="team"
-                    className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-                    src="https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg"
-                  />
-                  <div className="flex-grow">
-                    <h2 className="label-text text-xl">{i.name.nameEnglist}</h2>
-                    <p className="label-text">{i.major}</p>
-
-                    <div className="flex justify-end">
-                      <Link to={`/detail/${i.id}`}>
-                        <button className="btn btn-primary font-notosanslao !text-white">
-                          ລາຍລະອຽດນັກຮຽນ
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+          <div className="stat">
+            <div className="flex justify-center gap-10">
+              <div className="stat-title flex items-center justify-center text-black">
+                ປ ຕີ
               </div>
-            ))}
+              <div className="stat-value flex items-center justify-center text-primary">
+                {tongNu}
+              </div>{" "}
+              <div className="stat-title flex items-center justify-center text-black">
+                ປ ໂທ
+              </div>
+              <div className="stat-value flex items-center justify-center text-secondary">
+                {tongNu}
+              </div>
+            </div>
           </div>
         </div>
-        <div className="grid justify-items-center  ">
-          <div className="join  ">
-            <button className="join-item btn !bg-white">«</button>
-            <button className="join-item btn !bg-white">1</button>
-            <button className="join-item btn !bg-white">2</button>
-            <button className="join-item btn !bg-white">2</button>
-            <button className="join-item btn !bg-white">_</button>
-            <button className="join-item btn !bg-white">_</button>
-            <button className="join-item btn !bg-white">10</button>
-            <button className="join-item btn !bg-white">100</button>
-            <button className="join-item btn !bg-white">»</button>
-          </div>
-        </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 
-export default Dashboard;
+export default About;

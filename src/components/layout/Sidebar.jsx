@@ -19,7 +19,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
   const storedSidebarExpanded = localStorage.getItem("sidebar-expanded");
   const [sidebarExpanded, setSidebarExpanded] = useState(
-    storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
+    storedSidebarExpanded === null ? false : storedSidebarExpanded === "true",
   );
 
   // close on click outside
@@ -60,7 +60,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-[99999] flex h-screen w-72 flex-col overflow-y-hidden bg-slate-800 text-white duration-300 ease-linear lg:static lg:translate-x-0 ${
+      className={`absolute left-0 top-0 z-[99999] flex h-screen w-72 flex-col overflow-y-hidden bg-primary  text-white duration-300 ease-linear lg:static lg:translate-x-0 ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
@@ -84,11 +84,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
+        <div>
+          <a className="btn btn-ghost flex justify-center font-notosanslao text-2xl normal-case !text-white ">
+            Lao Student <p> in Ho Chi Minh City</p>
+          </a>
+        </div>
         {/* <!-- Sidebar Menu --> */}
         <nav className="mt-5 px-4 py-4 text-slate-300 lg:mt-9 lg:px-6">
           {/* <!-- Menu Group --> */}
           <div className="font-notosanslao">
-            <h3 className="text-bodydark2 mb-4 ml-4 text-sm font-semibold">
+            <h3 className="text-bodydark2 mb-4 ml-4 text-sm font-semibold !text-white">
               MENU
             </h3>
             <ul className="mb-6 flex flex-col gap-2">
@@ -103,7 +108,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     <React.Fragment>
                       <NavLink
                         to="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-white duration-300 ease-in-out ${
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao font-medium text-white duration-300 ease-in-out ${
                           (pathname === "/" ||
                             pathname.includes("dashboard")) &&
                           "bg-sky-600"
@@ -117,7 +122,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       >
                         {/* <AiOutlineDashboard size={23} /> */}
                         <AiFillDashboard size={23} />
-                        Dashboard
+                        ຂໍ້ມູນນັກຮຽນ
                         <BsFillCaretDownFill
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
                             open && "rotate-180"
@@ -133,13 +138,24 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         <ul className="mb-5 mt-4 flex flex-col gap-2.5 pl-6">
                           <li className={dropdownLiStyle}>
                             <NavLink
-                              to="dashboard"
+                              to="/"
                               className={({ isActive }) =>
                                 dropdownNavlinkStyle +
                                 (isActive && "! text-white")
                               }
                             >
-                              eCommerce
+                              ສັງລວມນັກຮຽນ
+                            </NavLink>
+                          </li>
+                          <li className={dropdownLiStyle}>
+                            <NavLink
+                              to="/studentlist"
+                              className={({ isActive }) =>
+                                dropdownNavlinkStyle +
+                                (isActive && "! text-white")
+                              }
+                            >
+                              ລາຍຊື່ນັກຮຽນ
                             </NavLink>
                           </li>
                         </ul>
@@ -152,63 +168,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               </SidebarLinkGroup>
               {/* <!-- Menu Item Dashboard --> */}
               {/* <!-- Menu Item Items --> */}
-              <SidebarLinkGroup
-                activeCondition={
-                  pathname === "admin/items/stock" ||
-                  pathname.includes("items/stock")
-                }
-              >
-                {(handleClick, open) => {
-                  return (
-                    <React.Fragment>
-                      <NavLink
-                        to="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao font-medium text-white duration-300 ease-in-out ${
-                          (pathname === "admin/items/stock" ||
-                            pathname.includes("items/stock")) &&
-                          "bg-sky-600"
-                        }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
-                        }}
-                      >
-                        <FaProductHunt size={23} />
-                        ສິນຄ້າ
-                        <BsFillCaretDownFill
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
-                            open && "rotate-180"
-                          }`}
-                        />
-                      </NavLink>
-                      {/* <!-- Dropdown Menu Start --> */}
-                      <div
-                        className={`translate transform overflow-hidden ${
-                          !open && "hidden"
-                        }`}
-                      >
-                        <ul className="mb-5 mt-4 flex flex-col gap-2.5 pl-6">
-                          <li className={dropdownLiStyle}>
-                            <NavLink
-                              to="items/stock"
-                              className={({ isActive }) =>
-                                dropdownNavlinkStyle +
-                                (isActive && "! text-white")
-                              }
-                            >
-                              <BsBoxes />
-                              ສະຕ໋ອກ
-                            </NavLink>
-                          </li>
-                        </ul>
-                      </div>
-                      {/* <!-- Dropdown Menu End --> */}
-                    </React.Fragment>
-                  );
-                }}
-              </SidebarLinkGroup>
+
               {/* <!-- Menu Item Items --> */}
 
               {/* <!-- Menu Item Profile --> */}
@@ -220,7 +180,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   }`}
                 >
                   <FaUser size={23} />
-                  Profile
+                  ໂປຮຟາຍ
                 </NavLink>
               </li>
               {/* <!-- Menu Item Profile --> */}
@@ -235,7 +195,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   }`}
                 >
                   <AiFillSetting size={23} />
-                  Settings
+                  ຕິດຕໍ່
                 </NavLink>
               </li>
               {/* <!-- Menu Item Settings --> */}
@@ -259,7 +219,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   }`}
                 >
                   <TbWorldWww size={23} />
-                  ໄປທີ່ເວັບໄຊ້
+                  ແບບຟອມເອກະສານຕ່າງໆ
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/"
+                  target="_blank"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:text-white ${
+                    pathname.includes("/") && "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <TbWorldWww size={23} />
+                  ອອກຈາກລະບົບ
                 </NavLink>
               </li>
               {/* <!-- Menu Item Chart --> */}
