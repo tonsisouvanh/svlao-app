@@ -29,6 +29,7 @@ function App() {
           <Route path="/studentlist" element={<StudentList />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/intro" element={<Intro />} />
+          
         </Route>
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/test" element={<Test />} />
