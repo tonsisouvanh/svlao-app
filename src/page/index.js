@@ -5,7 +5,7 @@ import NotFoundPage from "./NoFoundPage.jsx";
 import StudentList from "./StudentList.jsx";
 import Profile from "./Profile.jsx";
 import Intro from "./Intro.jsx";
-
+import Signin from './Signin.jsx'
 export {
   About,
   Dashboard,
@@ -14,4 +14,5 @@ export {
   StudentList,
   Profile,
   Intro,
+  Signin
 };

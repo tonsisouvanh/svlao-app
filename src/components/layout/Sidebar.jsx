@@ -1,21 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import SidebarLinkGroup from "./SidebarLinkGroup";
-import { BsArrowLeft, BsBoxes, BsFillCaretDownFill } from "react-icons/bs";
+import { BsArrowLeft, BsFillCaretDownFill } from "react-icons/bs";
 import {
   AiFillDashboard,
   AiOutlinePhone,
   AiFillBook,
   AiOutlineLogout,
 } from "react-icons/ai";
-import { FaProductHunt, FaUser } from "react-icons/fa";
-import { TbWorldWww } from "react-icons/tb";
+import { FaUser } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { signOutUser } from "../../feature/auth/AuthSlice";
 
 const dropdownLiStyle = "hover:text-white hover:bg-white/10";
 const dropdownNavlinkStyle =
   "group relative flex items-center gap-2 px-4 py-2 font-medium duration-300 ease-in-out";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
+  const { status } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
 
@@ -26,6 +30,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === "true",
   );
+
+  const handleSignOut = () => {
+    dispatch(signOutUser());
+    if (status === "succeeded") {
+      navigate("/signin");
+    }
+  };
 
   // close on click outside
   useEffect(() => {
@@ -228,16 +239,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 </NavLink>
               </li>
               <li>
-                <NavLink
-                  to="/"
-                  target="_blank"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:text-white ${
-                    pathname.includes("/") && "bg-graydark dark:bg-meta-4"
-                  }`}
+                <button
+                  onClick={handleSignOut}
+                  type="button"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:text-white`}
                 >
                   <AiOutlineLogout size={23} />
                   ອອກຈາກລະບົບ
-                </NavLink>
+                </button>
               </li>
               {/* <!-- Menu Item Chart --> */}
 
