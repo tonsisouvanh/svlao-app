@@ -1,25 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
-import { signIn, signOutUser, signUp } from "../feature/auth/AuthSlice";
+import { signIn, signOutUser } from "../feature/auth/AuthSlice";
 import { useEffect } from "react";
 const Test = () => {
   const { user, status } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
+  // const handleSignup = async (e) => {
+  //   e.preventDefault();
 
-    const userInput = {
-      email: "admin@gmail.com",
-      password: "111222",
-      firstname: "a",
-      lastname: "b",
-    };
-    try {
-      await dispatch(signUp(userInput));
-    } catch (error) {
-      console.error("Sign-up error", error);
-    }
-  };
+  //   const userInput = {
+  //     email: "admin@gmail.com",
+  //     password: "111222",
+  //     firstname: "a",
+  //     lastname: "b",
+  //   };
+  //   try {
+  //     await dispatch(signUp(userInput));
+  //   } catch (error) {
+  //     console.error("Sign-up error", error);
+  //   }
+  // };
 
   const handleSingin = async (e) => {
     e.preventDefault();
@@ -46,7 +46,7 @@ const Test = () => {
     <>
       <div className="container mx-auto flex min-h-screen items-center justify-center border">
         <div>
-          <div className="border p-10">
+          {/* <div className="border p-10">
             <h1>SIGN UP</h1>
             <form onSubmit={handleSignup} className="bg-dark ">
               <button
@@ -59,7 +59,7 @@ const Test = () => {
               </button>
             </form>
             <p>{JSON.stringify(user)}</p>
-          </div>
+          </div> */}
           <div className="border p-10">
             <h1>SIGN IN</h1>
             <form onSubmit={handleSingin} className="bg-dark ">

@@ -36,7 +36,6 @@ const AddStudent = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add your logic to save student data here, such as API calls or state management
-    console.log("Student Data:", studentInput);
     // You can reset the form after submission if needed
     setStudentInput({
       namelao: "",

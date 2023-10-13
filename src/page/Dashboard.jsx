@@ -28,7 +28,6 @@ const About = () => {
       }
       return accumulator;
     }, 0);
-    console.log(totalScore);
     settongNam(totalScore);
   };
 
@@ -39,7 +38,6 @@ const About = () => {
       }
       return accumulator;
     }, 0);
-    console.log(totalScore);
     settongNu(totalScore);
   };
 

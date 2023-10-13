@@ -4,11 +4,7 @@ import NotFoundPage from "./NoFoundPage.jsx";
 import StudentList from "./StudentList.jsx";
 import Profile from "./Profile.jsx";
 import Intro from "./Intro.jsx";
-import Signin from "./Signin.jsx";
-import Documents from "./Documents.jsx";
-import Contact from "./Contact.jsx";
-import Establishment from "./Establishment.jsx"
-
+import Signin from './Signin.jsx'
 export {
   Dashboard,
   StudentDetail,
@@ -16,8 +12,5 @@ export {
   StudentList,
   Profile,
   Intro,
-  Signin,
-  Documents,
-  Contact,
-  Establishment,
+  Signin
 };
