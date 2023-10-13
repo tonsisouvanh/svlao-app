@@ -1,33 +1,93 @@
 import { useDispatch, useSelector } from "react-redux";
-import { signUp } from "../feature/auth/AuthSlice";
+import { signIn, signOutUser, signUp } from "../feature/auth/AuthSlice";
+import { useEffect } from "react";
 const Test = () => {
-  const { user } = useSelector((state) => state.user);
-  console.log(user)
+  const { user, status } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const handleSubmit = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     const userInput = {
-      email: "test@gmail.com",
+      email: "admin@gmail.com",
       password: "111222",
-      role: "admin",
+      firstname: "a",
+      lastname: "b",
     };
     try {
       await dispatch(signUp(userInput));
-      if (status === "succeeded") {
-        // navigate("/admin/dashboard");
-      }
     } catch (error) {
-      console.error("Sign-in error =>", error);
+      console.error("Sign-up error", error);
     }
   };
 
+  const handleSingin = async (e) => {
+    e.preventDefault();
+
+    const userInput = {
+      email: "adminton@gmail.com",
+      password: "111222",
+    };
+    try {
+      await dispatch(signIn(userInput));
+    } catch (error) {
+      console.error("Sign-up error", error);
+    }
+  };
+  const handleSingOut = async (e) => {
+    e.preventDefault();
+    try {
+      await dispatch(signOutUser());
+    } catch (error) {
+      console.error("Sign out error", error);
+    }
+  };
   return (
     <>
-      <form onSubmit={handleSubmit} className="bg-red-500 ">
-        <button className="btn btn-primary" type="submit">submit</button>
-      </form>
+      <div className="container mx-auto flex min-h-screen items-center justify-center border">
+        <div>
+          <div className="border p-10">
+            <h1>SIGN UP</h1>
+            <form onSubmit={handleSignup} className="bg-dark ">
+              <button
+                className={`btn btn-primary ${
+                  status === "loading" && "loading"
+                }`}
+                type="submit"
+              >
+                SIGN UP
+              </button>
+            </form>
+            <p>{JSON.stringify(user)}</p>
+          </div>
+          <div className="border p-10">
+            <h1>SIGN IN</h1>
+            <form onSubmit={handleSingin} className="bg-dark ">
+              <button
+                className={`btn btn-accent ${
+                  status === "loading" && "loading"
+                }`}
+                type="submit"
+              >
+                SIGN IN
+              </button>
+            </form>
+          </div>
+          <div className="border p-10">
+            <h1>SIGN OUT</h1>
+            <form onSubmit={handleSingOut} className="bg-dark ">
+              <button
+                className={`btn btn-secondary ${
+                  status === "loading" && "loading"
+                }`}
+                type="submit"
+              >
+                SIGN OUT
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
