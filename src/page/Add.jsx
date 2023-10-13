@@ -25,13 +25,13 @@ const AddStudent = () => {
     linkFB: "",
   });
 
- const handleChange = (e) => {
-   const { name, value } = e.target;
-   setFormData((prevData) => ({
-     ...prevData,
-     [name]: value,
-   }));
- };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setStudentInput((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -67,7 +67,7 @@ const AddStudent = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-96">
         <h1 className="text-2xl font-bold mb-4">Add Student</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-gray-600 font-semibold mb-2">
