@@ -2,6 +2,7 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { Dashboard, About, StudentDetail, NotFoundPage } from "./page";
 import RootLayoutPublic from "./components/layout/public/rootLayoutPublic";
+import Test from "./page/Test";
 function App() {
   return (
     <>
@@ -12,6 +13,7 @@ function App() {
           <Route path="/about" element={<About />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="/test" element={<Test />} />
       </Routes>
     </>
   );
