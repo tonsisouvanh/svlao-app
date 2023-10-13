@@ -1,22 +1,23 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { themes } from "../../../data/data";
+import { AiFillThunderbolt } from "react-icons/ai";
 
 const user = {
   role: "admin",
 };
 const Navbar = () => {
   const [theme, setTheme] = useState(
-    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light",
   );
 
-  //   const handleToggle = (e) => {
-  //     if (e.target.checked) {
-  //       setTheme("dark");
-  //     } else {
-  //       setTheme("light");
-  //     }
-  //   };
+  const handleToggle = (e) => {
+    if (e.target.checked) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
@@ -27,17 +28,17 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-[999] flex w-full bg-primary">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-md md:px-6 2xl:px-11">
-        <div className="flex items-center justify-end w-full">
-          <div className="join flex justify-end items-center ">
+        <div className="flex w-full items-center justify-end">
+          <div className="join flex items-center justify-end ">
             <div>
               <div>
                 <input
-                  className="input input-bordered join-item !bg-white"
+                  className="input join-item input-bordered !bg-white"
                   placeholder="Search"
                 />
               </div>
             </div>
-            <select className="select select-bordered join-item !bg-white">
+            <select className="select join-item select-bordered !bg-white">
               <option disabled defaultValue={10}>
                 Filter
               </option>
@@ -49,9 +50,35 @@ const Navbar = () => {
               <option>All</option>
             </select>
             <div className="indicator">
-              <span className="indicator-item badge badge-secondary">new</span>
-              <button className="btn join-item !bg-white  flex ">Search</button>
+              <span className="badge indicator-item badge-secondary">new</span>
+              <button className="btn join-item flex  !bg-white ">Search</button>
             </div>
+          </div>
+        </div>
+
+        <div>
+          <div className="dropdown">
+            <label
+              tabIndex={0}
+              className="btn m-1 rounded-full font-notosanslao"
+            >
+              <AiFillThunderbolt />
+            </label>
+
+            <ul
+              tabIndex={0}
+              className="menu  dropdown-content rounded-box z-[1] w-52 space-y-2 bg-base-100 p-2 shadow"
+            >
+              {themes.map((theme) => (
+                <li
+                  className="btn btn-xs w-fit"
+                  onClick={() => setTheme(theme)}
+                  key={theme}
+                >
+                  {theme}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

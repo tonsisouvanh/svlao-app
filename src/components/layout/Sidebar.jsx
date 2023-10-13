@@ -2,7 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 import { BsArrowLeft, BsBoxes, BsFillCaretDownFill } from "react-icons/bs";
-import { AiFillDashboard, AiFillSetting } from "react-icons/ai";
+import {
+  AiFillDashboard,
+  AiOutlinePhone,
+  AiFillBook,
+  AiOutlineLogout,
+} from "react-icons/ai";
 import { FaProductHunt, FaUser } from "react-icons/fa";
 import { TbWorldWww } from "react-icons/tb";
 
@@ -174,7 +179,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item Profile --> */}
               <li>
                 <NavLink
-                  to="/profile"
+                  to={`/profile/${1}`}
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out ${
                     pathname.includes("profile") && "bg-graydark dark:bg-meta-4"
                   }`}
@@ -194,7 +199,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                  <AiFillSetting size={23} />
+                  <AiOutlinePhone size={23} />
                   ຕິດຕໍ່
                 </NavLink>
               </li>
@@ -218,7 +223,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     pathname.includes("/") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                  <TbWorldWww size={23} />
+                  <AiFillBook size={23} />
                   ແບບຟອມເອກະສານຕ່າງໆ
                 </NavLink>
               </li>
@@ -230,7 +235,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     pathname.includes("/") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                  <TbWorldWww size={23} />
+                  <AiOutlineLogout size={23} />
                   ອອກຈາກລະບົບ
                 </NavLink>
               </li>
