@@ -1,6 +1,10 @@
 import { data, university } from "../data/data";
 import { useState, useEffect } from "react";
-import { AiOutlineWoman, AiOutlineMan } from "react-icons/ai";
+import {
+  AiOutlineWoman,
+  AiOutlineMan,
+  AiOutlineCaretDown,
+} from "react-icons/ai";
 const About = () => {
   const [selectedschool, setselectedschool] = useState("");
   const [totalstudentPerSchool, settotalstudentPerSchool] = useState(0);
@@ -60,7 +64,7 @@ const About = () => {
               className="btn btn-lg m-1 w-full font-notosanslao"
             >
               ເລືອກໂຮງຮຽນ
-              {/* <HiChevronDown /> */}
+              <AiOutlineCaretDown />
             </label>
             <ul
               tabIndex={0}
@@ -79,7 +83,7 @@ const About = () => {
               className="btn btn-lg m-1 w-full font-notosanslao"
             >
               ເລືອກຫໍພັກ
-              {/* <HiChevronDown /> */}
+              <AiOutlineCaretDown />
             </label>
             <ul
               tabIndex={0}

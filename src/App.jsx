@@ -7,9 +7,12 @@ import {
   NotFoundPage,
   StudentList,
   Profile,
+  Intro,
+  Signin,
 } from "./page";
 import RootLayoutPublic from "./components/layout/public/rootLayoutPublic";
 import Test from "./page/Test";
+
 function App() {
   return (
     <>
@@ -19,7 +22,9 @@ function App() {
           <Route path="/detail/:id" element={<StudentDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/studentlist" element={<StudentList />} />
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/intro" element={<Intro />} />
+          <Route path="/signin" element={<Signin />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/test" element={<Test />} />
