@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { themes } from "../../../data/data";
 import { AiFillThunderbolt } from "react-icons/ai";
 
@@ -50,7 +49,7 @@ const Navbar = () => {
               <option>All</option>
             </select>
             <div className="indicator">
-              <span className="badge indicator-item badge-secondary">new</span>
+              {/* <span className="badge indicator-item badge-secondary">new</span> */}
               <button className="btn join-item flex  !bg-white ">Search</button>
             </div>
           </div>

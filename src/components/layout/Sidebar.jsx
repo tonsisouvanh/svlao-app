@@ -7,6 +7,7 @@ import {
   AiOutlinePhone,
   AiFillBook,
   AiOutlineLogout,
+  AiOutlineAudit,
 } from "react-icons/ai";
 import { FaProductHunt, FaUser } from "react-icons/fa";
 import { TbWorldWww } from "react-icons/tb";
@@ -193,7 +194,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item Settings --> */}
               <li>
                 <NavLink
-                  to="/settings"
+                  to="/establishment"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out ${
+                    pathname.includes("settings") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <AiOutlineAudit size={23} />
+                  ອົງການຈັດຕັ້ງຕ່າງໆ
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/contact"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out ${
                     pathname.includes("settings") &&
                     "bg-graydark dark:bg-meta-4"
@@ -217,7 +230,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item Chart --> */}
               <li>
                 <NavLink
-                  to="/"
+                  to="/documents"
                   target="_blank"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:text-white ${
                     pathname.includes("/") && "bg-graydark dark:bg-meta-4"
