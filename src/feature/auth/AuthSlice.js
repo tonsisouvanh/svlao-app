@@ -3,6 +3,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
+  onAuthStateChanged,
+  setPersistence,
+  browserSessionPersistence,
 } from "firebase/auth";
 import { auth, db } from "../../firebase"; // Import your Firebase auth instance
 import toast from "react-hot-toast";
@@ -68,6 +71,7 @@ import { doc, getDoc } from "firebase/firestore";
 // );
 
 // Define an async thunk for user sign-in
+
 export const signIn = createAsyncThunk(
   "auth/signIn",
   async ({ email, password }, { rejectWithValue }) => {
@@ -78,18 +82,18 @@ export const signIn = createAsyncThunk(
         email,
         password,
       );
-      const user = userCredential.user;
 
+      const user = userCredential.user;
       // Step 2: Fetch additional user data if needed (e.g., user role)
-      const userDoc = await getDoc(doc(db, "users", user.uid));
+      const userDoc = await getDoc(doc(db, "accounts", user.uid));
       const userData = userDoc.data();
       // Return user data to update the Redux state
-      sessionStorage.setItem("user", JSON.stringify(userData));
+      await setPersistence(auth, browserSessionPersistence);
+
       toast.success("Signed in successfully");
 
       return { ...userData };
     } catch (error) {
-      console.log(error && error.code);
       if (error && error.code === "auth/invalid-login-credentials") {
         toast.error("Email or password incorrect!");
         return rejectWithValue("This email is already in use.");
@@ -102,13 +106,31 @@ export const signIn = createAsyncThunk(
 );
 
 // Define a new async thunk for logging out
+// export const signOutUser = createAsyncThunk(
+//   "auth/signOut",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       // Sign out the user using Firebase Authentication
+//       await signOut(auth);
+//       sessionStorage.removeItem("user");
+//       return null; // The user is successfully signed out
+//     } catch (error) {
+//       const errorMessage = error.message;
+//       toast.error(errorMessage);
+//       return rejectWithValue(errorMessage);
+//     }
+//   },
+// );
 export const signOutUser = createAsyncThunk(
   "auth/signOut",
   async (_, { rejectWithValue }) => {
     try {
       // Sign out the user using Firebase Authentication
       await signOut(auth);
+
+      // Clear user data from session storage
       sessionStorage.removeItem("user");
+
       return null; // The user is successfully signed out
     } catch (error) {
       const errorMessage = error.message;
@@ -124,7 +146,6 @@ const authSlice = createSlice({
     user: {},
     status: "idle" | "loading" | "succeeded" | "failed",
     error: "",
-    role: "",
   },
   reducers: {},
   extraReducers: (builder) => {

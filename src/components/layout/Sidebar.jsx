@@ -12,13 +12,13 @@ import {
 import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { signOutUser } from "../../feature/auth/AuthSlice";
+import { auth } from "../../firebase";
 
 const dropdownLiStyle = "hover:text-white hover:bg-white/10";
 const dropdownNavlinkStyle =
   "group relative flex items-center gap-2 px-4 py-2 font-medium duration-300 ease-in-out";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
-  const { status } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,9 +34,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
   const handleSignOut = () => {
     dispatch(signOutUser());
-    if (status === "succeeded") {
-      navigate("/signin");
-    }
+    navigate("/signin");
   };
 
   // close on click outside

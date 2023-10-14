@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../components/typography/ErrorMessage";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../feature/auth/AuthSlice";
-import toast from "react-hot-toast";
+import { auth } from "../firebase";
 
 const initialState = {
   email: "",
@@ -13,7 +13,7 @@ const initialState = {
 };
 
 const Signin = () => {
-  const { user, status } = useSelector((state) => state.user);
+  const { status } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -28,14 +28,11 @@ const Signin = () => {
     const userInput = { ...data };
     try {
       await dispatch(signIn(userInput));
-      if (status === "succeeded") {
-        navigate("/");
-      }
+      navigate("/");
     } catch (error) {
       console.error("Sign-in error =>", error);
     }
   };
-
   return (
     <div className="flex min-h-screen items-center justify-center bg-base-100">
       <div className="w-96 rounded bg-base-200 p-8 shadow-md">
@@ -86,9 +83,16 @@ const Signin = () => {
             </div>
           </div>
           <div className="mb-4 flex justify-end gap-3">
-            <button type="submit" className="btn btn-primary flex-grow">
-              Sign In
-            </button>
+            {status === "loading" ? (
+              <button className="btn">
+                <span className="loading loading-spinner"></span>
+                loading
+              </button>
+            ) : (
+              <button type="submit" className={`btn btn-primary flex-grow`}>
+                Sign In
+              </button>
+            )}
 
             <button type="button" className="btn btn-ghost">
               Forgot Password

@@ -1,10 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { signIn, signOutUser } from "../feature/auth/AuthSlice";
 import { useEffect } from "react";
+import { fetchSingleStudent } from "../feature/student/StudentSlice";
 const Test = () => {
-  const { user, status } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+  const { user, status: userStatus } = useSelector((state) => state.user);
+  const { student, status: studentStatus } = useSelector(
+    (state) => state.students,
+  );
 
+  const dispatch = useDispatch();
+  const userauth = sessionStorage.getItem("user");
   // const handleSignup = async (e) => {
   //   e.preventDefault();
 
@@ -42,6 +47,11 @@ const Test = () => {
       console.error("Sign out error", error);
     }
   };
+  useEffect(() => {
+    dispatch(fetchSingleStudent());
+    console.log(student, studentStatus);
+  }, []);
+
   return (
     <>
       <div className="container mx-auto flex min-h-screen items-center justify-center border">

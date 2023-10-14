@@ -1,176 +1,217 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
-  signInWithEmailAndPassword,
-  signOut,
-  updateProfile,
-} from "firebase/auth";
-import { auth, db } from "../../firebase"; // Import your Firebase auth instance
-import toast from "react-hot-toast";
-import { doc, getDoc } from "firebase/firestore";
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
+import { auth, db } from "../../firebase";
 
-// export const signUp = createAsyncThunk(
-//   "auth/signUp",
-//   async (
-//     { email, password, firstname, lastname, role = "student" },
-//     { rejectWithValue },
-//   ) => {
+// Function to serialize Firebase Timestamp to JavaScript Date
+const serializeTimestamp = (timestamp) => {
+  const date = timestamp.toDate();
+  return date.toISOString();
+};
+
+// export const addStudent = createAsyncThunk<Student, Omit<Student, "id">>(
+//   "students/addStudent",
+//   async (newStudent) => {
 //     try {
-//       // Step 1: Create a new user in Firebase Authentication
-//       const userCredential = await createUserWithEmailAndPassword(
-//         auth,
-//         email,
-//         password,
-//       );
-//       const user = userCredential.user;
+//       const currentDate = new Date();
 
-//       // Step 2: Create a user document in the "users" collection in Firestore
-//       const customDocumentId = user.uid;
-//       const userRef = doc(db, "users", customDocumentId);
-
-//       const docData = {
-//         userId: user.uid,
-//         email: user.email,
-//         firstname,
-//         lastname,
-//         role: role,
+//       // Add the new student to the Firestore collection
+//       const docRef = await addDoc(collection(db, "students"), {
+//         ...newStudent,
+//         createdDate: currentDate,
+//       });
+//       return {
+//         id: docRef.id,
+//         ...newStudent,
 //       };
-
-//       try {
-//         // Use updateDoc to atomically create or update the document
-//         await updateDoc(userRef, docData);
-
-//         // If the document creation is successful, return the user data
-//         return {
-//           userId: user.uid,
-//           email: docData.email,
-//           firstname: docData.firstname,
-//           lastname: docData.lastname,
-//           role: docData.role,
-//         };
-//       } catch (error) {
-//         // Handle Firestore document creation errors
-//         toast.error("Error creating user document: " + error.message);
-//         return rejectWithValue(
-//           "Error creating user document: " + error.message,
-//         );
-//       }
 //     } catch (error) {
-//       // Handle Firebase Authentication errors
-//       if (error.code === "auth/email-already-in-use") {
-//         toast.error("This email is already in use.");
-//         return rejectWithValue("This email is already in use.");
-//       } else {
-//         toast.error("Authentication error: " + error.message);
-//         return rejectWithValue("Authentication error: " + error.message);
-//       }
+//       throw new Error("An error occurred while adding the student.");
+//     }
+//   },
+// );
+// export const deleteStudent = createAsyncThunk<void, string>(
+//   "students/deleteStudent",
+//   async (studentId) => {
+//     try {
+//       // Construct the Firestore document reference for the student
+//       const studentRef = doc(db, "students", studentId);
+
+//       // Delete the student document from Firestore
+//       await deleteDoc(studentRef);
+//     } catch (error) {
+//       throw new Error("An error occurred while deleting the student.");
 //     }
 //   },
 // );
 
-// Define an async thunk for user sign-in
-export const signIn = createAsyncThunk(
-  "auth/signIn",
-  async ({ email, password }, { rejectWithValue }) => {
+// export const updateStudent = createAsyncThunk<Student, Student>(
+//   "students/updateStudent",
+//   async (updatedStudent) => {
+//     const currentDate = new Date();
+
+//     try {
+//       // Construct the Firestore document reference for the student
+//       const studentRef = doc(db, "students", updatedStudent.id || "");
+
+//       // Update the student document in Firestore
+//       await setDoc(studentRef, { ...updatedStudent, createdDate: currentDate });
+
+//       return updatedStudent;
+//     } catch (error) {
+//       throw new Error("An error occurred while updating the student.");
+//     }
+//   },
+// );
+
+export const fetchStudents = createAsyncThunk(
+  "students/fetchStudents",
+  async () => {
     try {
-      // Step 1: Sign in the user using Firebase Authentication
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      );
-      const user = userCredential.user;
+      const querySnapshot = await getDocs(collection(db, "students"));
 
-      // Step 2: Fetch additional user data if needed (e.g., user role)
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      const userData = userDoc.data();
-      // Return user data to update the Redux state
-      sessionStorage.setItem("user", JSON.stringify(userData));
-      toast.success("Signed in successfully");
-
-      return { ...userData };
-    } catch (error) {
-      console.log(error && error.code);
-      if (error && error.code === "auth/invalid-login-credentials") {
-        toast.error("Email or password incorrect!");
-        return rejectWithValue("This email is already in use.");
-      } else {
-        toast.error("Authentication error: " + error.message);
-        return rejectWithValue("Authentication error: " + error.message);
+      if (!querySnapshot) {
+        console.log(new Error("An error occurred while fetching products."));
+        throw new Error("An error occurred while fetching products.");
       }
+
+      const students = querySnapshot.docs.map((doc) => {
+        const studentData = doc.data();
+        if (studentData.bod) {
+          studentData.bod = serializeTimestamp(studentData.bod);
+        }
+        return {
+          id: doc.id,
+          ...studentData,
+        };
+      });
+      return students;
+    } catch (error) {
+      console.log(error);
     }
   },
 );
 
-// Define a new async thunk for logging out
-export const signOutUser = createAsyncThunk(
-  "auth/signOut",
-  async (_, { rejectWithValue }) => {
+// for student
+export const fetchSingleStudent = createAsyncThunk(
+  "students/fetchSingleStudent",
+  async () => {
+    const user = auth.currentUser;
     try {
-      // Sign out the user using Firebase Authentication
-      await signOut(auth);
-      sessionStorage.removeItem("user");
-      return null; // The user is successfully signed out
+      // Build a reference to the document by specifying the collection and the document ID
+      const documentRef = doc(db, "students", user && user.uid);
+      if (!documentRef) {
+        console.log(new Error("An error occurred while fetching products."));
+        throw new Error("An error occurred while fetching products.");
+      }
+      // Fetch the document data
+      const documentSnapshot = await getDoc(documentRef);
+
+      // Check if the document exists
+      if (documentSnapshot.exists()) {
+        // Access the document data
+        const documentData = documentSnapshot.data();
+
+        console.log("fect one stu", documentData);
+
+        return documentData;
+      } else {
+        console.log("Document does not exist.");
+        return null;
+      }
     } catch (error) {
-      const errorMessage = error.message;
-      toast.error(errorMessage);
-      return rejectWithValue(errorMessage);
+      console.error("Error fetching document:", error);
+      throw error; // You can handle the error as needed
     }
   },
 );
 
 const studentSlice = createSlice({
-  name: "user",
+  name: "students",
   initialState: {
-    user: {},
+    students: [],
+    student: {},
     status: "idle" | "loading" | "succeeded" | "failed",
     error: "",
-    role: "",
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // sign
-      // .addCase(signUp.pending, (state) => {
-      //   state.status = "loading";
-      // })
-      // .addCase(signUp.fulfilled, (state, action) => {
-      //   state.status = "succeeded";
-      //   state.user = action.payload;
-      //   state.error = null;
-      // })
-      // .addCase(signUp.rejected, (state, action) => {
-      //   state.status = "failed";
-      //   state.user = null;
-      //   state.error = action.payload || "An error occurred during sign-in.";
-      // })
-      // sign in
-      .addCase(signIn.pending, (state) => {
+      .addCase(fetchStudents.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(signIn.fulfilled, (state, action) => {
+      .addCase(fetchStudents.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.user = action.payload;
-        state.error = null;
+        state.students = action.payload;
       })
-      .addCase(signIn.rejected, (state, action) => {
+      .addCase(fetchStudents.rejected, (state, action) => {
         state.status = "failed";
-        state.user = null;
-        state.error = action.payload || "An error occurred during sign-in.";
+        state.error = action.error.message || "";
       })
-      // sign out
-      .addCase(signOutUser.pending, (state) => {
+      //single student
+      .addCase(fetchSingleStudent.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(signOutUser.fulfilled, (state) => {
-        state.status = "idle";
-        state.user = null; // Set the user to null to indicate that they are logged out
-        state.error = null;
+      .addCase(fetchSingleStudent.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.student = action.payload;
       })
-      .addCase(signOutUser.rejected, (state, action) => {
+      .addCase(fetchSingleStudent.rejected, (state, action) => {
         state.status = "failed";
-        state.user = null;
-        state.error = action.payload || "An error occurred during sign-in.";
+        state.error = action.error.message || "";
       });
+    // // ADD
+    // .addCase(addStudent.pending, (state) => {
+    //   state.status = "loading";
+    // })
+    // .addCase(addStudent.fulfilled, (state, action) => {
+    //   state.status = "succeeded";
+    //   state.data.push(action.payload);
+    // })
+    // .addCase(addStudent.rejected, (state, action) => {
+    //   state.status = "failed";
+    //   state.error = action.error.message || "";
+    // })
+    // // DELETE
+    // .addCase(deleteStudent.pending, (state) => {
+    //   state.status = "loading";
+    // })
+    // .addCase(deleteStudent.fulfilled, (state, action) => {
+    //   state.status = "succeeded";
+    //   // Remove the deleted student from the state
+    //   state.data = state.data.filter(
+    //     (student) => student.id !== action.meta.arg,
+    //   );
+    // })
+    // .addCase(deleteStudent.rejected, (state, action) => {
+    //   state.status = "failed";
+    //   state.error = action.error.message || "";
+    // })
+    // // UPDATE
+    // .addCase(updateStudent.pending, (state) => {
+    //   state.status = "loading";
+    // })
+    // .addCase(updateStudent.fulfilled, (state, action) => {
+    //   state.status = "succeeded";
+    //   // Find and update the student in the state
+    //   const updatedStudent = action.payload;
+    //   const studentIndex = state.data.findIndex(
+    //     (student) => student.id === updatedStudent.id,
+    //   );
+    //   if (studentIndex !== -1) {
+    //     state.data[studentIndex] = updatedStudent;
+    //   }
+    // })
+    // .addCase(updateStudent.rejected, (state, action) => {
+    //   state.status = "failed";
+    //   state.error = action.error.message || "";
+    // });
   },
 });
 
