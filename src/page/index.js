@@ -8,6 +8,7 @@ import Signin from "./Signin.jsx";
 import Contact from "./Contact.jsx";
 import Documents from "./Documents.jsx";
 import Establishment from "./Establishment.jsx";
+import News from "./News.jsx";
 export {
   Dashboard,
   StudentDetail,
@@ -18,5 +19,6 @@ export {
   Signin,
   Contact,
   Documents,
-  Establishment
+  Establishment,
+  News,
 };

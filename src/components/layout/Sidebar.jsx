@@ -153,7 +153,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         <ul className="mb-5 mt-4 flex flex-col gap-2.5 pl-6">
                           <li className={dropdownLiStyle}>
                             <NavLink
-                              to="/"
+                              to="/dashboard"
                               className={({ isActive }) =>
                                 dropdownNavlinkStyle +
                                 (isActive && "! text-white")
