@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { themes } from "../../../data/data";
 import { AiFillThunderbolt } from "react-icons/ai";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const user = {
   role: "admin",
 };
-const Navbar = () => {
+const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light",
   );
@@ -27,6 +28,15 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-[999] flex w-full bg-primary">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-md md:px-6 2xl:px-11">
+        <button
+          className="group btn btn-sm flex flex-col items-center justify-center rounded border p-1 lg:hidden"
+          onClick={(e) => {
+            e.stopPropagation();
+            setSidebarOpen(!sidebarOpen);
+          }}
+        >
+          <RxHamburgerMenu className="text-2xl" />
+        </button>
         <div className="flex w-full items-center justify-end">
           <div className="join flex items-center justify-end ">
             <div>
