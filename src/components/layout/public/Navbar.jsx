@@ -26,7 +26,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   }, [theme]);
 
   return (
-    <header className="sticky top-0 z-[999] flex w-full bg-primary">
+    <header className="sticky top-0 z-[999] flex w-full bg-active">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-md md:px-6 2xl:px-11">
         <button
           className="group btn btn-sm flex flex-col items-center justify-center rounded border p-1 lg:hidden"

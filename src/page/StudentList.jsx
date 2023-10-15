@@ -4,11 +4,18 @@ import { data } from "../data/data";
 const StudentList = () => {
   return (
     <section className="body-fon p-10 text-gray-600 ">
-      <div className="container mx-auto px-5 py-24">
+      <div className="container mx-auto px-5 py-10">
         <div className="mb-20 flex w-full flex-col text-center">
           <label className="mb-20 flex justify-center font-notosanslao text-4xl font-bold text-primary     ">
             ລາຍຊື່ນັກຮຽນ
           </label>
+          <div className="mb-10 flex justify-end">
+            <Link to={"/add"}>
+              <button className="btn btn-ghost btn-active font-notosanslao ">
+                ຕື່ມຂໍ້ມູນນັກຮຽນ
+              </button>
+            </Link>
+          </div>
         </div>
 
         <div className="-m-20 flex flex-wrap font-notosanslao ">

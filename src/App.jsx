@@ -11,6 +11,7 @@ import {
   Documents,
   Contact,
   Establishment,
+  Add,
   News,
 } from "./page";
 import RootLayoutPublic from "./components/layout/public/rootLayoutPublic";
@@ -31,6 +32,7 @@ function App() {
           <Route path="/studentlist" element={<StudentList />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/intro" element={<Intro />} />
+          <Route path="/add" element={<Add />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/test" element={<Test />} />
