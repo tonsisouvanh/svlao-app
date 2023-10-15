@@ -3,6 +3,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      backgroundImage: {
+        "login-background": "url('assets/img/loginimg.jpg')",
+      },
       fontFamily: {
         notosanslao: ["notosanslao", "sans-serif"],
         fontDancing: ["Dancing Script", "cursive"],

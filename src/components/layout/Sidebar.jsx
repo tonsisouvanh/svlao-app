@@ -85,7 +85,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           {/* <NavLink className="flex w-full justify-center bg-white py-3" to="/">
             <img className="w-32" src={Logo} alt="Logo" />
           </NavLink> */}
-
+          <div className="bg-white">
+            <a className="mb-16 text-center font-notosanslao text-lg font-bold normal-case !text-neutral ">
+              <p>LAO STUDENT HCM</p>
+            </a>
+          </div>
           <button
             ref={trigger}
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -99,11 +103,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
-        <div>
-          <a className="btn btn-ghost flex justify-center font-notosanslao text-2xl normal-case !text-white ">
-            Lao Student <p> in Ho Chi Minh City</p>
-          </a>
-        </div>
         {/* <!-- Sidebar Menu --> */}
         <nav className="mt-5 px-4 py-4 text-slate-300 lg:mt-9 lg:px-6">
           {/* <!-- Menu Group --> */}

@@ -8,5 +8,5 @@ export const store = configureStore({
     students: studentsReducer,
   },
 });
-store.dispatch(fetchStudents());
+// store.dispatch(fetchStudents());
 export default store;

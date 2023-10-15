@@ -337,18 +337,18 @@ export const university = [
 
 export const themes = [
   // "light",
-  // "dark",
   "cupcake",
   // "bumblebee",
   // "emerald",
   //   "corporate",
   //   "synthwave",
-    "retro",
-    // "cyberpunk",
-    // "valentine",
-    // "halloween",
-    // "garden",
-    // "forest",
+  "retro",
+  "dark",
+  // "cyberpunk",
+  // "valentine",
+  // "halloween",
+  // "garden",
+  // "forest",
   //   "aqua",
   //   "lofi",
   //   "pastel",
@@ -366,6 +366,5 @@ export const themes = [
   //   "coffee",
   //   "winter",
 ];
-
 
 // USER DATA
