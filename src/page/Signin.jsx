@@ -6,7 +6,7 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../feature/auth/AuthSlice";
 import { auth } from "../firebase";
-
+import { onAuthStateChanged } from "firebase/auth";
 const initialState = {
   email: "",
   password: "",
@@ -18,7 +18,6 @@ const Signin = () => {
   const navigate = useNavigate();
   const {
     register,
-    reset,
     handleSubmit,
     formState: { errors },
   } = useForm({ defaultValues: initialState });
@@ -33,9 +32,23 @@ const Signin = () => {
       console.error("Sign-in error =>", error);
     }
   };
+
+  useEffect(() => {
+    // Listen for changes in the user's authentication state
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate("/");
+      }
+    });
+
+    // Clean up the subscription when the component unmounts
+    return () => unsubscribe();
+  }, [navigate]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-base-100">
-      <div className="w-96 rounded bg-base-200 p-8 shadow-md">
+    <div className="bg-login-background flex min-h-screen items-center justify-center bg-cover bg-no-repeat">
+      <div className="absolute h-full w-full bg-gradient-to-b from-black via-black/70 to-transparent"></div>
+      <div className="w-96 absolute rounded bg-base-200 p-8 shadow-md">
         <h1 className="mb-4 text-2xl font-bold">Student Login</h1>
         <form onSubmit={handleSubmit(handleLogin)}>
           <div className="mb-4">
@@ -47,7 +60,7 @@ const Signin = () => {
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
-                    value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                    value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
                     message: "Invalid email format",
                   },
                 })}

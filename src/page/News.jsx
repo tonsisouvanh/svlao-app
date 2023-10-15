@@ -1,15 +1,15 @@
 const News = () => {
   return (
     <div>
-      <section className="body-font overflow-hidden text-gray-600">
+      <section className="body-font overflow-hidden">
         <div className="container mx-auto px-5 py-24">
-          <div className="-my-8 divide-y-2 divide-gray-100">
-            <h1 className="title-font mb-4 text-center font-notosanslao text-2xl font-bold text-gray-900 sm:text-3xl">
+          <div className="-my-8 divide-y-2 divide-base-900">
+            <h1 className="title-font mb-4 text-center font-notosanslao text-2xl font-bold text-primary-content sm:text-3xl">
               ແຈ້ງການຕ່າງໆ
             </h1>
             <div className="flex flex-wrap py-8 md:flex-nowrap">
               <div className="mb-6 flex flex-shrink-0 flex-col md:mb-0 md:w-64">
-                <span className="title-font font-semibold text-gray-700">
+                <span className="title-font font-semibold text-base-600">
                   Thông báo
                   <div className="indicator">
                     <svg
@@ -32,11 +32,11 @@ const News = () => {
                 <span className="mt-1 text-sm text-gray-500">12 Jun 2023</span>
               </div>
               <div className="md:flex-grow">
-                <h2 className="title-font mb-2 text-2xl font-medium text-gray-900">
+                <h2 className="title-font mb-2 text-2xl font-medium text-accent-focus">
                   Tên chương trình
                 </h2>
                 <p className="leading-relaxed">Nội dung thông báo</p>
-                <a className="mt-4 inline-flex items-center text-indigo-500">
+                <a className="mt-4 inline-flex items-center text-info">
                   Xem thêm
                   <svg
                     className="ml-2 h-4 w-4"
