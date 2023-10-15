@@ -9,7 +9,6 @@ const Test = () => {
   );
 
   const dispatch = useDispatch();
-  const userauth = sessionStorage.getItem("user");
   // const handleSignup = async (e) => {
   //   e.preventDefault();
 

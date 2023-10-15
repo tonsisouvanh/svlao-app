@@ -48,10 +48,10 @@ const About = () => {
   }, [selectedschool]);
 
   return (
-    <section className="body-font text-gray-600">
+    <section className="body-font">
       <div className="container mx-auto px-5 py-24">
         <div className="mb-20 text-center">
-          <h1 className="title-font mb-4 text-center font-notosanslao text-2xl font-bold text-gray-900 sm:text-3xl">
+          <h1 className="title-font text-primary-conten mb-4 text-center font-notosanslao text-2xl font-bold sm:text-3xl">
             ສັງລວມນັກຮຽນທີ່ຢູ່ຕາມໂຮງຮຽນຕ່າງໆ
           </h1>
         </div>
@@ -96,9 +96,9 @@ const About = () => {
           </div>
         </div>
 
-        <div className="stats flex items-center justify-center  shadow">
-          <div className="stat">
-            <div className="stat-figure flex  text-primary ">
+        <div className="stats flex items-center justify-center font-notosanslao shadow">
+          <div className="stat text-primary-content">
+            <div className="stat-figure flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -113,43 +113,39 @@ const About = () => {
                 ></path>
               </svg>
             </div>
-            <div className="stat-title flex gap-10 text-black ">
-              ນັກຮຽນທັງໝົດ:
-            </div>
-            <div className="stat-value text-primary">
-              {totalstudentPerSchool}
-            </div>
+            <div className="stat-title flex gap-10 ">ນັກຮຽນທັງໝົດ:</div>
+            <div className="stat-value">{totalstudentPerSchool}</div>
           </div>
 
-          <div className="stat">
+          <div className="stat text-primary-content">
             <div className="flex justify-center gap-10">
-              <div className="stat-title flex items-center justify-center text-black">
+              <div className="stat-title flex items-center justify-center">
                 ຊາຍ
               </div>
-              <div className="stat-value flex items-center justify-center text-primary">
+              <div className="stat-value flex items-center justify-center ">
                 {tongNam} <AiOutlineMan />
               </div>
 
-              <div className="stat-title flex items-center justify-center text-black ">
+              <div className="stat-title flex items-center justify-center ">
                 ຍິງ
               </div>
-              <div className="stat-value flex items-center justify-center text-secondary">
+              <div className="stat-value flex items-center justify-center">
                 {tongNu} <AiOutlineWoman />
               </div>
             </div>
           </div>
-          <div className="stat">
+          <div className="stat text-primary-content">
             <div className="flex justify-center gap-10">
-              <div className="stat-title flex items-center justify-center text-black">
+              <div className="stat-title flex items-center justify-center">
                 ປ ຕີ
               </div>
-              <div className="stat-value flex items-center justify-center text-primary">
+              <div className="stat-value flex items-center justify-center ">
                 {tongNu}
               </div>{" "}
-              <div className="stat-title flex items-center justify-center text-black">
+              <div className="stat-title flex items-center justify-center">
                 ປ ໂທ
               </div>
-              <div className="stat-value flex items-center justify-center text-secondary">
+              <div className="stat-value flex items-center justify-center">
                 {tongNu}
               </div>
             </div>

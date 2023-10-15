@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signOutUser } from "../../feature/auth/AuthSlice";
 import { auth } from "../../firebase";
 
-const dropdownLiStyle = "hover:text-white hover:bg-white/10";
+const dropdownLiStyle = "hover:text-white hover:bg-white/10 rounded-md";
 const dropdownNavlinkStyle =
   "group relative flex items-center gap-2 px-4 py-2 font-medium duration-300 ease-in-out";
 
@@ -85,8 +85,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           {/* <NavLink className="flex w-full justify-center bg-white py-3" to="/">
             <img className="w-32" src={Logo} alt="Logo" />
           </NavLink> */}
-          <div className="bg-white">
-            <a className="mb-16 text-center font-notosanslao text-lg font-bold normal-case !text-neutral ">
+          <div className="bg-white p-2">
+            <a className="mb-16 whitespace-nowrap text-center font-notosanslao text-sm font-bold normal-case !text-neutral ">
               <p>LAO STUDENT HCM</p>
             </a>
           </div>
@@ -123,9 +123,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao font-medium text-white duration-300 ease-in-out ${
-                          (pathname === "/" ||
-                            pathname.includes("dashboard")) &&
-                          "bg-sky-600"
+                          (pathname === "/" || pathname.includes("/")) &&
+                          "rounded-md bg-primary-focus"
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -155,7 +154,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                               to="/dashboard"
                               className={({ isActive }) =>
                                 dropdownNavlinkStyle +
-                                (isActive && "! text-white")
+                                (isActive && "!text-white border-r-2")
                               }
                             >
                               ສັງລວມນັກຮຽນ
@@ -166,7 +165,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                               to="/studentlist"
                               className={({ isActive }) =>
                                 dropdownNavlinkStyle +
-                                (isActive && "! text-white")
+                                (isActive && "!text-white border-r-2")
                               }
                             >
                               ລາຍຊື່ນັກຮຽນ

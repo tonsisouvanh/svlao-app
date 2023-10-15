@@ -3,15 +3,10 @@ import { themes } from "../../../data/data";
 import { AiFillThunderbolt } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 
-const user = {
-  role: "admin",
-};
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light",
   );
-
-
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
@@ -20,7 +15,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   }, [theme]);
 
   return (
-    <header className="sticky top-0 z-[999] flex w-full bg-active">
+    <header className="top-0 z-[999] flex w-full bg-base-100">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-md md:px-6 2xl:px-11">
         <button
           className="group btn btn-sm flex flex-col items-center justify-center rounded border p-1 lg:hidden"
@@ -60,7 +55,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
         </div>
 
         <div>
-          <div className="dropdown">
+          <div className="dropdown dropdown-end">
             <label
               tabIndex={0}
               className="btn m-1 rounded-full font-notosanslao"
@@ -70,7 +65,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
 
             <ul
               tabIndex={0}
-              className="menu  dropdown-content rounded-box z-[1] w-52 space-y-2 bg-base-100 p-2 shadow"
+              className="menu dropdown-content w-fit rounded-box z-[1] space-y-2 bg-base-100 p-2 shadow"
             >
               {themes.map((theme) => (
                 <li

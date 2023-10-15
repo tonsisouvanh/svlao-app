@@ -40,6 +40,7 @@ import React, { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
+import Spinner from "../components/ui/Spinner";
 
 const PrivateRoute = () => {
   const [user, setUser] = useState(null);
@@ -60,7 +61,7 @@ const PrivateRoute = () => {
 
   if (loading) {
     // If still loading the user state, you can return a loading indicator
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   return user ? (

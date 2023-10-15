@@ -9,7 +9,14 @@ import {
 } from "firebase/auth";
 import { auth, db } from "../../firebase"; // Import your Firebase auth instance
 import toast from "react-hot-toast";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
 // export const signUp = createAsyncThunk(
 //   "auth/signUp",
@@ -71,10 +78,9 @@ import { doc, getDoc } from "firebase/firestore";
 // );
 
 // Define an async thunk for user sign-in
-
 export const signIn = createAsyncThunk(
   "auth/signIn",
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ email, password }, { rejectWithValue, dispatch }) => {
     try {
       // Step 1: Sign in the user using Firebase Authentication
       const userCredential = await signInWithEmailAndPassword(
@@ -82,17 +88,45 @@ export const signIn = createAsyncThunk(
         email,
         password,
       );
-
       const user = userCredential.user;
-      // Step 2: Fetch additional user data if needed (e.g., user role)
+
+      // Step 2: Fetch additional user data (e.g., user role)
       const userDoc = await getDoc(doc(db, "accounts", user.uid));
       const userData = userDoc.data();
-      // Return user data to update the Redux state
+
+      // Set session persistence
       await setPersistence(auth, browserSessionPersistence);
 
-      toast.success("Signed in successfully");
+      if (userData.role === "student") {
+        // Step 3: Fetch student's document data
+        const studentsCollectionRef = collection(db, "students");
+        const querySnapshot = await getDocs(
+          query(studentsCollectionRef, where("accountId", "==", user.uid)),
+        );
 
-      return { ...userData };
+        if (!querySnapshot.empty) {
+          // Assume there's only one matching document
+          const studentDocument = querySnapshot.docs[0];
+
+          // Get the student's data from the document
+          const studentData = {
+            documentId: studentDocument.id,
+            ...studentDocument.data(),
+          };
+
+          // Step 4: Store student data in session storage
+          sessionStorage.setItem("studentData", JSON.stringify(studentData));
+        } else {
+          // Handle the case where the student document wasn't found.
+        }
+      }
+
+      // Step 5: Return the user data to update the Redux state
+      const _user_ = { role: userData.role, fullname: userData.fullname };
+      sessionStorage.setItem("_role_", JSON.stringify(_user_));
+
+      toast.success("Signed in successfully");
+      return _user_;
     } catch (error) {
       if (error && error.code === "auth/invalid-login-credentials") {
         toast.error("Email or password incorrect!");
@@ -104,6 +138,40 @@ export const signIn = createAsyncThunk(
     }
   },
 );
+
+// export const signIn = createAsyncThunk(
+//   "auth/signIn",
+//   async ({ email, password }, { rejectWithValue }) => {
+//     try {
+//       // Step 1: Sign in the user using Firebase Authentication
+//       const userCredential = await signInWithEmailAndPassword(
+//         auth,
+//         email,
+//         password,
+//       );
+
+//       const user = userCredential.user;
+//       // Step 2: Fetch additional user data if needed (e.g., user role)
+//       const userDoc = await getDoc(doc(db, "accounts", user.uid));
+//       const userData = userDoc.data();
+//       // Return user data to update the Redux state
+//       await setPersistence(auth, browserSessionPersistence);
+//       toast.success("Signed in successfully");
+
+//       const _user_ = { role: userData.role, fullname: userData.fullname };
+//       sessionStorage.setItem("_user_", JSON.stringify(_user_));
+//       return _user_;
+//     } catch (error) {
+//       if (error && error.code === "auth/invalid-login-credentials") {
+//         toast.error("Email or password incorrect!");
+//         return rejectWithValue("This email is already in use.");
+//       } else {
+//         toast.error("Authentication error: " + error.message);
+//         return rejectWithValue("Authentication error: " + error.message);
+//       }
+//     }
+//   },
+// );
 
 // Define a new async thunk for logging out
 // export const signOutUser = createAsyncThunk(
@@ -130,6 +198,8 @@ export const signOutUser = createAsyncThunk(
 
       // Clear user data from session storage
       sessionStorage.removeItem("user");
+      sessionStorage.removeItem("_role_");
+      sessionStorage.removeItem("studentData");
 
       return null; // The user is successfully signed out
     } catch (error) {
