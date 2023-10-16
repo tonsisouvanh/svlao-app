@@ -660,3 +660,8 @@ export const scholarshipTypes = [
     name: "ສ່ວນໂຕ",
   },
 ];
+
+
+export const years = [
+  
+]

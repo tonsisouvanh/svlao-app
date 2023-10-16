@@ -10,6 +10,7 @@ import Documents from "./Documents.jsx";
 import Establishment from "./Establishment.jsx";
 import News from "./News.jsx";
 import Add from "./Add.jsx";
+import Signup from "./Signup.jsx";
 export {
   Dashboard,
   StudentDetail,
@@ -22,5 +23,6 @@ export {
   Documents,
   Establishment,
   News,
-  Add
+  Add,
+  Signup
 };

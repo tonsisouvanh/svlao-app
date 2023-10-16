@@ -79,24 +79,46 @@ const AddStudent = () => {
               className="flex flex-col items-center"
               onSubmit={handleSubmit(handleAddStudent)}
             >
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                {/* FIRST 3 INPUT TEXT */}
-                {/* {inputs?.map((input, index) => (
-              <div key={index} className="form-control w-full max-w-xs">
-                <label className={mainLabelStyle}>{input.label}:</label>
-                <input
-                  {...register(input.name, { required: "Please fill up" })}
-                  type={input.type}
-                  placeholder={input.placeHolder} // Corrected the property name here
-                  className={input.inputStyle}
-                />
-                <ErrorMessage
-                  styling="mt-3 sm:text-md"
-                  error={errors[input.name]}
-                />
+              <div className="flex items-center gap-5">
+                {/* email */}
+                <div className="form-control w-full max-w-xs">
+                  <label className={mainLabelStyle}>Email:</label>
+                  <input
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+                        message: "Invalid email format",
+                      },
+                    })}
+                    type="text"
+                    className={textInputStyle}
+                  />
+                  <ErrorMessage
+                    styling="mt-3 sm:text-md"
+                    error={errors?.email}
+                  />
+                </div>
+                {/* password */}
+                <div className="form-control w-full max-w-xs">
+                  <label className={mainLabelStyle}>Password:</label>
+                  <input
+                    {...register("password", {
+                      required: "Password is required",
+                      minLength: 6,
+                    })}
+                    type={"password"}
+                    className={textInputStyle}
+                  />
+                  <ErrorMessage
+                    styling="mt-3 sm:text-md"
+                    error={errors?.password}
+                  />
+                </div>
               </div>
-            ))} */}
-
+              <div className="divider-base-100 divider"></div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {/* fullname */}
                 <div className="form-control w-full max-w-xs">
                   <label className={mainLabelStyle}>ຊື່ລາວ:</label>
                   <input
@@ -112,20 +134,39 @@ const AddStudent = () => {
                     error={errors?.fullname?.laoName}
                   />
                 </div>
-                <div className="form-control w-full max-w-xs">
+                <div className="form-control w-full max-w-xs space-y-2">
                   <label className={mainLabelStyle}>ຊື່ອັງກິດ:</label>
-                  <input
-                    {...register("fullname.englishName", {
-                      required: "Please fill up",
-                    })}
-                    type="text"
-                    placeholder="ຕື່ມຊື່ອັງກິດ" // Corrected the property name here
-                    className={textInputStyle}
-                  />
-                  <ErrorMessage
-                    styling="mt-3 sm:text-md"
-                    error={errors?.fullname?.englishName}
-                  />
+                  <div>
+                    <label className="label-text">Firstname</label>
+                    <input
+                      {...register("fullname.englishFirstname", {
+                        required: "Please fill up",
+                      })}
+                      type="text"
+                      placeholder="ຕື່ມຊື່ອັງກິດ" // Corrected the property name here
+                      className={textInputStyle}
+                    />
+                    <ErrorMessage
+                      styling="mt-3 sm:text-md"
+                      error={errors?.fullname?.englishFirstname}
+                    />
+                  </div>
+                  <div>
+                    <label className="label-text">Lastname</label>
+
+                    <input
+                      {...register("fullname.englishLastname", {
+                        required: "Please fill up",
+                      })}
+                      type="text"
+                      placeholder="ຕື່ມນາມສະກຸນອັງກິດ" // Corrected the property name here
+                      className={textInputStyle}
+                    />
+                    <ErrorMessage
+                      styling="mt-3 sm:text-md"
+                      error={errors?.fullname?.englishLastname}
+                    />
+                  </div>
                 </div>
                 <div className="form-control w-full max-w-xs">
                   <label className={mainLabelStyle}>ຊື່ຫລິ້ນ:</label>
@@ -140,6 +181,7 @@ const AddStudent = () => {
                     error={errors?.fullname?.englishName}
                   />
                 </div>
+                {/* Student ID */}
                 <div className="form-control w-full max-w-xs">
                   <label className={mainLabelStyle}>MSSV:</label>
                   <input
@@ -152,7 +194,9 @@ const AddStudent = () => {
                 <div className="form-control w-full max-w-xs">
                   <label className={mainLabelStyle}>DOB:</label>
                   <input
-                    {...register("dob")}
+                    {...register("dob", {
+                      required: "Please fill up",
+                    })}
                     type="date"
                     placeholder="Date of birth" // Corrected the property name here
                     className={textInputStyle}
@@ -317,25 +361,19 @@ const AddStudent = () => {
                     </div>
                     <div className="space-y-2">
                       <input
-                        {...register("scholarship.sacolashipLao", {
-                          required: "Please select",
-                        })}
+                        {...register("scholarship.sacolashipLao")}
                         type="text"
                         placeholder="ຕື່ມເລກທີຂໍ້ຕົກລົງກະຊວງສຶກສາລາວ"
                         className={textInputStyle}
                       />
                       <input
-                        {...register("scholarship.sacolashipVn", {
-                          required: "Please select",
-                        })}
+                        {...register("scholarship.sacolashipVn")}
                         type="text"
                         placeholder="ຕື່ມເລກທີຂໍ້ຕົກລົງກະຊວງສຶກສາຫວຽດນາມ"
                         className={textInputStyle}
                       />
                       <input
-                        {...register("scholarship.sacolashipUniversity", {
-                          required: "Please select",
-                        })}
+                        {...register("scholarship.sacolashipUniversity")}
                         type="text"
                         placeholder="ຕື່ມເລກທີຂໍ້ຕົກລົງຂອງສະຖາບັນສຶກສາ"
                         className={textInputStyle}
@@ -352,9 +390,16 @@ const AddStudent = () => {
                         <input
                           {...register("duration.from", {
                             required: "Please enter date",
+                            minLength: { value: 4, message: "minimum 4" },
+                            maxLength: { value: 4, message: "maximum 4" },
                           })}
-                          type="date"
+                          placeholder="2023-202"
+                          type="text"
                           className={textInputStyle}
+                        />
+                        <ErrorMessage
+                          styling="mt-0 sm:text-md"
+                          error={errors?.duration?.from}
                         />
                       </div>
                       <div className="flex items-center gap-1">
@@ -362,9 +407,16 @@ const AddStudent = () => {
                         <input
                           {...register("duration.to", {
                             required: "Please enter date",
+                            minLength: { value: 4, message: "minimum 4" },
+                            maxLength: { value: 4, message: "maximum 4" },
                           })}
-                          type="date"
+                          placeholder="2023-202"
+                          type="text"
                           className={textInputStyle}
+                        />
+                        <ErrorMessage
+                          styling="mt-0 sm:text-md"
+                          error={errors?.duration?.to}
                         />
                       </div>
                     </div>

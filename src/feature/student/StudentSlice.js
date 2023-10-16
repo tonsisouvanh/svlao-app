@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 import toast from "react-hot-toast";
 import { auth, db } from "../../firebase";
+import { signUp } from "../auth/AuthSlice";
 
 // Function to serialize Firebase Timestamp to JavaScript Date
 const serializeTimestamp = (timestamp) => {
@@ -21,6 +22,19 @@ export const addStudent = createAsyncThunk(
   "students/addStudent",
   async (newStudent, rejectWithValue) => {
     try {
+      // const email = newStudent.email;
+      // const password = newStudent.password;
+      // signUp(email,password)
+      // const userCredential = await createUserWithEmailAndPassword(
+      //   auth,
+      //   email,
+      //   password,
+      // );
+      // const user = userCredential.user;
+
+
+
+      
       const currentDate = new Date();
       const docRef = await addDoc(collection(db, "students"), {
         ...newStudent,

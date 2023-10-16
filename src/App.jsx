@@ -13,6 +13,7 @@ import {
   Establishment,
   Add,
   News,
+  Signup,
 } from "./page";
 import RootLayoutPublic from "./components/layout/public/rootLayoutPublic";
 import Test from "./page/Test";
@@ -25,6 +26,7 @@ function App() {
       <Toaster position="top-center" reverseOrder={false} />
       <Routes>
         <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
 
         <Route path="/" element={<RootLayoutPublic />}>
           <Route element={<PrivateRoute />}>
