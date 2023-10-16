@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { themes } from "../../../data/data";
-import { AiFillThunderbolt } from "react-icons/ai";
+import { AiFillThunderbolt, AiFillBell } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 const user = {
@@ -11,8 +11,6 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light",
   );
 
-
-
   useEffect(() => {
     localStorage.setItem("theme", theme);
     const localTheme = localStorage.getItem("theme");
@@ -20,7 +18,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   }, [theme]);
 
   return (
-    <header className="sticky top-0 z-[999] flex w-full bg-active">
+    <header className="bg-active sticky top-0 z-[999] flex w-full">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-md md:px-6 2xl:px-11">
         <button
           className="group btn btn-sm flex flex-col items-center justify-center rounded border p-1 lg:hidden"
@@ -31,8 +29,8 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
         >
           <RxHamburgerMenu className="text-2xl" />
         </button>
-        <div className="flex w-full items-center justify-end">
-          <div className="join flex items-center justify-end ">
+        <div className="flex w-full items-center justify-center">
+          <div className="join flex items-center justify-center">
             <div>
               <div>
                 <input
@@ -58,7 +56,9 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
             </div>
           </div>
         </div>
-
+        <div>
+          <AiFillBell />
+        </div>
         <div>
           <div className="dropdown">
             <label

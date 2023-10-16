@@ -202,7 +202,7 @@ const AddStudent = () => {
                   ທຶນການສຶກສາ:
                 </label>
 
-                <div className="flex items-center mb-2">
+                <div className="mb-2 flex items-center">
                   <select className="select select-bordered w-full max-w-xs">
                     <option disabled selected>
                       ປະເພດທຶນ
@@ -243,7 +243,7 @@ const AddStudent = () => {
                     type="date"
                     className="input input-bordered w-full max-w-xs"
                   />
-                  ເຖິງ
+
                   <input
                     type="date"
                     className="input input-bordered w-full max-w-xs"
@@ -269,6 +269,18 @@ const AddStudent = () => {
                     placeholder="ຕື່ມເບີໂທຕິດຕໍ່ສຸກເສີນ"
                     className="input input-bordered w-full max-w-xs"
                   />
+                  <div>
+                    <select className="select select-bordered w-full max-w-xs">
+                      <option disabled selected>
+                        ສາຍພົວພັນ
+                      </option>
+                      <option>ພໍ່</option>
+                      <option>ແມ່</option>
+                      <option>ເອື້ອຍ</option>
+                      <option>ນ້ອງ</option>
+                      <option>...</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
