@@ -80,7 +80,7 @@ import {
 // Define an async thunk for user sign-in
 export const signIn = createAsyncThunk(
   "auth/signIn",
-  async ({ email, password }, { rejectWithValue, dispatch }) => {
+  async ({ email, password }, { rejectWithValue }) => {
     try {
       // Step 1: Sign in the user using Firebase Authentication
       const userCredential = await signInWithEmailAndPassword(

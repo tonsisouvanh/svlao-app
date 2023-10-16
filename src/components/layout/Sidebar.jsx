@@ -75,7 +75,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-[99999] flex h-screen w-72 flex-col overflow-y-hidden bg-primary  text-white duration-300 ease-linear lg:static lg:translate-x-0 ${
+      className={`absolute left-0 top-0 z-[99999] flex h-screen w-72 flex-col overflow-y-hidden bg-primary duration-300 ease-linear lg:static lg:translate-x-0 ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
@@ -104,10 +104,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
         {/* <!-- Sidebar Menu --> */}
-        <nav className="mt-5 px-4 py-4 text-slate-300 lg:mt-9 lg:px-6">
+        <nav className="mt-5 px-4 py-4 text-base-100 lg:mt-9 lg:px-6">
           {/* <!-- Menu Group --> */}
           <div className="font-notosanslao">
-            <h3 className="text-bodydark2 mb-4 ml-4 text-sm font-semibold !text-white">
+            <h3 className="text-bodydark2 mb-4 ml-4 text-sm font-semibold">
               MENU
             </h3>
             <ul className="mb-6 flex flex-col gap-2">
@@ -154,7 +154,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                               to="/dashboard"
                               className={({ isActive }) =>
                                 dropdownNavlinkStyle +
-                                (isActive && "!text-white border-r-2")
+                                (isActive && "border-r-2 !text-white")
                               }
                             >
                               ສັງລວມນັກຮຽນ
@@ -165,7 +165,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                               to="/studentlist"
                               className={({ isActive }) =>
                                 dropdownNavlinkStyle +
-                                (isActive && "!text-white border-r-2")
+                                (isActive && "border-r-2 !text-white")
                               }
                             >
                               ລາຍຊື່ນັກຮຽນ

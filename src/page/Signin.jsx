@@ -46,9 +46,9 @@ const Signin = () => {
   }, [navigate]);
 
   return (
-    <div className="bg-login-background flex min-h-screen items-center justify-center bg-cover bg-no-repeat">
+    <div className="flex min-h-screen items-center justify-center bg-login-background bg-cover bg-no-repeat">
       <div className="absolute h-full w-full bg-gradient-to-b from-black via-black/70 to-transparent"></div>
-      <div className="w-96 absolute rounded bg-base-200 p-8 shadow-md">
+      <div className="absolute w-96 rounded bg-base-200 p-8 shadow-md">
         <h1 className="mb-4 text-2xl font-bold">Student Login</h1>
         <form onSubmit={handleSubmit(handleLogin)}>
           <div className="mb-4">

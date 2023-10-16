@@ -8,6 +8,7 @@ import {
   getDocs,
   setDoc,
 } from "firebase/firestore";
+import toast from "react-hot-toast";
 import { auth, db } from "../../firebase";
 
 // Function to serialize Firebase Timestamp to JavaScript Date
@@ -16,26 +17,30 @@ const serializeTimestamp = (timestamp) => {
   return date.toISOString();
 };
 
-// export const addStudent = createAsyncThunk<Student, Omit<Student, "id">>(
-//   "students/addStudent",
-//   async (newStudent) => {
-//     try {
-//       const currentDate = new Date();
+export const addStudent = createAsyncThunk(
+  "students/addStudent",
+  async (newStudent, rejectWithValue) => {
+    try {
+      const currentDate = new Date();
+      const docRef = await addDoc(collection(db, "students"), {
+        ...newStudent,
+        accountId: "pending",
+        createdDate: currentDate,
+      });
+      toast.success("Add student successfully");
 
-//       // Add the new student to the Firestore collection
-//       const docRef = await addDoc(collection(db, "students"), {
-//         ...newStudent,
-//         createdDate: currentDate,
-//       });
-//       return {
-//         id: docRef.id,
-//         ...newStudent,
-//       };
-//     } catch (error) {
-//       throw new Error("An error occurred while adding the student.");
-//     }
-//   },
-// );
+      return {
+        id: docRef.id,
+        ...newStudent,
+      };
+    } catch (error) {
+      const errorMessage = error.message;
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage);
+    }
+  },
+);
+
 // export const deleteStudent = createAsyncThunk<void, string>(
 //   "students/deleteStudent",
 //   async (studentId) => {
@@ -83,8 +88,8 @@ export const fetchStudents = createAsyncThunk(
 
       const students = querySnapshot.docs.map((doc) => {
         const studentData = doc.data();
-        if (studentData.bod) {
-          studentData.bod = serializeTimestamp(studentData.bod);
+        if (studentData.createdDate) {
+          studentData.createdDate = serializeTimestamp(studentData.createdDate);
         }
         return {
           id: doc.id,
@@ -165,19 +170,19 @@ const studentSlice = createSlice({
       .addCase(fetchSingleStudent.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "";
+      })
+      // ADD
+      .addCase(addStudent.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(addStudent.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.students.push(action.payload);
+      })
+      .addCase(addStudent.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "";
       });
-    // // ADD
-    // .addCase(addStudent.pending, (state) => {
-    //   state.status = "loading";
-    // })
-    // .addCase(addStudent.fulfilled, (state, action) => {
-    //   state.status = "succeeded";
-    //   state.data.push(action.payload);
-    // })
-    // .addCase(addStudent.rejected, (state, action) => {
-    //   state.status = "failed";
-    //   state.error = action.error.message || "";
-    // })
     // // DELETE
     // .addCase(deleteStudent.pending, (state) => {
     //   state.status = "loading";

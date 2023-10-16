@@ -7,7 +7,6 @@ const ErrorMessage = ({ styling, error }) => {
   if (!error) {
     return null;
   }
-
   if (typeof error === "string") {
     return (
       <p
