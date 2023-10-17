@@ -13,6 +13,7 @@ import { addStudent } from "../feature/student/StudentSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../components/ui/Spinner";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const selectInputStyle =
   "select select-sm select-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
@@ -56,8 +57,10 @@ const AddStudent = () => {
   };
 
   const handleAddStudent = (data) => {
-    const studentData = { ...data };
-    dispatch(addStudent(studentData));
+    if (data) {
+      const studentData = { ...data };
+      dispatch(addStudent(studentData));
+    } else toast.warning("Input data not valid");
   };
 
   const handleClear = () => {
@@ -195,7 +198,7 @@ const AddStudent = () => {
                   <label className={mainLabelStyle}>DOB:</label>
                   <input
                     {...register("dob", {
-                      required: "Please fill up",
+                      requiredd: "Please fill up",
                     })}
                     type="date"
                     placeholder="Date of birth" // Corrected the property name here
@@ -211,7 +214,7 @@ const AddStudent = () => {
                   <div>
                     <label className={mainLabelStyle}>ເພດ:</label>
                     <select
-                      {...register("gender", { required: "Please select" })}
+                      {...register("gender", { requiredd: "Please select" })}
                       // className="select select-sm select-bordered w-full max-w-xs"
                       className={selectInputStyle}
                     >
@@ -228,7 +231,7 @@ const AddStudent = () => {
                     <label className={mainLabelStyle}>ທີ່ຢູ່ປັດຈຸບັນ:</label>
                     <select
                       {...register("perminentAddress", {
-                        required: "Please select",
+                        requiredd: "Please select",
                       })}
                       className={selectInputStyle}
                     >
@@ -250,7 +253,7 @@ const AddStudent = () => {
                   <div className="flex flex-col items-start gap-2">
                     <select
                       {...register("university.laoName", {
-                        required: "Please select",
+                        requiredd: "Please select",
                       })}
                       onChange={(e) => handleSelectUniversity(e.target.value)}
                       className={selectInputStyle}
@@ -291,7 +294,7 @@ const AddStudent = () => {
                   <div className="flex flex-col gap-2">
                     <select
                       {...register("major.laoMajor", {
-                        required: "Please select",
+                        requiredd: "Please select",
                       })}
                       onChange={(e) => handleSelectMajor(e.target.value)}
                       className={selectInputStyle}
@@ -322,7 +325,7 @@ const AddStudent = () => {
                   <div className="flex items-center gap-2">
                     <select
                       {...register("degree.laoDegree", {
-                        required: "Please select",
+                        requiredd: "Please select",
                       })}
                       onChange={(e) => handleSelectDegree(e.target.value)}
                       className={selectInputStyle}
@@ -350,7 +353,7 @@ const AddStudent = () => {
                     <div className="mb-2 flex items-center">
                       <select
                         {...register("scholarship.type", {
-                          required: "Please select",
+                          requiredd: "Please select",
                         })}
                         className={selectInputStyle}
                       >
@@ -389,7 +392,7 @@ const AddStudent = () => {
                         <span>ຈາກ:</span>
                         <input
                           {...register("duration.from", {
-                            required: "Please enter date",
+                            requiredd: "Please enter date",
                             minLength: { value: 4, message: "minimum 4" },
                             maxLength: { value: 4, message: "maximum 4" },
                           })}
@@ -406,7 +409,7 @@ const AddStudent = () => {
                         <span>ເຖິງ:</span>
                         <input
                           {...register("duration.to", {
-                            required: "Please enter date",
+                            requiredd: "Please enter date",
                             minLength: { value: 4, message: "minimum 4" },
                             maxLength: { value: 4, message: "maximum 4" },
                           })}
@@ -429,7 +432,7 @@ const AddStudent = () => {
                     <div className="flex flex-col items-start gap-2">
                       <input
                         {...register("phone.phoneNumber", {
-                          required: "Please fill up",
+                          requiredd: "Please fill up",
                           pattern: {
                             message: "Must be number",
                             value: /^[0-9]*$/,
@@ -445,7 +448,7 @@ const AddStudent = () => {
                       />
                       <input
                         {...register("phone.emergency", {
-                          required: "Please fill up",
+                          requiredd: "Please fill up",
                           pattern: {
                             message: "Must be number",
                             value: /^[0-9]*$/,
@@ -481,7 +484,7 @@ const AddStudent = () => {
                     <div className="flex flex-wrap items-center gap-2">
                       <input
                         {...register("visa.from", {
-                          required: "Please enter date",
+                          requiredd: "Please enter date",
                         })}
                         type="date"
                         placeholder="Issue date"
@@ -490,7 +493,7 @@ const AddStudent = () => {
 
                       <input
                         {...register("visa.to", {
-                          required: "Please enter date",
+                          requiredd: "Please enter date",
                         })}
                         type="date"
                         placeholder="Expired date"
@@ -506,7 +509,7 @@ const AddStudent = () => {
                       <div className="space-y-3">
                         <input
                           {...register("passport.passportNo", {
-                            required: "Please fill up",
+                            requiredd: "Please fill up",
                           })}
                           type="text"
                           placeholder="Passport Number"
@@ -515,7 +518,7 @@ const AddStudent = () => {
 
                         <input
                           {...register("passport.expired", {
-                            required: "Please enter date",
+                            requiredd: "Please enter date",
                           })}
                           type="date"
                           placeholder="Expired Date"

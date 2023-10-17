@@ -8,6 +8,7 @@ import {
   AiFillBook,
   AiOutlineLogout,
   AiOutlineAudit,
+  AiFillSound,
 } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -114,7 +115,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item Dashboard --> */}
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === "/" || pathname.includes("dashboard")
+                  pathname === "/" && pathname.includes("dashboard")
                 }
               >
                 {(handleClick, open) => {
@@ -122,9 +123,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     <React.Fragment>
                       <NavLink
                         to="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao font-medium text-white duration-300 ease-in-out ${
-                          (pathname === "/" || pathname.includes("/")) &&
-                          "rounded-md bg-primary-focus"
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao font-medium duration-300 ease-in-out ${
+                          pathname.includes("dashboard") &&
+                          "rounded-md bg-primary-focus text-white"
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -151,10 +152,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         <ul className="mb-5 mt-4 flex flex-col gap-2.5 pl-6">
                           <li className={dropdownLiStyle}>
                             <NavLink
-                              to="/dashboard"
+                              to="/dashboard/student-chart"
                               className={({ isActive }) =>
                                 dropdownNavlinkStyle +
-                                (isActive && "border-r-2 !text-white")
+                                (isActive &&
+                                  "rounded-md border-r-2 bg-white/10 text-white")
                               }
                             >
                               ສັງລວມນັກຮຽນ
@@ -162,10 +164,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           </li>
                           <li className={dropdownLiStyle}>
                             <NavLink
-                              to="/studentlist"
+                              to="/dashboard/studentlist"
                               className={({ isActive }) =>
                                 dropdownNavlinkStyle +
-                                (isActive && "border-r-2 !text-white")
+                                (isActive &&
+                                  "rounded-md border-r-2 bg-white/10 text-white")
                               }
                             >
                               ລາຍຊື່ນັກຮຽນ
@@ -185,7 +188,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item Items --> */}
 
               {/* <!-- Menu Item Profile --> */}
-              <li>
+              {/* <li>
                 <NavLink
                   to={`/profile/${1}`}
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out ${
@@ -195,7 +198,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   <FaUser size={23} />
                   ໂປຮຟາຍ
                 </NavLink>
-              </li>
+              </li> */}
               {/* <!-- Menu Item Profile --> */}
 
               {/* <!-- Menu Item Settings --> */}
@@ -245,6 +248,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 >
                   <AiFillBook size={23} />
                   ແບບຟອມເອກະສານຕ່າງໆ
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:text-white ${
+                    pathname === "/" && "rounded-md bg-primary-focus text-white"
+                  }`}
+                >
+                  <AiFillSound size={23} />
+                  ປະກາດ
                 </NavLink>
               </li>
               <li>

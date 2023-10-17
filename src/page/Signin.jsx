@@ -27,7 +27,6 @@ const Signin = () => {
     const userInput = { ...data };
     try {
       await dispatch(signIn(userInput));
-      navigate("/");
     } catch (error) {
       console.error("Sign-in error =>", error);
     }

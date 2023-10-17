@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { themes } from "../../../data/data";
-import { AiFillThunderbolt, AiFillBell } from "react-icons/ai";
+import { AiFillThunderbolt, AiFillBell, AiFillProfile } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { BsFillPersonBadgeFill, BsFillPersonFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light",
   );
+  const student = JSON.parse(sessionStorage.getItem("studentData")) || null;
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
@@ -57,17 +60,17 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
           <AiFillBell />
         </div>
         <div>
-          <div className="dropdown dropdown-end">
+          <div className="dropdown-end dropdown">
             <label
               tabIndex={0}
-              className="btn m-1 rounded-full font-notosanslao"
+              className="btn rounded-btn btn-sm m-1 font-notosanslao"
             >
               <AiFillThunderbolt />
             </label>
 
             <ul
               tabIndex={0}
-              className="menu dropdown-content w-fit rounded-box z-[1] space-y-2 bg-base-100 p-2 shadow"
+              className="menu dropdown-content rounded-box z-[1] w-fit space-y-2 bg-base-100 p-2 shadow"
             >
               {themes.map((theme) => (
                 <li
@@ -80,6 +83,49 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
               ))}
             </ul>
           </div>
+        </div>
+        <div className="dropdown-end dropdown">
+          <div className="indicator">
+            {/* {!student && (
+              <span className="badge indicator-item badge-secondary animate-bounce">
+                <AiFillBell />
+              </span>
+            )} */}
+            <label
+              tabIndex={0}
+              className="btn rounded-btn btn-sm m-1 font-notosanslao"
+            >
+              <BsFillPersonFill />
+            </label>
+          </div>
+
+          <ul
+            tabIndex={0}
+            className="menu dropdown-content rounded-box z-[1] w-fit space-y-2 bg-base-100 p-2 shadow"
+          >
+            <Link
+              className={`btn btn-ghost btn-xs relative whitespace-nowrap`}
+              //   className={`btn relative btn-ghost btn-xs whitespace-nowrap
+              //   ${!student && 'animate-pulse bg-secondary text-white'}`
+              // }
+              to={`/profile/${1}`}
+            >
+              Profile
+              {/* {!student && <AiFillBell className="absolute -left-1"/>} */}
+            </Link>
+            <Link
+              className="btn btn-ghost btn-xs whitespace-nowrap"
+              to="/profile"
+            >
+              Setting
+            </Link>
+            <Link
+              className="btn btn-ghost btn-xs whitespace-nowrap"
+              to="/profile"
+            >
+              Log out
+            </Link>
+          </ul>
         </div>
       </div>
     </header>

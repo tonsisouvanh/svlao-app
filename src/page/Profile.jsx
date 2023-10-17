@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { data } from "../data/data";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DataNotFound from "./public/DataNotFound";
 const user = {
   role: "admin",
@@ -10,9 +10,13 @@ const Profile = () => {
   const { id } = useParams();
   const student = data.find((stu) => stu.id === id);
   const [monutchinh, setmonutchinh] = useState(false);
+  // useEffect(() => {
+
+  // }, [])
+
   return (
     <>
-      {userData ? (
+      {!userData ? (
         <div className="rounded bg-none font-notosanslao">
           <div>
             <h1 className="mb-4 flex justify-center text-4xl font-bold ">
@@ -33,7 +37,7 @@ const Profile = () => {
                     <div>
                       <h2 className="text-2xl font-bold">ID:</h2>
                       <p className="font-notosanslao text-2xl">
-                        {userData.documentId}
+                        {userData?.documentId}
                       </p>
                     </div>
                     <div className="font-notosanslao text-2xl">

@@ -11,7 +11,7 @@ import {
 import toast from "react-hot-toast";
 import { auth, db } from "../../firebase";
 import { signUp } from "../auth/AuthSlice";
-
+import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 // Function to serialize Firebase Timestamp to JavaScript Date
 const serializeTimestamp = (timestamp) => {
   const date = timestamp.toDate();
@@ -22,31 +22,52 @@ export const addStudent = createAsyncThunk(
   "students/addStudent",
   async (newStudent, rejectWithValue) => {
     try {
-      // const email = newStudent.email;
-      // const password = newStudent.password;
-      // signUp(email,password)
-      // const userCredential = await createUserWithEmailAndPassword(
-      //   auth,
-      //   email,
-      //   password,
-      // );
-      // const user = userCredential.user;
+      // Sign user up in firebase
+      const email = newStudent.email;
+      const password = newStudent.password;
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      const user = userCredential.user;
 
+      if (user && user !== null) {
+        const accountData = {
+          email: user.email || "",
+          fullname: newStudent.fullname.nickName || "",
+          role: "student" || "",
+        };
 
+        // add data to accounts
+        await setDoc(doc(db, "accounts", user.uid), {
+          ...accountData,
+        });
+        await signOut(auth);
+        sessionStorage.removeItem("_role_");
 
-      
-      const currentDate = new Date();
-      const docRef = await addDoc(collection(db, "students"), {
-        ...newStudent,
-        accountId: "pending",
-        createdDate: currentDate,
-      });
-      toast.success("Add student successfully");
+        // Add student data to firebase
+        const currentDate = new Date();
+        // await setDoc(doc(db, "students", user.uid), {
+        //   ...accountData,
+        //   accountId: user.uid,
+        //   createdDate: currentDate,
+        // });
 
-      return {
-        id: docRef.id,
-        ...newStudent,
-      };
+        const studentsCollection = collection(db, "students");
+        const docRef = await addDoc(studentsCollection, {
+          role: "student",
+          ...accountData,
+          accountId: user.uid,
+          createdDate: currentDate,
+        });
+
+        return {
+          id: user.id,
+          ...newStudent,
+        };
+      }
+      return {};
     } catch (error) {
       const errorMessage = error.message;
       toast.error(errorMessage);

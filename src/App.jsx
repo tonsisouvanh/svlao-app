@@ -31,9 +31,9 @@ function App() {
         <Route path="/" element={<RootLayoutPublic />}>
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<News />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/student-chart" element={<Dashboard />} />
             <Route path="/detail/:id" element={<StudentDetail />} />
-            <Route path="/studentlist" element={<StudentList />} />
+            <Route path="/dashboard/studentlist" element={<StudentList />} />
             <Route path="/profile/:id" element={<Profile />} />
             <Route path="/intro" element={<Intro />} />
             <Route path="/add" element={<Add />} />

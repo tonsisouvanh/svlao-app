@@ -1,6 +1,6 @@
 export const initialStudentInput = {
-  email: '',
-  password: '',
+  email: "",
+  password: "",
   fullname: {
     laoName: "",
     englishFirstname: "",
