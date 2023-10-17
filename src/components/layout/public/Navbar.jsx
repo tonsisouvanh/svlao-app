@@ -15,7 +15,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   }, [theme]);
 
   return (
-    <header className="bg-active sticky top-0 z-[999] flex w-full">
+    <header className="bg-active sticky top-0 z-[999] flex w-full bg-base-100">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-md md:px-6 2xl:px-11">
         <button
           className="group btn btn-sm flex flex-col items-center justify-center rounded border p-1 lg:hidden"
@@ -31,12 +31,12 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
             <div>
               <div>
                 <input
-                  className="input join-item input-bordered !bg-white"
+                  className="input join-item input-bordered bg-base-300"
                   placeholder="Search"
                 />
               </div>
             </div>
-            <select className="select join-item select-bordered !bg-white">
+            <select className="select join-item select-bordered bg-base-300">
               <option disabled defaultValue={10}>
                 Filter
               </option>
@@ -49,7 +49,9 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
             </select>
             <div className="indicator">
               {/* <span className="badge indicator-item badge-secondary">new</span> */}
-              <button className="btn join-item flex  !bg-white ">Search</button>
+              <button className="btn join-item select-bordered   bg-base-300 ">
+                Search
+              </button>
             </div>
           </div>
         </div>
@@ -57,7 +59,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
           <AiFillBell />
         </div>
         <div>
-          <div className="dropdown dropdown-end">
+          <div className="dropdown-end dropdown">
             <label
               tabIndex={0}
               className="btn m-1 rounded-full font-notosanslao"
@@ -67,7 +69,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
 
             <ul
               tabIndex={0}
-              className="menu dropdown-content w-fit rounded-box z-[1] space-y-2 bg-base-100 p-2 shadow"
+              className="menu dropdown-content rounded-box z-[1] w-fit space-y-2 bg-base-100 p-2 shadow"
             >
               {themes.map((theme) => (
                 <li
