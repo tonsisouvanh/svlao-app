@@ -122,7 +122,7 @@ const AddStudent = () => {
               <div className="divider-base-100 divider"></div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* fullname */}
-                <div className="form-control w-full max-w-xs">
+                <div className="form-control w-full ">
                   <label className={mainLabelStyle}>ຊື່ລາວ:</label>
                   <input
                     {...register("fullname.laoName", {
@@ -136,6 +136,19 @@ const AddStudent = () => {
                     styling="mt-3 sm:text-md"
                     error={errors?.fullname?.laoName}
                   />
+                  <div className="form-control mt-5 flex ">
+                    <label className={mainLabelStyle}>ຊື່ຫລິ້ນ:</label>
+                    <input
+                      {...register("fullname.nickName")}
+                      type="text"
+                      placeholder="ຕື່ມຊື່ຫລິ້ນ" // Corrected the property name here
+                      className={textInputStyle}
+                    />
+                    <ErrorMessage
+                      styling="mt-3 sm:text-md"
+                      error={errors?.fullname?.englishName}
+                    />
+                  </div>
                 </div>
                 <div className="form-control w-full max-w-xs space-y-2">
                   <label className={mainLabelStyle}>ຊື່ອັງກິດ:</label>
@@ -171,19 +184,7 @@ const AddStudent = () => {
                     />
                   </div>
                 </div>
-                <div className="form-control w-full max-w-xs">
-                  <label className={mainLabelStyle}>ຊື່ຫລິ້ນ:</label>
-                  <input
-                    {...register("fullname.nickName")}
-                    type="text"
-                    placeholder="ຕື່ມຊື່ຫລິ້ນ" // Corrected the property name here
-                    className={textInputStyle}
-                  />
-                  <ErrorMessage
-                    styling="mt-3 sm:text-md"
-                    error={errors?.fullname?.englishName}
-                  />
-                </div>
+
                 {/* Student ID */}
                 <div className="form-control w-full max-w-xs">
                   <label className={mainLabelStyle}>MSSV:</label>
@@ -297,7 +298,7 @@ const AddStudent = () => {
                         requiredd: "Please select",
                       })}
                       onChange={(e) => handleSelectMajor(e.target.value)}
-                      className={selectInputStyle}
+                      className={selectInputStyle}  
                     >
                       {mockMajor.map((item, index) => (
                         <option key={index} value={item.laoMajor}>
@@ -346,7 +347,7 @@ const AddStudent = () => {
                     )}
                   </div>
                 </div>
-                <div className="flex items-center  gap-2">
+                <div className="mt-10 flex items-center gap-2">
                   {/* SCHOLARSHIP */}
                   <div>
                     <label className={mainLabelStyle}>ທຶນການສຶກສາ:</label>
@@ -362,7 +363,7 @@ const AddStudent = () => {
                         ))}
                       </select>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 ">
                       <input
                         {...register("scholarship.sacolashipLao")}
                         type="text"
@@ -425,7 +426,7 @@ const AddStudent = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center  gap-2">
+                <div className="flex items-center gap-2">
                   <div>
                     <label className={mainLabelStyle}>ເບີໂທຕິດຕໍ່:</label>
 
@@ -462,6 +463,31 @@ const AddStudent = () => {
                         styling="mt-0 sm:text-md"
                         error={errors?.phone?.emergency}
                       />
+                      {/* VISA */}
+                      <div className="mt-5 flex items-center gap-2">
+                        <div>
+                          <label className={mainLabelStyle}>Visa:</label>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <input
+                              {...register("visa.from", {
+                                required: "Please enter date",
+                              })}
+                              type="date"
+                              placeholder="Issue date"
+                              className={textInputStyle}
+                            />
+
+                            <input
+                              {...register("visa.to", {
+                                required: "Please enter date",
+                              })}
+                              type="date"
+                              placeholder="Expired date"
+                              className={textInputStyle}
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -476,91 +502,66 @@ const AddStudent = () => {
                       className={textInputStyle}
                     />
                   </div>
-                </div>
-                {/* VISA */}
-                <div className="flex items-center gap-2">
-                  <div>
-                    <label className={mainLabelStyle}>Visa:</label>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <input
-                        {...register("visa.from", {
-                          requiredd: "Please enter date",
-                        })}
-                        type="date"
-                        placeholder="Issue date"
-                        className={textInputStyle}
-                      />
-
-                      <input
-                        {...register("visa.to", {
-                          requiredd: "Please enter date",
-                        })}
-                        type="date"
-                        placeholder="Expired date"
-                        className={textInputStyle}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div>
-                    <label className={mainLabelStyle}>Passport:</label>
-                    <div className="flex flex-col items-start gap-3">
-                      <div className="space-y-3">
-                        <input
-                          {...register("passport.passportNo", {
-                            requiredd: "Please fill up",
-                          })}
-                          type="text"
-                          placeholder="Passport Number"
-                          className={textInputStyle}
-                        />
-
-                        <input
-                          {...register("passport.expired", {
-                            requiredd: "Please enter date",
-                          })}
-                          type="date"
-                          placeholder="Expired Date"
-                          className={textInputStyle}
-                        />
-                      </div>
-                      <div className="flex w-full flex-col items-start justify-center">
-                        <label className={mainLabelStyle}>ຮູບ</label>
-                        <label
-                          htmlFor="dropzone-file"
-                          className="dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-                        >
-                          <div className="flex flex-col items-center justify-center pb-6 pt-5">
-                            <svg
-                              className="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 20 16"
-                            >
-                              <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                              />
-                            </svg>
-                            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                              <span className="">Click to upload</span> or drag
-                              and drop
-                            </p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400">
-                              SVG, PNG, JPG or GIF (MAX. 800x400px)
-                            </p>
-                          </div>
+                  <div className="mt-5 flex items-center gap-2">
+                    <div>
+                      <label className={mainLabelStyle}>Passport:</label>
+                      <div className="flex flex-col items-start gap-3">
+                        <div className="space-y-3">
                           <input
-                            id="dropzone-file"
-                            type="file"
-                            className="hidden"
+                            {...register("passport.passportNo", {
+                              required: "Please fill up",
+                            })}
+                            type="text"
+                            placeholder="Passport Number"
+                            className={textInputStyle}
                           />
-                        </label>
+
+                          <input
+                            {...register("passport.expired", {
+                              required: "Please enter date",
+                            })}
+                            type="date"
+                            placeholder="Expired Date"
+                            className={textInputStyle}
+                          />
+                        </div>
+                        <div className="flex w-full flex-col items-start justify-center">
+                          <label className={mainLabelStyle}>ຮູບ</label>
+                          <label
+                            htmlFor="dropzone-file"
+                            className="dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                          >
+                            <div className="flex flex-col items-center justify-center pb-6 pt-5">
+                              <svg
+                                className="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 20 16"
+                              >
+                                <path
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                                />
+                              </svg>
+                              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                <span className="">Click to upload</span> or
+                                drag and drop
+                              </p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400">
+                                SVG, PNG, JPG or GIF (MAX. 800x400px)
+                              </p>
+                            </div>
+                            <input
+                              id="dropzone-file"
+                              type="file"
+                              className="hidden"
+                            />
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -24,5 +24,5 @@ export {
   Establishment,
   News,
   Add,
-  Signup
+  Signup,
 };

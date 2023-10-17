@@ -77,6 +77,20 @@ const Profile = () => {
                         ) : null}
                       </p>
                     </div>
+
+                    <div>
+                      <h2 className="text-2xl font-bold">ຊື່ຫລິ້ນ:</h2>
+                      <p className="font-notosanslao text-2xl">
+                        {student.name.nameEnglist}
+                        {monutchinh === true ? (
+                          <input
+                            type="text"
+                            placeholder="Type here"
+                            className="input input-bordered w-full max-w-xs"
+                          />
+                        ) : null}
+                      </p>
+                    </div>
                     <div>
                       <h2 className="text-2xl font-bold">ວັນເດືອນປີເກີດ:</h2>
                       <p className="font-notosanslao text-2xl">{student.age}</p>
@@ -281,19 +295,16 @@ const Profile = () => {
                         />
                       ) : null}
                     </div>
-                  </div>
+                    <div className="flex items-center  gap-2">
+                      <div>
+                        <label className="mb-2 block text-2xl font-semibold text-gray-600 ">
+                          Visa:
+                        </label>
 
-                  <div className="flex items-center  gap-2">
-                    <div>
-                      <label className="mb-2 block font-semibold text-gray-600 ">
-                        Passport:
-                      </label>
-
-                      <div className="flex flex-col items-start gap-3">
-                        <div className="space-y-3">
+                        <div className="flex flex-wrap items-center gap-2">
                           <input
-                            type="text"
-                            placeholder="Passport ID"
+                            type="Date"
+                            placeholder="Issue Date"
                             className="input input-bordered w-full max-w-xs"
                           />
 
@@ -303,72 +314,76 @@ const Profile = () => {
                             className="input input-bordered w-full max-w-xs"
                           />
                         </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-center  gap-2">
+                      <div>
+                        <label className="mb-2 block text-2xl font-semibold text-gray-600 ">
+                          Passport:
+                        </label>
 
-                        {/* <input
+                        <div className="flex flex-col items-start gap-3">
+                          <div className="space-y-3">
+                            <input
+                              type="text"
+                              placeholder="Passport ID"
+                              className="input input-bordered w-full max-w-xs"
+                            />
+
+                            <input
+                              type="Date"
+                              placeholder="Expired Date"
+                              className="input input-bordered w-full max-w-xs"
+                            />
+                          </div>
+
+                          {/* <input
                     type="file"
                     className="file-input file-input-bordered file-input-md w-full max-w-xs"
                   /> */}
 
-                        <div className="flex w-full flex-col items-start justify-center">
-                          <label className="label-text mb-1">ຮູບ</label>
-                          <label
-                            htmlFor="dropzone-file"
-                            className="dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-                          >
-                            <div className="flex flex-col items-center justify-center pb-6 pt-5">
-                              <svg
-                                className="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 20 16"
-                              >
-                                <path
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                                />
-                              </svg>
-                              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                <span className="font-semibold">
-                                  Click to upload
-                                </span>{" "}
-                                or drag and drop
-                              </p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400">
-                                SVG, PNG, JPG or GIF (MAX. 800x400px)
-                              </p>
-                            </div>
-                            <input
-                              id="dropzone-file"
-                              type="file"
-                              className="hidden"
-                            />
-                          </label>
+                          <div className="flex w-full flex-col items-start justify-center">
+                            <label className="label-text mb-1 text-2xl">
+                              ຮູບ
+                            </label>
+                            <label
+                              htmlFor="dropzone-file"
+                              className="dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                            >
+                              <div className="flex flex-col items-center justify-center pb-6 pt-5">
+                                <svg
+                                  className="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
+                                  aria-hidden="true"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 20 16"
+                                >
+                                  <path
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                                  />
+                                </svg>
+                                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                  <span className="font-semibold">
+                                    Click to upload
+                                  </span>{" "}
+                                  or drag and drop
+                                </p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                  SVG, PNG, JPG or GIF (MAX. 800x400px)
+                                </p>
+                              </div>
+                              <input
+                                id="dropzone-file"
+                                type="file"
+                                className="hidden"
+                              />
+                            </label>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center  gap-2">
-                    <div>
-                      <label className="mb-2 block font-semibold text-gray-600 ">
-                        Visa:
-                      </label>
-
-                      <div className="flex flex-wrap items-center gap-2">
-                        <input
-                          type="Date"
-                          placeholder="Issue Date"
-                          className="input input-bordered w-full max-w-xs"
-                        />
-
-                        <input
-                          type="Date"
-                          placeholder="Expired Date"
-                          className="input input-bordered w-full max-w-xs"
-                        />
                       </div>
                     </div>
                   </div>
