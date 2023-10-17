@@ -19,7 +19,7 @@ const Profile = () => {
       {!userData ? (
         <div className="rounded bg-none font-notosanslao">
           <div>
-            <h1 className="mb-4 flex justify-center text-4xl font-bold ">
+            <h1 className="mb-4 flex justify-center text-2xl font-bold">
               ລາຍລະອຽດນັກຮຽນ
             </h1>
             <section className="body-font text-gray-600">

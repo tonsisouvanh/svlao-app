@@ -12,7 +12,7 @@ const StudentSignup = () => {
     e.preventDefault();
     // Add your signup logic
     const inputUser = {
-      email: "tom@gmail.com",
+      email: "dola@gmail.com",
       password: "111222",
       username: "testuser",
       role: "student",

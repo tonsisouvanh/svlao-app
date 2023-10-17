@@ -144,22 +144,15 @@ export const fetchSingleStudent = createAsyncThunk(
   async () => {
     const user = auth.currentUser;
     try {
-      // Build a reference to the document by specifying the collection and the document ID
       const documentRef = doc(db, "students", user && user.uid);
       if (!documentRef) {
         console.log(new Error("An error occurred while fetching products."));
         throw new Error("An error occurred while fetching products.");
       }
-      // Fetch the document data
       const documentSnapshot = await getDoc(documentRef);
 
-      // Check if the document exists
       if (documentSnapshot.exists()) {
-        // Access the document data
         const documentData = documentSnapshot.data();
-
-        console.log("fect one stu", documentData);
-
         return documentData;
       } else {
         console.log("Document does not exist.");
@@ -167,7 +160,7 @@ export const fetchSingleStudent = createAsyncThunk(
       }
     } catch (error) {
       console.error("Error fetching document:", error);
-      throw error; // You can handle the error as needed
+      throw error;
     }
   },
 );

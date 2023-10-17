@@ -1,15 +1,32 @@
+import { Link } from "react-router-dom";
+
 const News = () => {
+  const userData = JSON.parse(sessionStorage.getItem("userData")) || {};
   return (
     <div>
+      <div className={`modal ${userData && "modal-open"}`}>
+        <div className="modal-box">
+          <h3 className="text-lg font-bold">Hello!</h3>
+          <p className="py-4">This modal works with a hidden checkbox!</p>
+          <div className="modal-action">
+            <Link className="btn btn-primary" to={`/profile/${1}`}>
+              Go to profile
+            </Link>
+            <label htmlFor="my_modal_6" className="btn">
+              Close!
+            </label>
+          </div>
+        </div>
+      </div>
       <section className="body-font overflow-hidden">
         <div className="container mx-auto px-5 py-24">
-          <div className="-my-8 divide-y-2 divide-base-900">
-            <h1 className="title-font mb-4 text-center font-notosanslao text-2xl font-bold text-primary-content sm:text-3xl">
+          <div className="divide-base-900 -my-8 divide-y-2">
+            <h1 className="title-font mb-4 text-center font-notosanslao text-2xl font-bold text-primary sm:text-3xl">
               ແຈ້ງການຕ່າງໆ
             </h1>
             <div className="flex flex-wrap py-8 md:flex-nowrap">
               <div className="mb-6 flex flex-shrink-0 flex-col md:mb-0 md:w-64">
-                <span className="title-font font-semibold text-base-600">
+                <span className="title-font text-base-600 font-semibold">
                   Thông báo
                   <div className="indicator">
                     <svg

@@ -43,6 +43,7 @@ export const signUp = createAsyncThunk(
 
         await setDoc(doc(db, "users", user.uid), {
           ...userData,
+          updateRequired: true,
         });
 
         await setDoc(doc(db, "students", user.uid), {
@@ -107,6 +108,8 @@ export const signIn = createAsyncThunk(
       // } else {
       //   // Handle the case where the student document wasn't found.
       // }
+
+      
       // Step 5: Return the user data to update the Redux state
       sessionStorage.setItem("userData", JSON.stringify(userData));
       toast.success("Signed in successfully");
@@ -128,14 +131,11 @@ export const signOutUser = createAsyncThunk(
   "auth/signOut",
   async (_, { rejectWithValue }) => {
     try {
-      // Sign out the user using Firebase Authentication
       await signOut(auth);
 
-      // Clear user data from session storage
-      sessionStorage.removeItem("userData");
-      sessionStorage.removeItem("studentData");
+      sessionStorage.clear();
 
-      return null; // The user is successfully signed out
+      return null;
     } catch (error) {
       const errorMessage = error.message;
       toast.error(errorMessage);
