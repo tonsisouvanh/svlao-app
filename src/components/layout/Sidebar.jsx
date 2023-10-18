@@ -17,7 +17,7 @@ import { auth } from "../../firebase";
 
 const dropdownLiStyle = "hover:text-white hover:bg-white/10 rounded-md";
 const dropdownNavlinkStyle =
-  "group relative flex items-center gap-2 px-4 py-2 font-medium duration-300 ease-in-out";
+  "group relative flex items-center gap-2 px-4 py-2 font-semibold duration-300 ease-in-out";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const dispatch = useDispatch();
@@ -87,7 +87,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             <img className="w-32" src={Logo} alt="Logo" />
           </NavLink> */}
           <div className="bg-white p-2">
-            <a className="mb-16 whitespace-nowrap text-center font-notosanslao text-sm font-bold normal-case !text-neutral ">
+            <a className="mb-16 whitespace-nowrap text-center font-notosanslao text-sm font-semibold normal-case !text-neutral ">
               <p>LAO STUDENT HCM</p>
             </a>
           </div>
@@ -123,7 +123,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     <React.Fragment>
                       <NavLink
                         to="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao font-medium duration-300 ease-in-out ${
+                        className={`group relative flex font-semibold items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao duration-300 ease-in-out ${
                           pathname.includes("dashboard") &&
                           "rounded-md bg-primary-focus text-white"
                         }`}
@@ -191,7 +191,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <li>
                 <NavLink
                   to={`/profile/${1}`}
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out ${
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out ${
                     pathname.includes("profile") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
@@ -205,7 +205,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <li>
                 <NavLink
                   to="/establishment"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out ${
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out ${
                     pathname.includes("settings") &&
                     "bg-graydark dark:bg-meta-4"
                   }`}
@@ -217,7 +217,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <li>
                 <NavLink
                   to="/contact"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out ${
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out ${
                     pathname.includes("settings") &&
                     "bg-graydark dark:bg-meta-4"
                   }`}
@@ -242,7 +242,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 <NavLink
                   to="/documents"
                   target="_blank"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:text-white ${
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:text-white ${
                     pathname.includes("/") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
@@ -253,7 +253,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <li>
                 <NavLink
                   to="/"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:text-white ${
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:text-white ${
                     pathname === "/" && "rounded-md bg-primary-focus text-white"
                   }`}
                 >
@@ -265,7 +265,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 <button
                   onClick={handleSignOut}
                   type="button"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:text-white`}
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:text-white`}
                 >
                   <AiOutlineLogout size={23} />
                   ອອກຈາກລະບົບ

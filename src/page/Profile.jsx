@@ -36,7 +36,7 @@ const Profile = () => {
     dispatch(fetchSingleStudent(user.uid));
   }, [dispatch, user]);
 
-  console.log(userProfile);
+  
   return (
     <>
       {!userData ? (
@@ -348,7 +348,7 @@ const Profile = () => {
               </section>
             </div>
 
-            {user.role === "admin" ? (
+            {userProfile?.role === "admin" ? (
               <div className="mb-10 flex justify-end gap-10  font-notosanslao font-bold text-primary">
                 {monutchinh === true ? null : (
                   <button

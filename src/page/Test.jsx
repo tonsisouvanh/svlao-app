@@ -48,7 +48,6 @@ const Test = () => {
   };
   useEffect(() => {
     dispatch(fetchSingleStudent());
-    console.log(student, studentStatus);
   }, []);
 
   return (

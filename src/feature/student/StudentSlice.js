@@ -176,32 +176,22 @@ export const fetchSingleStudent = createAsyncThunk(
   "students/fetchSingleStudent",
   async (userId) => {
     try {
-      // const documentRef = doc(db, "students", user && user.uid);
-      // if (!documentRef) {
-      //   console.log(new Error("An error occurred while fetching products."));
-      //   throw new Error("An error occurred while fetching products.");
-      // }
-      // const documentSnapshot = await getDoc(documentRef);
-
-      // if (documentSnapshot.exists()) {
-      //   const documentData = documentSnapshot.data();
-      //   return documentData;
-      // } else {
-      //   console.log("Document does not exist.");
-      //   return null;
-      // }\
       const q = query(
         collection(db, "students"),
         where("userId", "==", userId),
       );
 
       const querySnapshot = await getDocs(q);
+      const studentData = [];
+
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
+        const data = doc.data();
+        if (data.createdDate) {
+          data.createdDate = serializeTimestamp(data.createdDate);
+        }
+        studentData.push(data);
       });
-      // const student = querySnapshot.data();
-      // console.log(student);
+      return studentData[0] || {};
     } catch (error) {
       console.error("Error fetching document:", error);
       throw error;

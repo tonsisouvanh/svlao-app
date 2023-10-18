@@ -6,7 +6,6 @@ import { auth } from "../firebase";
 const News = () => {
   // const userData = JSON.parse(sessionStorage.getItem("userData")) || {};
   const { user } = useSelector((state) => state.user);
-  console.log(auth.currentUser);
   return (
     <div>
       {user?.updateRequired && user?.role === "student" ? (
