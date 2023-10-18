@@ -11,5 +11,5 @@ export const store = configureStore({
   },
 });
 // store.dispatch(fetchStudents());
-store.dispatch(fetchSingleStudent());
+// store.dispatch(fetchSingleStudent());
 export default store;

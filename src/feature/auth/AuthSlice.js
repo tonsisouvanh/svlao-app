@@ -46,7 +46,8 @@ export const signUp = createAsyncThunk(
           updateRequired: true,
         });
 
-        await setDoc(doc(db, "students", user.uid), {
+        const docRef = await addDoc(collection(db, "students"), {
+          userId: user.uid,
           ...userData,
         });
 
@@ -55,13 +56,6 @@ export const signUp = createAsyncThunk(
       }
       return { ...userData };
     } catch (error) {
-      // if (error.code === "auth/email-already-in-use") {
-      //   toast.error("This email is already in use.");
-      //   return rejectWithValue("This email is already in use.");
-      // } else {
-      //   toast.error("Authentication error: " + error.message);
-      //   return rejectWithValue("Authentication error: " + error.message);
-      // }
       toast.error("Authentication error: " + error.message);
       return rejectWithValue("Authentication error: " + error.message);
     }
@@ -109,7 +103,6 @@ export const signIn = createAsyncThunk(
       //   // Handle the case where the student document wasn't found.
       // }
 
-      
       // Step 5: Return the user data to update the Redux state
       sessionStorage.setItem("userData", JSON.stringify(userData));
       toast.success("Signed in successfully");

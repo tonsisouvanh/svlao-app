@@ -5,6 +5,9 @@ import DataNotFound from "./public/DataNotFound";
 import { useForm } from "react-hook-form";
 import { initialStudentInput } from "../data/initialState";
 
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSingleStudent } from "../feature/student/StudentSlice";
+import { auth } from "../firebase";
 const user = {
   role: "admin",
 };
@@ -26,7 +29,14 @@ const Profile = () => {
   const [degree, setDegree] = useState("");
   const [university, setUniversity] = useState("");
   const [major, setMajor] = useState("");
+  const dispatch = useDispatch((state) => state.user);
+  const user = auth.currentUser;
+  const { user: userProfile, status } = useSelector((state) => state.user);
+  useEffect(() => {
+    dispatch(fetchSingleStudent(user.uid));
+  }, [dispatch, user]);
 
+  console.log(userProfile);
   return (
     <>
       {!userData ? (
