@@ -5,11 +5,12 @@ import {
   mockMajor,
   mockPerminentAddresses,
   mockUniversity,
+  relationships,
   scholarshipTypes,
 } from "../data/data";
 import { useState } from "react";
 import { initialStudentInput } from "../data/initialState";
-import { addStudent } from "../feature/student/StudentSlice";
+import { addStudent, adminAddStudent } from "../feature/student/StudentSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../components/ui/Spinner";
 import { useNavigate } from "react-router-dom";
@@ -59,7 +60,7 @@ const AddStudent = () => {
   const handleAddStudent = (data) => {
     if (data) {
       const studentData = { ...data };
-      dispatch(addStudent(studentData));
+      dispatch(adminAddStudent(studentData));
     } else toast.warning("Input data not valid");
   };
 
@@ -67,7 +68,6 @@ const AddStudent = () => {
     reset();
     navigate(-1);
   };
-
   return (
     <>
       {status === "loading" ? (
@@ -82,8 +82,7 @@ const AddStudent = () => {
               className="flex flex-col items-center"
               onSubmit={handleSubmit(handleAddStudent)}
             >
-              <div className="flex items-center gap-5">
-                {/* email */}
+              {/* <div className="flex items-center gap-5">
                 <div className="form-control w-full max-w-xs">
                   <label className={mainLabelStyle}>Email:</label>
                   <input
@@ -102,7 +101,6 @@ const AddStudent = () => {
                     error={errors?.email}
                   />
                 </div>
-                {/* password */}
                 <div className="form-control w-full max-w-xs">
                   <label className={mainLabelStyle}>Password:</label>
                   <input
@@ -118,7 +116,7 @@ const AddStudent = () => {
                     error={errors?.password}
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="divider-base-100 divider"></div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* fullname */}
@@ -229,7 +227,7 @@ const AddStudent = () => {
                   </div>
                   {/* ADDRESS */}
                   <div>
-                    <label className={mainLabelStyle}>ທີ່ຢູ່ປັດຈຸບັນ:</label>
+                    <label className={mainLabelStyle}>ແຂວງເກີດ:</label>
                     <select
                       {...register("perminentAddress", {
                         requiredd: "Please select",
@@ -247,6 +245,21 @@ const AddStudent = () => {
                       error={errors.gender}
                     />
                   </div>
+                </div>
+                <div>
+                  <label className={mainLabelStyle}>ທີ່ຢູ່ປັດຈຸບັນ:</label>
+                  <input
+                    {...register("residenceAddress", {
+                      requiredd: "Please fill up",
+                    })}
+                    type="text"
+                    placeholder="KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương" // Corrected the property name here
+                    className={textInputStyle}
+                  />
+                  <ErrorMessage
+                    styling="mt-3 sm:text-md"
+                    error={errors.residenceAddress}
+                  />
                 </div>
                 {/* UNIVERSITY */}
                 <div className="">
@@ -298,7 +311,7 @@ const AddStudent = () => {
                         requiredd: "Please select",
                       })}
                       onChange={(e) => handleSelectMajor(e.target.value)}
-                      className={selectInputStyle}  
+                      className={selectInputStyle}
                     >
                       {mockMajor.map((item, index) => (
                         <option key={index} value={item.laoMajor}>
@@ -365,19 +378,19 @@ const AddStudent = () => {
                     </div>
                     <div className="space-y-2 ">
                       <input
-                        {...register("scholarship.sacolashipLao")}
+                        {...register("scholarship.scholarshipLao")}
                         type="text"
                         placeholder="ຕື່ມເລກທີຂໍ້ຕົກລົງກະຊວງສຶກສາລາວ"
                         className={textInputStyle}
                       />
                       <input
-                        {...register("scholarship.sacolashipVn")}
+                        {...register("scholarship.scholarshipVn")}
                         type="text"
                         placeholder="ຕື່ມເລກທີຂໍ້ຕົກລົງກະຊວງສຶກສາຫວຽດນາມ"
                         className={textInputStyle}
                       />
                       <input
-                        {...register("scholarship.sacolashipUniversity")}
+                        {...register("scholarship.scholarshipUniversity")}
                         type="text"
                         placeholder="ຕື່ມເລກທີຂໍ້ຕົກລົງຂອງສະຖາບັນສຶກສາ"
                         className={textInputStyle}
@@ -397,7 +410,7 @@ const AddStudent = () => {
                             minLength: { value: 4, message: "minimum 4" },
                             maxLength: { value: 4, message: "maximum 4" },
                           })}
-                          placeholder="2023-202"
+                          placeholder="2020"
                           type="text"
                           className={textInputStyle}
                         />
@@ -414,7 +427,7 @@ const AddStudent = () => {
                             minLength: { value: 4, message: "minimum 4" },
                             maxLength: { value: 4, message: "maximum 4" },
                           })}
-                          placeholder="2023-202"
+                          placeholder="2024"
                           type="text"
                           className={textInputStyle}
                         />
@@ -447,40 +460,46 @@ const AddStudent = () => {
                         styling="mt-0 sm:text-md"
                         error={errors?.phone?.phoneNumber}
                       />
-                      <input
-                        {...register("phone.emergency", {
-                          requiredd: "Please fill up",
-                          pattern: {
-                            message: "Must be number",
-                            value: /^[0-9]*$/,
-                          },
-                        })}
-                        type="text"
-                        placeholder="ຕື່ມເບີໂທຕິດຕໍ່ສຸກເສີນ"
-                        className={textInputStyle}
-                      />
-                      <ErrorMessage
-                        styling="mt-0 sm:text-md"
-                        error={errors?.phone?.emergency}
-                      />
+                      <div className="flex w-full items-center gap-1">
+                        <input
+                          {...register("phone.emergency", {
+                            requiredd: "Please fill up",
+                            pattern: {
+                              message: "Must be number",
+                              value: /^[0-9]*$/,
+                            },
+                          })}
+                          type="text"
+                          placeholder="ຕື່ມເບີໂທຕິດຕໍ່ສຸກເສີນ"
+                          className={textInputStyle + " flex-grow"}
+                        />
+                        <select
+                          {...register("phone.relationship")}
+                          className={selectInputStyle + " !w-fit"}
+                        >
+                          {relationships.map((ele) => (
+                            <option key={ele}>{ele}</option>
+                          ))}
+                        </select>
+                        <ErrorMessage
+                          styling="mt-0 sm:text-md"
+                          error={errors?.phone?.emergency}
+                        />
+                      </div>
                       {/* VISA */}
                       <div className="mt-5 flex items-center gap-2">
                         <div>
                           <label className={mainLabelStyle}>Visa:</label>
                           <div className="flex flex-wrap items-center gap-2">
                             <input
-                              {...register("visa.from", {
-                                required: "Please enter date",
-                              })}
+                              {...register("visa.from")}
                               type="date"
                               placeholder="Issue date"
                               className={textInputStyle}
                             />
 
                             <input
-                              {...register("visa.to", {
-                                required: "Please enter date",
-                              })}
+                              {...register("visa.to")}
                               type="date"
                               placeholder="Expired date"
                               className={textInputStyle}

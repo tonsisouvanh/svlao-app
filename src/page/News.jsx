@@ -1,23 +1,24 @@
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import InfoModal from "../components/modal/InfoModal";
+import { AiFillInfoCircle } from "react-icons/ai";
+import { auth } from "../firebase";
 
 const News = () => {
-  const userData = JSON.parse(sessionStorage.getItem("userData")) || {};
+  // const userData = JSON.parse(sessionStorage.getItem("userData")) || {};
+  const { user } = useSelector((state) => state.user);
+  console.log(auth.currentUser);
   return (
     <div>
-      <div className={`modal ${userData && "modal-open"}`}>
-        <div className="modal-box">
-          <h3 className="text-lg font-bold">Hello!</h3>
-          <p className="py-4">This modal works with a hidden checkbox!</p>
-          <div className="modal-action">
-            <Link className="btn btn-primary" to={`/profile/${1}`}>
-              Go to profile
-            </Link>
-            <label htmlFor="my_modal_6" className="btn">
-              Close!
-            </label>
-          </div>
-        </div>
-      </div>
+      {user?.updateRequired && user?.role === "student" ? (
+        <InfoModal
+          title={"ແຈ້ງເຕືອນ"}
+          modaltype={"info"}
+          conditionData={user}
+          desc={"This modal works with a hidden checkbox!"}
+          initialValue={true}
+        />
+      ) : null}
+
       <section className="body-font overflow-hidden">
         <div className="container mx-auto px-5 py-24">
           <div className="divide-base-900 -my-8 divide-y-2">

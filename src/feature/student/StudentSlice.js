@@ -6,7 +6,9 @@ import {
   doc,
   getDoc,
   getDocs,
+  query,
   setDoc,
+  where,
 } from "firebase/firestore";
 import toast from "react-hot-toast";
 import { auth, db } from "../../firebase";
@@ -17,10 +19,41 @@ const serializeTimestamp = (timestamp) => {
   const date = timestamp.toDate();
   return date.toISOString();
 };
+// ADMIN ADD STUDENT
+export const adminAddStudent = createAsyncThunk(
+  "students/adminAddStudent",
+  async (newStudent, { rejectWithValue }) => {
+    try {
+      const currentDate = new Date();
+      const studentsCollection = collection(db, "students");
 
+      await addDoc(studentsCollection, {
+        ...newStudent,
+        role: "student",
+        userId: "pending",
+        createdDate: currentDate,
+      });
+      toast.success("Student added successfully");
+      return {
+        ...newStudent,
+      };
+    } catch (error) {
+      const errorMessage = error.message;
+      const customError = {
+        message: errorMessage,
+        type: "AddStudentError",
+      };
+      console.error(error);
+      toast.error(errorMessage);
+      return rejectWithValue(customError);
+    }
+  },
+);
+
+// STUDENT ADD
 export const addStudent = createAsyncThunk(
   "students/addStudent",
-  async (newStudent, rejectWithValue) => {
+  async (newStudent, { rejectWithValue }) => {
     try {
       // Sign user up in firebase
       const email = newStudent.email;
@@ -141,23 +174,34 @@ export const fetchStudents = createAsyncThunk(
 // for student
 export const fetchSingleStudent = createAsyncThunk(
   "students/fetchSingleStudent",
-  async () => {
-    const user = auth.currentUser;
+  async (userId) => {
     try {
-      const documentRef = doc(db, "students", user && user.uid);
-      if (!documentRef) {
-        console.log(new Error("An error occurred while fetching products."));
-        throw new Error("An error occurred while fetching products.");
-      }
-      const documentSnapshot = await getDoc(documentRef);
+      // const documentRef = doc(db, "students", user && user.uid);
+      // if (!documentRef) {
+      //   console.log(new Error("An error occurred while fetching products."));
+      //   throw new Error("An error occurred while fetching products.");
+      // }
+      // const documentSnapshot = await getDoc(documentRef);
 
-      if (documentSnapshot.exists()) {
-        const documentData = documentSnapshot.data();
-        return documentData;
-      } else {
-        console.log("Document does not exist.");
-        return null;
-      }
+      // if (documentSnapshot.exists()) {
+      //   const documentData = documentSnapshot.data();
+      //   return documentData;
+      // } else {
+      //   console.log("Document does not exist.");
+      //   return null;
+      // }\
+      const q = query(
+        collection(db, "students"),
+        where("userId", "==", userId),
+      );
+
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+      });
+      // const student = querySnapshot.data();
+      // console.log(student);
     } catch (error) {
       console.error("Error fetching document:", error);
       throw error;
@@ -208,6 +252,18 @@ const studentSlice = createSlice({
         state.students.push(action.payload);
       })
       .addCase(addStudent.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "";
+      })
+      // ADD ADMIN
+      .addCase(adminAddStudent.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(adminAddStudent.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.students.push(action.payload);
+      })
+      .addCase(adminAddStudent.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "";
       });

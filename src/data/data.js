@@ -662,6 +662,6 @@ export const scholarshipTypes = [
 ];
 
 
-export const years = [
-  
-]
+export const relationships = ["ພໍ່","ແມ່","ປ້າ","ອາວ","ອາ", ]
+
+

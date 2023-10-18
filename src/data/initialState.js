@@ -1,6 +1,4 @@
 export const initialStudentInput = {
-  email: "",
-  password: "",
   fullname: {
     laoName: "",
     englishFirstname: "",
@@ -28,9 +26,9 @@ export const initialStudentInput = {
   },
   scholarship: {
     type: "",
-    sacolashipLao: "",
-    sacolashipVn: "",
-    sacolashipUniversity: "",
+    scholarshipLao: "",
+    scholarshipVn: "",
+    scholarshipUniversity: "",
   },
   duration: {
     from: "",
@@ -50,4 +48,5 @@ export const initialStudentInput = {
     passportNo: "",
     expired: "",
   },
+  residenceAddress: "",
 };

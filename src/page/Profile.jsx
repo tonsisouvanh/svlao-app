@@ -2,6 +2,9 @@ import { useParams } from "react-router-dom";
 import { data } from "../data/data";
 import { useEffect, useState } from "react";
 import DataNotFound from "./public/DataNotFound";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSingleStudent } from "../feature/student/StudentSlice";
+import { auth } from "../firebase";
 const user = {
   role: "admin",
 };
@@ -10,10 +13,14 @@ const Profile = () => {
   const { id } = useParams();
   const student = data.find((stu) => stu.id === id);
   const [monutchinh, setmonutchinh] = useState(false);
-  // useEffect(() => {
+  const dispatch = useDispatch((state) => state.user);
+  const user = auth.currentUser;
+  const { user: userProfile, status } = useSelector((state) => state.user);
+  useEffect(() => {
+    dispatch(fetchSingleStudent(user.uid));
+  }, [dispatch, user]);
 
-  // }, [])
-
+  console.log(userProfile);
   return (
     <>
       {!userData ? (
