@@ -13,7 +13,7 @@ const user = {
 };
 
 const mainLabelStyle = "label-text text-[1rem] mb-2 block font-semibold";
-
+const inputStyle = "input input-bordered input-sm w-full max-w-xs";
 const textInputStyle =
   "input input-sm input-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
 const Profile = () => {
@@ -47,7 +47,7 @@ const Profile = () => {
             </h1>
 
             <div className="flex flex-col items-center justify-start gap-4 md:flex-row md:items-start md:justify-center">
-              <div className="flex justify-center border border-red-500">
+              <div className="flex justify-center ">
                 <div className="flex h-1/2 w-64 ">
                   <img
                     className="mb-1 h-full  w-full object-cover  "
@@ -57,8 +57,8 @@ const Profile = () => {
                 </div>
               </div>
 
-              <section className="body-font grid grid-cols-1 border border-blue-500 px-5 text-gray-600 sm:grid-cols-3 lg:grid-cols-3">
-                <div className="flex items-center justify-between gap-6">
+              <section className="body-font grid grid-cols-1 whitespace-nowrap  px-5 text-gray-600 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="items-center justify-between gap-6">
                   <h2 className="label-text font-semibold md:text-xl">
                     ຊື່ລາວ:
                   </h2>
@@ -66,7 +66,7 @@ const Profile = () => {
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="input input-bordered w-full max-w-xs"
+                      className={inputStyle}
                     />
                   ) : null}
                   <p className="label-text font-semibold md:text-xl">
@@ -74,7 +74,7 @@ const Profile = () => {
                   </p>
                 </div>
                 <div className="">
-                  <h2 className="label-text font-semibold md:text-xl">
+                  <h2 className=" label-text font-semibold md:text-xl">
                     ຊື່ອັງກິດ:
                   </h2>
                   <p>{student.gender}</p>
@@ -82,7 +82,7 @@ const Profile = () => {
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="label-text font-semibold md:text-xl"
+                      className={inputStyle}
                     />
                   ) : null}
                 </div>
@@ -97,17 +97,17 @@ const Profile = () => {
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="input input-bordered w-full max-w-xs"
+                      className={inputStyle}
                     />
                   ) : null}
                 </div>
-                <div className="flex items-center justify-between gap-6 px-5">
+                <div className="flex items-center justify-between gap-6 ">
                   <h2 className="label-text font-semibold md:text-xl">MSSV:</h2>
                   {monutchinh === true ? (
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="label-text font-semibold md:text-xl"
+                      className={inputStyle}
                     />
                   ) : null}
                   <p className="label-text font-semibold md:text-xl">
@@ -121,7 +121,7 @@ const Profile = () => {
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="label-text font-semibold md:text-xl"
+                      className={inputStyle}
                     />
                   ) : null}
                 </div>
@@ -136,11 +136,11 @@ const Profile = () => {
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="input input-bordered w-full max-w-xs"
+                      className={inputStyle}
                     />
                   ) : null}
                 </div>
-                <div className="flex items-center justify-between gap-6 px-5">
+                <div className="flex items-center justify-between gap-6">
                   <h2 className="label-text font-semibold md:text-xl">
                     ທີ່ຢູ່ປັດຈຸບັນ:
                   </h2>
@@ -148,7 +148,7 @@ const Profile = () => {
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="label-text font-semibold md:text-xl"
+                      className={inputStyle}
                     />
                   ) : null}
                   <p className="label-text font-semibold md:text-xl">
@@ -164,7 +164,7 @@ const Profile = () => {
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="label-text font-semibold md:text-xl"
+                      className={inputStyle}
                     />
                   ) : null}
                 </div>
@@ -179,11 +179,11 @@ const Profile = () => {
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="input input-bordered w-full max-w-xs"
+                      className={inputStyle}
                     />
                   ) : null}
                 </div>
-                <div className="flex items-center justify-between gap-6 px-5">
+                <div className="flex items-center justify-between gap-6">
                   <h2 className="label-text font-semibold md:text-xl">
                     ລະດັບຮຽນ:
                   </h2>
@@ -191,7 +191,7 @@ const Profile = () => {
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="label-text font-semibold md:text-xl"
+                      className={inputStyle}
                     />
                   ) : null}
                   <p className="label-text font-semibold md:text-xl">
@@ -207,7 +207,7 @@ const Profile = () => {
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="label-text font-semibold md:text-xl"
+                      className={inputStyle}
                     />
                   ) : null}
                 </div>
@@ -222,11 +222,11 @@ const Profile = () => {
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="input input-bordered w-full max-w-xs"
+                      className={inputStyle}
                     />
                   ) : null}
                 </div>
-                <div className="flex items-center justify-between gap-6 px-5">
+                <div className="flex items-center justify-between gap-6 ">
                   <h2 className="label-text font-semibold md:text-xl">
                     ເບີໂທຕິດຕໍ່:
                   </h2>
@@ -234,7 +234,7 @@ const Profile = () => {
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="label-text font-semibold md:text-xl"
+                      className={inputStyle}
                     />
                   ) : null}
                   <p className="label-text font-semibold md:text-xl">
@@ -250,17 +250,17 @@ const Profile = () => {
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="label-text font-semibold md:text-xl"
+                      className={inputStyle}
                     />
                   ) : null}
                 </div>
-                <div className="items-center justify-between gap-6 px-5">
+                <div className="items-center justify-between gap-6 ">
                   <h2 className="label-text font-semibold md:text-xl">Visa:</h2>
                   {monutchinh === true ? (
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="label-text font-semibold md:text-xl"
+                      className={inputStyle}
                     />
                   ) : null}
                   <p className="label-text font-semibold md:text-xl">
@@ -276,7 +276,7 @@ const Profile = () => {
                     <input
                       type="text"
                       placeholder="Type here"
-                      className="label-text font-semibold md:text-xl"
+                      className={inputStyle}
                     />
                   ) : null}
                 </div>

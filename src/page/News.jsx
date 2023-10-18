@@ -53,7 +53,7 @@ const News = () => {
                   Tên chương trình
                 </h2>
                 <p className="leading-relaxed">Nội dung thông báo</p>
-                <a className="mt-4 inline-flex items-center text-info">
+                <a className="mt-4 inline-flex items-center text-indigo-500">
                   Xem thêm
                   <svg
                     className="ml-2 h-4 w-4"
@@ -95,7 +95,7 @@ const News = () => {
                 <span className="mt-1 text-sm text-gray-500">12 Jun 2023</span>
               </div>
               <div className="md:flex-grow">
-                <h2 className="title-font mb-2 text-2xl font-medium text-gray-900">
+                <h2 className="title-font mb-2 text-2xl font-medium text-accent-focus">
                   Tên chương trình
                 </h2>
                 <p className="leading-relaxed">Nội dung thông báp</p>
@@ -141,7 +141,7 @@ const News = () => {
                 <span className="text-sm text-gray-500">12 Jun 2023</span>
               </div>
               <div className="md:flex-grow">
-                <h2 className="title-font mb-2 text-2xl font-medium text-gray-900">
+                <h2 className="title-font mb-2 text-2xl font-medium text-accent-focus">
                   Tên chườg trình
                 </h2>
                 <p className="leading-relaxed">Nội dung thông báo</p>

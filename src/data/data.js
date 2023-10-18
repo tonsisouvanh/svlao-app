@@ -340,7 +340,7 @@ export const themes = [
   "cupcake",
   // "bumblebee",
   // "emerald",
-  "corporate",
+  // "corporate",
   // "synthwave",
   // "retro",
   // "dark",
@@ -362,9 +362,9 @@ export const themes = [
   // "business",
   // "acid",
   // "lemonade",
-  "night",
+  // "night",
   // "coffee",
-  "winter",
+//   "winter",
 ];
 
 // USER DATA
