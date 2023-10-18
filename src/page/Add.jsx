@@ -298,7 +298,7 @@ const AddStudent = () => {
                         requiredd: "Please select",
                       })}
                       onChange={(e) => handleSelectMajor(e.target.value)}
-                      className={selectInputStyle}  
+                      className={selectInputStyle}
                     >
                       {mockMajor.map((item, index) => (
                         <option key={index} value={item.laoMajor}>
