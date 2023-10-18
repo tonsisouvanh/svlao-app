@@ -19,7 +19,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
 
   return (
     <header className="bg-active sticky top-0 z-[999] flex w-full bg-base-100">
-      <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-md md:px-6 2xl:px-11">
+      <div className="flex flex-grow items-center justify-end px-4 py-4 shadow-md md:px-6 2xl:px-11">
         <button
           className="group btn btn-sm flex flex-col items-center justify-center rounded border p-1 lg:hidden"
           onClick={(e) => {
@@ -29,35 +29,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
         >
           <RxHamburgerMenu className="text-2xl" />
         </button>
-        <div className="flex w-full items-center justify-center">
-          <div className="join flex items-center justify-center">
-            <div>
-              <div>
-                <input
-                  className="input join-item input-bordered bg-base-300"
-                  placeholder="Search"
-                />
-              </div>
-            </div>
-            <select className="select join-item select-bordered bg-base-300">
-              <option disabled defaultValue={10}>
-                Filter
-              </option>
-              <option>10</option>
-              <option>20</option>
-              <option>30</option>
-              <option>40</option>
-              <option>50</option>
-              <option>All</option>
-            </select>
-            <div className="indicator">
-              {/* <span className="badge indicator-item badge-secondary">new</span> */}
-              <button className="btn join-item select-bordered   bg-base-300 ">
-                Search
-              </button>
-            </div>
-          </div>
-        </div>
+
         <div>
           <AiFillBell />
         </div>

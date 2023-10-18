@@ -60,6 +60,35 @@ const StudentList = () => {
                   </button>
                 </Link>
               </div>
+              <div className="mb-10 flex w-full items-center justify-center">
+                <div className="join flex items-center justify-center">
+                  <div>
+                    <div>
+                      <input
+                        className="input join-item input-bordered bg-base-300"
+                        placeholder="Search"
+                      />
+                    </div>
+                  </div>
+                  <select className="select join-item select-bordered bg-base-300">
+                    <option disabled defaultValue={10}>
+                      Filter
+                    </option>
+                    <option>10</option>
+                    <option>20</option>
+                    <option>30</option>
+                    <option>40</option>
+                    <option>50</option>
+                    <option>All</option>
+                  </select>
+                  <div className="indicator">
+                    {/* <span className="badge indicator-item badge-secondary">new</span> */}
+                    <button className="btn join-item select-bordered   bg-base-300 ">
+                      Search
+                    </button>
+                  </div>
+                </div>
+              </div>
 
               <div className="grid grid-cols-1 gap-4 font-notosanslao sm:grid-cols-2 md:grid-cols-3">
                 {data.map((i) => (
