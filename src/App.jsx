@@ -8,9 +8,10 @@ import {
   Profile,
   Intro,
   Signin,
-  Add,
   News,
   Signup,
+  AddStudent,
+  EditStudent,
 } from "./page";
 import RootLayoutPublic from "./components/layout/public/rootLayoutPublic";
 import Test from "./page/Test";
@@ -29,11 +30,11 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<News />} />
             <Route path="/dashboard/student-chart" element={<Dashboard />} />
-            <Route path="/detail/:id" element={<StudentDetail />} />
+            <Route path="/student-detail/:id" element={<StudentDetail />} />
             <Route path="/dashboard/studentlist" element={<StudentList />} />
             <Route path="/profile/:id" element={<Profile />} />
             <Route path="/intro" element={<Intro />} />
-            <Route path="/add" element={<Add />} />
+            <Route path="/studentlist/add-student" element={<AddStudent />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />

@@ -1,90 +1,132 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { signUp } from "../feature/auth/AuthSlice";
-
-const StudentSignup = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import ErrorMessage from "../components/typography/ErrorMessage";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { signIn, signUp } from "../feature/auth/AuthSlice";
+import { auth } from "../firebase";
+import { onAuthStateChanged } from "firebase/auth";
+const initialState = {
+  email: "",
+  username: "",
+  password: "",
+  role: "student",
+};
+// email, password, username,role
+const Signup = () => {
+  const { status } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add your signup logic
-    const inputUser = {
-      email: "ton@gmail.com",
-      password: "111222",
-      username: "testuser",
-      role: "student",
-    };
-    dispatch(signUp(inputUser));
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({ defaultValues: initialState });
+  const [showPass, setShowPass] = useState(false);
+  const handleLogin = async (data) => {
+    const userInput = { ...data };
+    try {
+      await dispatch(signUp(userInput));
+    } catch (error) {
+      console.error("Sign-up error =>", error);
+    }
   };
 
+  useEffect(() => {
+    if (status === "success") {
+      reset();
+    }
+  }, [status, reset]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-96 rounded bg-white p-8 shadow-md">
+    <div className="flex min-h-screen items-center justify-center bg-login-background bg-cover bg-no-repeat">
+      <div className="absolute h-full w-full bg-gradient-to-b from-black via-black/70 to-transparent"></div>
+      <div className="absolute w-96 rounded bg-base-200 p-8 shadow-md">
         <h1 className="mb-4 text-2xl font-bold">Student Signup</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="mb-2 block font-semibold text-gray-600">
-                First Name:
+        <form onSubmit={handleSubmit(handleLogin)}>
+          <div className="mb-4">
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Username</span>
               </label>
               <input
+                {...register("username", {
+                  required: "Username is required",
+                })}
                 type="text"
-                className="w-full rounded border px-3 py-2"
-                placeholder="Enter your first name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                className="input input-bordered w-full max-w-xs"
+              />
+              <ErrorMessage
+                styling="mt-3 sm:text-md"
+                error={errors?.username}
               />
             </div>
-            <div>
-              <label className="mb-2 block font-semibold text-gray-600">
-                Last Name:
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Email</span>
               </label>
               <input
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+                    message: "Invalid email format",
+                  },
+                })}
                 type="text"
-                className="w-full rounded border px-3 py-2"
-                placeholder="Enter your last name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                className="input input-bordered w-full max-w-xs"
               />
+              <ErrorMessage styling="mt-3 sm:text-md" error={errors?.email} />
             </div>
-            {/* <div className="col-span-2">
-              <label className="mb-2 block font-semibold text-gray-600">
-                Email:
+          </div>
+          <div className="mb-4">
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Password</span>
+                <span
+                  onClick={() => setShowPass(!showPass)}
+                  className="cursor-pointer"
+                >
+                  {showPass ? <AiFillEye /> : <AiFillEyeInvisible />}
+                </span>
               </label>
               <input
-                type="text"
-                className="w-full rounded border px-3 py-2"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: 6,
+                })}
+                type={showPass ? "text" : "password"}
+                className="input input-bordered w-full max-w-xs"
               />
-            </div> */}
-            <div className="col-span-2">
-              <label className="mb-2 block font-semibold text-gray-600">
-                Password:
-              </label>
-              <input
-                type="password"
-                className="w-full rounded border px-3 py-2"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+              <ErrorMessage
+                styling="mt-3 sm:text-md"
+                error={errors?.password}
               />
             </div>
           </div>
-          <div className="mt-4 flex justify-end">
-            <button type="submit" className="btn btn-secondary btn-active">
-              Sign Up
-            </button>
+          <div className="mb-4 flex justify-end gap-3">
+            {status === "loading" ? (
+              <button className="btn flex-grow">
+                <span className="loading loading-spinner"></span>
+                loading
+              </button>
+            ) : (
+              <button type="submit" className={`btn btn-primary flex-grow`}>
+                sign up
+              </button>
+            )}
           </div>
         </form>
+        <div>
+          <label className="label-text">Already have an account?</label>
+          <Link to="/signin" className="link-primary link">
+            Sign in
+          </Link>
+        </div>
       </div>
     </div>
   );
 };
 
-export default StudentSignup;
+export default Signup;

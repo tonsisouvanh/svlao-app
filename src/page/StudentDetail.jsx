@@ -1,303 +1,81 @@
-import { useParams } from "react-router-dom";
-import { data } from "../data/data";
-import { useState } from "react";
-
-const user = {
-  role: "admin",
-};
+import { Link, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { adminFetchSingleStudent } from "../feature/student/StudentSlice";
 const StudentDetail = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
-  const student = data.find((stu) => stu.id === id);
-  const [monutchinh, setmonutchinh] = useState(false);
+  const { student: studentData } = useSelector((state) => state.students);
+
+  useEffect(() => {
+    dispatch(adminFetchSingleStudent(id));
+  }, []);
 
   return (
-    <div className="container mx-auto mt-8 font-notosanslao">
-      <div className="rounded bg-white p-8 shadow-md ">
-        <div>
-          <h1 className="mb-4 flex justify-center text-4xl font-bold ">
-            ລາຍລະອຽດນັກຮຽນ
-          </h1>
-          <section className="body-font text-gray-600">
-            <div className="container mx-auto flex flex-col px-5 py-24 ">
-              <div className="flex gap-60">
-                <div className="h-1/2 w-64  ">
-                  <img
-                    className="mb-1 h-full  w-full object-cover  "
-                    alt="hero"
-                    src="https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-20">
-                  <div>
-                    <h2 className="text-2xl font-bold">ID:</h2>
-                    <p className="font-notosanslao text-2xl">{id}</p>
-                  </div>
-                  <div className="font-notosanslao text-2xl">
-                    <h2 className="text-2xl font-bold">ເພດ:</h2>
-                    <p>{student.gender}</p>
-                    {monutchinh === true ? (
-                      <input
-                        type="text"
-                        placeholder="Type here"
-                        className="input input-bordered w-full max-w-xs"
-                      />
-                    ) : null}
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">ຊື່ລາວ:</h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.name.nameLao}
-                      {monutchinh === true ? (
-                        <input
-                          type="text"
-                          placeholder="Type here"
-                          className="input input-bordered w-full max-w-xs"
-                        />
-                      ) : null}
-                    </p>
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">ຊື່ ພາສາອັງກິດ:</h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.name.nameEnglist}
-                      {monutchinh === true ? (
-                        <input
-                          type="text"
-                          placeholder="Type here"
-                          className="input input-bordered w-full max-w-xs"
-                        />
-                      ) : null}
-                    </p>
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">ວັນເດືອນປີເກີດ:</h2>
-                    <p className="font-notosanslao text-2xl">{student.age}</p>
-                    {monutchinh === true ? (
-                      <input
-                        type="text"
-                        placeholder="Type here"
-                        className="input input-bordered w-full max-w-xs"
-                      />
-                    ) : null}
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">ລະດັບຮຽນ:</h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.degree}
-                      {monutchinh === true ? (
-                        <input
-                          type="text"
-                          placeholder="Type here"
-                          className="input input-bordered w-full max-w-xs"
-                        />
-                      ) : null}
-                    </p>
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">ວິຊາຮຽນ:</h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.subject}
-                    </p>
-                    {monutchinh === true ? (
-                      <input
-                        type="text"
-                        placeholder="Type here"
-                        className="input input-bordered w-full max-w-xs"
-                      />
-                    ) : null}
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">ຮຽນຢູ່ໂຮງຮຽນ:</h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.school}
-                      {monutchinh === true ? (
-                        <input
-                          type="text"
-                          placeholder="Type here"
-                          className="input input-bordered w-full max-w-xs"
-                        />
-                      ) : null}
-                    </p>
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">ໄລຍະຮຽນ:</h2>
-                    <p className="font-notosanslao text-2xl">{student.level}</p>
-                    {monutchinh === true ? (
-                      <input
-                        type="text"
-                        placeholder="Type here"
-                        className="input input-bordered w-full max-w-xs"
-                      />
-                    ) : null}
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">ແຫຼ່ງທຶນ:</h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.sacolaship}
-                      {monutchinh === true ? (
-                        <input
-                          type="text"
-                          placeholder="Type here"
-                          className="input input-bordered w-full max-w-xs"
-                        />
-                      ) : null}
-                    </p>
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">
-                      ເລກທີຂໍ້ຕົກລົງກະຊວງສຶກສາລາວ, ລົງວັນທີ:
-                    </h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.sacolashipLao}
-                      {monutchinh === true ? (
-                        <input
-                          type="text"
-                          placeholder="Type here"
-                          className="input input-bordered w-full max-w-xs"
-                        />
-                      ) : null}
-                    </p>
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">
-                      ເລກທີຂໍ້ຕົກລົງກະຊວງສຶກສາຫວຽດນາມ, ລົງວັນທີ:
-                    </h2>
-                    {monutchinh === true ? (
-                      <input
-                        type="text"
-                        placeholder="Type here"
-                        className="input input-bordered w-full max-w-xs"
-                      />
-                    ) : null}
-                    <p className="font-notosanslao text-2xl">
-                      {student.sacolashipVN}
-                    </p>
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">
-                      ເລກທີຂໍ້ຕົກລົງຂອງສະຖາບັນສຶກສາ, ລົງວັນທີ:
-                    </h2>
-
-                    <p className="font-notosanslao text-2xl">
-                      {student.sacolashipSchool}
-                    </p>
-                    {monutchinh === true ? (
-                      <input
-                        type="text"
-                        placeholder="Type here"
-                        className="input input-bordered w-full max-w-xs"
-                      />
-                    ) : null}
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">ປີເລີ່ມຮຽນ - ປີຈົບ:</h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.startStop}
-                    </p>
-                    {monutchinh === true ? (
-                      <input
-                        type="text"
-                        placeholder="Type here"
-                        className="input input-bordered w-full max-w-xs"
-                      />
-                    ) : null}
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">ແຂວງເກີດ:</h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.province}
-                    </p>
-                    {monutchinh === true ? (
-                      <input
-                        type="text"
-                        placeholder="Type here"
-                        className="input input-bordered w-full max-w-xs"
-                      />
-                    ) : null}
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">
-                      ທີ່ຢູ່ປັດຈຸບັນໃນ ຮຈມ:
-                    </h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.address}
-                    </p>
-                    {monutchinh === true ? (
-                      <input
-                        type="text"
-                        placeholder="Type here"
-                        className="input input-bordered w-full max-w-xs"
-                      />
-                    ) : null}
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">ເບີໂທລາວ:</h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.phone ? student.phone.phoneLao : " "}
-                    </p>
-                    {monutchinh === true ? (
-                      <input
-                        type="text"
-                        placeholder="Type here"
-                        className="input input-bordered w-full max-w-xs"
-                      />
-                    ) : null}
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">ເບີໂທຫວຽດ:</h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.phone ? student.phone.phoneViet : " "}
-                    </p>
-                    {monutchinh === true ? (
-                      <input
-                        type="text"
-                        placeholder="Type here"
-                        className="input input-bordered w-full max-w-xs"
-                      />
-                    ) : null}
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold">Link facebook:</h2>
-                    <p className="font-notosanslao text-2xl">
-                      {student.linkFB}
-                    </p>
-                    {monutchinh === true ? (
-                      <input
-                        type="text"
-                        placeholder="Type here"
-                        className="input input-bordered w-full max-w-xs"
-                      />
-                    ) : null}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          {user.role === "admin" ? (
-            <div className="mb-10 flex justify-end gap-10  font-notosanslao font-bold text-primary">
-              {monutchinh === true ? null : (
-                <button
-                  onClick={() => setmonutchinh(true)}
-                  className="btn btn-info text-xl"
-                >
-                  ແປງຂໍ້ມູນ
-                </button>
-              )}
-              {monutchinh === true ? (
-                <div>
-                  <button className="btn btn-info text-xl">ຕົກລົງ</button>
-                  <button
-                    onClick={() => setmonutchinh(false)}
-                    className="btn btn-secondary text-xl"
-                  >
-                    ຍົກເລີກ
-                  </button>
-                </div>
-              ) : null}
-            </div>
-          ) : null}
+    <div className="container mx-auto font-notosanslao">
+      <div className="!sticky !top-[4rem]">
+        <div className="breadcrumbs text-sm">
+          <ul>
+            <li>
+              <Link to="/dashboard/studentlist">Student list</Link>
+            </li>
+            <li className="underline">
+              <span>Add student</span>
+            </li>
+          </ul>
         </div>
+      </div>
+      <div className="rounded-lg p-6 shadow-md">
+        <div className="mb-4 text-2xl font-bold">
+          {studentData?.fullname?.laoName}
+        </div>
+        <div className="flex justify-between">
+          <div className="w-1/2">
+            <h2 className="mb-2 text-lg font-semibold">Personal Information</h2>
+            <p>
+              <strong>Username:</strong> {studentData?.username}
+            </p>
+            <p>
+              <strong>Role:</strong> {studentData?.role}
+            </p>
+            <p>
+              <strong>Date of Birth:</strong> {studentData?.dob || "N/A"}
+            </p>
+            {/* Add more personal information fields */}
+          </div>
+          <div className="w-1/2">
+            <h2 className="mb-2 text-lg font-semibold">Contact Information</h2>
+            <p>
+              <strong>Email:</strong> {studentData?.email}
+            </p>
+            <p>
+              <strong>Phone Number:</strong>{" "}
+              {studentData?.phone?.phoneNumber || "N/A"}
+            </p>
+            <p>
+              <strong>Gender:</strong> {studentData?.gender}
+            </p>
+            {/* Add more contact information fields */}
+          </div>
+        </div>
+        <h2 className="my-4 text-lg font-semibold">Academic Information</h2>
+        <div className="mb-2">
+          <strong>University:</strong> {studentData?.university?.laoName}
+        </div>
+        <div className="mb-2">
+          <strong>Major:</strong> {studentData?.major?.laoMajor || "N/A"}
+        </div>
+        <div className="mb-2">
+          <strong>Degree:</strong> {studentData?.degree?.laoDegree || "N/A"}
+        </div>
+        <h2 className="my-4 text-lg font-semibold">Other Information</h2>
+        <div className="mb-2">
+          <strong>Passport No:</strong> {studentData?.passport?.passportNo}
+        </div>
+        <div className="mb-2">
+          <strong>Scholarship Type:</strong> {studentData?.scholarship?.type}
+        </div>
+        {/* Add more fields like visa, duration, permanent address, etc. */}
       </div>
     </div>
   );

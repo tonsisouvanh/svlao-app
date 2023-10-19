@@ -96,7 +96,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             onClick={() => setSidebarOpen(!sidebarOpen)}
             aria-controls="sidebar"
             aria-expanded={sidebarOpen}
-            className="cursor-pointer text-3xl lg:hidden"
+            className="cursor-pointer lg:hidden text-base-100"
           >
             <BsArrowLeft className="text-3xl" />
           </button>

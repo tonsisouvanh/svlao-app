@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import { themes } from "../../../data/data";
-import { AiFillThunderbolt, AiFillBell, AiFillProfile } from "react-icons/ai";
+import { AiFillBell } from "react-icons/ai";
+import { TbShirtFilled } from "react-icons/tb";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { BsFillPersonBadgeFill, BsFillPersonFill } from "react-icons/bs";
+import { BsFillPersonFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { GiCupcake } from "react-icons/gi";
+import { BiSolidMoon, BiSolidSun } from "react-icons/bi";
+
 
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const [theme, setTheme] = useState(
@@ -19,7 +23,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
 
   return (
     <header className="bg-active sticky top-0 z-[999] flex w-full bg-base-100">
-      <div className="flex flex-grow items-center justify-end px-4 py-4 shadow-md md:px-6 2xl:px-11">
+      <div className="flex w-full items-center justify-between px-4 py-4 shadow-md md:px-6 2xl:px-11">
         <button
           className="group btn btn-sm flex flex-col items-center justify-center rounded border p-1 lg:hidden"
           onClick={(e) => {
@@ -30,76 +34,84 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
           <RxHamburgerMenu className="text-2xl" />
         </button>
 
-        <div>
-          <AiFillBell />
-        </div>
-        <div>
+        <div className="flex items-center gap-2">
+          <div>
+            <AiFillBell />
+          </div>
+          <div>
+            <div className="dropdown dropdown-end">
+              <label
+                tabIndex={0}
+                className="btn rounded-btn btn-sm m-1 font-notosanslao"
+              >
+                <TbShirtFilled />
+              </label>
+
+              <ul
+                tabIndex={0}
+                className="menu dropdown-content rounded-box z-[1] w-fit space-y-2 bg-base-100 p-2 shadow"
+              >
+                {themes.map((theme) => (
+                  <div
+                    className="btn btn-xs w-fit"
+                    onClick={() => setTheme(theme)}
+                    key={theme}
+                  >
+                    {theme === "cupcake" ? (
+                      <GiCupcake size={16} />
+                    ) : theme === "night" ? (
+                      <BiSolidMoon size={16} />
+                    ) : (
+                      <BiSolidSun size={16} />
+                    )}
+                  </div>
+                ))}
+              </ul>
+            </div>
+          </div>
           <div className="dropdown-end dropdown">
-            <label
-              tabIndex={0}
-              className="btn rounded-btn btn-sm m-1 font-notosanslao"
-            >
-              <AiFillThunderbolt />
-            </label>
+            <div className="indicator">
+              {/* {!student && (
+              <span className="badge indicator-item badge-secondary animate-bounce">
+                <AiFillBell />
+              </span>
+            )} */}
+              <label
+                tabIndex={0}
+                className="btn rounded-btn btn-sm m-1 font-notosanslao"
+              >
+                <BsFillPersonFill />
+              </label>
+            </div>
 
             <ul
               tabIndex={0}
               className="menu dropdown-content rounded-box z-[1] w-fit space-y-2 bg-base-100 p-2 shadow"
             >
-              {themes.map((theme) => (
-                <li
-                  className="btn btn-xs w-fit"
-                  onClick={() => setTheme(theme)}
-                  key={theme}
-                >
-                  {theme}
-                </li>
-              ))}
+              <Link
+                className={`btn btn-ghost btn-xs relative whitespace-nowrap`}
+                //   className={`btn relative btn-ghost btn-xs whitespace-nowrap
+                //   ${!student && 'animate-pulse bg-secondary text-white'}`
+                // }
+                to={`/profile/${1}`}
+              >
+                Profile
+                {/* {!student && <AiFillBell className="absolute -left-1"/>} */}
+              </Link>
+              <Link
+                className="btn btn-ghost btn-xs whitespace-nowrap"
+                to="/profile"
+              >
+                Setting
+              </Link>
+              <Link
+                className="btn btn-ghost btn-xs whitespace-nowrap"
+                to="/profile"
+              >
+                Log out
+              </Link>
             </ul>
           </div>
-        </div>
-        <div className="dropdown-end dropdown">
-          <div className="indicator">
-            {/* {!student && (
-              <span className="badge indicator-item badge-secondary animate-bounce">
-                <AiFillBell />
-              </span>
-            )} */}
-            <label
-              tabIndex={0}
-              className="btn rounded-btn btn-sm m-1 font-notosanslao"
-            >
-              <BsFillPersonFill />
-            </label>
-          </div>
-
-          <ul
-            tabIndex={0}
-            className="menu dropdown-content rounded-box z-[1] w-fit space-y-2 bg-base-100 p-2 shadow"
-          >
-            <Link
-              className={`btn btn-ghost btn-xs relative whitespace-nowrap`}
-              //   className={`btn relative btn-ghost btn-xs whitespace-nowrap
-              //   ${!student && 'animate-pulse bg-secondary text-white'}`
-              // }
-              to={`/profile/${1}`}
-            >
-              Profile
-              {/* {!student && <AiFillBell className="absolute -left-1"/>} */}
-            </Link>
-            <Link
-              className="btn btn-ghost btn-xs whitespace-nowrap"
-              to="/profile"
-            >
-              Setting
-            </Link>
-            <Link
-              className="btn btn-ghost btn-xs whitespace-nowrap"
-              to="/profile"
-            >
-              Log out
-            </Link>
-          </ul>
         </div>
       </div>
     </header>

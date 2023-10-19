@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import ErrorMessage from "../components/typography/ErrorMessage";
+import ErrorMessage from "../../components/typography/ErrorMessage";
 import {
   mockDegrees,
   mockMajor,
@@ -7,37 +7,44 @@ import {
   mockUniversity,
   relationships,
   scholarshipTypes,
-} from "../data/data";
-import { useState } from "react";
-import { initialStudentInput } from "../data/initialState";
-import { addStudent, adminAddStudent } from "../feature/student/StudentSlice";
+} from "../../data/data";
+import { useEffect, useState } from "react";
+import {
+  addStudent,
+  adminAddStudent,
+  adminFetchSingleStudent,
+  adminUpdateStudent,
+  fetchSingleStudent,
+} from "../../feature/student/StudentSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Spinner from "../components/ui/Spinner";
+import Spinner from "../../components/ui/Spinner";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { AiFillEdit } from "react-icons/ai";
 
 const selectInputStyle =
   "select select-sm select-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
 const mainLabelStyle = "label-text text-[1rem] mb-2 block font-semibold";
 const subSelectSpanStyle =
-  "input input-bordered opacity-70 input-sm whitespace-nowrap";
+  "input input-bordered opacity-70 input-sm whitespace-nowrap w-fit";
 const textInputStyle =
   "input input-sm input-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
 
-const AddStudent = () => {
+const EditStudent = ({ setEditToggle, editingStudent }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.students);
+  const [degree, setDegree] = useState("");
+  const [university, setUniversity] = useState("");
+  const [major, setMajor] = useState("");
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
     reset,
-  } = useForm({ defaultValues: initialStudentInput });
-  const [degree, setDegree] = useState("");
-  const [university, setUniversity] = useState("");
-  const [major, setMajor] = useState("");
+  } = useForm({ defaultValues: editingStudent });
 
   const handleSelectDegree = (value) => {
     const vietDegree = mockDegrees.find((d) => d.laoDegree === value);
@@ -60,63 +67,42 @@ const AddStudent = () => {
   const handleAddStudent = (data) => {
     if (data) {
       const studentData = { ...data };
-      dispatch(adminAddStudent(studentData));
+      dispatch(adminUpdateStudent(studentData));
     } else toast.warning("Input data not valid");
   };
 
   const handleClear = () => {
     reset();
-    navigate(-1);
+    setEditToggle(false);
   };
+
   return (
     <>
       {status === "loading" ? (
         <Spinner />
       ) : (
-        <div className="container mx-auto px-5 py-10">
-          <div className="rounded bg-base-200 p-8 font-notosanslao shadow-md">
+        <div className="container mx-auto">
+          <div className="breadcrumbs text-sm">
+            <ul>
+              <li onClick={handleClear}>
+                <a>Student list</a>
+              </li>
+              <li className="underline">
+                <span>Edit student</span>
+              </li>
+            </ul>
+          </div>
+          <div className="relative rounded bg-base-200 p-8 font-notosanslao shadow-md">
+            <span className="absolute left-8 top-8">
+              <AiFillEdit size={40} />
+            </span>
             <h1 className="mb-10 flex items-center justify-center font-notosanslao text-4xl font-bold text-primary ">
-              ເພີ່ມນັກຮຽນ
+              ແກ້ໄຂຂໍ້ມູນນັກຮຽນ
             </h1>
             <form
               className="flex flex-col items-center"
               onSubmit={handleSubmit(handleAddStudent)}
             >
-              {/* <div className="flex items-center gap-5">
-                <div className="form-control w-full max-w-xs">
-                  <label className={mainLabelStyle}>Email:</label>
-                  <input
-                    {...register("email", {
-                      required: "Email is required",
-                      pattern: {
-                        value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-                        message: "Invalid email format",
-                      },
-                    })}
-                    type="text"
-                    className={textInputStyle}
-                  />
-                  <ErrorMessage
-                    styling="mt-3 sm:text-md"
-                    error={errors?.email}
-                  />
-                </div>
-                <div className="form-control w-full max-w-xs">
-                  <label className={mainLabelStyle}>Password:</label>
-                  <input
-                    {...register("password", {
-                      required: "Password is required",
-                      minLength: 6,
-                    })}
-                    type={"password"}
-                    className={textInputStyle}
-                  />
-                  <ErrorMessage
-                    styling="mt-3 sm:text-md"
-                    error={errors?.password}
-                  />
-                </div>
-              </div> */}
               <div className="divider-base-100 divider"></div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* fullname */}
@@ -149,15 +135,17 @@ const AddStudent = () => {
                   </div>
                 </div>
                 <div className="form-control w-full max-w-xs space-y-2">
-                  <label className={mainLabelStyle}>ຊື່ອັງກິດ:</label>
+                  <label className={mainLabelStyle}>
+                    ຊື່ ແລະ ນາມສະກຸນອັງກິດ:
+                  </label>
                   <div>
-                    <label className="label-text">Firstname</label>
+                    <label className="label-text">ຊື່</label>
                     <input
                       {...register("fullname.englishFirstname", {
                         required: "Please fill up",
                       })}
                       type="text"
-                      placeholder="ຕື່ມຊື່ອັງກິດ" // Corrected the property name here
+                      placeholder="ຕື່ມຊື່" // Corrected the property name here
                       className={textInputStyle}
                     />
                     <ErrorMessage
@@ -166,14 +154,14 @@ const AddStudent = () => {
                     />
                   </div>
                   <div>
-                    <label className="label-text">Lastname</label>
+                    <label className="label-text">ນາມສະກຸນ</label>
 
                     <input
                       {...register("fullname.englishLastname", {
                         required: "Please fill up",
                       })}
                       type="text"
-                      placeholder="ຕື່ມນາມສະກຸນອັງກິດ" // Corrected the property name here
+                      placeholder="ຕື່ມນາມສະກຸນ" // Corrected the property name here
                       className={textInputStyle}
                     />
                     <ErrorMessage
@@ -619,4 +607,4 @@ const AddStudent = () => {
   );
 };
 
-export default AddStudent;
+export default EditStudent;

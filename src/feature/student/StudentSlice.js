@@ -81,12 +81,6 @@ export const addStudent = createAsyncThunk(
 
         // Add student data to firebase
         const currentDate = new Date();
-        // await setDoc(doc(db, "students", user.uid), {
-        //   ...accountData,
-        //   accountId: user.uid,
-        //   createdDate: currentDate,
-        // });
-
         const studentsCollection = collection(db, "students");
         const docRef = await addDoc(studentsCollection, {
           role: "student",
@@ -94,13 +88,36 @@ export const addStudent = createAsyncThunk(
           accountId: user.uid,
           createdDate: currentDate,
         });
-
         return {
           id: user.id,
           ...newStudent,
         };
       }
       return {};
+    } catch (error) {
+      const errorMessage = error.message;
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage);
+    }
+  },
+);
+
+// STUDENT UPDATE
+export const adminUpdateStudent = createAsyncThunk(
+  "students/adminUpdateStudent",
+  async (updatedStudent, { rejectWithValue }) => {
+    console.log(updatedStudent);
+    const currentDate = new Date();
+
+    try {
+      // Construct the Firestore document reference for the product
+      const studentRef = doc(db, "students", updatedStudent.id || "");
+
+      // Update the product document in Firestore
+      await setDoc(studentRef, { ...updatedStudent, createdDate: currentDate });
+
+      toast.success("Update student successfully");
+      return updatedStudent;
     } catch (error) {
       const errorMessage = error.message;
       toast.error(errorMessage);
@@ -142,7 +159,6 @@ export const addStudent = createAsyncThunk(
 //     }
 //   },
 // );
-
 export const fetchStudents = createAsyncThunk(
   "students/fetchStudents",
   async () => {
@@ -198,6 +214,32 @@ export const fetchSingleStudent = createAsyncThunk(
     }
   },
 );
+export const adminFetchSingleStudent = createAsyncThunk(
+  "students/adminFetchSingleStudent",
+  async (id) => {
+    console.log(id);
+    try {
+      const docRef = doc(db, "students", id);
+      const docSnap = await getDoc(docRef);
+      let studentData = {};
+      if (docSnap.exists()) {
+        studentData = { ...docSnap.data(), id: docSnap.id };
+      } else {
+        // docSnap.data() will be undefined in this case
+        console.log("No such document!");
+      }
+
+      if (studentData.createdDate) {
+        studentData.createdDate = serializeTimestamp(studentData.createdDate);
+      }
+      console.log(studentData);
+      return studentData;
+    } catch (error) {
+      console.error("Error fetching document:", error);
+      throw error;
+    }
+  },
+);
 
 const studentSlice = createSlice({
   name: "students",
@@ -233,6 +275,18 @@ const studentSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message || "";
       })
+      //admin single student
+      .addCase(adminFetchSingleStudent.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(adminFetchSingleStudent.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.student = action.payload;
+      })
+      .addCase(adminFetchSingleStudent.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "";
+      })
       // ADD
       .addCase(addStudent.pending, (state) => {
         state.status = "loading";
@@ -254,6 +308,24 @@ const studentSlice = createSlice({
         state.students.push(action.payload);
       })
       .addCase(adminAddStudent.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "";
+      })
+      // UPDATE ADMIN
+      .addCase(adminUpdateStudent.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(adminUpdateStudent.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const updatedStudent = action.payload;
+        const studentIndex = state.students.findIndex(
+          (student) => student.id === updatedStudent.id,
+        );
+        if (studentIndex !== -1) {
+          state.students[studentIndex] = updatedStudent;
+        }
+      })
+      .addCase(adminUpdateStudent.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "";
       });

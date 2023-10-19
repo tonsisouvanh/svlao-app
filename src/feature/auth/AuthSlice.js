@@ -48,7 +48,7 @@ export const signUp = createAsyncThunk(
 
         const docRef = await addDoc(collection(db, "students"), {
           userId: user.uid,
-          ...userData,
+          role: role,
         });
 
         await signOut(auth);

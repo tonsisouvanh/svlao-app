@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        "login-background": "url('assets/img/loginimg.jpg')",
+        "login-background": "url('assets/img/consule.jpg')",
       },
       fontFamily: {
         notosanslao: ["notosanslao", "sans-serif"],

@@ -362,9 +362,9 @@ export const themes = [
   // "business",
   // "acid",
   // "lemonade",
-  // "night",
+  "night",
   // "coffee",
-//   "winter",
+  // "winter",
 ];
 
 // USER DATA
@@ -661,7 +661,4 @@ export const scholarshipTypes = [
   },
 ];
 
-
-export const relationships = ["ພໍ່","ແມ່","ປ້າ","ອາວ","ອາ", ]
-
-
+export const relationships = ["ພໍ່", "ແມ່", "ປ້າ", "ອາວ", "ອາ"];

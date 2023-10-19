@@ -9,7 +9,8 @@ import Contact from "./Contact.jsx";
 import Documents from "./Documents.jsx";
 import Establishment from "./Establishment.jsx";
 import News from "./News.jsx";
-import Add from "./Add.jsx";
+import AddStudent from "./student/AddStudent.jsx";
+import EditStudent from "./student/EditStudent.jsx";
 import Signup from "./Signup.jsx";
 export {
   Dashboard,
@@ -23,6 +24,7 @@ export {
   Documents,
   Establishment,
   News,
-  Add,
+  AddStudent,
+  EditStudent,
   Signup,
 };

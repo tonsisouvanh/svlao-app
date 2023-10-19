@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../components/typography/ErrorMessage";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -111,6 +111,10 @@ const Signin = () => {
             </button>
           </div>
         </form>
+        <div>
+          <label className="label-text">No account?</label>
+          <Link to="/signup" className="link link-primary">Register now</Link>
+        </div>
       </div>
     </div>
   );
