@@ -3,15 +3,15 @@ import { theads } from "./data";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../ui/Spinner";
 import {
-  AiOutlineDelete,
-  AiOutlineEdit,
-  AiOutlineEye,
+  AiFillDelete,
+  AiFillEdit,
+  AiFillEye,
   AiOutlineMore,
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import EditStudent from "../../../page/student/EditStudent";
 
-const cellStyle = "whitespace-nowrap truncate";
+const cellStyle = "whitespace-nowrap truncate font-light";
 const headerStyle = "border-r-[0.1rem]";
 
 const StudentTable = ({ editToggle, setEditToggle, studentsProps }) => {
@@ -33,7 +33,7 @@ const StudentTable = ({ editToggle, setEditToggle, studentsProps }) => {
         <Spinner />
       ) : (
         <div className="overflow-x-auto ">
-          <table className="table table-sm font-notosanslao">
+          <table className="table table-md font-notosanslao">
             <thead className="">
               <tr className="">
                 <th></th>
@@ -63,17 +63,17 @@ const StudentTable = ({ editToggle, setEditToggle, studentsProps }) => {
                           className="btn btn-ghost btn-xs"
                         >
                           <a>
-                            <AiOutlineEdit />
+                            <AiFillEdit size={15} />
                           </a>
                         </li>
                         <li className="btn btn-ghost btn-xs">
                           <a>
-                            <AiOutlineDelete />
+                            <AiFillDelete size={15} />
                           </a>
                         </li>
                         <Link to={`/student-detail/${ele.id}`}>
                           <li className="btn btn-ghost btn-xs">
-                            <AiOutlineEye />
+                            <AiFillEye size={15} />
                           </li>
                         </Link>
                       </ul>

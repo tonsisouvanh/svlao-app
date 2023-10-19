@@ -7,6 +7,11 @@ import Unauthorized from "./public/Unauthorized";
 import StudentTable from "../components/table/student/StudentTable";
 import { BsGridFill, BsTable } from "react-icons/bs";
 import StudentGrid from "../components/grid/student/StudentGrid";
+import {
+  AiFillGooglePlusCircle,
+  AiFillPlusCircle,
+  AiFillPlusSquare,
+} from "react-icons/ai";
 
 const StudentList = () => {
   const { students, status: studentStatus } = useSelector(
@@ -46,49 +51,18 @@ const StudentList = () => {
   return userData?.role === "admin" ? (
     <>
       <section className="">
-        <div className="container mx-auto px-5 py-10">
-          <div className="">
+        <div className="container mx-auto">
+          <div className="mb-14">
             {editToggle ? null : (
               <label className="flex justify-center font-notosanslao text-4xl font-bold text-primary">
                 ລາຍຊື່ນັກຮຽນ
               </label>
             )}
           </div>
-          {editToggle ? null : (
-            <div>
-              {view === "table" ? (
-                <button onClick={toggleView} className="btn btn-sm">
-                  <BsTable />
-                </button>
-              ) : (
-                <button onClick={toggleView} className="btn btn-sm">
-                  <BsGridFill />
-                </button>
-              )}
-            </div>
-          )}
-
           <div className="">
             {editToggle ? null : (
               <>
-                <div className="mb-10 flex justify-end">
-                  <Link
-                    to={
-                      userData.role !== "admin"
-                        ? "#"
-                        : "/studentlist/add-student"
-                    }
-                  >
-                    <button
-                      className={`btn btn-primary font-notosanslao text-white ${
-                        userData.role !== "admin" && "btn-disabled"
-                      }`}
-                    >
-                      ຕື່ມຂໍ້ມູນນັກຮຽນ
-                    </button>
-                  </Link>
-                </div>
-                <div className="mb-10 flex w-full items-center justify-center">
+                <div className="mb-10 flex w-full items-center justify-between">
                   <div className="join flex items-center justify-center">
                     <div>
                       <div>
@@ -115,6 +89,39 @@ const StudentList = () => {
                         Search
                       </button>
                     </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="">
+                      <Link
+                        to={
+                          userData.role !== "admin"
+                            ? "#"
+                            : "/studentlist/add-student"
+                        }
+                      >
+                        <button
+                          data-tip="ເພີ່ມນັກຮຽນ"
+                          className={`btn btn-primary tooltip font-notosanslao text-white ${
+                            userData.role !== "admin" && "btn-disabled"
+                          }`}
+                        >
+                          <AiFillPlusCircle size={20} />
+                        </button>
+                      </Link>
+                    </div>
+                    {editToggle ? null : (
+                      <div className="">
+                        {view === "table" ? (
+                          <button onClick={toggleView} className="btn btn-md">
+                            <BsTable />
+                          </button>
+                        ) : (
+                          <button onClick={toggleView} className="btn btn-md">
+                            <BsGridFill />
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </>

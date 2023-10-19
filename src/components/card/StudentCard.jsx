@@ -1,4 +1,5 @@
-import React from "react";
+import PropTypes from "prop-types";
+
 import consule from "../../assets/img/consule.jpg";
 import { Link } from "react-router-dom";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
@@ -131,3 +132,7 @@ const StudentCard = ({ student }) => {
 };
 
 export default StudentCard;
+
+StudentCard.propTypes = {
+  student: PropTypes.object.isRequired, // You can specify the correct shape of the object if needed.
+};

@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../components/ui/Spinner";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { AiFillFileAdd } from "react-icons/ai";
 
 const selectInputStyle =
   "select select-sm select-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
@@ -86,15 +87,17 @@ const AddStudent = () => {
               </ul>
             </div>
           </div>
-          <div className="rounded bg-base-200 p-8 font-notosanslao shadow-md">
-            <h1 className="mb-10 flex items-center justify-center font-notosanslao text-4xl font-bold text-primary ">
+          <div className="rounded relative bg-base-200d p-8 font-notosanslao shadow-mdd">
+            <span className="absolute left-8 top-8">
+              <AiFillFileAdd size={40} />
+            </span>
+            <h1 className="mb-14 flex items-center justify-center font-notosanslao text-4xl font-bold text-primary ">
               ເພີ່ມນັກຮຽນ
             </h1>
             <form
               className="flex flex-col items-center"
               onSubmit={handleSubmit(handleAddStudent)}
             >
-              <div className="divider-base-100 divider"></div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* fullname */}
                 <div className="form-control w-full ">

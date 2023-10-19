@@ -8,17 +8,10 @@ import {
   relationships,
   scholarshipTypes,
 } from "../../data/data";
-import { useEffect, useState } from "react";
-import {
-  addStudent,
-  adminAddStudent,
-  adminFetchSingleStudent,
-  adminUpdateStudent,
-  fetchSingleStudent,
-} from "../../feature/student/StudentSlice";
+import { useState } from "react";
+import { adminUpdateStudent } from "../../feature/student/StudentSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../components/ui/Spinner";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { AiFillEdit } from "react-icons/ai";
 
@@ -31,7 +24,6 @@ const textInputStyle =
   "input input-sm input-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
 
 const EditStudent = ({ setEditToggle, editingStudent }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.students);
   const [degree, setDegree] = useState("");
@@ -92,18 +84,17 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
               </li>
             </ul>
           </div>
-          <div className="relative rounded bg-base-200 p-8 font-notosanslao shadow-md">
+          <div className="relative rounded bg-base-200d p-8 font-notosanslao shadow-mdd">
             <span className="absolute left-8 top-8">
               <AiFillEdit size={40} />
             </span>
-            <h1 className="mb-10 flex items-center justify-center font-notosanslao text-4xl font-bold text-primary ">
+            <h1 className="mb-14 flex items-center justify-center font-notosanslao text-4xl font-bold text-primary ">
               ແກ້ໄຂຂໍ້ມູນນັກຮຽນ
             </h1>
             <form
               className="flex flex-col items-center"
               onSubmit={handleSubmit(handleAddStudent)}
             >
-              <div className="divider-base-100 divider"></div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* fullname */}
                 <div className="form-control w-full ">

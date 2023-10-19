@@ -1,7 +1,5 @@
 import { useSelector } from "react-redux";
 import InfoModal from "../components/modal/InfoModal";
-import { AiFillInfoCircle } from "react-icons/ai";
-import { auth } from "../firebase";
 
 const News = () => {
   // const userData = JSON.parse(sessionStorage.getItem("userData")) || {};
@@ -19,8 +17,8 @@ const News = () => {
       ) : null}
 
       <section className="body-font overflow-hidden">
-        <div className="container mx-auto px-5 py-24">
-          <div className="divide-base-900 -my-8 divide-y-2">
+        <div className="container mx-auto">
+          <div className="divide-base-900 divide-y-2">
             <h1 className="title-font mb-4 text-center font-notosanslao text-2xl font-bold text-primary sm:text-3xl">
               ແຈ້ງການຕ່າງໆ
             </h1>

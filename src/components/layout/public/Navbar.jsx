@@ -23,6 +23,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
 
   return (
     <header className="bg-active sticky top-0 z-[999] flex w-full bg-base-100">
+    {/* <header className="bg-active sticky top-0 z-[999] flex w-full bg-base-100"> */}
       <div className="flex w-full items-center justify-between px-4 py-4 shadow-md md:px-6 2xl:px-11">
         <button
           className="group btn btn-sm flex flex-col items-center justify-center rounded border p-1 lg:hidden"
