@@ -113,11 +113,11 @@ const StudentList = () => {
                       <div className="">
                         {view === "table" ? (
                           <button onClick={toggleView} className="btn btn-md">
-                            <BsTable />
+                            <BsGridFill />
                           </button>
                         ) : (
                           <button onClick={toggleView} className="btn btn-md">
-                            <BsGridFill />
+                            <BsTable />
                           </button>
                         )}
                       </div>
