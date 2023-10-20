@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../feature/auth/AuthSlice";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { fetchStudents } from "../feature/student/StudentSlice";
 const initialState = {
   email: "",
   password: "",
@@ -27,6 +28,10 @@ const Signin = () => {
     const userInput = { ...data };
     try {
       await dispatch(signIn(userInput));
+      const user = JSON.parse(sessionStorage.getItem("userData")) || {};
+      if (user.role === "admin" || user.role === "assistant") {
+        dispatch(fetchStudents());
+      }
     } catch (error) {
       console.error("Sign-in error =>", error);
     }
@@ -83,7 +88,10 @@ const Signin = () => {
               <input
                 {...register("password", {
                   required: "Password is required",
-                  minLength: 6,
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
                 })}
                 type={showPass ? "text" : "password"}
                 className="input input-bordered w-full max-w-xs"
@@ -113,7 +121,9 @@ const Signin = () => {
         </form>
         <div>
           <label className="label-text">No account?</label>
-          <Link to="/signup" className="link link-primary">Register now</Link>
+          <Link to="/signup" className="link-primary link">
+            Register now
+          </Link>
         </div>
       </div>
     </div>

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import StudentCard from "../../card/StudentCard";
 
 const StudentGrid = ({ studentsProps }) => {
-  console.log(studentsProps);
   return (
     <div>
       <div className="grid grid-cols-1 gap-4 font-notosanslao sm:grid-cols-2 md:grid-cols-3">

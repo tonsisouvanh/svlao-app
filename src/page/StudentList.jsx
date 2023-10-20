@@ -1,23 +1,19 @@
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchStudents } from "../feature/student/StudentSlice";
 import Spinner from "../components/ui/Spinner";
 import Unauthorized from "./public/Unauthorized";
 import StudentTable from "../components/table/student/StudentTable";
 import { BsGridFill, BsTable } from "react-icons/bs";
 import StudentGrid from "../components/grid/student/StudentGrid";
-import {
-  AiFillGooglePlusCircle,
-  AiFillPlusCircle,
-  AiFillPlusSquare,
-} from "react-icons/ai";
+import { AiFillPlusCircle } from "react-icons/ai";
 
 const StudentList = () => {
+  // const dispatch = useDispatch();
   const { students, status: studentStatus } = useSelector(
     (state) => state.students,
   );
-  const dispatch = useDispatch();
+  // const [studentData, setStudentData] = useState(students);
   const [editToggle, setEditToggle] = useState(false);
   const userData = JSON.parse(sessionStorage.getItem("userData")) || {};
 
@@ -26,9 +22,13 @@ const StudentList = () => {
     setView((prevView) => (prevView === "table" ? "grid" : "table"));
   };
 
-  const handleDeleteStudent = (id) => {
-    return;
-  };
+  // const handleReload = async () => {
+  //   await dispatch(fetchStudents());
+  //   setStudentData(students);
+  // };
+  // const handleDeleteStudent = (id) => {
+  //   return;
+  // };
 
   useEffect(() => {
     const savedView = localStorage.getItem("viewPreference");
@@ -41,17 +41,21 @@ const StudentList = () => {
     localStorage.setItem("viewPreference", view);
   }, [view]);
 
-  useEffect(() => {
-    dispatch(fetchStudents());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchStudents());
+  //   if (studentStatus === "succeeded" && students && students.length > 0)
+  //     setStudentData(students);
+  // }, []);
   if (studentStatus === "loading") {
     return <Spinner />;
   }
-
+  if (studentStatus === "failed") {
+    return <div>Error loading students</div>;
+  }
   return userData?.role === "admin" ? (
     <>
       <section className="">
-        <div className="container mx-auto">
+        <div className="container mx-auto p-4">
           <div className="mb-14">
             {editToggle ? null : (
               <label className="flex justify-center font-notosanslao text-4xl font-bold text-primary">
@@ -62,34 +66,25 @@ const StudentList = () => {
           <div className="">
             {editToggle ? null : (
               <>
-                <div className="mb-10 flex w-full items-center justify-between">
-                  <div className="join flex items-center justify-center">
-                    <div>
-                      <div>
-                        <input
-                          className="input join-item input-bordered bg-base-300"
-                          placeholder="Search"
-                        />
-                      </div>
-                    </div>
-                    <select className="select join-item select-bordered bg-base-300">
-                      <option disabled defaultValue={10}>
-                        Filter
-                      </option>
-                      <option>10</option>
-                      <option>20</option>
-                      <option>30</option>
-                      <option>40</option>
-                      <option>50</option>
-                      <option>All</option>
-                    </select>
-                    <div className="indicator">
-                      {/* <span className="badge indicator-item badge-secondary">new</span> */}
-                      <button className="btn join-item select-bordered   bg-base-300 ">
-                        Search
-                      </button>
-                    </div>
-                  </div>
+                <div className="mb-10 flex w-full items-center justify-between gap-2">
+                  {/* <Searchbar
+                      filter={globalFilter}
+                      setFilter={setGlobalFilter}
+                    />
+                    <Filter
+                      filter={globalFilter}
+                      setFilter={setGlobalFilter}
+                      options={scholarshipTypes}
+                      title={"ປະເພດທຶນ"}
+                      fieldName={"name"}
+                    />
+                    <Filter
+                      filter={globalFilter}
+                      setFilter={setGlobalFilter}
+                      options={mockDegrees}
+                      title={"ລະດັບການສຶກສາ"}
+                      fieldName={"laoDegree"}
+                    /> */}
                   <div className="flex items-center gap-2">
                     <div className="">
                       <Link
@@ -122,6 +117,15 @@ const StudentList = () => {
                         )}
                       </div>
                     )}
+                    {/* <div
+                        onClick={handleReload}
+                        className="tooltip tooltip-top"
+                        data-tip="Reload data"
+                      >
+                        <button className="btn">
+                          <AiOutlineReload />
+                        </button>
+                      </div> */}
                   </div>
                 </div>
               </>
@@ -133,7 +137,6 @@ const StudentList = () => {
             <StudentTable
               editToggle={editToggle}
               setEditToggle={setEditToggle}
-              studentsProps={students}
             />
           )}
         </div>

@@ -4,12 +4,13 @@ import studentsReducer, {
   fetchSingleStudent,
 } from "../feature/student/StudentSlice";
 import { fetchStudents } from "../feature/student/StudentSlice";
+console.log("store");
 export const store = configureStore({
   reducer: {
     user: authReducer,
     students: studentsReducer,
   },
 });
-// store.dispatch(fetchStudents());
-// store.dispatch(fetchSingleStudent());
+
+
 export default store;

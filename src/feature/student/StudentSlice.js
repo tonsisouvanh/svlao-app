@@ -12,7 +12,6 @@ import {
 } from "firebase/firestore";
 import toast from "react-hot-toast";
 import { auth, db } from "../../firebase";
-import { signUp } from "../auth/AuthSlice";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 // Function to serialize Firebase Timestamp to JavaScript Date
 const serializeTimestamp = (timestamp) => {
@@ -182,7 +181,9 @@ export const fetchStudents = createAsyncThunk(
       });
       return students;
     } catch (error) {
-      console.log(error);
+      const errorMessage = error.message;
+      toast.error(errorMessage);
+      throw error;
     }
   },
 );
@@ -209,7 +210,8 @@ export const fetchSingleStudent = createAsyncThunk(
       });
       return studentData[0] || {};
     } catch (error) {
-      console.error("Error fetching document:", error);
+      const errorMessage = error.message;
+      toast.error(errorMessage);
       throw error;
     }
   },
@@ -235,7 +237,8 @@ export const adminFetchSingleStudent = createAsyncThunk(
       console.log(studentData);
       return studentData;
     } catch (error) {
-      console.error("Error fetching document:", error);
+      const errorMessage = error.message;
+      toast.error(errorMessage);
       throw error;
     }
   },
