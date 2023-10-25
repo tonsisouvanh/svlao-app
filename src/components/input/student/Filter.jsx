@@ -1,6 +1,6 @@
 const Filter = ({ filter, setFilter, options, title, fieldName }) => {
   return (
-    <div className="form-control w-full max-w-xs">
+    <div className="form-control max-w-xs w-fit">
       <select
         value={filter || ""}
         onChange={(e) => setFilter(e.target.value)}

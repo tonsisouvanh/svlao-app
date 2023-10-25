@@ -20,15 +20,15 @@ const InfoModal = ({ title, modaltype, desc, initialValue = false }) => {
   };
   return (
     <div className={`modal ${!openModal ? null : "modal-open"}`}>
-      <div className="modal-box">
-        <div className="flex items-center gap-2 font-notosanslao">
+      <div className="modal-box font-notosanslao">
+        <div className="flex items-center gap-2">
           <div>{getIcon(modaltype)}</div>
           <h3 className="text-xl font-bold">{title}</h3>
         </div>
         <p className="py-4">{desc}</p>
         <div className="modal-action">
           <Link className="btn btn-primary" to={`/profile/${1}`}>
-            Go to profile
+            ອັບເດດ
           </Link>
           <button onClick={() => setOpenModal(false)} className="btn">
             Close!

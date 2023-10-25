@@ -1,32 +1,29 @@
 import { useState, useEffect } from "react";
 import { themes } from "../../../data/data";
-import { AiFillBell } from "react-icons/ai";
+import { AiFillBell, AiFillInfoCircle } from "react-icons/ai";
 import { TbShirtFilled } from "react-icons/tb";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { BsFillPersonFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { GiCupcake } from "react-icons/gi";
 import { BiSolidMoon, BiSolidSun } from "react-icons/bi";
-
 
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light",
   );
-  const student = JSON.parse(sessionStorage.getItem("studentData")) || null;
+  const userData = JSON.parse(sessionStorage.getItem("userData")) || null;
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
     const localTheme = localStorage.getItem("theme");
     document.querySelector("html").setAttribute("data-theme", localTheme);
   }, [theme]);
-
   return (
     <header className="bg-active sticky top-0 z-[999] flex w-full bg-base-100">
-    {/* <header className="bg-active sticky top-0 z-[999] flex w-full bg-base-100"> */}
+      {/* <header className="bg-active sticky top-0 z-[999] flex w-full bg-base-100"> */}
       <div className="flex w-full items-center justify-between px-4 py-4 shadow-md md:px-6 2xl:px-11">
         <button
-          className="group btn btn-sm flex flex-col items-center justify-center rounded border p-1 lg:hidden"
+          className="group btn btn-sm flex flex-col items-center justify-center rounded border p-1 lg:invisible"
           onClick={(e) => {
             e.stopPropagation();
             setSidebarOpen(!sidebarOpen);
@@ -72,41 +69,52 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div className="dropdown-end dropdown">
             <div className="indicator">
-              {/* {!student && (
-              <span className="badge indicator-item badge-secondary animate-bounce">
-                <AiFillBell />
-              </span>
-            )} */}
+              {userData.userStatus === "pending" && (
+                <span className="badge indicator-item badge-secondary badge-xs animate-bounce">
+                  <AiFillBell size={8} />
+                </span>
+              )}
               <label
                 tabIndex={0}
-                className="btn rounded-btn btn-sm m-1 font-notosanslao"
+                className="btn btn-circle btn-ghost btn-sm m-1 font-notosanslao"
               >
-                <BsFillPersonFill />
+                <div className="avatar placeholder">
+                  <div className="w-8 rounded-full bg-neutral-focus text-neutral-content">
+                    <span className="text-md">{userData.email[0].toUpperCase()}</span>
+                  </div>
+                </div>
               </label>
+              {/* <div className="avatar placeholder online">
+                <div className="w-8 rounded-full bg-neutral-focus text-neutral-content">
+                  <span className="text-md">{userData.email[0]}</span>
+                </div>
+              </div> */}
             </div>
 
             <ul
               tabIndex={0}
-              className="menu dropdown-content rounded-box z-[1] w-fit space-y-2 bg-base-100 p-2 shadow"
+              className="menu border border-primary-focus dropdown-content rounded-box z-[1] w-fit space-y-2 bg-base-100 p-2 font-notosanslao shadow"
             >
               <Link
-                className={`btn btn-ghost btn-xs relative whitespace-nowrap`}
-                //   className={`btn relative btn-ghost btn-xs whitespace-nowrap
+                className={`btn btn-ghost btn-sm relative whitespace-nowrap`}
+                //   className={`btn relative btn-ghost btn-sm whitespace-nowrap
                 //   ${!student && 'animate-pulse bg-secondary text-white'}`
                 // }
-                to={`/profile/${1}`}
+                to={`/profile/${userData.role}`}
               >
                 Profile
-                {/* {!student && <AiFillBell className="absolute -left-1"/>} */}
+                {userData.userStatus === "pending" && (
+                  <AiFillInfoCircle className="absolute top-0 right-0" />
+                )}
               </Link>
               <Link
-                className="btn btn-ghost btn-xs whitespace-nowrap"
+                className="btn btn-ghost btn-sm whitespace-nowrap"
                 to="/profile"
               >
                 Setting
               </Link>
               <Link
-                className="btn btn-ghost btn-xs whitespace-nowrap"
+                className="btn btn-ghost btn-sm whitespace-nowrap"
                 to="/profile"
               >
                 Log out

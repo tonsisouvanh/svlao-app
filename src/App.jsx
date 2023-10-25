@@ -12,6 +12,7 @@ import {
   Signup,
   AddStudent,
   EditStudent,
+  StudentProfile,
 } from "./page";
 import RootLayoutPublic from "./components/layout/public/rootLayoutPublic";
 import Test from "./page/Test";
@@ -19,7 +20,7 @@ import { Toaster } from "react-hot-toast";
 import PrivateRoute from "./route/PrivateRoute";
 
 function App() {
-  console.log('app')
+  console.log("app");
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -33,7 +34,7 @@ function App() {
             <Route path="/dashboard/student-chart" element={<Dashboard />} />
             <Route path="/student-detail/:id" element={<StudentDetail />} />
             <Route path="/dashboard/studentlist" element={<StudentList />} />
-            <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/profile/:id" element={<StudentProfile />} />
             <Route path="/intro" element={<Intro />} />
             <Route path="/studentlist/add-student" element={<AddStudent />} />
           </Route>

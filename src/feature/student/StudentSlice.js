@@ -13,11 +13,13 @@ import {
 import toast from "react-hot-toast";
 import { auth, db } from "../../firebase";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { initialStudentInput } from "../../data/initialState";
 // Function to serialize Firebase Timestamp to JavaScript Date
 const serializeTimestamp = (timestamp) => {
   const date = timestamp.toDate();
   return date.toISOString();
 };
+
 // ADMIN ADD STUDENT
 export const adminAddStudent = createAsyncThunk(
   "students/adminAddStudent",
@@ -113,6 +115,25 @@ export const adminUpdateStudent = createAsyncThunk(
       const studentRef = doc(db, "students", updatedStudent.id || "");
 
       // Update the product document in Firestore
+      await setDoc(studentRef, { ...updatedStudent, createdDate: currentDate });
+
+      toast.success("Update student successfully");
+      return updatedStudent;
+    } catch (error) {
+      const errorMessage = error.message;
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage);
+    }
+  },
+);
+export const studentUpdateStudent = createAsyncThunk(
+  "students/studentUpdateStudent",
+  async (updatedStudent, { rejectWithValue }) => {
+    const currentDate = new Date();
+
+    try {
+      const studentRef = doc(db, "students", updatedStudent.id || "");
+
       await setDoc(studentRef, { ...updatedStudent, createdDate: currentDate });
 
       toast.success("Update student successfully");
@@ -248,7 +269,7 @@ const studentSlice = createSlice({
   name: "students",
   initialState: {
     students: [],
-    student: {},
+    student: initialStudentInput,
     status: "idle" | "loading" | "succeeded" | "failed",
     error: "",
   },
@@ -329,6 +350,18 @@ const studentSlice = createSlice({
         }
       })
       .addCase(adminUpdateStudent.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "";
+      })
+      // STUDENT UPDATE
+      .addCase(studentUpdateStudent.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(studentUpdateStudent.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.student = action.payload;
+      })
+      .addCase(studentUpdateStudent.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "";
       });

@@ -4,14 +4,15 @@ import InfoModal from "../components/modal/InfoModal";
 const News = () => {
   // const userData = JSON.parse(sessionStorage.getItem("userData")) || {};
   const { user } = useSelector((state) => state.user);
+  console.log("herrrr", user);
   return (
     <div>
-      {user?.updateRequired && user?.role === "student" ? (
+      {user?.userStatus === "pending" && user?.role === "student" ? (
         <InfoModal
           title={"ແຈ້ງເຕືອນ"}
           modaltype={"info"}
           conditionData={user}
-          desc={"This modal works with a hidden checkbox!"}
+          desc={"ກາລຸນນາອັບເດດຂໍ້ມູນ"}
           initialValue={true}
         />
       ) : null}

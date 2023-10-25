@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Spinner from "../components/ui/Spinner";
 import Unauthorized from "./public/Unauthorized";
@@ -7,9 +7,10 @@ import StudentTable from "../components/table/student/StudentTable";
 import { BsGridFill, BsTable } from "react-icons/bs";
 import StudentGrid from "../components/grid/student/StudentGrid";
 import { AiFillPlusCircle } from "react-icons/ai";
+import { fetchStudents } from "../feature/student/StudentSlice";
 
 const StudentList = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { students, status: studentStatus } = useSelector(
     (state) => state.students,
   );
@@ -41,11 +42,9 @@ const StudentList = () => {
     localStorage.setItem("viewPreference", view);
   }, [view]);
 
-  // useEffect(() => {
-  //   dispatch(fetchStudents());
-  //   if (studentStatus === "succeeded" && students && students.length > 0)
-  //     setStudentData(students);
-  // }, []);
+  useEffect(() => {
+    dispatch(fetchStudents());
+  }, []);
   if (studentStatus === "loading") {
     return <Spinner />;
   }

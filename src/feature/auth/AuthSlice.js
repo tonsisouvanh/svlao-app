@@ -43,7 +43,7 @@ export const signUp = createAsyncThunk(
 
         await setDoc(doc(db, "users", user.uid), {
           ...userData,
-          updateRequired: true,
+          userStatus: "pending",
         });
 
         const docRef = await addDoc(collection(db, "students"), {
@@ -67,46 +67,40 @@ export const signIn = createAsyncThunk(
   "auth/signIn",
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      // Step 1: Sign in the user using Firebase Authentication
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
         password,
       );
       const user = userCredential.user;
-      // Step 2: Fetch additional user data (e.g., user role)
       const userDoc = await getDoc(doc(db, "users", user.uid));
-      const userData = userDoc.data();
+      let userData = { ...userDoc.data() };
 
-      // Set session persistence
       await setPersistence(auth, browserSessionPersistence);
 
-      // Step 3: Fetch student's document data
-      const studentsCollectionRef = collection(db, "students");
-      // const querySnapshot = await getDocs(
-      //   query(studentsCollectionRef, where("userId", "==", user.uid)),
-      // );
+      if (userData.role === "student") {
+        const studentsCollectionRef = collection(db, "students");
+        const querySnapshot = await getDocs(
+          query(studentsCollectionRef, where("userId", "==", user.uid)),
+        );
 
-      // if (!querySnapshot.empty) {
-      //   // Assume there's only one matching document
-      //   const studentDocument = querySnapshot.docs[0];
+        if (!querySnapshot.empty) {
+          const studentDocument = querySnapshot.docs[0];
 
-      //   // Get the student's data from the document
-      //   const studentData = {
-      //     documentId: studentDocument.id,
-      //     ...studentDocument.data(),
-      //   };
+          const studentData = {
+            documentId: studentDocument.id,
+            ...studentDocument.data(),
+          };
+          userData = { ...userData, userStatus: studentData.userStatus };
 
-      //   // Step 4: Store student data in session storage
-      //   sessionStorage.setItem("studentData", JSON.stringify(studentData));
-      // } else {
-      //   // Handle the case where the student document wasn't found.
-      // }
-
-      // Step 5: Return the user data to update the Redux state
+          sessionStorage.setItem("userData", JSON.stringify(userData));
+        } else {
+          // toast.warning(404, "Student not found");
+        }
+      }
       sessionStorage.setItem("userData", JSON.stringify(userData));
-      toast.success("Signed in successfully");
 
+      toast.success("Signed in successfully");
       return userData;
     } catch (error) {
       if (error && error.code === "auth/invalid-login-credentials") {

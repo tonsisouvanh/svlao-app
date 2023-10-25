@@ -7,6 +7,7 @@ import {
   mockUniversity,
   relationships,
   scholarshipTypes,
+  userStatus,
 } from "../../data/data";
 import { useState } from "react";
 import { initialStudentInput } from "../../data/initialState";
@@ -87,7 +88,7 @@ const AddStudent = () => {
               </ul>
             </div>
           </div>
-          <div className="rounded relative bg-base-200d p-8 font-notosanslao shadow-mdd">
+          <div className="bg-base-200d shadow-mdd relative rounded p-8 font-notosanslao">
             <span className="absolute left-8 top-8">
               <AiFillFileAdd size={40} />
             </span>
@@ -217,7 +218,7 @@ const AddStudent = () => {
                       className={selectInputStyle}
                     >
                       {mockPerminentAddresses.map((item) => (
-                        <option key={item.id} value={item.id}>
+                        <option key={item.id} value={item.laoName}>
                           {item.laoName}
                         </option>
                       ))}
@@ -564,6 +565,25 @@ const AddStudent = () => {
                           </label>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                  {/* // ~~~~~~~~~~~ status Check box ~~~~~~~~~~  */}
+                  <div>
+                    <div className="form-control">
+                      {userStatus.map((ele) => (
+                        <label key={ele} className="label cursor-pointer">
+                          <span className="label-text">{ele}</span>
+                          <input
+                            {...register("status", {
+                              required: "Please fill up",
+                            })}
+                            type="radio"
+                            name="radio-10"
+                            className="radio checked:bg-red-500"
+                            value={ele}
+                          />
+                        </label>
+                      ))}
                     </div>
                   </div>
                 </div>

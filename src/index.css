@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+.btn {
+  text-transform: none;
+}
 @font-face {
   font-family: "notosanslao";
   font-style: normal;

@@ -1,8 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 import Spinner from "../../ui/Spinner";
 import EditStudent from "../../../page/student/EditStudent";
 import { useGlobalFilter, useSortBy, useTable } from "react-table";
+import Filter from "../../input/student/Filter";
+import Searchbar from "../../input/student/Searchbar";
 import {
   AiFillCaretDown,
   AiFillCaretUp,
@@ -12,14 +14,13 @@ import {
   AiOutlineMore,
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { fetchStudents } from "../../../feature/student/StudentSlice";
+import { mockDegrees, scholarshipTypes } from "../../../data/data";
 
 const cellStyle = "whitespace-nowrap truncate font-light";
 // const headerStyle = "border-r-[0.1rem]";
 
 const StudentTable = ({ editToggle, setEditToggle }) => {
   const { status, students } = useSelector((state) => state.students);
-  const dispatch = useDispatch();
 
   const data = useMemo(() => students, []);
   const columns = useMemo(
@@ -184,6 +185,7 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
   if (status === "loading") {
     return <Spinner />;
   }
+  console.log(students);
   return (
     <>
       {editToggle ? (
@@ -195,6 +197,23 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
         <Spinner />
       ) : (
         <div className="overflow-x-auto ">
+          <div className="flex items-center gap-2">
+            <Searchbar filter={globalFilter} setFilter={setGlobalFilter} />
+            <Filter
+              filter={globalFilter}
+              setFilter={setGlobalFilter}
+              options={scholarshipTypes}
+              title={"ປະເພດທຶນ"}
+              fieldName={"name"}
+            />
+            <Filter
+              filter={globalFilter}
+              setFilter={setGlobalFilter}
+              options={mockDegrees}
+              title={"ລະດັບການສຶກສາ"}
+              fieldName={"laoDegree"}
+            />
+          </div>
           <table
             {...getTableProps()}
             className="table table-md font-notosanslao"
@@ -283,7 +302,6 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
                 })}
             </tbody>
           </table>
-          <div>{JSON.stringify(students)}</div>
         </div>
       )}
     </>

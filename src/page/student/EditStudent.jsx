@@ -7,6 +7,7 @@ import {
   mockUniversity,
   relationships,
   scholarshipTypes,
+  userStatus,
 } from "../../data/data";
 import { useState } from "react";
 import { adminUpdateStudent } from "../../feature/student/StudentSlice";
@@ -60,6 +61,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
     if (data) {
       const studentData = { ...data };
       dispatch(adminUpdateStudent(studentData));
+      setEditToggle(false);
     } else toast.warning("Input data not valid");
   };
 
@@ -67,7 +69,6 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
     reset();
     setEditToggle(false);
   };
-
   return (
     <>
       {status === "loading" ? (
@@ -84,7 +85,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
               </li>
             </ul>
           </div>
-          <div className="relative rounded bg-base-200d p-8 font-notosanslao shadow-mdd">
+          <div className="bg-base-200d shadow-mdd relative rounded p-8 font-notosanslao">
             <span className="absolute left-8 top-8">
               <AiFillEdit size={40} />
             </span>
@@ -96,6 +97,26 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
               onSubmit={handleSubmit(handleAddStudent)}
             >
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {/* // ~~~~~~~~~~~ status Check box ~~~~~~~~~~  */}
+                <div>
+                  <label className={mainLabelStyle}>User Status:</label>
+                  <select
+                    {...register("userStatus", {
+                      requiredd: "Please select",
+                    })}
+                    className={selectInputStyle}
+                  >
+                    {userStatus.map((ele) => (
+                      <option key={ele} value={ele}>
+                        {ele}
+                      </option>
+                    ))}
+                  </select>
+                  <ErrorMessage
+                    styling="mt-3 sm:text-md"
+                    error={errors.userStatus}
+                  />
+                </div>
                 {/* fullname */}
                 <div className="form-control w-full ">
                   <label className={mainLabelStyle}>ຊື່ລາວ:</label>
@@ -104,7 +125,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                       required: "Please fill up",
                     })}
                     type="text"
-                    placeholder="ຕື່ມຊື່ລາວ" // Corrected the property name here
+                    placeholder="ຕື່ມຊື່ລາວ"
                     className={textInputStyle}
                   />
                   <ErrorMessage
@@ -116,7 +137,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                     <input
                       {...register("fullname.nickName")}
                       type="text"
-                      placeholder="ຕື່ມຊື່ຫລິ້ນ" // Corrected the property name here
+                      placeholder="ຕື່ມຊື່ຫລິ້ນ"
                       className={textInputStyle}
                     />
                     <ErrorMessage
@@ -136,7 +157,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                         required: "Please fill up",
                       })}
                       type="text"
-                      placeholder="ຕື່ມຊື່" // Corrected the property name here
+                      placeholder="ຕື່ມຊື່"
                       className={textInputStyle}
                     />
                     <ErrorMessage
@@ -152,7 +173,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                         required: "Please fill up",
                       })}
                       type="text"
-                      placeholder="ຕື່ມນາມສະກຸນ" // Corrected the property name here
+                      placeholder="ຕື່ມນາມສະກຸນ"
                       className={textInputStyle}
                     />
                     <ErrorMessage
@@ -168,7 +189,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                   <input
                     {...register("studentId")}
                     type="text"
-                    placeholder="MSSV" // Corrected the property name here
+                    placeholder="MSSV"
                     className={textInputStyle}
                   />
                 </div>
@@ -179,7 +200,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                       requiredd: "Please fill up",
                     })}
                     type="date"
-                    placeholder="Date of birth" // Corrected the property name here
+                    placeholder="Date of birth"
                     className={textInputStyle}
                   />
                   <ErrorMessage
@@ -214,7 +235,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                       className={selectInputStyle}
                     >
                       {mockPerminentAddresses.map((item) => (
-                        <option key={item.id} value={item.id}>
+                        <option key={item.id} value={item.laoName}>
                           {item.laoName}
                         </option>
                       ))}
@@ -232,7 +253,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                       requiredd: "Please fill up",
                     })}
                     type="text"
-                    placeholder="KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương" // Corrected the property name here
+                    placeholder="KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương"
                     className={textInputStyle}
                   />
                   <ErrorMessage

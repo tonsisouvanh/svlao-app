@@ -12,12 +12,14 @@ import News from "./News.jsx";
 import AddStudent from "./student/AddStudent.jsx";
 import EditStudent from "./student/EditStudent.jsx";
 import Signup from "./Signup.jsx";
+import StudentProfile from "./student/StudentProfile.jsx";
 export {
   Dashboard,
   StudentDetail,
   NotFoundPage,
   StudentList,
   Profile,
+  StudentProfile,
   Intro,
   Signin,
   Contact,

@@ -107,214 +107,6 @@ export const data = [
     lttt: "ABC",
     link: "www.cloudinary.com",
   },
-  // {
-  //   id: "5",
-  //   name: {
-  //     nameLao: "BounmyDola",
-  //     nameEnglist: "BounmyDola",
-  //   },
-  //   gender: "male",
-
-  //   major: "CNTT",
-  //   img: "https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg",
-  //   age: 23,
-  //   address: "KTXDHQG KHU B",
-  //   school: "DHSPKT",
-  //   level: 4,
-
-  //   phone: {
-  //     phoneLao: "02058445543",
-  //     phoneViet: "0870513122",
-  //   },
-  //   province: "SVK",
-  //   subject: "CNTT",
-  //   lt: "HBNN",
-  //   ltt: "NBVN",
-  //   lttt: "ABC",
-  //   link: "www.cloudinary.com",
-  // },
-  // {
-  //   id: "6",
-  //   name: {
-  //     nameLao: "BounmyDola",
-  //     nameEnglist: "BounmyDola",
-  //   },
-  //   gender: "male",
-
-  //   major: "CNTT",
-  //   img: "https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg",
-  //   age: 23,
-  //   address: "KTXDHQG KHU B",
-  //   school: "DHSPKT",
-  //   level: 4,
-
-  //   phone: {
-  //     phoneLao: "02058445543",
-  //     phoneViet: "0870513122",
-  //   },
-  //   province: "SVK",
-  //   subject: "CNTT",
-  //   lt: "HBNN",
-  //   ltt: "NBVN",
-  //   lttt: "ABC",
-  //   link: "www.cloudinary.com",
-  // },
-  // {
-  //   id: "7",
-  //   name: {
-  //     nameLao: "BounmyDola",
-  //     nameEnglist: "BounmyDola",
-  //   },
-  //   gender: "male",
-
-  //   major: "CNTT",
-  //   img: "https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg",
-  //   age: 23,
-  //   address: "KTXDHQG KHU B",
-  //   school: "DHSPKT",
-  //   level: 4,
-
-  //   phone: {
-  //     phoneLao: "02058445543",
-  //     phoneViet: "0870513122",
-  //   },
-  //   province: "SVK",
-  //   subject: "CNTT",
-  //   lt: "HBNN",
-  //   ltt: "NBVN",
-  //   lttt: "ABC",
-  //   link: "www.cloudinary.com",
-  // },
-  // {
-  //   id: "8",
-  //   name: {
-  //     nameLao: "BounmyDola",
-  //     nameEnglist: "BounmyDola",
-  //   },
-  //   gender: "male",
-
-  //   major: "CNTT",
-  //   img: "https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg",
-  //   age: 23,
-  //   address: "KTXDHQG KHU B",
-  //   school: "UEL",
-  //   level: 4,
-
-  //   phone: {
-  //     phoneLao: "02058445543",
-  //     phoneViet: "0870513122",
-  //   },
-  //   province: "SVK",
-  //   subject: "CNTT",
-  //   lt: "HBNN",
-  //   ltt: "NBVN",
-  //   lttt: "ABC",
-  //   link: "www.cloudinary.com",
-  // },
-  // {
-  //   id: "9",
-  //   name: {
-  //     nameLao: "BounmyDola",
-  //     nameEnglist: "BounmyDola",
-  //   },
-  //   gender: "male",
-
-  //   major: "CNTT",
-  //   img: "https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg",
-  //   age: 23,
-  //   address: "KTXDHQG KHU B",
-  //   school: "UEL",
-  //   level: 4,
-
-  //   phone: {
-  //     phoneLao: "02058445543",
-  //     phoneViet: "0870513122",
-  //   },
-  //   province: "SVK",
-  //   subject: "CNTT",
-  //   lt: "HBNN",
-  //   ltt: "NBVN",
-  //   lttt: "ABC",
-  //   link: "www.cloudinary.com",
-  // },
-  // {
-  //   id: "10",
-  //   name: {
-  //     nameLao: "BounmyDola",
-  //     nameEnglist: "BounmyDola",
-  //   },
-  //   gender: "male",
-
-  //   major: "CNTT",
-  //   img: "https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg",
-  //   age: 23,
-  //   address: "KTXDHQG KHU B",
-  //   school: "DHSPKT",
-  //   level: 4,
-
-  //   phone: {
-  //     phoneLao: "02058445543",
-  //     phoneViet: "0870513122",
-  //   },
-  //   province: "SVK",
-  //   subject: "CNTT",
-  //   lt: "HBNN",
-  //   ltt: "NBVN",
-  //   lttt: "ABC",
-  //   link: "www.cloudinary.com",
-  // },
-  // {
-  //   id: "11",
-  //   name: {
-  //     nameLao: "BounmyDola",
-  //     nameEnglist: "BounmyDola",
-  //   },
-  //   gender: "male",
-
-  //   major: "CNTT",
-  //   img: "https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg",
-  //   age: 23,
-  //   address: "KTXDHQG KHU B",
-  //   school: "UEF",
-  //   level: 4,
-
-  //   phone: {
-  //     phoneLao: "02058445543",
-  //     phoneViet: "0870513122",
-  //   },
-  //   province: "SVK",
-  //   subject: "CNTT",
-  //   lt: "HBNN",
-  //   ltt: "NBVN",
-  //   lttt: "ABC",
-  //   link: "www.cloudinary.com",
-  // },
-  // {
-  //   id: "12",
-  //   name: {
-  //     nameLao: "BounmyDola",
-  //     nameEnglist: "BounmyDola",
-  //   },
-  //   gender: "male",
-
-  //   major: "CNTT",
-  //   img: "https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg",
-  //   age: 23,
-  //   address: "KTXDHQG KHU B",
-  //   school: "UEF",
-  //   level: 4,
-
-  //   phone: {
-  //     phoneLao: "02058445543",
-  //     phoneViet: "0870513122",
-  //   },
-  //   province: "SVK",
-  //   subject: "CNTT",
-  //   lt: "HBNN",
-  //   ltt: "NBVN",
-  //   lttt: "ABC",
-  //   link: "www.cloudinary.com",
-  // },
 ];
 export const university = [
   {
@@ -335,37 +127,7 @@ export const university = [
   },
 ];
 
-export const themes = [
-  // "light",
-  "cupcake",
-  // "bumblebee",
-  // "emerald",
-  // "corporate",
-  // "synthwave",
-  // "retro",
-  // "dark",
-  // "cyberpunk",
-  // "valentine",
-  // "halloween",
-  // "garden",
-  // "forest",
-  //   "aqua",
-  "lofi",
-  // "pastel",
-  // "fantasy",
-  // "wireframe",
-  // "black",
-  // "luxury",
-  // "dracula",
-  // "cmyk",
-  // "autumn",
-  // "business",
-  // "acid",
-  // "lemonade",
-  "night",
-  // "coffee",
-  // "winter",
-];
+export const themes = ["cupcake", "lofi", "night"];
 
 // USER DATA
 export const mockUniversity = [
@@ -636,7 +398,6 @@ export const mockPerminentAddresses = [
   },
 ];
 
-export const mockScholarship = [];
 
 export const scholarshipTypes = [
   {
@@ -662,3 +423,25 @@ export const scholarshipTypes = [
 ];
 
 export const relationships = ["ພໍ່", "ແມ່", "ປ້າ", "ອາວ", "ອາ"];
+export const userStatus = ["pending", "active", "inactive", "locked"];
+export const mockResidenceAddress = [
+  "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
+  "14 Đ. 12C, Phường 3, Quận 4, Thành phố Hồ Chí Minh",
+  "30/38 hẻm 30 lâm văn bền ,tân kiểng,q7",
+];
+
+// export const mockResidenceAddress = [
+//   {
+//     dormitory: "KTX Khu B",
+//     address:
+//       "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
+//   },
+//   {
+//     dormitory: "",
+//     address: "14 Đ. 12C, Phường 3, Quận 4, Thành phố Hồ Chí Minh",
+//   },
+//   {
+//     dormitory: "",
+//     address: "30/38 hẻm 30 lâm văn bền ,tân kiểng,q7",
+//   },
+// ];
