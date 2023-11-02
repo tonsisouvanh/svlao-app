@@ -167,11 +167,18 @@ export const mockUniversity = [
     shortcut: "KTTCH",
   },
   {
-    id: "qQY4LsbTLABcIHex2UKx",
+    id: "3bJi08gpeAye9JMjl2uw",
     laoName: "ມລ ກະສິກຳ",
     vietName: "trường đại học nông lâm",
     englishName: "University of Agriculture and Forestry",
     shortcut: "NL",
+  },
+  {
+    id: "qQY4LsbTLABcIHex2UKx",
+    laoName: "ມລ ວິທະຍາສາດທຳມະຊາດ",
+    vietName: "trường đại học Khoa Học Tự Nhiên",
+    englishName: "University of Science",
+    shortcut: "KHTN",
   },
 ];
 
@@ -423,12 +430,158 @@ export const scholarshipTypes = [
 ];
 
 export const relationships = ["ພໍ່", "ແມ່", "ປ້າ", "ອາວ", "ອາ"];
-export const userStatus = ["pending", "active", "inactive", "locked"];
+export const userStatus = [{status: "pending"}, {status: "active"}, {status:"inactive"}, {status:"locked"}];
 export const mockResidenceAddress = [
   "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
   "14 Đ. 12C, Phường 3, Quận 4, Thành phố Hồ Chí Minh",
   "30/38 hẻm 30 lâm văn bền ,tân kiểng,q7",
 ];
+
+export const STUDENT_COLUMNS  = [
+  // {
+  //   Header: "ID",
+  //   accessor: "id",
+  // },
+  {
+    Header: "Lao Name",
+    accessor: "fullname.laoName",
+  },
+  {
+    Header: "Last Name (English)",
+    accessor: "fullname.englishLastname",
+  },
+  {
+    Header: "First Name (English)",
+    accessor: "fullname.englishFirstname",
+  },
+  {
+    Header: "Major (Lao)",
+    accessor: "major.laoMajor",
+  },
+  // {
+  //   Header: "Major (Viet)",
+  //   accessor: "major.vietMajor",
+  // },
+  // {
+  //   Header: "Visa From",
+  //   accessor: "visa.from",
+  //   disableFilters: true,
+  // },
+  // {
+  //   Header: "Visa To",
+  //   accessor: "visa.to",
+  //   disableFilters: true,
+  // },
+  {
+    Header: "Date of Birth",
+    accessor: "dob",
+  },
+  // {
+  //   Header: "Role",
+  //   accessor: "role",
+  // },
+  // {
+  //   Header: "Passport Expired",
+  //   accessor: "passport.expired",
+  // },
+  // {
+  //   Header: "Passport No",
+  //   accessor: "passport.passportNo",
+  // },
+  // {
+  //   Header: "Student ID",
+  //   accessor: "studentId",
+  // },
+  // {
+  //   Header: "Facebook URL",
+  //   accessor: "facebookUrl",
+  // },
+  // {
+  //   Header: "Permanent Address",
+  //   accessor: "permanentAddress",
+  // },
+  // {
+  //   Header: "Residence Address",
+  //   accessor: "residenceAddress",
+  // },
+  // {
+  //   Header: "Created Date",
+  //   accessor: "createdDate",
+  // },
+  // {
+  //   Header: "Degree (Viet)",
+  //   accessor: "degree.vietDegree",
+  // },
+  {
+    Header: "Degree (Lao)",
+    accessor: "degree.laoDegree",
+  },
+  // {
+  //   Header: "User ID",
+  //   accessor: "userId",
+  // },
+  {
+    Header: "Gender",
+    accessor: "gender",
+  },
+  // {
+  //   Header: "Scholarship (Vn)",
+  //   accessor: "scholarship.scholarshipVn",
+  // },
+  // {
+  //   Header: "Scholarship (University)",
+  //   accessor: "scholarship.scholarshipUniversity",
+  // },
+  // {
+  //   Header: "Scholarship (Lao)",
+  //   accessor: "scholarship.scholarshipLao",
+  // },
+  {
+    Header: "Scholarship Type",
+    accessor: "scholarship.type",
+  },
+
+  // {
+  //   Header: "Duration From",
+  //   accessor: "duration.from",
+  // },
+  // {
+  //   Header: "Duration To",
+  //   accessor: "duration.to",
+  // },
+  // {
+  //   Header: "Emergency Phone",
+  //   accessor: "phone.emergency",
+  // },
+  // {
+  //   Header: "Relationship",
+  //   accessor: "phone.relationship",
+  // },
+  {
+    Header: "Phone Number",
+    accessor: "phone.phoneNumber",
+  },
+  // {
+  //   Header: "University (English Name)",
+  //   accessor: "university.englishName",
+  // },
+  // {
+  //   Header: "University (Lao Name)",
+  //   accessor: "university.laoName",
+  // },
+  {
+    Header: "University (Viet Name)",
+    accessor: "university.vietName",
+  },
+  // {
+  //   Header: "University Shortcut",
+  //   accessor: "university.shortcut",
+  // },
+  {
+    Header: "Status",
+    accessor: "userStatus",
+  },
+]
 
 // export const mockResidenceAddress = [
 //   {

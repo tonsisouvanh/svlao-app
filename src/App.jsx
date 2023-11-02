@@ -20,7 +20,6 @@ import { Toaster } from "react-hot-toast";
 import PrivateRoute from "./route/PrivateRoute";
 
 function App() {
-  console.log("app");
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />

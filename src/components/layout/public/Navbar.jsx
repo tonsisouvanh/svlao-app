@@ -6,18 +6,28 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { GiCupcake } from "react-icons/gi";
 import { BiSolidMoon, BiSolidSun } from "react-icons/bi";
+import { useSelector } from "react-redux";
 
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light",
   );
-  const userData = JSON.parse(sessionStorage.getItem("userData")) || null;
-
+  const { user } = useSelector((state) => state.user);
+  const [userData, setUserData] = useState(user);
+  // const userData = JSON.parse(
+  //   sessionStorage.getItem("userData")
+  //     ? sessionStorage.getItem("userData")
+  //     : null,
+  // );
   useEffect(() => {
     localStorage.setItem("theme", theme);
     const localTheme = localStorage.getItem("theme");
     document.querySelector("html").setAttribute("data-theme", localTheme);
   }, [theme]);
+
+  useEffect(() => {
+    setUserData(JSON.parse(sessionStorage.getItem("userData")));
+  }, [user]);
   return (
     <header className="bg-active sticky top-0 z-[999] flex w-full bg-base-100">
       {/* <header className="bg-active sticky top-0 z-[999] flex w-full bg-base-100"> */}
@@ -69,7 +79,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
           <div className="dropdown-end dropdown">
             <div className="indicator">
-              {userData.userStatus === "pending" && (
+              {userData?.userStatus === "pending" && (
                 <span className="badge indicator-item badge-secondary badge-xs animate-bounce">
                   <AiFillBell size={8} />
                 </span>
@@ -80,7 +90,9 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
               >
                 <div className="avatar placeholder">
                   <div className="w-8 rounded-full bg-neutral-focus text-neutral-content">
-                    <span className="text-md">{userData.email[0].toUpperCase()}</span>
+                    <span className="text-md">
+                      {userData?.email ? userData?.email[0].toUpperCase() : "NA"}
+                    </span>
                   </div>
                 </div>
               </label>
@@ -93,18 +105,15 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
 
             <ul
               tabIndex={0}
-              className="menu border border-primary-focus dropdown-content rounded-box z-[1] w-fit space-y-2 bg-base-100 p-2 font-notosanslao shadow"
+              className="menu dropdown-content rounded-box z-[1] w-fit space-y-2 border border-primary-focus bg-base-100 p-2 font-notosanslao shadow"
             >
               <Link
                 className={`btn btn-ghost btn-sm relative whitespace-nowrap`}
-                //   className={`btn relative btn-ghost btn-sm whitespace-nowrap
-                //   ${!student && 'animate-pulse bg-secondary text-white'}`
-                // }
-                to={`/profile/${userData.role}`}
+                to={`/profile/${userData?.role}`}
               >
                 Profile
-                {userData.userStatus === "pending" && (
-                  <AiFillInfoCircle className="absolute top-0 right-0" />
+                {userData?.userStatus === "pending" && (
+                  <AiFillInfoCircle className="absolute text-secondary right-0 top-0" />
                 )}
               </Link>
               <Link

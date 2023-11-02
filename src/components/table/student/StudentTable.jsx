@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import Spinner from "../../ui/Spinner";
 import EditStudent from "../../../page/student/EditStudent";
-import { useGlobalFilter, useSortBy, useTable } from "react-table";
+import { useGlobalFilter, useSortBy, useTable, useFilters } from "react-table";
 import Filter from "../../input/student/Filter";
 import Searchbar from "../../input/student/Searchbar";
 import {
@@ -14,156 +14,35 @@ import {
   AiOutlineMore,
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { mockDegrees, scholarshipTypes } from "../../../data/data";
+import ColumnFilter from "../../input/student/ColumnFilter";
+import {
+  STUDENT_COLUMNS,
+  mockDegrees,
+  mockUniversity,
+  scholarshipTypes,
+  userStatus,
+} from "../../../data/data";
 
 const cellStyle = "whitespace-nowrap truncate font-light";
-// const headerStyle = "border-r-[0.1rem]";
 
 const StudentTable = ({ editToggle, setEditToggle }) => {
   const { status, students } = useSelector((state) => state.students);
 
   const data = useMemo(() => students, []);
-  const columns = useMemo(
-    () => [
-      {
-        Header: "ID",
-        accessor: "id",
-      },
-      {
-        Header: "Lao Name",
-        accessor: "fullname.laoName",
-      },
-      {
-        Header: "Major (Lao)",
-        accessor: "major.laoMajor",
-      },
-      {
-        Header: "Major (Viet)",
-        accessor: "major.vietMajor",
-      },
-      {
-        Header: "Visa From",
-        accessor: "visa.from",
-      },
-      {
-        Header: "Visa To",
-        accessor: "visa.to",
-      },
-      {
-        Header: "Date of Birth",
-        accessor: "dob",
-      },
-      {
-        Header: "Role",
-        accessor: "role",
-      },
-      {
-        Header: "Passport Expired",
-        accessor: "passport.expired",
-      },
-      {
-        Header: "Passport No",
-        accessor: "passport.passportNo",
-      },
-      {
-        Header: "Student ID",
-        accessor: "studentId",
-      },
-      {
-        Header: "Facebook URL",
-        accessor: "facebookUrl",
-      },
-      {
-        Header: "Permanent Address",
-        accessor: "permanentAddress",
-      },
-      {
-        Header: "Residence Address",
-        accessor: "residenceAddress",
-      },
-      {
-        Header: "Created Date",
-        accessor: "createdDate",
-      },
-      {
-        Header: "Degree (Viet)",
-        accessor: "degree.vietDegree",
-      },
-      {
-        Header: "Degree (Lao)",
-        accessor: "degree.laoDegree",
-      },
-      {
-        Header: "User ID",
-        accessor: "userId",
-      },
-      {
-        Header: "Gender",
-        accessor: "gender",
-      },
-      {
-        Header: "Scholarship (Vn)",
-        accessor: "scholarship.scholarshipVn",
-      },
-      {
-        Header: "Scholarship (University)",
-        accessor: "scholarship.scholarshipUniversity",
-      },
-      {
-        Header: "Scholarship (Lao)",
-        accessor: "scholarship.scholarshipLao",
-      },
-      {
-        Header: "Scholarship Type",
-        accessor: "scholarship.type",
-      },
-      {
-        Header: "Last Name (English)",
-        accessor: "fullname.englishLastname",
-      },
-      {
-        Header: "First Name (English)",
-        accessor: "fullname.englishFirstname",
-      },
-      {
-        Header: "Duration From",
-        accessor: "duration.from",
-      },
-      {
-        Header: "Duration To",
-        accessor: "duration.to",
-      },
-      {
-        Header: "Emergency Phone",
-        accessor: "phone.emergency",
-      },
-      {
-        Header: "Relationship",
-        accessor: "phone.relationship",
-      },
-      {
-        Header: "Phone Number",
-        accessor: "phone.phoneNumber",
-      },
-      {
-        Header: "University (English Name)",
-        accessor: "university.englishName",
-      },
-      {
-        Header: "University (Lao Name)",
-        accessor: "university.laoName",
-      },
-      {
-        Header: "University (Viet Name)",
-        accessor: "university.vietName",
-      },
-      {
-        Header: "University Shortcut",
-        accessor: "university.shortcut",
-      },
-    ],
-    [],
-  );
+  const columns = useMemo(() => STUDENT_COLUMNS, []);
+  const defaultColumn = useMemo(() => {
+    return {
+      Filter: (props) => (
+        <ColumnFilter
+          title={"ads"}
+          fieldName={"asdf"}
+          options={["asdf", "efff"]}
+          {...props}
+        />
+      ),
+    };
+  }, []);
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -172,7 +51,12 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
     prepareRow,
     state,
     setGlobalFilter,
-  } = useTable({ columns, data }, useGlobalFilter, useSortBy);
+  } = useTable(
+    { columns, data, defaultColumn },
+    useFilters,
+    useGlobalFilter,
+    useSortBy,
+  );
 
   const { globalFilter } = state;
   const [editingStudent, setEditingStudent] = useState();
@@ -185,7 +69,6 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
   if (status === "loading") {
     return <Spinner />;
   }
-  console.log(students);
   return (
     <>
       {editToggle ? (
@@ -197,7 +80,7 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
         <Spinner />
       ) : (
         <div className="overflow-x-auto ">
-          <div className="flex items-center gap-2">
+          <div className="mb-5 flex flex-wrap items-center gap-2">
             <Searchbar filter={globalFilter} setFilter={setGlobalFilter} />
             <Filter
               filter={globalFilter}
@@ -212,6 +95,20 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
               options={mockDegrees}
               title={"ລະດັບການສຶກສາ"}
               fieldName={"laoDegree"}
+            />
+            <Filter
+              filter={globalFilter}
+              setFilter={setGlobalFilter}
+              options={mockUniversity}
+              title={"ມະຫາໄລ"}
+              fieldName={"vietName"}
+            />
+            <Filter
+              filter={globalFilter}
+              setFilter={setGlobalFilter}
+              options={userStatus}
+              title={"Status"}
+              fieldName={"status"}
             />
           </div>
           <table
@@ -246,6 +143,9 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
                               ) : null}
                             </span>
                           </div>
+                          {/* <div>
+                            {column.canFilter ? column.render("Filter") : null}
+                          </div> */}
                         </th>
                       ))}
                   </tr>
@@ -294,7 +194,21 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
                             key={index}
                             {...cell.getCellProps()}
                           >
-                            {cell.render("Cell")}
+                            {cell.column.id === "userStatus" ? (
+                              <span
+                                className={`badge ${
+                                  cell.value === "active"
+                                    ? " badge-success"
+                                    : "badge-warning"
+                                }`}
+                              >
+                                {cell.render("Cell")}
+                              </span>
+                            ) : cell.column.id === "gender" ? (
+                              <>{cell.value === "male" ? "ຊາຍ" : "ຍິງ"}</>
+                            ) : (
+                              cell.render("Cell")
+                            )}
                           </td>
                         ))}
                     </tr>

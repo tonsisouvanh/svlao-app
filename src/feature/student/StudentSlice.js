@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   addDoc,
   collection,
-  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -14,7 +13,6 @@ import toast from "react-hot-toast";
 import { auth, db } from "../../firebase";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { initialStudentInput } from "../../data/initialState";
-// Function to serialize Firebase Timestamp to JavaScript Date
 const serializeTimestamp = (timestamp) => {
   const date = timestamp.toDate();
   return date.toISOString();

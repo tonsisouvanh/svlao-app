@@ -9,6 +9,7 @@ import {
   AiOutlineLogout,
   AiOutlineAudit,
   AiFillSound,
+  AiOutlineDashboard,
 } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -96,7 +97,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             onClick={() => setSidebarOpen(!sidebarOpen)}
             aria-controls="sidebar"
             aria-expanded={sidebarOpen}
-            className="cursor-pointer lg:hidden text-base-100"
+            className="cursor-pointer text-base-100 lg:hidden"
           >
             <BsArrowLeft className="text-3xl" />
           </button>
@@ -123,7 +124,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     <React.Fragment>
                       <NavLink
                         to="#"
-                        className={`group relative flex font-semibold items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao duration-300 ease-in-out ${
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao font-semibold duration-300 ease-in-out ${
                           pathname.includes("dashboard") &&
                           "rounded-md bg-primary-focus text-white"
                         }`}
@@ -135,8 +136,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         }}
                       >
                         {/* <AiOutlineDashboard size={23} /> */}
-                        <AiFillDashboard size={23} />
-                        ຂໍ້ມູນນັກຮຽນ
+                        <AiOutlineDashboard size={23} />
+                        ຈັດການນັກຮຽນ
                         <BsFillCaretDownFill
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
                             open && "rotate-180"
@@ -214,7 +215,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   ອົງການຈັດຕັ້ງຕ່າງໆ
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink
                   to="/contact"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out ${
@@ -225,7 +226,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   <AiOutlinePhone size={23} />
                   ຕິດຕໍ່
                 </NavLink>
-              </li>
+              </li> */}
               {/* <!-- Menu Item Settings --> */}
             </ul>
           </div>

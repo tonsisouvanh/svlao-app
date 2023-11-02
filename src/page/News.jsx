@@ -4,7 +4,6 @@ import InfoModal from "../components/modal/InfoModal";
 const News = () => {
   // const userData = JSON.parse(sessionStorage.getItem("userData")) || {};
   const { user } = useSelector((state) => state.user);
-  console.log("herrrr", user);
   return (
     <div>
       {user?.userStatus === "pending" && user?.role === "student" ? (

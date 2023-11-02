@@ -69,6 +69,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
     reset();
     setEditToggle(false);
   };
+  console.log(editingStudent);
   return (
     <>
       {status === "loading" ? (
@@ -107,8 +108,8 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                     className={selectInputStyle}
                   >
                     {userStatus.map((ele) => (
-                      <option key={ele} value={ele}>
-                        {ele}
+                      <option key={ele.status} value={ele.status}>
+                        {ele.status}
                       </option>
                     ))}
                   </select>
@@ -591,20 +592,23 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
               <div className="mt-10 flex justify-end gap-5">
                 {status === "loading" ? (
                   <>
-                    <button className="btn">
+                    <button className="btn btn-wide">
                       <span className="loading loading-spinner"></span>
                       loading
                     </button>
                   </>
                 ) : (
                   <>
-                    <button type="submit" className={`btn btn-primary`}>
+                    <button
+                      type="submit"
+                      className={`btn btn-primary btn-wide`}
+                    >
                       ຕົກລົງ
                     </button>
                     <button
                       onClick={handleClear}
                       type="button"
-                      className={`btn btn-secondary `}
+                      className={`btn btn-secondary btn-wide`}
                     >
                       ຍົກເລີກ
                     </button>

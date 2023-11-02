@@ -37,7 +37,6 @@ export const signUp = createAsyncThunk(
       if (user && user !== null) {
         userData = {
           email: user.email,
-          username: username,
           role: role,
         };
 
@@ -97,8 +96,7 @@ export const signIn = createAsyncThunk(
         } else {
           // toast.warning(404, "Student not found");
         }
-      }
-      sessionStorage.setItem("userData", JSON.stringify(userData));
+      } else sessionStorage.setItem("userData", JSON.stringify(userData));
 
       toast.success("Signed in successfully");
       return userData;

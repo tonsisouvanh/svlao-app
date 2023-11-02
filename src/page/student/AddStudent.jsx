@@ -100,6 +100,26 @@ const AddStudent = () => {
               onSubmit={handleSubmit(handleAddStudent)}
             >
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {/* // ~~~~~~~~~~~ status Check box ~~~~~~~~~~  */}
+                <div>
+                  <label className={mainLabelStyle}>User Status:</label>
+                  <select
+                    {...register("userStatus", {
+                      requiredd: "Please select",
+                    })}
+                    className={selectInputStyle}
+                  >
+                    {userStatus.map((ele) => (
+                      <option key={ele.status} value={ele.status}>
+                        {ele.status}
+                      </option>
+                    ))}
+                  </select>
+                  <ErrorMessage
+                    styling="mt-3 sm:text-md"
+                    error={errors.userStatus}
+                  />
+                </div>
                 {/* fullname */}
                 <div className="form-control w-full ">
                   <label className={mainLabelStyle}>ຊື່ລາວ:</label>
@@ -567,25 +587,6 @@ const AddStudent = () => {
                       </div>
                     </div>
                   </div>
-                  {/* // ~~~~~~~~~~~ status Check box ~~~~~~~~~~  */}
-                  <div>
-                    <div className="form-control">
-                      {userStatus.map((ele) => (
-                        <label key={ele} className="label cursor-pointer">
-                          <span className="label-text">{ele}</span>
-                          <input
-                            {...register("status", {
-                              required: "Please fill up",
-                            })}
-                            type="radio"
-                            name="radio-10"
-                            className="radio checked:bg-red-500"
-                            value={ele}
-                          />
-                        </label>
-                      ))}
-                    </div>
-                  </div>
                 </div>
 
                 {/* Add more input fields for other student information */}
@@ -593,7 +594,7 @@ const AddStudent = () => {
               <div className="mt-10 flex justify-end gap-5">
                 {status === "loading" ? (
                   <>
-                    <button className="btn">
+                    <button className="btn btn-wide">
                       <span className="loading loading-spinner"></span>
                       loading
                     </button>
@@ -602,14 +603,14 @@ const AddStudent = () => {
                   <>
                     <button
                       type="submit"
-                      className={`btn btn-primary text-white`}
+                      className={`btn btn-primary btn-wide text-white`}
                     >
                       ຕົກລົງ
                     </button>
                     <button
                       onClick={handleClear}
                       type="button"
-                      className={`btn btn-secondary text-white`}
+                      className={`btn btn-secondary btn-wide text-white`}
                     >
                       ຍົກເລີກ
                     </button>

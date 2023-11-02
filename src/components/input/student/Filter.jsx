@@ -4,7 +4,7 @@ const Filter = ({ filter, setFilter, options, title, fieldName }) => {
       <select
         value={filter || ""}
         onChange={(e) => setFilter(e.target.value)}
-        className="select select-bordered font-notosanslao "
+        className="select select-sm select-bordered font-notosanslao focus:outline-none"
       >
         <option disabled value="">
           {title}

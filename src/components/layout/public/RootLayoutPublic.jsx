@@ -5,7 +5,6 @@ import { Outlet } from "react-router-dom";
 
 function RootLayoutPublic() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
     <>
       <div className="dark:bg-boxdark-2 dark:text-bodydark">

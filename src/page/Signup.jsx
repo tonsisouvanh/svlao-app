@@ -9,7 +9,6 @@ import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 const initialState = {
   email: "",
-  username: "",
   password: "",
   role: "student",
 };
@@ -46,22 +45,6 @@ const Signup = () => {
         <h1 className="mb-4 text-2xl font-bold">Student Signup</h1>
         <form onSubmit={handleSubmit(handleLogin)}>
           <div className="mb-4">
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Username</span>
-              </label>
-              <input
-                {...register("username", {
-                  required: "Username is required",
-                })}
-                type="text"
-                className="input input-bordered w-full max-w-xs"
-              />
-              <ErrorMessage
-                styling="mt-3 sm:text-md"
-                error={errors?.username}
-              />
-            </div>
             <div className="form-control w-full max-w-xs">
               <label className="label">
                 <span className="label-text">Email</span>

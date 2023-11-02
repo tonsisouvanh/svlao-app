@@ -104,7 +104,7 @@ const Signin = () => {
           </div>
           <div className="mb-4 flex justify-end gap-3">
             {status === "loading" ? (
-              <button className="btn">
+              <button className="btn flex-grow">
                 <span className="loading loading-spinner"></span>
                 loading
               </button>

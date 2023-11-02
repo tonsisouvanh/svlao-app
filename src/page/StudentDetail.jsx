@@ -23,7 +23,6 @@ const StudentDetail = () => {
   useEffect(() => {
     dispatch(adminFetchSingleStudent(id));
   }, []);
-console.log(studentData);
   return (
     <div className="container mx-auto font-notosanslao">
       <div className="!sticky !top-[4.2rem] z-[1] bg-base-100 px-2 shadow-sm">
@@ -42,112 +41,24 @@ console.log(studentData);
       </div>
       <div className="min-h-screend hero bg-base-100">
         <div className="hero-content flex-col lg:flex-row lg:items-start">
-          <div className="h-[30rem] w-full">
+          <div className="h-[30rem] w-[20rem]">
             <img
               src="https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg"
               className="h-full w-full rounded-lg object-cover shadow-md"
             />
           </div>
-          {/* <div className="rounded-lg p-6">
-            <div className="mb-4 text-2xl font-bold">
-              {studentData?.fullname?.laoName}
-            </div>
-            <div className="flex justify-between">
-              <div className="w-1/2">
-                <h2 className="mb-2 text-lg font-semibold underline">
-                  Personal Information
-                </h2>
-                <p>
-                  <strong>Student ID:</strong> {studentData?.studentId}
-                </p>
-                <p>
-                  <strong>Date of Birth:</strong> {studentData?.dob || "N/A"}
-                </p>
-                <p>
-                  <strong>Gender:</strong> {studentData?.gender || "N/A"}
-                </p>
-                <p>
-                  <strong>Permanent Address:</strong>{" "}
-                  {studentData?.permanentAddress || "N/A"}
-                </p>
-              </div>
-              <div className="w-1/2">
-                <h2 className="mb-2 text-lg font-semibold underline">
-                  Contact Information
-                </h2>
-                <p>
-                  <strong>Email:</strong> {studentData?.email || "N/A"}
-                </p>
-                <p>
-                  <strong>Phone Number:</strong>{" "}
-                  {studentData?.phone?.phoneNumber || "N/A"}
-                </p>
-              </div>
-            </div>
-            <h2 className="my-4 text-lg font-semibold underline">
-              Academic Information
-            </h2>
-            <div className="mb-2">
-              <strong>University:</strong>{" "}
-              {studentData?.university?.laoName || "N/A"}
-            </div>
-            <div className="mb-2">
-              <strong>Major:</strong> {studentData?.major?.laoMajor || "N/A"}
-            </div>
-            <div className="mb-2">
-              <strong>Degree:</strong> {studentData?.degree?.laoDegree || "N/A"}
-            </div>
-            <h2 className="my-4 text-lg font-semibold underline">
-              Scholarship Information
-            </h2>
-            <div className="mb-2">
-              <strong>Scholarship Type:</strong>{" "}
-              {studentData?.scholarship?.type || "N/A"}
-            </div>
-            <div className="mb-2">
-              <strong>Scholarship in Lao:</strong>{" "}
-              {studentData?.scholarship?.scholarshipLao || "N/A"}
-            </div>
-            <div className="mb-2">
-              <strong>Scholarship in Vietnam:</strong>{" "}
-              {studentData?.scholarship?.scholarshipVn || "N/A"}
-            </div>
-            <div className="mb-2">
-              <strong>Scholarship University:</strong>{" "}
-              {studentData?.scholarship?.scholarshipUniversity || "N/A"}
-            </div>
-            <h2 className="my-4 text-lg font-semibold underline">
-              Other Information
-            </h2>
-            <div className="mb-2">
-              <strong>Visa from:</strong> {studentData?.visa?.from || "N/A"}
-            </div>
-            <div className="mb-2">
-              <strong>Visa to:</strong> {studentData?.visa?.to || "N/A"}
-            </div>
-            <div className="mb-2">
-              <strong>Passport No:</strong>{" "}
-              {studentData?.passport?.passportNo || "N/A"}
-            </div>
-            <div className="mb-2">
-              <strong>Passport Expiry:</strong>{" "}
-              {studentData?.passport?.expired || "N/A"}
-            </div>
-            <div className="mb-2">
-              <strong>Residence Address:</strong>{" "}
-              {studentData?.residenceAddress || "N/A"}
-            </div>
-          </div> */}
-          <div className="rounded-lg bg-base-100 p-4">
-            <div className="text-2xl font-bold space-x-5">
+          <div className="flex-grow rounded-lg bg-base-100 p-4">
+            <div className="space-x-5 text-2xl font-bold">
               <span>{studentData?.fullname?.laoName}</span>
               <span>
-                ({studentData?.fullname?.englishFirstname +
+                (
+                {studentData?.fullname?.englishFirstname +
                   " " +
-                  studentData?.fullname?.englishLastname})
+                  studentData?.fullname?.englishLastname}
+                )
               </span>
             </div>
-            <div className="-mx-2 mt-4 flex flex-wrap">
+            <div className="mt-4 grid grid-cols-1 whitespace-nowrap sm:grid-cols-2 lg:grid-cols-3">
               <InfoCard
                 icon={<FaUser />}
                 label="Student ID"
