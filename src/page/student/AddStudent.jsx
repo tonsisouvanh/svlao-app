@@ -4,6 +4,7 @@ import {
   mockDegrees,
   mockMajor,
   mockPerminentAddresses,
+  mockResidenceAddress,
   mockUniversity,
   relationships,
   scholarshipTypes,
@@ -19,12 +20,12 @@ import toast from "react-hot-toast";
 import { AiFillFileAdd } from "react-icons/ai";
 
 const selectInputStyle =
-  "select select-sm select-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
+  "select select-sm select-bordered w-full hover:shadow-md transition-all duration-200";
 const mainLabelStyle = "label-text text-[1rem] mb-2 block font-semibold";
 const subSelectSpanStyle =
   "input input-bordered opacity-70 input-sm whitespace-nowrap";
 const textInputStyle =
-  "input input-sm input-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
+  "input input-sm input-bordered w-full hover:shadow-md transition-all duration-200";
 
 const AddStudent = () => {
   const navigate = useNavigate();
@@ -76,7 +77,7 @@ const AddStudent = () => {
         <Spinner />
       ) : (
         <div className="container mx-auto">
-          <div className="!sticky !top-[4rem]">
+          <div className="!sticky !top-[4.2rem] z-[1] bg-base-100 px-2 shadow-sm">
             <div className="breadcrumbs text-sm">
               <ul>
                 <li>
@@ -101,60 +102,141 @@ const AddStudent = () => {
             >
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* // ~~~~~~~~~~~ status Check box ~~~~~~~~~~  */}
-                <div>
-                  <label className={mainLabelStyle}>User Status:</label>
-                  <select
-                    {...register("userStatus", {
-                      requiredd: "Please select",
-                    })}
-                    className={selectInputStyle}
-                  >
-                    {userStatus.map((ele) => (
-                      <option key={ele.status} value={ele.status}>
-                        {ele.status}
-                      </option>
-                    ))}
-                  </select>
-                  <ErrorMessage
-                    styling="mt-3 sm:text-md"
-                    error={errors.userStatus}
-                  />
+                {/* <div>
+                  <div className="">
+                    <label
+                      className={mainLabelStyle + " flex items-center gap-2"}
+                    >
+                      User Status:
+                      <ErrorMessage
+                        styling="sm:text-md"
+                        error={errors.userStatus}
+                      />
+                    </label>
+                    <select
+                      {...register("userStatus", {
+                        required: "Please select",
+                      })}
+                      className={selectInputStyle}
+                    >
+                      {userStatus.map((ele) => (
+                        <option key={ele.status} value={ele.status}>
+                          {ele.status}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <div className="relative">
+                      <label
+                        className={mainLabelStyle + " flex items-center gap-2"}
+                      >
+                        <span>ຊື່ລາວ:</span>
+                        <ErrorMessage
+                          styling="sm:text-md"
+                          error={errors?.fullname?.laoName}
+                        />
+                      </label>
+                    </div>
+                    <input
+                      {...register("fullname.laoName", {
+                        requiredd: "Please fill up",
+                      })}
+                      type="text"
+                      placeholder="ຕື່ມຊື່ລາວ" // Corrected the property name here
+                      className={textInputStyle}
+                    />
+                  </div>
+                </div> */}
+                <div className="flex items-start gap-2">
+                  <div className="whitespace-nowrap">
+                    <label className={mainLabelStyle}>ສະຖານະ</label>
+                    <select
+                      {...register("userStatus", {
+                        requiredd: "Please select",
+                      })}
+                      className={selectInputStyle}
+                    >
+                      {userStatus.map((ele) => (
+                        <option key={ele.status} value={ele.status}>
+                          {ele.status}
+                        </option>
+                      ))}
+                    </select>
+                    <ErrorMessage
+                      styling="mt-3 sm:text-md"
+                      error={errors.userStatus}
+                    />
+                  </div>
+                  <div className="w-fit">
+                    <div className="relative">
+                      <label
+                        className={mainLabelStyle + " flex items-center gap-2"}
+                      >
+                        <span>Account ID</span>
+                        <ErrorMessage
+                          styling="sm:text-md"
+                          error={errors?.userId}
+                        />
+                      </label>
+                    </div>
+                    <input
+                      {...register("userId", {
+                        requiredd: "Please fill up",
+                      })}
+                      type="text"
+                      placeholder="Account ID" // Corrected the property name here
+                      className={textInputStyle}
+                    />
+                  </div>
                 </div>
                 {/* fullname */}
-                <div className="form-control w-full ">
-                  <label className={mainLabelStyle}>ຊື່ລາວ:</label>
-                  <input
-                    {...register("fullname.laoName", {
-                      required: "Please fill up",
-                    })}
-                    type="text"
-                    placeholder="ຕື່ມຊື່ລາວ" // Corrected the property name here
-                    className={textInputStyle}
-                  />
-                  <ErrorMessage
-                    styling="mt-3 sm:text-md"
-                    error={errors?.fullname?.laoName}
-                  />
-                  <div className="form-control mt-5 flex ">
+                <div className="flex w-full flex-wrap items-center gap-2 lg:flex-nowrap">
+                  <div className="flex w-full flex-shrink-0 flex-col">
+                    <div className="relative">
+                      <label
+                        className={mainLabelStyle + " flex items-center gap-2"}
+                      >
+                        <span>ຊື່ລາວ:</span>
+                        <ErrorMessage
+                          styling="sm:text-md"
+                          error={errors?.fullname?.laoName}
+                        />
+                      </label>
+                    </div>
+                    <input
+                      {...register("fullname.laoName", {
+                        required: "Please fill up",
+                      })}
+                      type="text"
+                      placeholder="ຕື່ມຊື່ລາວ" // Corrected the property name here
+                      className={textInputStyle}
+                    />
+                  </div>
+                  <div className="flex flex-col">
                     <label className={mainLabelStyle}>ຊື່ຫລິ້ນ:</label>
                     <input
                       {...register("fullname.nickName")}
                       type="text"
                       placeholder="ຕື່ມຊື່ຫລິ້ນ" // Corrected the property name here
-                      className={textInputStyle}
-                    />
-                    <ErrorMessage
-                      styling="mt-3 sm:text-md"
-                      error={errors?.fullname?.englishName}
+                      className={
+                        "input input-bordered input-sm transition-all duration-200 hover:shadow-md"
+                      }
                     />
                   </div>
                 </div>
-                <div className="form-control w-full max-w-xs space-y-2">
+                <div className="form-control w-full  space-y-2">
                   <label className={mainLabelStyle}>
                     ຊື່ ແລະ ນາມສະກຸນອັງກິດ:
                   </label>
                   <div>
-                    <label className="label-text">ຊື່</label>
+                    <label className="label-text flex items-center gap-2">
+                      ຊື່
+                      <ErrorMessage
+                        styling="sm:text-md"
+                        error={errors?.fullname?.englishFirstname}
+                      />
+                    </label>
                     <input
                       {...register("fullname.englishFirstname", {
                         required: "Please fill up",
@@ -163,13 +245,15 @@ const AddStudent = () => {
                       placeholder="ຕື່ມຊື່" // Corrected the property name here
                       className={textInputStyle}
                     />
-                    <ErrorMessage
-                      styling="mt-3 sm:text-md"
-                      error={errors?.fullname?.englishFirstname}
-                    />
                   </div>
                   <div>
-                    <label className="label-text">ນາມສະກຸນ</label>
+                    <label className="label-text flex items-center gap-2">
+                      ນາມສະກຸນ
+                      <ErrorMessage
+                        styling="sm:text-md"
+                        error={errors?.fullname?.englishLastname}
+                      />
+                    </label>
 
                     <input
                       {...register("fullname.englishLastname", {
@@ -179,15 +263,11 @@ const AddStudent = () => {
                       placeholder="ຕື່ມນາມສະກຸນ" // Corrected the property name here
                       className={textInputStyle}
                     />
-                    <ErrorMessage
-                      styling="mt-3 sm:text-md"
-                      error={errors?.fullname?.englishLastname}
-                    />
                   </div>
                 </div>
 
                 {/* Student ID */}
-                <div className="form-control w-full max-w-xs">
+                <div className="form-control w-full">
                   <label className={mainLabelStyle}>MSSV:</label>
                   <input
                     {...register("studentId")}
@@ -196,11 +276,11 @@ const AddStudent = () => {
                     className={textInputStyle}
                   />
                 </div>
-                <div className="form-control w-full max-w-xs">
+                <div className="form-control w-full ">
                   <label className={mainLabelStyle}>DOB:</label>
                   <input
                     {...register("dob", {
-                      requiredd: "Please fill up",
+                      required: "Please fill up",
                     })}
                     type="date"
                     placeholder="Date of birth" // Corrected the property name here
@@ -213,11 +293,11 @@ const AddStudent = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   {/* GENDER */}
-                  <div>
+                  <div className="w-20 flex-none">
                     <label className={mainLabelStyle}>ເພດ:</label>
                     <select
-                      {...register("gender", { requiredd: "Please select" })}
-                      // className="select select-sm select-bordered w-full max-w-xs"
+                      {...register("gender", { required: "Please select" })}
+                      // className="select select-sm select-bordered w-full "
                       className={selectInputStyle}
                     >
                       <option value={"male"}>ຊາຍ</option>
@@ -229,11 +309,11 @@ const AddStudent = () => {
                     />
                   </div>
                   {/* ADDRESS */}
-                  <div>
+                  <div className="w-full">
                     <label className={mainLabelStyle}>ແຂວງເກີດ:</label>
                     <select
                       {...register("perminentAddress", {
-                        requiredd: "Please select",
+                        required: "Please select",
                       })}
                       className={selectInputStyle}
                     >
@@ -251,12 +331,27 @@ const AddStudent = () => {
                 </div>
                 <div>
                   <label className={mainLabelStyle}>ທີ່ຢູ່ປັດຈຸບັນ:</label>
+                  <select
+                    onChange={(e) =>
+                      setValue("residenceAddress", e.target.value)
+                    }
+                    className={selectInputStyle + " mb-2"}
+                  >
+                    <option>
+                      Select address
+                    </option>
+                    {mockResidenceAddress.map((item, index) => (
+                      <option key={index} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
                   <input
                     {...register("residenceAddress", {
-                      requiredd: "Please fill up",
+                      required: "Please fill up",
                     })}
                     type="text"
-                    placeholder="KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương" // Corrected the property name here
+                    placeholder="KTX khu B đại học quốc gia..." // Corrected the property name here
                     className={textInputStyle}
                   />
                   <ErrorMessage
@@ -270,7 +365,7 @@ const AddStudent = () => {
                   <div className="flex flex-col items-start gap-2">
                     <select
                       {...register("university.laoName", {
-                        requiredd: "Please select",
+                        required: "Please select",
                       })}
                       onChange={(e) => handleSelectUniversity(e.target.value)}
                       className={selectInputStyle}
@@ -311,7 +406,7 @@ const AddStudent = () => {
                   <div className="flex flex-col gap-2">
                     <select
                       {...register("major.laoMajor", {
-                        requiredd: "Please select",
+                        required: "Please select",
                       })}
                       onChange={(e) => handleSelectMajor(e.target.value)}
                       className={selectInputStyle}
@@ -342,7 +437,7 @@ const AddStudent = () => {
                   <div className="flex items-center gap-2">
                     <select
                       {...register("degree.laoDegree", {
-                        requiredd: "Please select",
+                        required: "Please select",
                       })}
                       onChange={(e) => handleSelectDegree(e.target.value)}
                       className={selectInputStyle}
@@ -370,7 +465,7 @@ const AddStudent = () => {
                     <div className="mb-2 flex items-center">
                       <select
                         {...register("scholarship.type", {
-                          requiredd: "Please select",
+                          required: "Please select",
                         })}
                         className={selectInputStyle}
                       >
@@ -404,7 +499,7 @@ const AddStudent = () => {
                 <div className="flex items-center gap-2">
                   <div className="">
                     <label className={mainLabelStyle}>ໄລຍະຮຽນ:</label>
-                    <div className="flex flex-wrap items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2 lg:flex-nowrap">
                       <div className="flex items-center gap-1">
                         <span>ຈາກ:</span>
                         <input
@@ -449,7 +544,7 @@ const AddStudent = () => {
                     <div className="flex flex-col items-start gap-2">
                       <input
                         {...register("phone.phoneNumber", {
-                          requiredd: "Please fill up",
+                          required: "Please fill up",
                           pattern: {
                             message: "Must be number",
                             value: /^[0-9]*$/,
@@ -466,7 +561,7 @@ const AddStudent = () => {
                       <div className="flex w-full items-center gap-1">
                         <input
                           {...register("phone.emergency", {
-                            requiredd: "Please fill up",
+                            required: "Please fill up",
                             pattern: {
                               message: "Must be number",
                               value: /^[0-9]*$/,

@@ -1,6 +1,5 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
-  data,
   mockDegrees,
   mockMajor,
   mockResidenceAddress,
@@ -27,17 +26,14 @@ import {
   FaPassport,
   FaClock,
   FaAccessibleIcon,
-  FaSearchLocation,
   FaMapMarked,
   FaFacebook,
   FaMale,
   FaFemale,
   FaIdCard,
-  FaLevelUpAlt,
   FaRulerVertical,
 } from "react-icons/fa";
 import ErrorMessage from "../../components/typography/ErrorMessage";
-import { AiFillAlert, AiOutlineProfile } from "react-icons/ai";
 import toast from "react-hot-toast";
 import Spinner from "../../components/ui/Spinner";
 const textInputStyle =
@@ -223,14 +219,16 @@ const StudentProfile = () => {
                   </div>
                 ) : (
                   <div className={`ml-8 text-sm`}>
-                    <span>{studentData[field].laoName}</span>
+                    <span>{studentData[field]?.laoName || "NA"}</span>
                     <div className="flex items-center gap-1">
                       <span>ຊື່:</span>
-                      <span>{studentData[field].englishFirstname}</span>
+                      <span>
+                        {studentData[field]?.englishFirstname || "NA"}
+                      </span>
                     </div>
                     <div className="flex items-center gap-1">
                       <span>ນາມສະກຸນ:</span>
-                      <span>{studentData[field].englishLastname}</span>
+                      <span>{studentData[field]?.englishLastname || "NA"}</span>
                     </div>
                   </div>
                 )}
@@ -255,9 +253,9 @@ const StudentProfile = () => {
                   </>
                 ) : (
                   <div className={`ml-8 flex flex-col text-sm`}>
-                    <span>{studentData[field].laoName}</span>
-                    <span>{studentData[field].vietName}</span>
-                    <span>{studentData[field].englishName}</span>
+                    <span>{studentData[field]?.laoName}</span>
+                    <span>{studentData[field]?.vietName}</span>
+                    <span>{studentData[field]?.englishName}</span>
                   </div>
                 )}
               </>
@@ -291,8 +289,8 @@ const StudentProfile = () => {
                 ) : (
                   <>
                     <div className={`ml-8 flex flex-col text-sm`}>
-                      <span>{studentData[field].laoMajor}</span>
-                      <span>{studentData[field].vietMajor}</span>
+                      <span>{studentData[field]?.laoMajor}</span>
+                      <span>{studentData[field]?.vietMajor}</span>
                     </div>
                   </>
                 )}
@@ -309,8 +307,8 @@ const StudentProfile = () => {
                       onChange={(e) => handleSelectDegree(e.target.value)}
                     >
                       {mockDegrees.map((item, index) => (
-                        <option key={index} value={item.laoDegree}>
-                          {item.laoDegree}
+                        <option key={index} value={item?.laoDegree}>
+                          {item?.laoDegree}
                         </option>
                       ))}
                     </select>
@@ -323,8 +321,8 @@ const StudentProfile = () => {
                 ) : (
                   <>
                     <div className={`ml-8 flex flex-col text-sm`}>
-                      <span>{studentData[field].laoDegree}</span>
-                      <span>({studentData[field].vietDegree})</span>
+                      <span>{studentData[field]?.laoDegree}</span>
+                      <span>({studentData[field]?.vietDegree})</span>
                     </div>
                   </>
                 )}
@@ -437,8 +435,8 @@ const StudentProfile = () => {
                 ) : (
                   <>
                     <div className={`ml-8 flex items-center gap-1 text-sm`}>
-                      <span>{studentData[field].from}</span>-
-                      <span>{studentData[field].to}</span>
+                      <span>{studentData[field]?.from}</span>-
+                      <span>{studentData[field]?.to}</span>
                     </div>
                   </>
                 )}
@@ -479,10 +477,10 @@ const StudentProfile = () => {
                 ) : (
                   <>
                     <div className={`ml-8 flex flex-col gap-1 text-sm`}>
-                      <span>{studentData[field].phoneNumber}</span>
+                      <span>{studentData[field]?.phoneNumber}</span>
                       <div className="space-x-2">
-                        <span>{studentData[field].emergency}</span> -
-                        <span>{studentData[field].relationship}</span>
+                        <span>{studentData[field]?.emergency}</span> -
+                        <span>{studentData[field]?.relationship}</span>
                       </div>
                     </div>
                   </>
@@ -521,11 +519,11 @@ const StudentProfile = () => {
                   <>
                     <div className={`ml-8 flex flex-col gap-1 text-sm`}>
                       <span>
-                        ຈາກ: {studentData[field].from}
+                        ຈາກ: {studentData[field]?.from}
                         <p className="text-xs">{`(YYYY-MM-DD)`}</p>
                       </span>
                       <span>
-                        ເຖິງ: {studentData[field].to}
+                        ເຖິງ: {studentData[field]?.to}
                         <p className="text-xs">{`(YYYY-MM-DD)`}</p>
                       </span>
                     </div>
@@ -563,8 +561,8 @@ const StudentProfile = () => {
                 ) : (
                   <>
                     <div className={`ml-8 flex flex-col gap-1 text-sm`}>
-                      <span>{studentData[field].passportNo}</span>
-                      <span>Expired: {studentData[field].expired}</span>
+                      <span>{studentData[field]?.passportNo}</span>
+                      <span>Expired: {studentData[field]?.expired}</span>
                     </div>
                   </>
                 )}
@@ -587,7 +585,9 @@ const StudentProfile = () => {
                     </select>
                   </>
                 ) : (
-                  <div className={`ml-8 flex flex-col text-sm whitespace-normal`}>
+                  <div
+                    className={`ml-8 flex flex-col whitespace-normal text-sm`}
+                  >
                     <span>{studentData[field]}</span>
                   </div>
                 )}
@@ -694,6 +694,7 @@ const StudentProfile = () => {
                     <div className="avatar">
                       <div className="w-32 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
                         <img src="https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg" />
+                        {/* <img alt="Profile" src={studentData?.facebookUrl} />; */}
                       </div>
                     </div>
                     <div className="text-md flex flex-col gap-1">
@@ -708,7 +709,7 @@ const StudentProfile = () => {
                     </div>
                   </div>
                   <form onSubmit={handleSubmit(handleEditSubmit)}>
-                    <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:text-md">
+                    <div className="lg:text-md mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                       {fieldOrder.map((field, i) => handleRenderer(i, field))}
                     </div>
                     {toggleEdit && (

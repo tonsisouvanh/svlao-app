@@ -198,7 +198,7 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
                               <span
                                 className={`badge ${
                                   cell.value === "active"
-                                    ? " badge-success"
+                                    ? " badge-success text-white"
                                     : "badge-warning"
                                 }`}
                               >

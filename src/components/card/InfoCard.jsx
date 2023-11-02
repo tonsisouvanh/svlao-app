@@ -15,13 +15,13 @@ const InfoCard = ({ icon, label, text, toggleEdit = false, link = "" }) => {
           <a
             target="_blank"
             rel="noreferrer"
-            href={text}
-            className="w-full truncate btn-link"
+            href={link}
+            className="btn-link w-full truncate"
           >
             Link
           </a>
         ) : (
-          <span>{text}</span>
+          <span className="whitespace-normal">{text}</span>
         )}
       </div>
     </div>

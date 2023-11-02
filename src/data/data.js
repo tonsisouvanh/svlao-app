@@ -435,6 +435,7 @@ export const mockResidenceAddress = [
   "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
   "14 Đ. 12C, Phường 3, Quận 4, Thành phố Hồ Chí Minh",
   "30/38 hẻm 30 lâm văn bền ,tân kiểng,q7",
+  "122ABC Đ. Cách Mạng Tháng 8, Võ Thị Sáu, Quận 3, Thành phố Hồ Chí Minh"
 ];
 
 export const STUDENT_COLUMNS  = [

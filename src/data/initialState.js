@@ -51,4 +51,5 @@ export const initialStudentInput = {
   },
   residenceAddress: "",
   userStatus: "",
+  userId: "",
 };

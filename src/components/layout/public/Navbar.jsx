@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { themes } from "../../../data/data";
 import { AiFillBell, AiFillInfoCircle } from "react-icons/ai";
-import { TbShirtFilled } from "react-icons/tb";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { GiCupcake } from "react-icons/gi";
 import { BiSolidMoon, BiSolidSun } from "react-icons/bi";
 import { useSelector } from "react-redux";
+import Spinner from "../../ui/Spinner";
 
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const [theme, setTheme] = useState(
@@ -52,7 +52,13 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                 tabIndex={0}
                 className="btn rounded-btn btn-sm m-1 font-notosanslao"
               >
-                <TbShirtFilled />
+                {theme === "cupcake" ? (
+                  <GiCupcake size={16} />
+                ) : theme === "night" ? (
+                  <BiSolidMoon size={16} />
+                ) : (
+                  <BiSolidSun size={16} />
+                )}
               </label>
 
               <ul
@@ -91,7 +97,11 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                 <div className="avatar placeholder">
                   <div className="w-8 rounded-full bg-neutral-focus text-neutral-content">
                     <span className="text-md">
-                      {userData?.email ? userData?.email[0].toUpperCase() : "NA"}
+                      {userData?.email ? (
+                        userData?.email[0].toUpperCase()
+                      ) : (
+                        <Spinner />
+                      )}
                     </span>
                   </div>
                 </div>
@@ -113,7 +123,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
               >
                 Profile
                 {userData?.userStatus === "pending" && (
-                  <AiFillInfoCircle className="absolute text-secondary right-0 top-0" />
+                  <AiFillInfoCircle className="absolute right-0 top-0 text-secondary" />
                 )}
               </Link>
               <Link

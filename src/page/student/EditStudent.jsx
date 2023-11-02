@@ -4,6 +4,7 @@ import {
   mockDegrees,
   mockMajor,
   mockPerminentAddresses,
+  mockResidenceAddress,
   mockUniversity,
   relationships,
   scholarshipTypes,
@@ -15,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../components/ui/Spinner";
 import toast from "react-hot-toast";
 import { AiFillEdit } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const selectInputStyle =
   "select select-sm select-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
@@ -69,14 +71,13 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
     reset();
     setEditToggle(false);
   };
-  console.log(editingStudent);
   return (
     <>
       {status === "loading" ? (
         <Spinner />
       ) : (
         <div className="container mx-auto">
-          <div className="breadcrumbs text-sm">
+          {/* <div className="breadcrumbs text-sm">
             <ul>
               <li onClick={handleClear}>
                 <a>Student list</a>
@@ -85,6 +86,18 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                 <span>Edit student</span>
               </li>
             </ul>
+          </div> */}
+          <div className="!sticky !top-[4.2rem] z-[1] bg-base-100 px-2 shadow-sm">
+            <div className="breadcrumbs text-sm">
+              <ul>
+                <li className="cursor-pointer hover:underline" onClick={() => setEditToggle(false)}>
+                  <span>Student list</span>
+                </li>
+                <li className="underline">
+                  <span>Edit student</span>
+                </li>
+              </ul>
+            </div>
           </div>
           <div className="bg-base-200d shadow-mdd relative rounded p-8 font-notosanslao">
             <span className="absolute left-8 top-8">
@@ -99,24 +112,47 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
             >
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* // ~~~~~~~~~~~ status Check box ~~~~~~~~~~  */}
-                <div>
-                  <label className={mainLabelStyle}>User Status:</label>
-                  <select
-                    {...register("userStatus", {
-                      requiredd: "Please select",
-                    })}
-                    className={selectInputStyle}
-                  >
-                    {userStatus.map((ele) => (
-                      <option key={ele.status} value={ele.status}>
-                        {ele.status}
-                      </option>
-                    ))}
-                  </select>
-                  <ErrorMessage
-                    styling="mt-3 sm:text-md"
-                    error={errors.userStatus}
-                  />
+                <div className="flex items-start gap-2">
+                  <div className="whitespace-nowrap">
+                    <label className={mainLabelStyle}>ສະຖານະ</label>
+                    <select
+                      {...register("userStatus", {
+                        requiredd: "Please select",
+                      })}
+                      className={selectInputStyle}
+                    >
+                      {userStatus.map((ele) => (
+                        <option key={ele.status} value={ele.status}>
+                          {ele.status}
+                        </option>
+                      ))}
+                    </select>
+                    <ErrorMessage
+                      styling="mt-3 sm:text-md"
+                      error={errors.userStatus}
+                    />
+                  </div>
+                  <div className="w-fit">
+                    <div className="relative">
+                      <label
+                        className={mainLabelStyle + " flex items-center gap-2"}
+                      >
+                        <span>Account ID</span>
+                        <ErrorMessage
+                          styling="sm:text-md"
+                          error={errors?.userId}
+                        />
+                      </label>
+                    </div>
+                    <input
+                      {...register("userId", {
+                        requiredd: "Please fill up",
+                      })}
+                      type="text"
+                      placeholder="Account ID" // Corrected the property name here
+                      className={textInputStyle}
+                    />
+                  </div>
                 </div>
                 {/* fullname */}
                 <div className="form-control w-full ">
@@ -249,6 +285,19 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                 </div>
                 <div>
                   <label className={mainLabelStyle}>ທີ່ຢູ່ປັດຈຸບັນ:</label>
+                  <select
+                    onChange={(e) =>
+                      setValue("residenceAddress", e.target.value)
+                    }
+                    className={selectInputStyle + " mb-2"}
+                    defaultValue={editingStudent.residenceAddress}
+                  >
+                    {mockResidenceAddress.map((item, index) => (
+                      <option key={index} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
                   <input
                     {...register("residenceAddress", {
                       requiredd: "Please fill up",
