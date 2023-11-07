@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -101,7 +102,7 @@ export const addStudent = createAsyncThunk(
   },
 );
 
-// STUDENT UPDATE
+// ADMIN UPDATE
 export const adminUpdateStudent = createAsyncThunk(
   "students/adminUpdateStudent",
   async (updatedStudent, { rejectWithValue }) => {
@@ -124,6 +125,8 @@ export const adminUpdateStudent = createAsyncThunk(
     }
   },
 );
+
+// STUDENT UPDATE
 export const studentUpdateStudent = createAsyncThunk(
   "students/studentUpdateStudent",
   async (updatedStudent, { rejectWithValue }) => {
@@ -144,39 +147,24 @@ export const studentUpdateStudent = createAsyncThunk(
   },
 );
 
-// export const deleteStudent = createAsyncThunk<void, string>(
-//   "students/deleteStudent",
-//   async (studentId) => {
-//     try {
-//       // Construct the Firestore document reference for the student
-//       const studentRef = doc(db, "students", studentId);
+export const adminDeleteStudent = createAsyncThunk(
+  "students/adminDeleteStudent",
+  async (studentId, { rejectWithValue }) => {
+    console.log(studentId);
+    try {
+      // Construct the Firestore document reference for the student
+      // const studentRef = doc(db, "students", studentId);
+      // Delete the student document from Firestore
+      // await deleteDoc(studentRef);
+    } catch (error) {
+      const errorMessage = error.message;
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage);
+    }
+  },
+);
 
-//       // Delete the student document from Firestore
-//       await deleteDoc(studentRef);
-//     } catch (error) {
-//       throw new Error("An error occurred while deleting the student.");
-//     }
-//   },
-// );
 
-// export const updateStudent = createAsyncThunk<Student, Student>(
-//   "students/updateStudent",
-//   async (updatedStudent) => {
-//     const currentDate = new Date();
-
-//     try {
-//       // Construct the Firestore document reference for the student
-//       const studentRef = doc(db, "students", updatedStudent.id || "");
-
-//       // Update the student document in Firestore
-//       await setDoc(studentRef, { ...updatedStudent, createdDate: currentDate });
-
-//       return updatedStudent;
-//     } catch (error) {
-//       throw new Error("An error occurred while updating the student.");
-//     }
-//   },
-// );
 export const fetchStudents = createAsyncThunk(
   "students/fetchStudents",
   async () => {
@@ -362,22 +350,22 @@ const studentSlice = createSlice({
       .addCase(studentUpdateStudent.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "";
+      })
+      // // DELETE
+      .addCase(adminDeleteStudent.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(adminDeleteStudent.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        console.log(action.payload)
+        state.data = state.data.filter(
+          (student) => student.id !== action.payload,
+        );
+      })
+      .addCase(adminDeleteStudent.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "";
       });
-    // // DELETE
-    // .addCase(deleteStudent.pending, (state) => {
-    //   state.status = "loading";
-    // })
-    // .addCase(deleteStudent.fulfilled, (state, action) => {
-    //   state.status = "succeeded";
-    //   // Remove the deleted student from the state
-    //   state.data = state.data.filter(
-    //     (student) => student.id !== action.meta.arg,
-    //   );
-    // })
-    // .addCase(deleteStudent.rejected, (state, action) => {
-    //   state.status = "failed";
-    //   state.error = action.error.message || "";
-    // })
     // // UPDATE
     // .addCase(updateStudent.pending, (state) => {
     //   state.status = "loading";

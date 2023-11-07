@@ -1,16 +1,28 @@
 import React, { useState } from "react";
-import { AiFillInfoCircle } from "react-icons/ai";
+import { AiFillInfoCircle, AiFillQuestionCircle } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
-const style = "text-2xl text-primary";
+const style = "text-2xl";
 
-const InfoModal = ({ title, modaltype, desc, initialValue = false }) => {
+const InfoModal = ({
+  title,
+  modaltype,
+  desc,
+  initialValue = false,
+  isOnclickEvent = false,
+  confirmLabel,
+  cancelLabel = "Close!",
+  handleClick,
+}) => {
   const [openModal, setOpenModal] = useState(initialValue);
-  const getIcon = (modaltype) => {
+  const getIcon = () => {
     let icon;
     switch (modaltype) {
       case "info":
-        icon = <AiFillInfoCircle className={style} />;
+        icon = <AiFillInfoCircle className={style + " text-primary"} />;
+        break;
+      case "question":
+        icon = <AiFillQuestionCircle className={style + " text-warning"} />;
         break;
 
       default:
@@ -22,16 +34,26 @@ const InfoModal = ({ title, modaltype, desc, initialValue = false }) => {
     <div className={`modal ${!openModal ? null : "modal-open"}`}>
       <div className="modal-box font-notosanslao">
         <div className="flex items-center gap-2">
-          <div>{getIcon(modaltype)}</div>
+          <div>{getIcon()}</div>
           <h3 className="text-xl font-bold">{title}</h3>
         </div>
         <p className="py-4">{desc}</p>
         <div className="modal-action">
-          <Link className="btn btn-primary" to={`/profile/${1}`}>
-            ອັບເດດ
-          </Link>
+          {isOnclickEvent ? (
+            <button
+              onClick={handleClick}
+              type="button"
+              className="btn btn-primary"
+            >
+              {confirmLabel}
+            </button>
+          ) : (
+            <Link className="btn btn-primary" to={`/profile/${1}`}>
+              ອັບເດດ
+            </Link>
+          )}
           <button onClick={() => setOpenModal(false)} className="btn">
-            Close!
+            {cancelLabel}
           </button>
         </div>
       </div>

@@ -49,6 +49,7 @@ export const initialStudentInput = {
     expired: "",
     img: ""
   },
+  profileImg: "",
   residenceAddress: "",
   userStatus: "",
   userId: "",

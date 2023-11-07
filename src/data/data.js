@@ -143,7 +143,7 @@ export const mockUniversity = [
     laoName: "ມລ ສ້າງຄູເຕັກໂນໂລຊີ",
     vietName: "trường đại học sư phạm kỹ thuật",
     englishName: "University of Technical Pedagogy",
-    shortcut: "SPHKTH",
+    shortcut: "SPKT",
   },
   {
     id: "SyOMKWvKVFFbOiuVVP1C",
@@ -573,6 +573,10 @@ export const STUDENT_COLUMNS  = [
   {
     Header: "University (Viet Name)",
     accessor: "university.vietName",
+  },
+  {
+    Header: "University (Lao Name)",
+    accessor: "university.laoName",
   },
   // {
   //   Header: "University Shortcut",

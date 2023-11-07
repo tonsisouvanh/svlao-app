@@ -21,6 +21,7 @@ import {
 import { PiGenderIntersexBold } from "react-icons/pi";
 import Spinner from "../components/ui/Spinner";
 const fieldOrder = [
+  "id",
   "fullname",
   "studentId",
   "dob",
@@ -302,6 +303,7 @@ const StudentDetail = () => {
                       studentData?.fullname?.englishLastname}
                     )
                   </span>
+                  <span className="text-sm text-base-content">ID: {studentData?.id || "NA"}</span>
                 </div>
               </div>
               <div>

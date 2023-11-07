@@ -94,11 +94,12 @@ const StudentList = () => {
                         }
                       >
                         <button
-                          data-tip="ເພີ່ມນັກຮຽນ"
-                          className={`btn btn-primary tooltip font-notosanslao text-white ${
+                          // data-tip="ເພີ່ມນັກຮຽນ"
+                          className={`btn btn-primary tooltipp font-notosanslao text-white ${
                             userData.role !== "admin" && "btn-disabled"
                           }`}
                         >
+                          ເພີ່ມນັກຮຽນ
                           <AiFillPlusCircle size={20} />
                         </button>
                       </Link>
