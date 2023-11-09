@@ -66,24 +66,6 @@ const StudentList = () => {
             {editToggle ? null : (
               <>
                 <div className="mb-10 flex w-full items-center justify-between gap-2">
-                  {/* <Searchbar
-                      filter={globalFilter}
-                      setFilter={setGlobalFilter}
-                    />
-                    <Filter
-                      filter={globalFilter}
-                      setFilter={setGlobalFilter}
-                      options={scholarshipTypes}
-                      title={"ປະເພດທຶນ"}
-                      fieldName={"name"}
-                    />
-                    <Filter
-                      filter={globalFilter}
-                      setFilter={setGlobalFilter}
-                      options={mockDegrees}
-                      title={"ລະດັບການສຶກສາ"}
-                      fieldName={"laoDegree"}
-                    /> */}
                   <div className="flex items-center gap-2">
                     <div className="">
                       <Link
@@ -117,15 +99,6 @@ const StudentList = () => {
                         )}
                       </div>
                     )}
-                    {/* <div
-                        onClick={handleReload}
-                        className="tooltip tooltip-top"
-                        data-tip="Reload data"
-                      >
-                        <button className="btn">
-                          <AiOutlineReload />
-                        </button>
-                      </div> */}
                   </div>
                 </div>
               </>
