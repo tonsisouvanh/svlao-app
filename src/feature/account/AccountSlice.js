@@ -1,12 +1,10 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
-  addDoc,
   collection,
-  deleteDoc,
   doc,
   getDoc,
   getDocs,
-  setDoc,
+  setDoc
 } from "firebase/firestore";
 import toast from "react-hot-toast";
 import { auth, db } from "../../firebase";

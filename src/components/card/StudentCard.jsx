@@ -16,7 +16,7 @@ const StudentCard = ({ student }) => {
       </div>
       <div className="relative mx-auto -mt-16 h-32 w-32 overflow-hidden rounded-full">
         <img
-          src="https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg"
+          src={student?.profileImg || ""}
           alt=""
           className="h-32 w-full object-cover object-top "
         />
@@ -65,7 +65,7 @@ const StudentCard = ({ student }) => {
                 {/* ລົບຂໍ້ມູນ */}
                 <AiFillDelete />
               </button>
-              <Link to={`/detail/${student?.id}`}>
+              <Link to={`/student-detail/${student?.id}`}>
                 <button className="btn btn-primary  btn-sm whitespace-nowrap font-notosanslao !text-white">
                   {/* ລາຍລະອຽດນັກຮຽນ */}
                   <AiFillEye />

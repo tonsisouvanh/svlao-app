@@ -1,6 +1,4 @@
-import React from "react";
 import { AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
-import { BiTime } from "react-icons/bi";
 
 const Searchbar = ({ filter, setFilter }) => {
   return (

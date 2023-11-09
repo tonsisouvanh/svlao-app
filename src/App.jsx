@@ -5,13 +5,11 @@ import {
   StudentDetail,
   NotFoundPage,
   StudentList,
-  Profile,
   Intro,
   Signin,
   News,
   Signup,
   AddStudent,
-  EditStudent,
   StudentProfile,
 } from "./page";
 import RootLayoutPublic from "./components/layout/public/rootLayoutPublic";

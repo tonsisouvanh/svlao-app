@@ -1,4 +1,3 @@
-import React from "react";
 import emptyfolder from "../../assets/img/empty-folder.png";
 const DataNotFound = () => {
   return (

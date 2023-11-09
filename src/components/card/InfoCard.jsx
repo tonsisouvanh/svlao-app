@@ -1,8 +1,5 @@
-import React from "react";
-import ErrorMessage from "../typography/ErrorMessage";
-import { useFormContext } from "react-hook-form";
-const textInputStyle =
-  "input input-sm input-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
+// const textInputStyle =
+//   "input input-sm input-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
 
 const InfoCard = ({ icon, label, text, toggleEdit = false, link = "" }) => {
   return (

@@ -1,5 +1,3 @@
-import React from "react";
-
 const Spinner = () => {
   return (
     <dialog id="my_modal_1" className="modal modal-open z-[9999]">

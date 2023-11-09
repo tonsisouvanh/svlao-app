@@ -1,5 +1,3 @@
-import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
-import { Link } from "react-router-dom";
 import StudentCard from "../../card/StudentCard";
 
 const StudentGrid = ({ studentsProps }) => {
@@ -51,7 +49,7 @@ const StudentGrid = ({ studentsProps }) => {
             </div>
           ))}
       </div>
-      <div className="grid justify-items-center  ">
+      {/* <div className="grid justify-items-center  ">
         <div className="join  ">
           <button className="btn join-item !bg-white">«</button>
           <button className="btn join-item !bg-white">1</button>
@@ -63,7 +61,7 @@ const StudentGrid = ({ studentsProps }) => {
           <button className="btn join-item !bg-white">100</button>
           <button className="btn join-item !bg-white">»</button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

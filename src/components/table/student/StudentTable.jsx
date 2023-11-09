@@ -14,7 +14,6 @@ import {
   AiOutlineMore,
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import ColumnFilter from "../../input/student/ColumnFilter";
 import {
   STUDENT_COLUMNS,
   mockDegrees,
@@ -34,18 +33,6 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
   const [deletedStudent, setDeletedStudent] = useState("");
   const data = useMemo(() => students, []);
   const columns = useMemo(() => STUDENT_COLUMNS, []);
-  const defaultColumn = useMemo(() => {
-    return {
-      Filter: (props) => (
-        <ColumnFilter
-          title={"ads"}
-          fieldName={"asdf"}
-          options={["asdf", "efff"]}
-          {...props}
-        />
-      ),
-    };
-  }, []);
 
   const {
     getTableProps,
@@ -56,7 +43,7 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
     state,
     setGlobalFilter,
   } = useTable(
-    { columns, data, defaultColumn },
+    { columns, data },
     useFilters,
     useGlobalFilter,
     useSortBy,
@@ -74,7 +61,6 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
     setOpenModal(true);
   };
   const handleDeletStudent = () => {
-    console.log(deletedStudent);
     dispatch(adminDeleteStudent(deletedStudent));
     setDeletedStudent("");
     setOpenModal(false);

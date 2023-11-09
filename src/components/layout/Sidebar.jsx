@@ -1,20 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import SidebarLinkGroup from "./SidebarLinkGroup";
-import { BsArrowLeft, BsFillCaretDownFill } from "react-icons/bs";
 import {
-  AiFillDashboard,
-  AiOutlinePhone,
   AiFillBook,
-  AiOutlineLogout,
-  AiOutlineAudit,
   AiFillSound,
+  AiOutlineAudit,
   AiOutlineDashboard,
+  AiOutlineLogout
 } from "react-icons/ai";
-import { FaUser } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import { BsArrowLeft, BsFillCaretDownFill } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { signOutUser } from "../../feature/auth/AuthSlice";
-import { auth } from "../../firebase";
+import SidebarLinkGroup from "./SidebarLinkGroup";
 
 const dropdownLiStyle = "hover:text-white hover:bg-white/10 rounded-md";
 const dropdownNavlinkStyle =

@@ -1,27 +1,27 @@
-import { Link, useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { adminFetchSingleStudent } from "../feature/student/StudentSlice";
+import { useEffect, useState } from "react";
 import {
-  FaUser,
-  FaPhone,
-  FaUniversity,
-  FaAward,
-  FaPassport,
-  FaClock,
   FaAccessibleIcon,
-  FaMapMarked,
+  FaAward,
+  FaClock,
   FaFacebook,
-  FaMale,
   FaFemale,
   FaIdCard,
+  FaMale,
+  FaMapMarked,
+  FaPassport,
+  FaPhone,
   FaRulerVertical,
+  FaUniversity,
+  FaUser,
 } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { adminFetchSingleStudent } from "../feature/student/StudentSlice";
 
-import { PiGenderIntersexBold } from "react-icons/pi";
+import { AiFillCloseCircle } from "react-icons/ai";
+import { PiGenderIntersexBold, PiMagnifyingGlassFill } from "react-icons/pi";
 import Spinner from "../components/ui/Spinner";
 const fieldOrder = [
-  "id",
   "fullname",
   "studentId",
   "dob",
@@ -40,6 +40,7 @@ const fieldOrder = [
   "userStatus",
 ];
 const StudentDetail = () => {
+  const [openImg, setopenImg] = useState(false);
   const dispatch = useDispatch();
   const { id } = useParams();
   const { student: studentData } = useSelector((state) => state.students);
@@ -268,7 +269,24 @@ const StudentDetail = () => {
   }, []);
   return (
     <>
-      <div className="container mx-auto font-notosanslao">
+      <div className="container relative mx-auto font-notosanslao">
+        {openImg && (
+          <div className="absolute bottom-0 left-0 right-0 top-0 z-[10] flex h-full w-full items-start justify-center bg-black/80">
+            <div className="max-h-1/2 mt-10 h-auto w-1/2 border">
+              <img
+                className="h-full w-full"
+                src={studentData?.profileImg}
+                alt=""
+              />
+            </div>
+            <span
+              onClick={() => setopenImg(false)}
+              className="absolute right-10 top-10 cursor-pointer"
+            >
+              <AiFillCloseCircle className="text-xl" />
+            </span>
+          </div>
+        )}
         <div className="!sticky !top-[4.2rem] z-[1] flex items-center justify-between bg-base-100 px-2 shadow-sm">
           <div className="breadcrumbs text-sm">
             <ul>
@@ -290,8 +308,15 @@ const StudentDetail = () => {
             <div className="rounded-lg bg-base-100 p-4">
               <div className="flex items-center gap-5 text-2xl font-bold">
                 <div className="avatar">
-                  <div className="w-32 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
-                    <img src="https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg" />
+                  <PiMagnifyingGlassFill
+                    onClick={() => setopenImg(true)}
+                    className="btn btn-ghost p-0 btn-xs btn-circle cursor-pointer"
+                  />
+                  <div className="relative w-32 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
+                    <img src={studentData?.profileImg} />
+                    {/* <div className="absolute left-0 top-0 z-[100] hidden h-full w-full bg-black/50 hover:flex hover:items-center hover:justify-center">
+                      <span>X</span>
+                    </div> */}
                   </div>
                 </div>
                 <div className="text-md flex flex-col gap-1">
@@ -303,7 +328,9 @@ const StudentDetail = () => {
                       studentData?.fullname?.englishLastname}
                     )
                   </span>
-                  <span className="text-sm text-base-content">ID: {studentData?.id || "NA"}</span>
+                  <span className="text-sm text-base-content">
+                    ID: {studentData?.id || "NA"}
+                  </span>
                 </div>
               </div>
               <div>

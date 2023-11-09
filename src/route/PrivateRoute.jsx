@@ -36,11 +36,11 @@
 
 // export default PrivateRoute;
 
-import React, { useEffect, useState } from "react";
-import { Navigate, Outlet } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase";
+import { useEffect, useState } from "react";
+import { Navigate, Outlet } from "react-router-dom";
 import Spinner from "../components/ui/Spinner";
+import { auth } from "../firebase";
 
 const PrivateRoute = () => {
   const [user, setUser] = useState(null);

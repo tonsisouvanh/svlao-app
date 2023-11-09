@@ -77,7 +77,6 @@ const Profile = () => {
   const handleEditSubmit = (data) => {
     console.log(data);
   };
-  console.log(studentData);
   return (
     <>
       {!userData ? (
