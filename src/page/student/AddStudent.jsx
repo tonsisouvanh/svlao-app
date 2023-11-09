@@ -192,7 +192,7 @@ const AddStudent = () => {
                 </div>
                 {/* fullname */}
                 <div className="flex w-full flex-wrap items-center gap-2 lg:flex-nowrap">
-                  <div className="flex w-full flex-shrink-0 flex-col">
+                  <div className="flex w-full flex-col">
                     <div className="relative">
                       <label
                         className={mainLabelStyle + " flex items-center gap-2"}
@@ -213,7 +213,7 @@ const AddStudent = () => {
                       className={textInputStyle}
                     />
                   </div>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col w-full">
                     <label className={mainLabelStyle}>ຊື່ຫລິ້ນ:</label>
                     <input
                       {...register("fullname.nickName")}
