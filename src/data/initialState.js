@@ -47,10 +47,11 @@ export const initialStudentInput = {
   passport: {
     passportNo: "",
     expired: "",
-    img: ""
+    img: "",
   },
   profileImg: "",
   residenceAddress: "",
   userStatus: "",
   userId: "",
+  emailAddress: "",
 };

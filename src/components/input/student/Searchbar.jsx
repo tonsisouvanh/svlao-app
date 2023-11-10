@@ -16,7 +16,11 @@ const Searchbar = ({ filter, setFilter }) => {
       <div className="indicator">
         <button
           onClick={() => setFilter("")}
-          className={"btn join-item select-bordered btn-sm bg-base-300 p-0 "}
+          className={`btn join-item select-bordered btn-sm bg-base-300 p-0 ${
+            filter === undefined || filter === ""
+              ? "text-opacity-30"
+              : "text-opacity-100"
+          }`}
         >
           <AiOutlineClose />
         </button>

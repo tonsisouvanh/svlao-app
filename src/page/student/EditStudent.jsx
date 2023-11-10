@@ -1,5 +1,10 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { AiFillEdit } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
 import ErrorMessage from "../../components/typography/ErrorMessage";
+import Spinner from "../../components/ui/Spinner";
 import {
   mockDegrees,
   mockMajor,
@@ -10,13 +15,7 @@ import {
   scholarshipTypes,
   userStatus,
 } from "../../data/data";
-import { useState } from "react";
 import { adminUpdateStudent } from "../../feature/student/StudentSlice";
-import { useDispatch, useSelector } from "react-redux";
-import Spinner from "../../components/ui/Spinner";
-import toast from "react-hot-toast";
-import { AiFillEdit } from "react-icons/ai";
-import { Link } from "react-router-dom";
 
 const selectInputStyle =
   "select select-sm select-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
@@ -32,14 +31,13 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
   const [degree, setDegree] = useState("");
   const [university, setUniversity] = useState("");
   const [major, setMajor] = useState("");
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
     reset,
-  } = useForm({ defaultValues: editingStudent });
+  } = useForm({ defaultValues: { ...editingStudent, dob: "1995-02-02" } });
 
   const handleSelectDegree = (value) => {
     const vietDegree = mockDegrees.find((d) => d.laoDegree === value);
@@ -90,7 +88,10 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
           <div className="!sticky !top-[4.2rem] z-[1] bg-base-100 px-2 shadow-sm">
             <div className="breadcrumbs text-sm">
               <ul>
-                <li className="cursor-pointer hover:underline" onClick={() => setEditToggle(false)}>
+                <li
+                  className="cursor-pointer hover:underline"
+                  onClick={() => setEditToggle(false)}
+                >
                   <span>Student list</span>
                 </li>
                 <li className="underline">

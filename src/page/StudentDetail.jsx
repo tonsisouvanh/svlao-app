@@ -22,6 +22,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { PiGenderIntersexBold, PiMagnifyingGlassFill } from "react-icons/pi";
 import Spinner from "../components/ui/Spinner";
 const fieldOrder = [
+  "userStatus",
   "fullname",
   "studentId",
   "dob",
@@ -37,13 +38,14 @@ const fieldOrder = [
   "visa",
   "passport",
   "residenceAddress",
-  "userStatus",
 ];
 const StudentDetail = () => {
   const [openImg, setopenImg] = useState(false);
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { student: studentData } = useSelector((state) => state.students);
+  const { student: studentData, status } = useSelector(
+    (state) => state.students,
+  );
 
   const getIconAndLabel = (field) => {
     let icon;
@@ -51,6 +53,10 @@ const StudentDetail = () => {
     switch (field) {
       case "fullname":
         label = "ຊື່ ແລະ ນາມສະກຸນ";
+        icon = <FaUser />;
+        break;
+      case "userStatus":
+        label = "ສະຖານະບັນຊີ";
         icon = <FaUser />;
         break;
       case "university":
@@ -102,7 +108,7 @@ const StudentDetail = () => {
         icon = <FaMapMarked />;
         break;
       case "perminentAddress":
-        label = "ທີ່ຢູ່ລາວ";
+        label = "ທີ່ຢູ່ລາວ (ແຂວງ)";
         icon = <FaMapMarked />;
         break;
       case "facebookUrl":
@@ -117,7 +123,7 @@ const StudentDetail = () => {
     return (
       <div className="flex items-center gap-2 font-semibold">
         <div className="text-2xl text-primary">{icon}</div>
-        <span className="underline underline-offset-2">{label}</span>
+        <span className="underline underline-offset-4">{label}</span>
       </div>
     );
   };
@@ -159,8 +165,8 @@ const StudentDetail = () => {
             ) : field === "degree" ? (
               <>
                 <div className={`ml-8 flex flex-col text-sm`}>
-                  <span>{studentData[field]?.laoDegree}</span>
-                  <span>({studentData[field]?.vietDegree})</span>
+                  <span>{studentData[field]?.laoDegree || "NA"}</span>
+                  <span>{studentData[field]?.vietDegree || "NA"}</span>
                 </div>
               </>
             ) : field === "scholarship" ? (
@@ -203,8 +209,8 @@ const StudentDetail = () => {
                 <div className={`ml-8 flex flex-col gap-1 text-sm`}>
                   <span>{studentData[field]?.phoneNumber}</span>
                   <div className="space-x-2">
-                    <span>{studentData[field]?.emergency}</span> -
-                    <span>{studentData[field]?.relationship}</span>
+                    <span>{studentData[field]?.emergency}</span>
+                    <span>({studentData[field]?.relationship || "NA"})</span>
                   </div>
                 </div>
               </>
@@ -240,6 +246,18 @@ const StudentDetail = () => {
                   </span>
                 </div>
               </>
+            ) : field === "userStatus" ? (
+              <>
+                <span
+                  className={`badge ${
+                    studentData[field] === "active"
+                      ? " badge-success text-white"
+                      : "badge-warning"
+                  }`}
+                >
+                  {studentData[field]}
+                </span>
+              </>
             ) : (
               <div className={`ml-8 flex flex-col gap-1 text-sm`}>
                 {field === "dob" ? (
@@ -270,32 +288,15 @@ const StudentDetail = () => {
   return (
     <>
       <div className="container relative mx-auto font-notosanslao">
-        {openImg && (
-          <div className="absolute bottom-0 left-0 right-0 top-0 z-[10] flex h-full w-full items-start justify-center bg-black/80">
-            <div className="max-h-1/2 mt-10 h-auto w-1/2 border">
-              <img
-                className="h-full w-full"
-                src={studentData?.profileImg}
-                alt=""
-              />
-            </div>
-            <span
-              onClick={() => setopenImg(false)}
-              className="absolute right-10 top-10 cursor-pointer"
-            >
-              <AiFillCloseCircle className="text-xl" />
-            </span>
-          </div>
-        )}
         <div className="!sticky !top-[4.2rem] z-[1] flex items-center justify-between bg-base-100 px-2 shadow-sm">
           <div className="breadcrumbs text-sm">
             <ul>
               <li>
                 <Link className="" to="/dashboard/studentlist">
-                  Student list
+                  ລາຍຊື່ນັກຮຽນ
                 </Link>
               </li>
-              <li className="underline">
+              <li className="underline underline-offset-2">
                 <span>ຂໍ້ມູນສ່ວນໂຕ</span>
               </li>
             </ul>
@@ -306,11 +307,13 @@ const StudentDetail = () => {
         ) : (
           <div className="min-h-screend hero bg-base-100">
             <div className="rounded-lg bg-base-100 p-4">
-              <div className="flex items-center gap-5 text-2xl font-bold">
+              <div className="flex flex-col items-center justify-center gap-5 text-2xl font-bold">
                 <div className="avatar">
                   <PiMagnifyingGlassFill
-                    onClick={() => setopenImg(true)}
-                    className="btn btn-ghost p-0 btn-xs btn-circle cursor-pointer"
+                    onClick={() =>
+                      document.getElementById("my_modal_2").showModal()
+                    }
+                    className="btn btn-circle btn-ghost btn-xs cursor-pointer p-0"
                   />
                   <div className="relative w-32 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
                     <img src={studentData?.profileImg} />
@@ -319,7 +322,21 @@ const StudentDetail = () => {
                     </div> */}
                   </div>
                 </div>
-                <div className="text-md flex flex-col gap-1">
+                <dialog id="my_modal_2" className="modal">
+                  <div className="modal-box">
+                    <div className="flex items-center justify-center">
+                      <div className="avatar">
+                        <div className="w-full rounded">
+                          <img src={studentData.profileImg} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <form method="dialog" className="modal-backdrop">
+                    <button>close</button>
+                  </form>
+                </dialog>
+                <div className="text-md flex flex-col items-center justify-center gap-1">
                   <span>{studentData?.fullname?.laoName}</span>
                   <span>
                     (

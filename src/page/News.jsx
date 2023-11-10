@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import InfoModal from "../components/modal/InfoModal";
 
 const News = () => {
-  // const userData = JSON.parse(sessionStorage.getItem("userData")) || {};
   const { user } = useSelector((state) => state.user);
   return (
     <div>
@@ -17,7 +16,7 @@ const News = () => {
       ) : null}
 
       <section className="body-font overflow-hidden">
-        <div className="container mx-auto">
+        <div className="container mx-auto p-3">
           <div className="divide-base-900 divide-y-2">
             <h1 className="title-font mb-4 text-center font-notosanslao text-2xl font-bold text-primary sm:text-3xl">
               ແຈ້ງການຕ່າງໆ

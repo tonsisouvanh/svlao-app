@@ -18,18 +18,11 @@ const StudentList = () => {
   const [editToggle, setEditToggle] = useState(false);
   const userData = JSON.parse(sessionStorage.getItem("userData")) || {};
 
-  const [view, setView] = useState("table");
+  const [view, setView] = useState("");
   const toggleView = () => {
     setView((prevView) => (prevView === "table" ? "grid" : "table"));
   };
 
-  // const handleReload = async () => {
-  //   await dispatch(fetchStudents());
-  //   setStudentData(students);
-  // };
-  // const handleDeleteStudent = (id) => {
-  //   return;
-  // };
 
   useEffect(() => {
     const savedView = localStorage.getItem("viewPreference");
@@ -105,7 +98,10 @@ const StudentList = () => {
             )}
           </div>
           {view === "grid" ? (
-            <StudentGrid studentsProps={students} />
+            <StudentGrid 
+            editToggle={editToggle}
+              setEditToggle={setEditToggle}
+            studentsProps={students} />
           ) : (
             <StudentTable
               editToggle={editToggle}

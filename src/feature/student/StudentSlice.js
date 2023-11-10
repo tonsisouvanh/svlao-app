@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   addDoc,
   collection,
-  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -106,7 +105,6 @@ export const addStudent = createAsyncThunk(
 export const adminUpdateStudent = createAsyncThunk(
   "students/adminUpdateStudent",
   async (updatedStudent, { rejectWithValue }) => {
-    console.log(updatedStudent);
     const currentDate = new Date();
 
     try {
@@ -150,7 +148,6 @@ export const studentUpdateStudent = createAsyncThunk(
 export const adminDeleteStudent = createAsyncThunk(
   "students/adminDeleteStudent",
   async (studentId, { rejectWithValue }) => {
-    console.log(studentId);
     try {
       // Construct the Firestore document reference for the student
       // const studentRef = doc(db, "students", studentId);
@@ -226,7 +223,6 @@ export const fetchSingleStudent = createAsyncThunk(
 export const adminFetchSingleStudent = createAsyncThunk(
   "students/adminFetchSingleStudent",
   async (id) => {
-    console.log(id);
     try {
       const docRef = doc(db, "students", id);
       const docSnap = await getDoc(docRef);
@@ -241,7 +237,6 @@ export const adminFetchSingleStudent = createAsyncThunk(
       if (studentData.createdDate) {
         studentData.createdDate = serializeTimestamp(studentData.createdDate);
       }
-      console.log(studentData);
       return studentData;
     } catch (error) {
       const errorMessage = error.message;
@@ -357,7 +352,6 @@ const studentSlice = createSlice({
       })
       .addCase(adminDeleteStudent.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload)
         state.data = state.data.filter(
           (student) => student.id !== action.payload,
         );
