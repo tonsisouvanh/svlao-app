@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../ui/Spinner";
 import EditStudent from "../../../page/student/EditStudent";
@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import {
   STUDENT_COLUMNS,
   mockDegrees,
+  mockMajor,
   mockUniversity,
   scholarshipTypes,
   userStatus,
@@ -27,6 +28,16 @@ import { adminDeleteStudent } from "../../../feature/student/StudentSlice";
 const cellStyle = "whitespace-nowrap truncate font-light";
 
 const StudentTable = ({ editToggle, setEditToggle }) => {
+  const [totalStudents, setTotalStudents] = useState(0);
+  const [totalMale, setTotalMale] = useState(0);
+  const [totalFemale, setTotalFemale] = useState(0);
+  const [totalDegree, setTotalDegree] = useState({
+    associate: 0,
+    bachelor: 0,
+    master: 0,
+    dotoral: 0,
+  });
+
   const { status, students } = useSelector((state) => state.students);
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
@@ -61,6 +72,28 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
     setOpenModal(false);
   };
 
+  useEffect(() => {
+    setTotalStudents(rows.length);
+    const maleCount = rows.filter(
+      (student) => student.original.gender === "male",
+    ).length;
+    const femaleCount = rows.filter(
+      (student) => student.original.gender === "female",
+    ).length;
+    setTotalMale(maleCount);
+    setTotalFemale(femaleCount);
+    setTotalDegree({
+      bachelor: rows.filter(
+        (student) =>
+          student.original.degree.vietDegree.toLowerCase() === "cử nhân",
+      ).length,
+      master: rows.filter(
+        (student) =>
+          student.original.degree.vietDegree.toLowerCase() === "thạc sĩ",
+      ).length,
+    });
+  }, [rows]);
+
   if (status === "loading") {
     return <Spinner />;
   }
@@ -90,22 +123,30 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
           )}
           <div className="overflow-x-auto ">
             {/* State */}
-            <div className="stats stats-vertical my-4 shadow lg:stats-horizontal">
-              <div className="stat">
+            <div className="my-4 shadow">
+              <div className="stat w-36">
                 <div className="stat-title">All Students</div>
-                <div className="stat-value">{data.length}</div>
+                <div className="stat-value">{totalStudents}</div>
                 {/* <div className="stat-desc">Jan 1st - Feb 1st</div> */}
               </div>
-
-              <div className="stat">
-                <div className="stat-title">New Users</div>
-                <div className="stat-value">4,200</div>
+              <div className="stat w-36">
+                <div className="stat-title">Female</div>
+                <div className="stat-value">{totalFemale}</div>
                 {/* <div className="stat-desc">↗︎ 400 (22%)</div> */}
               </div>
-
-              <div className="stat">
-                <div className="stat-title">New Registers</div>
-                <div className="stat-value">1,200</div>
+              <div className="stat w-36">
+                <div className="stat-title">Male</div>
+                <div className="stat-value">{totalMale}</div>
+                {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
+              </div>
+              <div className="stat w-36">
+                <div className="stat-title">Bachelor</div>
+                <div className="stat-value">{totalDegree.bachelor}</div>
+                {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
+              </div>
+              <div className="stat w-36">
+                <div className="stat-title">Master</div>
+                <div className="stat-value">{totalDegree.master}</div>
                 {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
               </div>
             </div>
@@ -138,6 +179,14 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
                 options={userStatus}
                 title={"Status"}
                 fieldName={"status"}
+              />
+              {/*  */}
+              <Filter
+                filter={globalFilter}
+                setFilter={setGlobalFilter}
+                options={mockMajor}
+                title={"Major"}
+                fieldName={"vietMajor"}
               />
             </div>
             <table
@@ -242,6 +291,12 @@ const StudentTable = ({ editToggle, setEditToggle }) => {
                                 </span>
                               ) : cell.column.id === "gender" ? (
                                 <>{cell.value === "male" ? "ຊາຍ" : "ຍິງ"}</>
+                              ) : cell.column.id === "profileImg" ? (
+                                <div className="avatar">
+                                  <div className="w-10 rounded-full">
+                                    <img src={cell.value} />
+                                  </div>
+                                </div>
                               ) : (
                                 cell.render("Cell")
                               )}
