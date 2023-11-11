@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import InfoModal from "../components/modal/InfoModal";
+import ActivitySlider from "../components/slider/ActivitySlider";
 
 const News = () => {
   const { user } = useSelector((state) => state.user);
@@ -21,6 +22,13 @@ const News = () => {
             <h1 className="title-font mb-4 text-center font-notosanslao text-2xl font-bold text-primary sm:text-3xl">
               ແຈ້ງການຕ່າງໆ
             </h1>
+            <ActivitySlider
+              slides={[
+                "https://www.udn.vn/Portals/1/EasyDNNnews/11102/img-20.4.21.jpg",
+                "https://imagevietnam.vnanet.vn//MediaUpload/Org/2022/06/23/vna-potal-thanh-pho-ho-chi-minh-tao-moi-truong-huu-nghi-gan-ket-tinh-cam-cho-sinh-vien-lao-va-campuchia-618259923-12-9-58.jpeg",
+                "https://file3.qdnd.vn/data/images/0/2022/04/13/lehungkhoa/8d8dc4b9-7cf3-4b8c-a0ec-846a0c88d6c3.png",
+              ]}
+            />
             <div className="flex flex-wrap py-8 md:flex-nowrap">
               <div className="mb-6 flex flex-shrink-0 flex-col md:mb-0 md:w-64">
                 <span className="title-font text-base-600 font-semibold">
