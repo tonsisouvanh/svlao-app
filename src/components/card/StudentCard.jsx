@@ -15,7 +15,7 @@ const StudentCard = ({
   };
   return (
     <>
-      <div className="rounded-lg bg-base-200 shadow-md ">
+      <div className="rounded-lg bg-base-200 shadow-md">
         <div className="relative overflow-hidden rounded-t-lg">
           <div className="absolute bottom-0 left-0 right-0 top-0 bg-black/30 backdrop-invert backdrop-opacity-10"></div>
           <img

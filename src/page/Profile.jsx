@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import {
   data,
   mockDegrees,
-  mockMajor,
+  majorList,
   mockUniversity,
   relationships,
   scholarshipTypes,
@@ -63,7 +63,7 @@ const Profile = () => {
     setDegree(vietDegree.vietDegree);
   };
   const handleSelectMajor = (value) => {
-    const major = mockMajor.find((d) => d.laoMajor === value);
+    const major = majorList.find((d) => d.laoMajor === value);
     setValue("major.vietMajor", major.vietMajor);
     setMajor(major.vietMajor);
   };
@@ -450,7 +450,7 @@ const Profile = () => {
                       }
                       onChange={(e) => handleSelectMajor(e.target.value)}
                     >
-                      {mockMajor.map((item, index) => (
+                      {majorList.map((item, index) => (
                         <option key={index} value={item.laoMajor}>
                           {item.laoMajor}
                         </option>

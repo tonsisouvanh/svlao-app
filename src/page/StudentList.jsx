@@ -5,15 +5,12 @@ import Spinner from "../components/ui/Spinner";
 import Unauthorized from "./public/Unauthorized";
 import StudentTable from "../components/table/student/StudentTable";
 import { BsGridFill, BsTable } from "react-icons/bs";
-import StudentGrid from "../components/grid/student/StudentGrid";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { fetchStudents } from "../feature/student/StudentSlice";
 
 const StudentList = () => {
   const dispatch = useDispatch();
-  const { students, status: studentStatus } = useSelector(
-    (state) => state.students,
-  );
+  const { status: studentStatus } = useSelector((state) => state.students);
   // const [studentData, setStudentData] = useState(students);
   const [editToggle, setEditToggle] = useState(false);
   const userData = JSON.parse(sessionStorage.getItem("userData")) || {};
@@ -22,7 +19,6 @@ const StudentList = () => {
   const toggleView = () => {
     setView((prevView) => (prevView === "table" ? "grid" : "table"));
   };
-
 
   useEffect(() => {
     const savedView = localStorage.getItem("viewPreference");
@@ -70,7 +66,7 @@ const StudentList = () => {
                       >
                         <button
                           // data-tip="ເພີ່ມນັກຮຽນ"
-                          className={`btn btn-primary tooltipp font-notosanslao text-white ${
+                          className={`tooltipp btn btn-primary font-notosanslao text-white ${
                             userData.role !== "admin" && "btn-disabled"
                           }`}
                         >
@@ -97,17 +93,11 @@ const StudentList = () => {
               </>
             )}
           </div>
-          {view === "grid" ? (
-            <StudentGrid 
+          <StudentTable
+            view={view}
             editToggle={editToggle}
-              setEditToggle={setEditToggle}
-            studentsProps={students} />
-          ) : (
-            <StudentTable
-              editToggle={editToggle}
-              setEditToggle={setEditToggle}
-            />
-          )}
+            setEditToggle={setEditToggle}
+          />
         </div>
       </section>
     </>

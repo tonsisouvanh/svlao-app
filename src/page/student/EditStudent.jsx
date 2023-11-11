@@ -7,7 +7,7 @@ import ErrorMessage from "../../components/typography/ErrorMessage";
 import Spinner from "../../components/ui/Spinner";
 import {
   mockDegrees,
-  mockMajor,
+  majorList,
   mockPerminentAddresses,
   mockResidenceAddress,
   mockUniversity,
@@ -19,12 +19,12 @@ import { adminUpdateStudent } from "../../feature/student/StudentSlice";
 import { getImageId } from "../../utils/utils";
 
 const selectInputStyle =
-  "select select-sm select-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
+  "select select-md select-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
 const mainLabelStyle = "label-text text-[1rem] mb-2 block font-semibold";
 const subSelectSpanStyle =
-  "input input-bordered opacity-70 input-sm whitespace-nowrap w-fit";
+  "input input-bordered opacity-70 input-md whitespace-nowrap w-fit";
 const textInputStyle =
-  "input input-sm input-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
+  "input input-md input-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
 
 const EditStudent = ({ setEditToggle, editingStudent }) => {
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
     setDegree(vietDegree.vietDegree);
   };
   const handleSelectMajor = (value) => {
-    const major = mockMajor.find((d) => d.laoMajor === value);
+    const major = majorList.find((d) => d.laoMajor === value);
     setValue("major.vietMajor", major.vietMajor);
     setMajor(major.vietMajor);
   };
@@ -387,7 +387,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                       onChange={(e) => handleSelectMajor(e.target.value)}
                       className={selectInputStyle}
                     >
-                      {mockMajor.map((item, index) => (
+                      {majorList.map((item, index) => (
                         <option key={index} value={item.laoMajor}>
                           {item.laoMajor}
                         </option>
@@ -475,7 +475,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                 <div className="flex items-center gap-2">
                   <div className="">
                     <label className={mainLabelStyle}>ໄລຍະຮຽນ:</label>
-                    <div className="flex flex-wrap items-center gap-2">
+                    <div className="flex flex-col items-center gap-2">
                       <div className="flex items-center gap-1">
                         <span>ຈາກ:</span>
                         <input

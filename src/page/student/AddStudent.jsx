@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import ErrorMessage from "../../components/typography/ErrorMessage";
 import {
   mockDegrees,
-  mockMajor,
+  majorList,
   mockPerminentAddresses,
   mockResidenceAddress,
   mockUniversity,
@@ -48,7 +48,7 @@ const AddStudent = () => {
     setDegree(vietDegree.vietDegree);
   };
   const handleSelectMajor = (value) => {
-    const major = mockMajor.find((d) => d.laoMajor === value);
+    const major = majorList.find((d) => d.laoMajor === value);
     setValue("major.vietMajor", major.vietMajor);
     setMajor(major.vietMajor);
   };
@@ -213,7 +213,7 @@ const AddStudent = () => {
                       className={textInputStyle}
                     />
                   </div>
-                  <div className="flex flex-col w-full">
+                  <div className="flex w-full flex-col">
                     <label className={mainLabelStyle}>ຊື່ຫລິ້ນ:</label>
                     <input
                       {...register("fullname.nickName")}
@@ -337,9 +337,7 @@ const AddStudent = () => {
                     }
                     className={selectInputStyle + " mb-2"}
                   >
-                    <option>
-                      Select address
-                    </option>
+                    <option>Select address</option>
                     {mockResidenceAddress.map((item, index) => (
                       <option key={index} value={item}>
                         {item}
@@ -411,7 +409,7 @@ const AddStudent = () => {
                       onChange={(e) => handleSelectMajor(e.target.value)}
                       className={selectInputStyle}
                     >
-                      {mockMajor.map((item, index) => (
+                      {majorList.map((item, index) => (
                         <option key={index} value={item.laoMajor}>
                           {item.laoMajor}
                         </option>
