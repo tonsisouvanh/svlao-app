@@ -17,7 +17,7 @@ import {
   studentUpdateStudent,
 } from "../../feature/student/StudentSlice";
 import { auth } from "../../firebase";
-import { PiGenderIntersexBold } from "react-icons/pi";
+import { PiGenderIntersexBold, PiMagnifyingGlassFill } from "react-icons/pi";
 import {
   FaUser,
   FaPhone,
@@ -689,12 +689,31 @@ const StudentProfile = () => {
               <Spinner />
             ) : (
               <div className="min-h-screend hero bg-base-100">
+                <dialog id="my_modal_2" className="modal">
+                  <div className="modal-box">
+                    <div className="flex items-center justify-center">
+                      <div className="avatar">
+                        <div className="w-full rounded">
+                          <img src={studentData.profileImg} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <form method="dialog" className="modal-backdrop">
+                    <button>close</button>
+                  </form>
+                </dialog>
                 <div className="rounded-lg bg-base-100 p-4">
                   <div className="flex items-center gap-5 text-2xl font-bold">
                     <div className="avatar">
+                      <PiMagnifyingGlassFill
+                        onClick={() =>
+                          document.getElementById("my_modal_2").showModal()
+                        }
+                        className="btn btn-circle btn-ghost btn-xs cursor-pointer p-0"
+                      />
                       <div className="w-32 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
-                        <img src="https://res.cloudinary.com/dlux9nebf/image/upload/v1696842264/SVlaoProject/BounmyDola.jpg" />
-                        {/* <img alt="Profile" src={studentData?.facebookUrl} />; */}
+                        <img src={studentData.profileImg} />
                       </div>
                     </div>
                     <div className="text-md flex flex-col gap-1">

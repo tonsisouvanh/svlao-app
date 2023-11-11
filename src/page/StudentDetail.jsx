@@ -18,9 +18,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { adminFetchSingleStudent } from "../feature/student/StudentSlice";
 
-import { AiFillCloseCircle } from "react-icons/ai";
+import { AiFillCloseCircle, AiFillCopy } from "react-icons/ai";
 import { PiGenderIntersexBold, PiMagnifyingGlassFill } from "react-icons/pi";
 import Spinner from "../components/ui/Spinner";
+import { copyToClipboard } from "../utils/utils";
 const fieldOrder = [
   "userStatus",
   "fullname",
@@ -347,6 +348,12 @@ const StudentDetail = () => {
                   </span>
                   <span className="text-sm text-base-content">
                     ID: {studentData?.id || "NA"}
+                    <button
+                      onClick={() => copyToClipboard(studentData.id)}
+                      className="btn btn-xs ml-2"
+                    >
+                      <AiFillCopy />
+                    </button>
                   </span>
                 </div>
               </div>

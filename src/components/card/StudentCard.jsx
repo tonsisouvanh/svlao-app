@@ -1,10 +1,8 @@
 import PropTypes from "prop-types";
 
-import consule from "../../assets/img/consule.jpg";
-import { Link } from "react-router-dom";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
-import { useState } from "react";
-import EditStudent from "../../page/student/EditStudent";
+import { Link } from "react-router-dom";
+import consule from "../../assets/img/consule.jpg";
 const StudentCard = ({
   student,
   editToggle,

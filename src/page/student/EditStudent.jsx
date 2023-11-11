@@ -16,6 +16,7 @@ import {
   userStatus,
 } from "../../data/data";
 import { adminUpdateStudent } from "../../feature/student/StudentSlice";
+import { getImageId } from "../../utils/utils";
 
 const selectInputStyle =
   "select select-sm select-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
@@ -37,7 +38,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
     formState: { errors },
     setValue,
     reset,
-  } = useForm({ defaultValues: { ...editingStudent, dob: "1995-02-02" } });
+  } = useForm({ defaultValues: { ...editingStudent } });
 
   const handleSelectDegree = (value) => {
     const vietDegree = mockDegrees.find((d) => d.laoDegree === value);
@@ -59,7 +60,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
 
   const handleAddStudent = (data) => {
     if (data) {
-      const studentData = { ...data };
+      const studentData = { ...data, profileImg: getImageId(data.profileImg) };
       dispatch(adminUpdateStudent(studentData));
       setEditToggle(false);
     } else toast.warning("Input data not valid");
@@ -113,7 +114,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
             >
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* // ~~~~~~~~~~~ status Check box ~~~~~~~~~~  */}
-                <div className="flex items-start gap-2">
+                <div className="flex flex-wrap items-start gap-2">
                   <div className="whitespace-nowrap">
                     <label className={mainLabelStyle}>ສະຖານະ</label>
                     <select
@@ -151,6 +152,27 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                       })}
                       type="text"
                       placeholder="Account ID" // Corrected the property name here
+                      className={textInputStyle}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <div className="relative">
+                      <label
+                        className={mainLabelStyle + " flex items-center gap-2"}
+                      >
+                        <span>Email</span>
+                        <ErrorMessage
+                          styling="sm:text-md"
+                          error={errors?.emailAddress}
+                        />
+                      </label>
+                    </div>
+                    <input
+                      {...register("emailAddress", {
+                        requiredd: "Please fill up",
+                      })}
+                      type="text"
+                      placeholder="abc@gmail.com" // Corrected the property name here
                       className={textInputStyle}
                     />
                   </div>
@@ -233,6 +255,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                 </div>
                 <div className="form-control w-full max-w-xs">
                   <label className={mainLabelStyle}>DOB:</label>
+                  <span className="label-text-alt">MM/DD/YYYY</span>
                   <input
                     {...register("dob", {
                       requiredd: "Please fill up",
@@ -597,40 +620,14 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                         </div>
                         <div className="flex w-full flex-col items-start justify-center">
                           <label className={mainLabelStyle}>ຮູບ</label>
-                          <label
-                            htmlFor="dropzone-file"
-                            className="dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-                          >
-                            <div className="flex flex-col items-center justify-center pb-6 pt-5">
-                              <svg
-                                className="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 20 16"
-                              >
-                                <path
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                                />
-                              </svg>
-                              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                <span className="">Click to upload</span> or
-                                drag and drop
-                              </p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400">
-                                SVG, PNG, JPG or GIF (MAX. 800x400px)
-                              </p>
-                            </div>
-                            <input
-                              id="dropzone-file"
-                              type="file"
-                              className="hidden"
-                            />
-                          </label>
+                          <input
+                            {...register("profileImg", {
+                              required: "Please enter date",
+                            })}
+                            type="text"
+                            placeholder="https://www.google.com/"
+                            className={textInputStyle}
+                          />
                         </div>
                       </div>
                     </div>

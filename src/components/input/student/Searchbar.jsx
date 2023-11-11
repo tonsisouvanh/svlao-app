@@ -18,8 +18,8 @@ const Searchbar = ({ filter, setFilter }) => {
           onClick={() => setFilter("")}
           className={`btn join-item select-bordered btn-sm bg-base-300 p-0 ${
             filter === undefined || filter === ""
-              ? "text-opacity-30"
-              : "text-opacity-100"
+              ? "hidden"
+              : null
           }`}
         >
           <AiOutlineClose />
