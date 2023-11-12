@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { AiFillEdit } from "react-icons/ai";
@@ -6,17 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import ErrorMessage from "../../components/typography/ErrorMessage";
 import Spinner from "../../components/ui/Spinner";
 import {
-  mockDegrees,
-  majorList,
-  mockPerminentAddresses,
-  mockResidenceAddress,
-  mockUniversity,
+  degreeList,
+  perminentAddressList,
+  residenceAddress,
   relationships,
   scholarshipTypes,
   userStatus,
 } from "../../data/data";
 import { adminUpdateStudent } from "../../feature/student/StudentSlice";
 import { getImageId } from "../../utils/utils";
+import { fetchUniversities } from "../../feature/globalData/UniversitySlice";
+import { fetchMajors } from "../../feature/globalData/MajorSlice";
 
 const selectInputStyle =
   "select select-md select-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
@@ -29,6 +29,8 @@ const textInputStyle =
 const EditStudent = ({ setEditToggle, editingStudent }) => {
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.students);
+  const { majors } = useSelector((state) => state.majors);
+  const { universities } = useSelector((state) => state.universities);
   const [degree, setDegree] = useState("");
   const [university, setUniversity] = useState("");
   const [major, setMajor] = useState("");
@@ -41,17 +43,17 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
   } = useForm({ defaultValues: { ...editingStudent } });
 
   const handleSelectDegree = (value) => {
-    const vietDegree = mockDegrees.find((d) => d.laoDegree === value);
+    const vietDegree = degreeList.find((d) => d.laoDegree === value);
     setValue("degree.vietDegree", vietDegree.vietDegree);
     setDegree(vietDegree.vietDegree);
   };
   const handleSelectMajor = (value) => {
-    const major = majorList.find((d) => d.laoMajor === value);
+    const major = majors.find((d) => d.laoMajor === value);
     setValue("major.vietMajor", major.vietMajor);
     setMajor(major.vietMajor);
   };
   const handleSelectUniversity = (value) => {
-    const university = mockUniversity.find((d) => d.laoName === value);
+    const university = universities.find((d) => d.laoName === value);
     setValue("university.vietName", university.vietName);
     setValue("university.englishName", university.englishName);
     setValue("university.shortcut", university.shortcut);
@@ -70,6 +72,10 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
     reset();
     setEditToggle(false);
   };
+  useEffect(() => {
+    dispatch(fetchUniversities());
+    dispatch(fetchMajors());
+  }, [dispatch]);
   return (
     <>
       {status === "loading" ? (
@@ -93,10 +99,10 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                   className="cursor-pointer hover:underline"
                   onClick={() => setEditToggle(false)}
                 >
-                  <span>Student list</span>
+                  <span>ລາຍຊື່ນັກຮຽນ</span>
                 </li>
                 <li className="underline">
-                  <span>Edit student</span>
+                  <span>ແກ້ໄຂຂໍ້ມູນນັກຮຽນ</span>
                 </li>
               </ul>
             </div>
@@ -295,7 +301,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                       })}
                       className={selectInputStyle}
                     >
-                      {mockPerminentAddresses.map((item) => (
+                      {perminentAddressList.map((item) => (
                         <option key={item.id} value={item.laoName}>
                           {item.laoName}
                         </option>
@@ -314,9 +320,9 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                       setValue("residenceAddress", e.target.value)
                     }
                     className={selectInputStyle + " mb-2"}
-                    defaultValue={editingStudent.residenceAddress}
+                    defaultValue={editingStudent?.residenceAddress}
                   >
-                    {mockResidenceAddress.map((item, index) => (
+                    {residenceAddress.map((item, index) => (
                       <option key={index} value={item}>
                         {item}
                       </option>
@@ -346,7 +352,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                       onChange={(e) => handleSelectUniversity(e.target.value)}
                       className={selectInputStyle}
                     >
-                      {mockUniversity.map((item, index) => (
+                      {universities.map((item, index) => (
                         <option key={index} value={item.laoName}>
                           {item.laoName}
                         </option>
@@ -387,7 +393,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                       onChange={(e) => handleSelectMajor(e.target.value)}
                       className={selectInputStyle}
                     >
-                      {majorList.map((item, index) => (
+                      {majors.map((item, index) => (
                         <option key={index} value={item.laoMajor}>
                           {item.laoMajor}
                         </option>
@@ -418,7 +424,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                       onChange={(e) => handleSelectDegree(e.target.value)}
                       className={selectInputStyle}
                     >
-                      {mockDegrees.map((item, index) => (
+                      {degreeList.map((item, index) => (
                         <option key={index} value={item.laoDegree}>
                           {item.laoDegree}
                         </option>

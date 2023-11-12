@@ -129,59 +129,6 @@ export const university = [
 
 export const themes = ["cupcake", "lofi", "night"];
 
-// USER DATA
-export const mockUniversity = [
-  {
-    id: "3bJi08gpeAye9JMjl2ux",
-    laoName: "ມລ ນານາຊາດ ໂຮ່ຈີມິນ",
-    vietName: "trường đại học quốc tế",
-    englishName: "International University",
-    shortcut: "QT",
-  },
-  {
-    id: "5ff7XSoOwy0hS7Sz1jRp",
-    laoName: "ມລ ສ້າງຄູເຕັກໂນໂລຊີ",
-    vietName: "trường đại học sư phạm kỹ thuật",
-    englishName: "University of Technical Pedagogy",
-    shortcut: "SPKT",
-  },
-  {
-    id: "SyOMKWvKVFFbOiuVVP1C",
-    laoName: "ມລ ເສດຖະກິດ-ກົດໝາຍ",
-    vietName: "trường đại học kinh tế - luật",
-    englishName: "University of Economics and Law",
-    shortcut: "KTL",
-  },
-  {
-    id: "eKf6PaljZpIScPqwUKrE",
-    laoName: "ມລ ສັງຄົມສາດແລະມະນຸດສາດ",
-    vietName: "trường đại học khoa học xã hội và nhân văn",
-    englishName: "University of Social Sciences and Humanities",
-    shortcut: "KHXHNV",
-  },
-  {
-    id: "lohPFkqC17Nm6X1tPy0k",
-    laoName: "ມລ ເສດຖະກິດ - ການເງິນ",
-    vietName: "trường đại học kinh tế tài chính",
-    englishName: "University of Economics and Finance",
-    shortcut: "KTTCH",
-  },
-  {
-    id: "3bJi08gpeAye9JMjl2uw",
-    laoName: "ມລ ກະສິກຳ",
-    vietName: "trường đại học nông lâm",
-    englishName: "University of Agriculture and Forestry",
-    shortcut: "NL",
-  },
-  {
-    id: "qQY4LsbTLABcIHex2UKx",
-    laoName: "ມລ ວິທະຍາສາດທຳມະຊາດ",
-    vietName: "trường đại học Khoa Học Tự Nhiên",
-    englishName: "University of Science",
-    shortcut: "KHTN",
-  },
-];
-
 export const majorList = [
   {
     laoMajor: "ກົດຫມາຍສາກົນ",
@@ -305,28 +252,18 @@ export const majorList = [
   },
 ];
 
-export const mockDegrees = [
+export const degreeList = [
   { laoDegree: "ຊັ້ນສູງ", vietDegree: "Cao Học" },
   { laoDegree: "ປະລິນຍາຕີ", vietDegree: "Cử Nhân" },
   { laoDegree: "ປະລິນຍາໂທ", vietDegree: "Thạc Sĩ" },
   { laoDegree: "ປະລິນຍາເອກ", vietDegree: "Tiến Sĩ" },
 ];
 
-export const mockPerminentAddresses = [
+export const perminentAddressList = [
   {
-    id: "RhnomHPocV8eYv9jDk6r",
-    englishName: "Attapeu",
-    laoName: "ອັດຕະປື",
-  },
-  {
-    id: "TOrextVm5MNrutpTKHeS",
-    englishName: "Bokeo",
-    laoName: "ບໍ່ແກ້ວ",
-  },
-  {
-    id: "TB1hmAmM0rsQLWsTGu97",
-    englishName: "Bolikhamxai",
-    laoName: "ບໍລິຄຳໄຊ",
+    id: "hTzhuZfScEPnce8XUfxj",
+    englishName: "Khammouane",
+    laoName: "ຄຳມ່ວນ",
   },
   {
     id: "gQ7IEDQf5Smm8l6lmu73",
@@ -334,14 +271,44 @@ export const mockPerminentAddresses = [
     laoName: "ຈໍາປາສັກ",
   },
   {
+    id: "XNKNKYdp7TlNDpye17Op",
+    englishName: "Xieng Khouang",
+    laoName: "ຊຽງຂວາງ",
+  },
+  {
+    id: "6gV30NOC9lyfLdHi8mLi",
+    englishName: "Vientiane Capital",
+    laoName: "ນະຄອນຫຼວງວຽງຈັນ",
+  },
+  {
+    id: "TB1hmAmM0rsQLWsTGu97",
+    englishName: "Bolikhamxai",
+    laoName: "ບໍລິຄຳໄຊ",
+  },
+  {
+    id: "TOrextVm5MNrutpTKHeS",
+    englishName: "Bokeo",
+    laoName: "ບໍ່ແກ້ວ",
+  },
+  {
+    id: "WWbulo7OTygdIEUFFHZa",
+    englishName: "Phongsaly",
+    laoName: "ຜ້າຍສາລີ",
+  },
+  {
+    id: "Nzj0nIgbj8ad0GDdQ7i7",
+    englishName: "Savannakhet",
+    laoName: "ສະຫວັນ",
+  },
+  {
+    id: "RhK1f3Rbyk3Biue8CYSW",
+    englishName: "Salavan",
+    laoName: "ສາລະວັນ",
+  },
+  {
     id: "vMcgWMLmCzBprT5ET3qy",
     englishName: "Houaphanh",
     laoName: "ຫົວພັນ",
-  },
-  {
-    id: "hTzhuZfScEPnce8XUfxj",
-    englishName: "Khammouane",
-    laoName: "ຄຳມ່ວນ",
   },
   {
     id: "YxpFtA0QLH7K5ghb5NZf",
@@ -354,29 +321,14 @@ export const mockPerminentAddresses = [
     laoName: "ຫຼວງພະບາງ",
   },
   {
+    id: "RhnomHPocV8eYv9jDk6r",
+    englishName: "Attapeu",
+    laoName: "ອັດຕະປື",
+  },
+  {
     id: "BYchfRQi7YH0Lv0EMUwx",
     englishName: "Oudomxay",
     laoName: "ອຸດົມໄຊ",
-  },
-  {
-    id: "WWbulo7OTygdIEUFFHZa",
-    englishName: "Phongsaly",
-    laoName: "ຜ້າຍສາລີ",
-  },
-  {
-    id: "RhK1f3Rbyk3Biue8CYSW",
-    englishName: "Salavan",
-    laoName: "ສາລະວັນ",
-  },
-  {
-    id: "Nzj0nIgbj8ad0GDdQ7i7",
-    englishName: "Savannakhet",
-    laoName: "ສະຫວັນ",
-  },
-  {
-    id: "hRxrEuQbCs9B04RAaJ92",
-    englishName: "Sayaboury",
-    laoName: "ໄຊຍະບູລີ",
   },
   {
     id: "be1sxH6Es1KCkYBVkUOA",
@@ -384,27 +336,21 @@ export const mockPerminentAddresses = [
     laoName: "ເຊກອງ",
   },
   {
-    id: "6gV30NOC9lyfLdHi8mLi",
-    englishName: "Vientiane Capital",
-    laoName: "ນະຄອນຫຼວງວຽງຈັນ",
-  },
-  {
     id: "lJMhEsiMt7DOBnbpDKdF",
     englishName: "Vientiane Province",
     laoName: "ແຂວງວຽງຈັນ",
+  },
+  {
+    id: "hRxrEuQbCs9B04RAaJ92",
+    englishName: "Sayaboury",
+    laoName: "ໄຊຍະບູລີ",
   },
   {
     id: "rn3cYrZFsSf3C845L0kQ",
     englishName: "Xaisomboun",
     laoName: "ໄຊສົມບູນ",
   },
-  {
-    id: "XNKNKYdp7TlNDpye17Op",
-    englishName: "Xieng Khouang",
-    laoName: "ຊຽງຂວາງ",
-  },
 ];
-
 export const scholarshipTypes = [
   {
     id: "government",
@@ -435,7 +381,7 @@ export const userStatus = [
   { status: "inactive" },
   { status: "locked" },
 ];
-export const mockResidenceAddress = [
+export const residenceAddress = [
   "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
   "14 Đ. 12C, Phường 3, Quận 4, Thành phố Hồ Chí Minh",
   "30/38 hẻm 30 lâm văn bền ,tân kiểng,q7",
@@ -596,7 +542,7 @@ export const STUDENT_COLUMNS = [
   },
 ];
 
-// export const mockResidenceAddress = [
+// export const residenceAddress = [
 //   {
 //     dormitory: "KTX Khu B",
 //     address:

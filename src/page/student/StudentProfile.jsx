@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import {
-  mockDegrees,
-  majorList,
-  mockResidenceAddress,
-  mockUniversity,
+  degreeList,
+  residenceAddress,
   relationships,
   scholarshipTypes,
 } from "../../data/data";
@@ -36,6 +34,8 @@ import {
 import ErrorMessage from "../../components/typography/ErrorMessage";
 import toast from "react-hot-toast";
 import Spinner from "../../components/ui/Spinner";
+import { fetchUniversities } from "../../feature/globalData/UniversitySlice";
+import { fetchMajors } from "../../feature/globalData/MajorSlice";
 const textInputStyle =
   "input input-sm input-bordered focus:outline-none w-full hover:shadow-md transition-all duration-200";
 
@@ -62,6 +62,9 @@ const StudentProfile = () => {
   const { student: studentData, status } = useSelector(
     (state) => state.students,
   );
+  const { universities } = useSelector((state) => state.universities);
+  const { majors } = useSelector((state) => state.majors);
+
   const {
     register,
     handleSubmit,
@@ -69,7 +72,6 @@ const StudentProfile = () => {
     setValue,
     reset,
   } = useForm({ defaultValues: studentData });
-  // const methods = useForm({ defaultValues: studentData });
   const [toggleEdit, setToggleEdit] = useState(false);
   const [degree, setDegree] = useState("");
   const [university, setUniversity] = useState("");
@@ -83,17 +85,17 @@ const StudentProfile = () => {
   }, [toggleEdit]);
 
   const handleSelectDegree = (value) => {
-    const vietDegree = mockDegrees.find((d) => d.laoDegree === value);
+    const vietDegree = degreeList.find((d) => d.laoDegree === value);
     setValue("degree.vietDegree", vietDegree.vietDegree);
     setDegree(vietDegree.vietDegree);
   };
   const handleSelectMajor = (value) => {
-    const major = majorList.find((d) => d.laoMajor === value);
+    const major = majors.find((d) => d.laoMajor === value);
     setValue("major.vietMajor", major.vietMajor);
     setMajor(major.vietMajor);
   };
   const handleSelectUniversity = (value) => {
-    const university = mockUniversity.find((d) => d.laoName === value);
+    const university = universities.find((d) => d.laoName === value);
     setValue("university.vietName", university.vietName);
     setValue("university.englishName", university.englishName);
     setValue("university.shortcut", university.shortcut);
@@ -244,7 +246,7 @@ const StudentProfile = () => {
                       onChange={(e) => handleSelectUniversity(e.target.value)}
                       className={textInputStyle}
                     >
-                      {mockUniversity.map((item, index) => (
+                      {universities.map((item, index) => (
                         <option key={index} value={item.laoName}>
                           {item.laoName}
                         </option>
@@ -270,7 +272,7 @@ const StudentProfile = () => {
                       className={textInputStyle}
                       onChange={(e) => handleSelectMajor(e.target.value)}
                     >
-                      {majorList.map((item, index) => (
+                      {majors.map((item, index) => (
                         <option key={index} value={item.laoMajor}>
                           {item.laoMajor}
                         </option>
@@ -306,7 +308,7 @@ const StudentProfile = () => {
                       className={textInputStyle}
                       onChange={(e) => handleSelectDegree(e.target.value)}
                     >
-                      {mockDegrees.map((item, index) => (
+                      {degreeList.map((item, index) => (
                         <option key={index} value={item?.laoDegree}>
                           {item?.laoDegree}
                         </option>
@@ -577,7 +579,7 @@ const StudentProfile = () => {
                       })}
                       className={textInputStyle}
                     >
-                      {mockResidenceAddress.map((item, index) => (
+                      {residenceAddress.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
                         </option>
@@ -656,6 +658,11 @@ const StudentProfile = () => {
       </div>
     );
   };
+
+  useEffect(() => {
+    dispatch(fetchUniversities());
+    dispatch(fetchMajors());
+  }, [dispatch]);
   return (
     <>
       {!userData ? (

@@ -13,12 +13,12 @@ import toast from "react-hot-toast";
 import { db } from "../../firebase";
 
 // ADMIN ADD STUDENT
-export const addUniversity = createAsyncThunk(
-  "universities/addUniversity",
+export const addMajor = createAsyncThunk(
+  "majors/addMajor",
   async (newStudent, { rejectWithValue }) => {
     try {
       const currentDate = new Date();
-      const studentsCollection = collection(db, "universities");
+      const studentsCollection = collection(db, "majors");
 
       await addDoc(studentsCollection, {
         ...newStudent,
@@ -34,7 +34,7 @@ export const addUniversity = createAsyncThunk(
       const errorMessage = error.message;
       const customError = {
         message: errorMessage,
-        type: "addUniversityError",
+        type: "addMajorError",
       };
       console.error(error);
       toast.error(errorMessage);
@@ -44,14 +44,14 @@ export const addUniversity = createAsyncThunk(
 );
 
 // ADMIN UPDATE
-export const updateUniversity = createAsyncThunk(
-  "universities/updateUniversity",
+export const updateMajor = createAsyncThunk(
+  "majors/updateMajor",
   async (updatedStudent, { rejectWithValue }) => {
     const currentDate = new Date();
 
     try {
       // Construct the Firestore document reference for the product
-      const studentRef = doc(db, "universities", updatedStudent.id || "");
+      const studentRef = doc(db, "majors", updatedStudent.id || "");
 
       // Update the product document in Firestore
       await setDoc(studentRef, { ...updatedStudent, createdDate: currentDate });
@@ -66,14 +66,14 @@ export const updateUniversity = createAsyncThunk(
   },
 );
 
-export const deleteUniversity = createAsyncThunk(
-  "universities/deleteUniversity",
-  async (universityId, { rejectWithValue }) => {
+export const deleteMajor = createAsyncThunk(
+  "majors/deleteMajor",
+  async (majorId, { rejectWithValue }) => {
     try {
       //Construct the Firestore document reference for the student
-      const universityRef = doc(db, "universities", universityId);
+      const majorRef = doc(db, "majors", majorId);
       //Delete the student document from Firestore
-      await deleteDoc(universityRef);
+      await deleteDoc(majorRef);
     } catch (error) {
       const errorMessage = error.message;
       toast.error(errorMessage);
@@ -82,99 +82,96 @@ export const deleteUniversity = createAsyncThunk(
   },
 );
 
-export const fetchUniversities = createAsyncThunk(
-  "universities/fetchUniversities",
-  async () => {
-    const collectionRef = collection(db, "university");
-    // const sortedQuery = query(collectionRef, orderBy("laoName", "asc"));
-    try {
-      const querySnapshot = await getDocs(collectionRef);
-      if (!querySnapshot) {
-        console.log(new Error("An error occurred while fetching products."));
-        throw new Error("An error occurred while fetching products.");
-      }
-      const data = querySnapshot.docs.map((doc) => {
-        const universityData = doc.data();
-        return {
-          id: doc.id,
-          ...universityData,
-        };
-      });
-      return data;
-    } catch (error) {
-      const errorMessage = error.message;
-      toast.error(errorMessage);
-      throw error;
+export const fetchMajors = createAsyncThunk("majors/fetchMajors", async () => {
+  const collectionRef = collection(db, "majors");
+  const sortedQuery = query(collectionRef, orderBy("laoMajor", "asc"));
+  try {
+    const querySnapshot = await getDocs(sortedQuery);
+    if (!querySnapshot) {
+      console.log(new Error("An error occurred while fetching products."));
+      throw new Error("An error occurred while fetching products.");
     }
-  },
-);
+    const data = querySnapshot.docs.map((doc) => {
+      const majorData = doc.data();
+      return {
+        id: doc.id,
+        ...majorData,
+      };
+    });
+    return data;
+  } catch (error) {
+    const errorMessage = error.message;
+    toast.error(errorMessage);
+    throw error;
+  }
+});
 
-const UniversitySlice = createSlice({
-  name: "universities",
+const MajorSlice = createSlice({
+  name: "majors",
   initialState: {
-    universities: [],
+    majors: [],
     status: "idle" | "loading" | "succeeded" | "failed",
     error: "",
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUniversities.pending, (state) => {
+      .addCase(fetchMajors.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchUniversities.fulfilled, (state, action) => {
+      .addCase(fetchMajors.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.universities = action.payload;
+        state.majors = action.payload;
       })
-      .addCase(fetchUniversities.rejected, (state, action) => {
+      .addCase(fetchMajors.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "";
       })
       // ADD
-      .addCase(addUniversity.pending, (state) => {
+      .addCase(addMajor.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(addUniversity.fulfilled, (state, action) => {
+      .addCase(addMajor.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.universities.push(action.payload);
+        state.majors.push(action.payload);
       })
-      .addCase(addUniversity.rejected, (state, action) => {
+      .addCase(addMajor.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "";
       })
       // UPDATE ADMIN
-      .addCase(updateUniversity.pending, (state) => {
+      .addCase(updateMajor.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(updateUniversity.fulfilled, (state, action) => {
+      .addCase(updateMajor.fulfilled, (state, action) => {
         state.status = "succeeded";
         const updatedStudent = action.payload;
-        const studentIndex = state.universities.findIndex(
+        const studentIndex = state.majors.findIndex(
           (student) => student.id === updatedStudent.id,
         );
         if (studentIndex !== -1) {
-          state.universities[studentIndex] = updatedStudent;
+          state.majors[studentIndex] = updatedStudent;
         }
       })
-      .addCase(updateUniversity.rejected, (state, action) => {
+      .addCase(updateMajor.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "";
       })
       // // DELETE
-      .addCase(deleteUniversity.pending, (state) => {
+      .addCase(deleteMajor.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(deleteUniversity.fulfilled, (state, action) => {
+      .addCase(deleteMajor.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.data = state.data.filter(
           (student) => student.id !== action.payload,
         );
       })
-      .addCase(deleteUniversity.rejected, (state, action) => {
+      .addCase(deleteMajor.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "";
       });
   },
 });
 
-export default UniversitySlice.reducer;
+export default MajorSlice.reducer;

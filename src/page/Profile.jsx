@@ -1,16 +1,8 @@
-import { Link, useParams } from "react-router-dom";
-import {
-  data,
-  mockDegrees,
-  majorList,
-  mockUniversity,
-  relationships,
-  scholarshipTypes,
-} from "../data/data";
-import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { degreeList, relationships, scholarshipTypes } from "../data/data";
+import { useEffect, useState } from "react";
 import DataNotFound from "./public/DataNotFound";
-import { useForm, FormProvider } from "react-hook-form";
-import { initialStudentInput } from "../data/initialState";
+import { useForm } from "react-hook-form";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleStudent } from "../feature/student/StudentSlice";
@@ -29,14 +21,17 @@ import {
 } from "react-icons/fa";
 import InfoCard from "../components/card/InfoCard";
 import ErrorMessage from "../components/typography/ErrorMessage";
+import { fetchMajors } from "../feature/globalData/MajorSlice";
 const textInputStyle =
   "input input-sm input-bordered focus:outline-none w-full max-w-xs hover:shadow-md transition-all duration-200";
 const infoCardWarpperStyle = "mb-4 w-full px-2 md:w-1/2 lg:w-1/3";
 const Profile = () => {
   const userData = JSON.parse(sessionStorage.getItem("studentData")) || null;
-  const { student: studentData, status } = useSelector(
+  const { student: studentData } = useSelector(
     (state) => state.students,
   );
+  const { universities } = useSelector((state) => state.universities);
+  const { majors } = useSelector((state) => state.majors);
   const {
     register,
     handleSubmit,
@@ -58,17 +53,17 @@ const Profile = () => {
   }, [toggleEdit]);
 
   const handleSelectDegree = (value) => {
-    const vietDegree = mockDegrees.find((d) => d.laoDegree === value);
+    const vietDegree = degreeList.find((d) => d.laoDegree === value);
     setValue("degree.vietDegree", vietDegree.vietDegree);
     setDegree(vietDegree.vietDegree);
   };
   const handleSelectMajor = (value) => {
-    const major = majorList.find((d) => d.laoMajor === value);
+    const major = majors.find((d) => d.laoMajor === value);
     setValue("major.vietMajor", major.vietMajor);
     setMajor(major.vietMajor);
   };
   const handleSelectUniversity = (value) => {
-    const university = mockUniversity.find((d) => d.laoName === value);
+    const university = universities.find((d) => d.laoName === value);
     setValue("university.vietName", university.vietName);
     setValue("university.englishName", university.englishName);
     setValue("university.shortcut", university.shortcut);
@@ -77,6 +72,10 @@ const Profile = () => {
   const handleEditSubmit = (data) => {
     console.log(data);
   };
+  useEffect(() => {
+    dispatch(fetchMajors());
+  }, [dispatch]);
+
   return (
     <>
       {!userData ? (
@@ -425,7 +424,7 @@ const Profile = () => {
                         textInputStyle + `${toggleEdit ? " flex" : " hidden"}`
                       }
                     >
-                      {mockUniversity.map((item, index) => (
+                      {universities.map((item, index) => (
                         <option key={index} value={item.laoName}>
                           {item.laoName}
                         </option>
@@ -450,7 +449,7 @@ const Profile = () => {
                       }
                       onChange={(e) => handleSelectMajor(e.target.value)}
                     >
-                      {majorList.map((item, index) => (
+                      {majors.map((item, index) => (
                         <option key={index} value={item.laoMajor}>
                           {item.laoMajor}
                         </option>
@@ -485,7 +484,7 @@ const Profile = () => {
                         }
                         onChange={(e) => handleSelectDegree(e.target.value)}
                       >
-                        {mockDegrees.map((item, index) => (
+                        {degreeList.map((item, index) => (
                           <option key={index} value={item.laoDegree}>
                             {item.laoDegree}
                           </option>

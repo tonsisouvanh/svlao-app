@@ -17,9 +17,7 @@ import { BiSolidSortAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import {
   STUDENT_COLUMNS,
-  mockDegrees,
-  majorList,
-  mockUniversity,
+  degreeList,
   scholarshipTypes,
   userStatus,
 } from "../../../data/data";
@@ -27,6 +25,7 @@ import InfoModal from "../../modal/InfoModal";
 import { adminDeleteStudent } from "../../../feature/student/StudentSlice";
 import consule from "../../../assets/img/consule.jpg";
 import { BsFacebook } from "react-icons/bs";
+import { fetchUniversities } from "../../../feature/globalData/UniversitySlice";
 
 const cellStyle = "whitespace-nowrap truncate font-light";
 
@@ -46,6 +45,9 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
   };
 
   const { status, students } = useSelector((state) => state.students);
+  const { universities } = useSelector((state) => state.universities);
+  const { majors } = useSelector((state) => state.majors);
+
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const [deletedStudent, setDeletedStudent] = useState("");
@@ -100,6 +102,10 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
       ).length,
     });
   }, [rows]);
+
+  useEffect(() => {
+    dispatch(fetchUniversities());
+  }, [dispatch]);
 
   if (status === "loading") {
     return <Spinner />;
@@ -184,14 +190,14 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
               <Filter
                 filter={globalFilter}
                 setFilter={setGlobalFilter}
-                options={mockDegrees}
+                options={degreeList}
                 title={"ລະດັບການສຶກສາ"}
                 fieldName={"laoDegree"}
               />
               <Filter
                 filter={globalFilter}
                 setFilter={setGlobalFilter}
-                options={mockUniversity}
+                options={universities}
                 title={"ມະຫາໄລ"}
                 fieldName={"laoName"}
               />
@@ -206,7 +212,7 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
               <Filter
                 filter={globalFilter}
                 setFilter={setGlobalFilter}
-                options={majorList}
+                options={majors}
                 title={"ສາຍຮຽນ"}
                 fieldName={"vietMajor"}
               />
@@ -217,7 +223,7 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
                   {students &&
                     headerGroups?.map((headerGroup) => (
                       <div
-                        className="flex items-start gap-5 overflow-auto my-4"
+                        className="my-4 flex items-start gap-5 overflow-auto"
                         key={headerGroup.id}
                         {...headerGroup.getHeaderGroupProps()}
                       >
@@ -396,7 +402,7 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
                       return (
                         <tr key={row.id} {...row.getRowProps()}>
                           <td>
-                            <div className="dropdown dropdown-right">
+                            <div className="dropdown-right dropdown">
                               <label
                                 tabIndex={0}
                                 className="btn btn-xs px-1 py-0"

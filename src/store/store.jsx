@@ -1,10 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../feature/auth/AuthSlice";
 import studentsReducer from "../feature/student/StudentSlice";
+import universitiesReducer from "../feature/globalData/UniversitySlice";
+import majorsReducer from "../feature/globalData/MajorSlice";
 export const store = configureStore({
   reducer: {
     user: authReducer,
     students: studentsReducer,
+    universities: universitiesReducer,
+    majors: majorsReducer,
   },
 });
 
