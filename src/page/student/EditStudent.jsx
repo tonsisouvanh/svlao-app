@@ -8,7 +8,7 @@ import Spinner from "../../components/ui/Spinner";
 import {
   degreeList,
   perminentAddressList,
-  residenceAddress,
+  residenceAddressList,
   relationships,
   scholarshipTypes,
   userStatus,
@@ -34,6 +34,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
   const [degree, setDegree] = useState("");
   const [university, setUniversity] = useState("");
   const [major, setMajor] = useState("");
+  const [address, setAddress] = useState("");
   const {
     register,
     handleSubmit,
@@ -58,6 +59,14 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
     setValue("university.englishName", university.englishName);
     setValue("university.shortcut", university.shortcut);
     setUniversity(university.vietName);
+  };
+
+  const handleSelectResidenceAddress = (value) => {
+    const residenceAddress = residenceAddressList.find(
+      (d) => d.location === value,
+    );
+    setValue("residenceAddress.address", residenceAddress.address);
+    setAddress(residenceAddress.address);
   };
 
   const handleAddStudent = (data) => {
@@ -315,16 +324,16 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                 </div>
                 <div>
                   <label className={mainLabelStyle}>ທີ່ຢູ່ປັດຈຸບັນ:</label>
-                  <select
+                  {/* <select
                     onChange={(e) =>
                       setValue("residenceAddress", e.target.value)
                     }
                     className={selectInputStyle + " mb-2"}
-                    defaultValue={editingStudent?.residenceAddress}
+                    defaultValue={editingStudent?.residenceAddress?.address}
                   >
                     {residenceAddress.map((item, index) => (
-                      <option key={index} value={item}>
-                        {item}
+                      <option key={index} value={item.address}>
+                        {item.address}
                       </option>
                     ))}
                   </select>
@@ -339,6 +348,33 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                   <ErrorMessage
                     styling="mt-3 sm:text-md"
                     error={errors.residenceAddress}
+                  /> */}
+                  <select
+                    {...register("residenceAddress.location", {
+                      requiredd: "Please select",
+                    })}
+                    onChange={(e) =>
+                      handleSelectResidenceAddress(e.target.value)
+                    }
+                    className={selectInputStyle}
+                  >
+                    {residenceAddressList.map((item, index) => (
+                      <option key={index} value={item.location}>
+                        {item.location}
+                      </option>
+                    ))}
+                  </select>
+                  {address && address !== "" && (
+                    <p className={"whitespace-pre-wrap max-w-xs mt-2 text-xs"}>{address}</p>
+                  )}
+                  <ErrorMessage
+                    styling="mt-1 sm:text-md"
+                    error={errors?.residenceAddress?.location}
+                  />
+                  <input
+                    type="text"
+                    hidden
+                    {...register("residenceAddress.address")}
                   />
                 </div>
                 {/* UNIVERSITY */}

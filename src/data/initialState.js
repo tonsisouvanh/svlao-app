@@ -50,7 +50,10 @@ export const initialStudentInput = {
     img: "",
   },
   profileImg: "",
-  residenceAddress: "",
+  residenceAddress: {
+    address:"",
+    location:"",
+  },
   userStatus: "",
   userId: "",
   emailAddress: "",

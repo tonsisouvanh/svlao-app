@@ -233,7 +233,8 @@ const StudentDetail = () => {
               </div>
             ) : field === "residenceAddress" ? (
               <div className={`ml-8 flex flex-col whitespace-normal text-sm`}>
-                <span>{studentData[field]}</span>
+                <span>ຫໍພັກ: {studentData[field]?.location}</span>
+                <span>ທີ່ຢູ່ປັດຈຸບັນ: {studentData[field]?.address}</span>
               </div>
             ) : field === "gender" ? (
               <>

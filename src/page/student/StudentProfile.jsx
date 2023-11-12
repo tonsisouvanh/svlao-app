@@ -580,8 +580,8 @@ const StudentProfile = () => {
                       className={textInputStyle}
                     >
                       {residenceAddress.map((item, index) => (
-                        <option key={index} value={item}>
-                          {item}
+                        <option key={index} value={item.address}>
+                          {item.address}
                         </option>
                       ))}
                     </select>

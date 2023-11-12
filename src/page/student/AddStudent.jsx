@@ -345,8 +345,8 @@ const AddStudent = () => {
                   >
                     <option>Select address</option>
                     {residenceAddress.map((item, index) => (
-                      <option key={index} value={item}>
-                        {item}
+                      <option key={index} value={item.address}>
+                        {item.address}
                       </option>
                     ))}
                   </select>

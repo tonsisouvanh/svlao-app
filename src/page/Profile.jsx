@@ -727,7 +727,7 @@ const Profile = () => {
                   <InfoCard
                     icon={<FaHome />}
                     label="Residence Address"
-                    text={studentData?.residenceAddress || "N/A"}
+                    text={studentData?.residenceAddress?.address || "N/A"}
                   />
                 </form>
               </div>
