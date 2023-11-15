@@ -27,9 +27,7 @@ const textInputStyle =
 const infoCardWarpperStyle = "mb-4 w-full px-2 md:w-1/2 lg:w-1/3";
 const Profile = () => {
   const userData = JSON.parse(sessionStorage.getItem("studentData")) || null;
-  const { student: studentData } = useSelector(
-    (state) => state.students,
-  );
+  const { student: studentData } = useSelector((state) => state.students);
   const { universities } = useSelector((state) => state.universities);
   const { majors } = useSelector((state) => state.majors);
   const {
@@ -75,7 +73,7 @@ const Profile = () => {
   useEffect(() => {
     dispatch(fetchMajors());
   }, [dispatch]);
-
+  console.log(studentData);
   return (
     <>
       {!userData ? (
@@ -724,11 +722,11 @@ const Profile = () => {
                       </div>
                     </div>
                   </div>
-                  <InfoCard
+                  {/* <InfoCard
                     icon={<FaHome />}
                     label="Residence Address"
                     text={studentData?.residenceAddress?.address || "N/A"}
-                  />
+                  /> */}
                 </form>
               </div>
             </div>

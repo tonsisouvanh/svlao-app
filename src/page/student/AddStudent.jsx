@@ -3,8 +3,8 @@ import ErrorMessage from "../../components/typography/ErrorMessage";
 import {
   degreeList,
   perminentAddressList,
-  residenceAddress,
   relationships,
+  residenceAddressList,
   scholarshipTypes,
   userStatus,
 } from "../../data/data";
@@ -344,7 +344,7 @@ const AddStudent = () => {
                     className={selectInputStyle + " mb-2"}
                   >
                     <option>Select address</option>
-                    {residenceAddress.map((item, index) => (
+                    {residenceAddressList.map((item, index) => (
                       <option key={index} value={item.address}>
                         {item.address}
                       </option>

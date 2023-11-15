@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import {
   degreeList,
-  residenceAddress,
   relationships,
+  residenceAddressList,
   scholarshipTypes,
 } from "../../data/data";
 import { useEffect, useState } from "react";
@@ -38,7 +38,8 @@ import { fetchUniversities } from "../../feature/globalData/UniversitySlice";
 import { fetchMajors } from "../../feature/globalData/MajorSlice";
 const textInputStyle =
   "input input-sm input-bordered focus:outline-none w-full hover:shadow-md transition-all duration-200";
-
+const selectInputStyle =
+  "select select-md select-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
 const fieldOrder = [
   "fullname",
   "studentId",
@@ -76,6 +77,7 @@ const StudentProfile = () => {
   const [degree, setDegree] = useState("");
   const [university, setUniversity] = useState("");
   const [major, setMajor] = useState("");
+  const [address, setAddress] = useState("");
   const dispatch = useDispatch((state) => state.user);
   const user = auth.currentUser;
 
@@ -101,12 +103,19 @@ const StudentProfile = () => {
     setValue("university.shortcut", university.shortcut);
     setUniversity(university.vietName);
   };
+  const handleSelectResidenceAddress = (value) => {
+    const residenceAddress = residenceAddressList.find(
+      (d) => d.location === value,
+    );
+    setValue("residenceAddress.address", residenceAddress.address);
+    setAddress(residenceAddress.address);
+  };
   const handleEditSubmit = (data) => {
     if (data) {
       const studentData = { ...data };
       dispatch(studentUpdateStudent(studentData));
-      setToggleEdit(false);
     } else toast.warning("Input data not valid");
+    setToggleEdit(false);
   };
   const getIconAndLabel = (field) => {
     let icon;
@@ -574,23 +583,43 @@ const StudentProfile = () => {
                 {toggleEdit ? (
                   <>
                     <select
-                      {...register("residenceAddress", {
+                      {...register("residenceAddress.location", {
                         requiredd: "Please select",
                       })}
-                      className={textInputStyle}
+                      onChange={(e) =>
+                        handleSelectResidenceAddress(e.target.value)
+                      }
+                      className={selectInputStyle}
                     >
-                      {residenceAddress.map((item, index) => (
-                        <option key={index} value={item.address}>
-                          {item.address}
+                      {residenceAddressList.map((item, index) => (
+                        <option key={index} value={item.location}>
+                          {item.location}
                         </option>
                       ))}
                     </select>
+                    {address && address !== "" && (
+                      <p
+                        className={"mt-2 max-w-xs whitespace-pre-wrap text-xs"}
+                      >
+                        {address}
+                      </p>
+                    )}
+                    <ErrorMessage
+                      styling="mt-1 sm:text-md"
+                      error={errors?.residenceAddress?.location}
+                    />
+                    <input
+                      type="text"
+                      hidden
+                      {...register("residenceAddress.address")}
+                    />
                   </>
                 ) : (
                   <div
                     className={`ml-8 flex flex-col whitespace-normal text-sm`}
                   >
-                    <span>{studentData[field]}</span>
+                    <span>ຫໍພັກ: {studentData[field]?.location}</span>
+                    <span>ທີ່ຢູ່ປັດຈຸບັນ: {studentData[field]?.address}</span>
                   </div>
                 )}
               </>
@@ -683,10 +712,11 @@ const StudentProfile = () => {
               </div>
               <div className="form-control w-28">
                 <label className="label cursor-pointer">
-                  <span className="label-text">ອັບເດດ</span>
+                  <span className="label-text">ເປີດແກ້ໄຂ</span>
                   <input
                     type="checkbox"
                     className="toggle toggle-accent"
+                    checked={toggleEdit}
                     onChange={() => setToggleEdit(!toggleEdit)}
                   />
                 </label>

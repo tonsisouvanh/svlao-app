@@ -26,6 +26,7 @@ import { adminDeleteStudent } from "../../../feature/student/StudentSlice";
 import consule from "../../../assets/img/consule.jpg";
 import { BsFacebook } from "react-icons/bs";
 import { fetchUniversities } from "../../../feature/globalData/UniversitySlice";
+import { fetchMajors } from "../../../feature/globalData/MajorSlice";
 
 const cellStyle = "whitespace-nowrap truncate font-light";
 
@@ -105,6 +106,7 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
 
   useEffect(() => {
     dispatch(fetchUniversities());
+    dispatch(fetchMajors());
   }, [dispatch]);
 
   if (status === "loading") {
@@ -402,7 +404,7 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
                       return (
                         <tr key={row.id} {...row.getRowProps()}>
                           <td>
-                            <div className="dropdown-right dropdown">
+                            <div className="dropdown dropdown-right">
                               <label
                                 tabIndex={0}
                                 className="btn btn-xs px-1 py-0"

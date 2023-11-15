@@ -48,7 +48,7 @@ const InfoModal = ({
               {confirmLabel}
             </button>
           ) : (
-            <Link className="btn btn-primary" to={`/profile/${1}`}>
+            <Link className="btn btn-primary" to={`/profile/${"student"}`}>
               ອັບເດດ
             </Link>
           )}

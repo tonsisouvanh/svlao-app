@@ -2,13 +2,16 @@ import { useState, useEffect } from "react";
 import { themes } from "../../../data/data";
 import { AiFillBell, AiFillInfoCircle } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GiCupcake } from "react-icons/gi";
 import { BiSolidMoon, BiSolidSun } from "react-icons/bi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../ui/Spinner";
+import { signOutUser } from "../../../feature/auth/AuthSlice";
 
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light",
   );
@@ -19,6 +22,10 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   //     ? sessionStorage.getItem("userData")
   //     : null,
   // );
+  const handleSignOut = () => {
+    dispatch(signOutUser());
+    navigate("/signin");
+  };
   useEffect(() => {
     localStorage.setItem("theme", theme);
     const localTheme = localStorage.getItem("theme");
@@ -43,9 +50,6 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
         </button>
 
         <div className="flex items-center gap-2">
-          <div>
-            <AiFillBell />
-          </div>
           <div>
             <div className="dropdown dropdown-end">
               <label
@@ -132,12 +136,13 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
               >
                 Setting
               </Link>
-              <Link
+              <button
+                onClick={handleSignOut}
                 className="btn btn-ghost btn-sm whitespace-nowrap"
                 to="/profile"
               >
                 Log out
-              </Link>
+              </button>
             </ul>
           </div>
         </div>
