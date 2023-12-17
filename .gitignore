@@ -33,3 +33,5 @@ dist-ssr
 .env.test.local
 .env.production.local
 .env
+
+*.cmd
