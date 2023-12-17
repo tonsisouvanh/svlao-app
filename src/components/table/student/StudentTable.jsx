@@ -95,11 +95,11 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
     setTotalDegree({
       bachelor: rows.filter(
         (student) =>
-          student.original.degree.vietDegree.toLowerCase() === "cử nhân",
+          student.original.degree?.vietDegree.toLowerCase() === "cử nhân",
       ).length,
       master: rows.filter(
         (student) =>
-          student.original.degree.vietDegree.toLowerCase() === "thạc sĩ",
+          student.original.degree?.vietDegree.toLowerCase() === "thạc sĩ",
       ).length,
     });
   }, [rows]);
