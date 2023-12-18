@@ -29,9 +29,9 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { fullname, email, password, image } = req.body;
+  const { fullname, emailAddress, password } = req.body;
 
-  const userExists = await User.findOne({ email });
+  const userExists = await User.findOne({ emailAddress });
 
   if (userExists) {
     res.status(400);
@@ -40,20 +40,15 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const user = await User.create({
     fullname,
-    email,
+    emailAddress,
     password,
-    image,
   });
-
   if (user) {
+    const { password, ...userWithoutPassword } = user._doc;
     res.status(201).json({
       _id: user._id,
-      fullname: user.fullname,
-      email: user.email,
-      role: user.role,
+      ...userWithoutPassword,
       token: generateToken(user._id),
-      image: user.image,
-      isActive: user.isActive,
     });
   } else {
     res.status(400);

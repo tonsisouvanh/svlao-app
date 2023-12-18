@@ -23,7 +23,6 @@ const userSchema = mongoose.Schema(
       },
       shortcut: {
         type: String,
-        required: true,
       },
     },
     scholarship: {
@@ -38,13 +37,11 @@ const userSchema = mongoose.Schema(
     },
     dob: {
       type: Date,
-      required: true,
     },
     phone: {
       emergency: String,
       phoneNumber: {
         type: String,
-        required: true,
       },
       relationship: String,
     },
