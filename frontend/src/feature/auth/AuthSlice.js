@@ -13,38 +13,46 @@ const initialState = {
 
 //** DONE
 export const signUp = createAsyncThunk(
-  "auth/signUp",
-  async (inputAuth, rejectWithValue) => {
-    const { email, password, authname, role } = inputAuth;
+  "auth/signin",
+  async (userData, thunkAPI) => {
     try {
-      // const authCredential = await createAuthWithEmailAndPassword(
-      //   auth,
-      //   email,
-      //   password,
-      // );
-      // const auth = authCredential.auth;
-      // let authData = {};
-      // if (auth && auth !== null) {
-      //   authData = {
-      //     email: auth.email,
-      //     role: role,
-      //   };
+      const { emailAddress, password } = userData;
 
-      //   await setDoc(doc(db, "auths", auth.uid), {
-      //     ...authData,
-      //     authStatus: "pending",
-      //   });
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
-      //   const docRef = await addDoc(collection(db, "students"), {
-      //     authId: auth.uid,
-      //     role: role,
-      //   });
+      const { data } = await axios.post(
+        "/api/users/login",
+        { emailAddress, password },
+        config,
+      );
 
-      //   await signOut(auth);
-      // }
-      return { ...inputAuth };
+      const fixedData = {
+        ...data,
+        visa: {
+          from: formatDate(data.visa.from),
+          to: formatDate(data.visa.to),
+        },
+        dob: formatDate(data.dob),
+        passport: {
+          ...data.passport,
+          expired: formatDate(data.passport.expired),
+        },
+      };
+
+      sessionStorage.setItem("authInfo", JSON.stringify(fixedData));
+      return fixedData;
     } catch (error) {
-      return rejectWithValue("Authentication error: " + error.message);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   },
 );
@@ -203,19 +211,19 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // sign up
-      // .addCase(signUp.pending, (state) => {
-      //   state.status = "loading";
-      // })
-      // .addCase(signUp.fulfilled, (state) => {
-      //   state.status = "succeeded";
-      //   // state.auth = action.payload;
-      //   state.error = null;
-      // })
-      // .addCase(signUp.rejected, (state, action) => {
-      //   state.status = "failed";
-      //   state.auth = null;
-      //   state.error = action.payload || "An error occurred during sign-in.";
-      // })
+      .addCase(signUp.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(signUp.fulfilled, (state) => {
+        state.status = "succeeded";
+        // state.auth = action.payload;
+        state.error = null;
+      })
+      .addCase(signUp.rejected, (state, action) => {
+        state.status = "failed";
+        state.auth = null;
+        state.error = action.payload;
+      })
       // sign in
       .addCase(signIn.pending, (state) => {
         state.status = "loading";
