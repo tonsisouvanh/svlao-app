@@ -63,7 +63,6 @@ const univerData = [
     },
   },
 ];
-
 const addAdditionalFields = (element) => {
   element.password = bcrypt.hashSync("123456", 10);
   element.token = generateToken(element._id.$oid);
@@ -92,10 +91,9 @@ const getMatchesUniversity = (university) => {
 };
 
 export const modifyData = () => {
-  //   usersData.forEach(addAdditionalFields);
+  usersData.forEach(addAdditionalFields);
   const newArray = usersData.map(addAdditionalFields);
   const fixedStuents = newArray.map((ele) => {
-    // const { _id, laoName, vietName, englishName, shortcut } = university;
     return {
       ...ele,
       university: getMatchesUniversity(ele.university),
@@ -104,7 +102,7 @@ export const modifyData = () => {
   const jsonString = JSON.stringify(fixedStuents, null, 2);
   const filePath = "output.json";
 
-  //   // Write the JSON data to the file
   fs.writeFileSync(filePath, jsonString);
+
   return "done";
 };
