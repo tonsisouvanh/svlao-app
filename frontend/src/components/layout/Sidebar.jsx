@@ -4,12 +4,12 @@ import {
   AiFillSound,
   AiOutlineAudit,
   AiOutlineDashboard,
-  AiOutlineLogout
+  AiOutlineLogout,
 } from "react-icons/ai";
 import { BsArrowLeft, BsFillCaretDownFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { signOutUser } from "../../feature/auth/AuthSlice";
+import { signOut } from "../../feature/auth/AuthSlice";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 
 const dropdownLiStyle = "hover:text-white hover:bg-white/10 rounded-md";
@@ -31,7 +31,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   );
 
   const handleSignOut = () => {
-    dispatch(signOutUser());
+    dispatch(signOut());
     navigate("/signin");
   };
 
@@ -80,9 +80,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="py-5.5 lg:py-6.5 flex items-center justify-between gap-2 px-6">
         <div className="mt-5 flex w-full items-center gap-16">
-          {/* <NavLink className="flex w-full justify-center bg-white py-3" to="/">
-            <img className="w-32" src={Logo} alt="Logo" />
-          </NavLink> */}
           <div className="bg-white p-2">
             <a className="mb-16 whitespace-nowrap text-center font-notosanslao text-sm font-semibold normal-case !text-neutral ">
               <p>LAO STUDENT HCM</p>
@@ -131,7 +128,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             : setSidebarExpanded(true);
                         }}
                       >
-                        {/* <AiOutlineDashboard size={23} /> */}
                         <AiOutlineDashboard size={23} />
                         ຈັດການນັກຮຽນ
                         <BsFillCaretDownFill
@@ -179,26 +175,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   );
                 }}
               </SidebarLinkGroup>
-              {/* <!-- Menu Item Dashboard --> */}
-              {/* <!-- Menu Item Items --> */}
-
-              {/* <!-- Menu Item Items --> */}
-
-              {/* <!-- Menu Item Profile --> */}
-              {/* <li>
-                <NavLink
-                  to={`/profile/${1}`}
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out ${
-                    pathname.includes("profile") && "bg-graydark dark:bg-meta-4"
-                  }`}
-                >
-                  <FaUser size={23} />
-                  ໂປຮຟາຍ
-                </NavLink>
-              </li> */}
-              {/* <!-- Menu Item Profile --> */}
-
-              {/* <!-- Menu Item Settings --> */}
               <li>
                 <NavLink
                   to="/establishment"
@@ -211,19 +187,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   ອົງການຈັດຕັ້ງຕ່າງໆ
                 </NavLink>
               </li>
-              {/* <li>
-                <NavLink
-                  to="/contact"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out ${
-                    pathname.includes("settings") &&
-                    "bg-graydark dark:bg-meta-4"
-                  }`}
-                >
-                  <AiOutlinePhone size={23} />
-                  ຕິດຕໍ່
-                </NavLink>
-              </li> */}
-              {/* <!-- Menu Item Settings --> */}
             </ul>
           </div>
 

@@ -74,9 +74,6 @@ const StudentProfile = () => {
     reset,
   } = useForm({ defaultValues: studentData });
   const [toggleEdit, setToggleEdit] = useState(false);
-  const [degree, setDegree] = useState("");
-  const [university, setUniversity] = useState("");
-  const [major, setMajor] = useState("");
   const [address, setAddress] = useState("");
   const dispatch = useDispatch((state) => state.user);
   const user = auth.currentUser;
@@ -89,19 +86,16 @@ const StudentProfile = () => {
   const handleSelectDegree = (value) => {
     const vietDegree = degreeList.find((d) => d.laoDegree === value);
     setValue("degree.vietDegree", vietDegree.vietDegree);
-    setDegree(vietDegree.vietDegree);
   };
   const handleSelectMajor = (value) => {
     const major = majors.find((d) => d.laoMajor === value);
     setValue("major.vietMajor", major.vietMajor);
-    setMajor(major.vietMajor);
   };
   const handleSelectUniversity = (value) => {
     const university = universities.find((d) => d.laoName === value);
     setValue("university.vietName", university.vietName);
     setValue("university.englishName", university.englishName);
     setValue("university.shortcut", university.shortcut);
-    setUniversity(university.vietName);
   };
   const handleSelectResidenceAddress = (value) => {
     const residenceAddress = residenceAddressList.find(

@@ -1,18 +1,12 @@
 import express from "express";
 const router = express.Router();
 import {
-  authUniversity,
-  registerUniversity,
-  getUniversityProfile,
-  updateUniversityProfile,
-  getUniversitys,
-  deleteUniversity,
-  getUniversityById,
-  updateUniversity,
+  createUniversity,
+  getUniversities,
 } from "../controllers/universityController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 
-router.route("/").post(registerUniversity).get(getUniversitys);
+router.route("/").post(createUniversity).get(getUniversities);
 // router.post('/login', authUniversity)
 // router
 //   .route('/profile')

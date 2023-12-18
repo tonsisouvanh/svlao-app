@@ -397,6 +397,10 @@ export const residenceAddressList = [
       "122ABC Đ. Cách Mạng Tháng 8, Võ Thị Sáu, Quận 3, Thành phố Hồ Chí Minh",
     location: "KTX SVLAO",
   },
+  {
+    address: "other",
+    location: "other",
+  },
 ];
 
 export const STUDENT_COLUMNS = [

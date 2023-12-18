@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-
+import moment from "moment";
 export const checkRole = (role) => {
   let approve = false;
   switch (role) {
@@ -48,4 +48,9 @@ export const copyToClipboard = async (text) => {
   } catch (err) {
     console.error("Unable to copy to clipboard", err);
   }
+};
+
+export const formatDate = (dateString) => {
+  var date = new Date(dateString);
+  return moment(date).format("YYYY-MM-DD");
 };

@@ -11,9 +11,8 @@ import { fetchStudents } from "../feature/student/StudentSlice";
 const StudentList = () => {
   const dispatch = useDispatch();
   const { status: studentStatus } = useSelector((state) => state.students);
-  // const [studentData, setStudentData] = useState(students);
+  const { auth } = useSelector((state) => state.auth);
   const [editToggle, setEditToggle] = useState(false);
-  const userData = JSON.parse(sessionStorage.getItem("userData")) || {};
 
   const [view, setView] = useState("");
   const toggleView = () => {
@@ -40,10 +39,10 @@ const StudentList = () => {
   if (studentStatus === "failed") {
     return <div>Error loading students</div>;
   }
-  return userData?.role === "admin" ? (
+  return auth?.role === "admin" ? (
     <>
       <section className="">
-        <div className="container mx-auto p-4">
+        {/* <div className="container mx-auto p-4">
           <div className="mb-14">
             {editToggle ? null : (
               <label className="flex justify-center font-notosanslao text-4xl font-bold text-primary">
@@ -59,7 +58,7 @@ const StudentList = () => {
                     <div className="">
                       <Link
                         to={
-                          userData.role !== "admin"
+                          auth.role !== "admin"
                             ? "#"
                             : "/studentlist/add-student"
                         }
@@ -67,7 +66,7 @@ const StudentList = () => {
                         <button
                           // data-tip="ເພີ່ມນັກຮຽນ"
                           className={`tooltipp btn btn-primary font-notosanslao text-white ${
-                            userData.role !== "admin" && "btn-disabled"
+                            auth.role !== "admin" && "btn-disabled"
                           }`}
                         >
                           ເພີ່ມນັກຮຽນ
@@ -98,7 +97,7 @@ const StudentList = () => {
             editToggle={editToggle}
             setEditToggle={setEditToggle}
           />
-        </div>
+        </div> */}
       </section>
     </>
   ) : (

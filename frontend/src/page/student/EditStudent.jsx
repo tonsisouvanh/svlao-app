@@ -15,7 +15,7 @@ import {
 } from "../../data/data";
 import { adminUpdateStudent } from "../../feature/student/StudentSlice";
 import { getImageId } from "../../utils/utils";
-import { fetchUniversities } from "../../feature/globalData/UniversitySlice";
+import { listUniversity } from "../../feature/globalData/UniversitySlice";
 import { fetchMajors } from "../../feature/globalData/MajorSlice";
 
 const selectInputStyle =
@@ -82,9 +82,8 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
     setEditToggle(false);
   };
   useEffect(() => {
-    dispatch(fetchUniversities());
+    dispatch(listUniversity());
     dispatch(fetchMajors());
-
   }, [dispatch]);
   console.log(majors);
   return (
@@ -367,7 +366,9 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
                     ))}
                   </select>
                   {address && address !== "" && (
-                    <p className={"whitespace-pre-wrap max-w-xs mt-2 text-xs"}>{address}</p>
+                    <p className={"mt-2 max-w-xs whitespace-pre-wrap text-xs"}>
+                      {address}
+                    </p>
                   )}
                   <ErrorMessage
                     styling="mt-1 sm:text-md"

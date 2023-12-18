@@ -25,7 +25,7 @@ import InfoModal from "../../modal/InfoModal";
 import { adminDeleteStudent } from "../../../feature/student/StudentSlice";
 import consule from "../../../assets/img/consule.jpg";
 import { BsFacebook } from "react-icons/bs";
-import { fetchUniversities } from "../../../feature/globalData/UniversitySlice";
+import { listUniversity } from "../../../feature/globalData/UniversitySlice";
 import { fetchMajors } from "../../../feature/globalData/MajorSlice";
 
 const cellStyle = "whitespace-nowrap truncate font-light";
@@ -105,8 +105,8 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
   }, [rows]);
 
   useEffect(() => {
-    dispatch(fetchUniversities());
-    dispatch(fetchMajors());
+    dispatch(listUniversity());
+    // dispatch(fetchMajors());
   }, [dispatch]);
 
   if (status === "loading") {

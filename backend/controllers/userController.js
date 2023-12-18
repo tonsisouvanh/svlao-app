@@ -80,7 +80,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // * @access  Private
 const updateUserProfile = asyncHandler(async (req, res) => {
   const userId = req.user._id;
-  const updatedUserData = req.body;
+  const { role, userStatus, ...updatedUserData } = req.body; //extract role out
   const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, {
     new: true,
   });

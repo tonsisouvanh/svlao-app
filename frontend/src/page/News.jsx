@@ -3,14 +3,14 @@ import InfoModal from "../components/modal/InfoModal";
 import ActivitySlider from "../components/slider/ActivitySlider";
 
 const News = () => {
-  const { user } = useSelector((state) => state.user);
+  const { auth } = useSelector((state) => state.auth);
   return (
     <div>
-      {user?.userStatus === "pending" && user?.role === "student" ? (
+      {auth?.userStatus === "pending" && auth?.role === "student" ? (
         <InfoModal
           title={"ແຈ້ງເຕືອນ"}
           modaltype={"info"}
-          conditionData={user}
+          conditionData={auth}
           desc={"ກາລຸນນາອັບເດດຂໍ້ມູນ"}
           initialValue={true}
         />

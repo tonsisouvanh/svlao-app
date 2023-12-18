@@ -28,7 +28,7 @@ const authUniversity = asyncHandler(async (req, res) => {
 // @desc    Register a new university
 // @route   POST /api/universitys
 // @access  Public
-const registerUniversity = asyncHandler(async (req, res) => {
+const createUniversity = asyncHandler(async (req, res) => {
   const { fullname, email, password, image } = req.body;
 
   const universityExists = await University.findOne({ email });
@@ -83,7 +83,7 @@ const getUniversityProfile = asyncHandler(async (req, res) => {
 // @desc    Update university profile
 // @route   PUT /api/universitys/profile
 // * @access  Private
-const updateUniversityProfile = asyncHandler(async (req, res) => {
+const updateUniversity = asyncHandler(async (req, res) => {
   const universityId = req.university._id;
   const updatedUniversityData = req.body;
   const updatedUniversity = await University.findByIdAndUpdate(universityId, updatedUniversityData, {
@@ -100,7 +100,7 @@ const updateUniversityProfile = asyncHandler(async (req, res) => {
 // @desc    Get all universitys
 // @route   GET /api/universitys
 // @access  Private/Admin
-const getUniversitys = asyncHandler(async (req, res) => {
+const getUniversities = asyncHandler(async (req, res) => {
   const universitys = await University.find({});
   res.json(universitys);
 });
@@ -134,30 +134,10 @@ const getUniversityById = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Update university
-// @route   PUT /api/universitys/:id
-//* @access  Private/Admin
-const updateUniversity = asyncHandler(async (req, res) => {
-  const universityId = req.params.id;
-  const updatedUniversityData = req.body;
-  const updatedUniversity = await University.findByIdAndUpdate(universityId, updatedUniversityData, {
-    new: true,
-  });
-  if (updatedUniversity) {
-    res.json(updatedUniversity);
-  } else {
-    res.status(404);
-    throw new Error("University not found");
-  }
-});
+
 
 export {
-  authUniversity,
-  registerUniversity,
-  getUniversityProfile,
-  updateUniversityProfile,
-  getUniversitys,
-  deleteUniversity,
-  getUniversityById,
+  getUniversities,
   updateUniversity,
+  createUniversity
 };

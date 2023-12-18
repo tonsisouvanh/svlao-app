@@ -5,16 +5,14 @@ import ErrorMessage from "../components/typography/ErrorMessage";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../feature/auth/AuthSlice";
-import { auth } from "../firebase";
-import { onAuthStateChanged } from "firebase/auth";
-import { fetchStudents } from "../feature/student/StudentSlice";
+import toast from "react-hot-toast";
 const initialState = {
-  email: "",
+  emailAddress: "",
   password: "",
 };
 
 const Signin = () => {
-  const { status } = useSelector((state) => state.user);
+  const { status, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -26,28 +24,15 @@ const Signin = () => {
 
   const handleLogin = async (data) => {
     const userInput = { ...data };
-    try {
-      await dispatch(signIn(userInput));
-      const user = JSON.parse(sessionStorage.getItem("userData")) || {};
-      if (user.role === "admin" || user.role === "assistant") {
-        dispatch(fetchStudents());
-      }
-    } catch (error) {
-      console.error("Sign-in error =>", error);
-    }
+    dispatch(signIn(userInput));
   };
 
   useEffect(() => {
-    // Listen for changes in the user's authentication state
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigate("/");
-      }
-    });
-
-    // Clean up the subscription when the component unmounts
-    return () => unsubscribe();
-  }, [navigate]);
+    if (status === "succeeded") {
+      navigate("/");
+      toast.success("Login successful");
+    } else if (status === "failed") toast.error(error);
+  }, [status, error, navigate]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-login-background bg-cover bg-no-repeat">
@@ -61,17 +46,20 @@ const Signin = () => {
                 <span className="label-text">Email</span>
               </label>
               <input
-                {...register("email", {
+                {...register("emailAddress", {
                   required: "Email is required",
                   pattern: {
                     value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-                    message: "Invalid email format",
+                    message: "Invalid emailAddress format",
                   },
                 })}
                 type="text"
                 className="input input-bordered w-full max-w-xs"
               />
-              <ErrorMessage styling="mt-3 sm:text-md" error={errors?.email} />
+              <ErrorMessage
+                styling="mt-3 sm:text-md"
+                error={errors?.emailAddress}
+              />
             </div>
           </div>
           <div className="mb-4">

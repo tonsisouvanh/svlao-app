@@ -1,21 +1,19 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import {
-  Dashboard,
-  StudentDetail,
-  NotFoundPage,
-  StudentList,
-  Intro,
-  Signin,
-  News,
-  Signup,
-  AddStudent,
-  StudentProfile,
-} from "./page";
+
 import RootLayoutPublic from "./components/layout/public/rootLayoutPublic";
-import Test from "./page/Test";
 import { Toaster } from "react-hot-toast";
 import PrivateRoute from "./route/PrivateRoute";
+import Signin from "./page/Signin";
+import Signup from "./page/Signup";
+import News from "./page/News";
+// import StudentDetail from "./page/StudentDetail";
+// import StudentList from "./page/StudentList";
+import UserProfile from "./page/UserProfile";
+// import Intro from "./page/Intro";
+// import AddStudent from "./page/student/AddStudent";
+import NotFoundPage from "./page/NoFoundPage";
+import StudentList from "./page/StudentList";
 
 function App() {
   return (
@@ -28,16 +26,14 @@ function App() {
         <Route path="/" element={<RootLayoutPublic />}>
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<News />} />
-            <Route path="/dashboard/student-chart" element={<Dashboard />} />
-            <Route path="/student-detail/:id" element={<StudentDetail />} />
+            {/* <Route path="/student-detail/:id" element={<StudentDetail />} /> */}
             <Route path="/dashboard/studentlist" element={<StudentList />} />
-            <Route path="/profile/:id" element={<StudentProfile />} />
-            <Route path="/intro" element={<Intro />} />
-            <Route path="/studentlist/add-student" element={<AddStudent />} />
+            <Route path="/profile" element={<UserProfile />} />
+            {/* <Route path="/intro" element={<Intro />} /> */}
+            {/* <Route path="/studentlist/add-student" element={<AddStudent />} /> */}
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
-        <Route path="/test" element={<Test />} />
       </Routes>
     </>
   );
