@@ -84,7 +84,9 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
   useEffect(() => {
     dispatch(fetchUniversities());
     dispatch(fetchMajors());
+
   }, [dispatch]);
+  console.log(majors);
   return (
     <>
       {status === "loading" ? (

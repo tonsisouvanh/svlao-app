@@ -8,15 +8,15 @@ import User from "../models/userModel.js";
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).populate(
+    "university.universityId"
+  );
 
   if (user && (await user.matchPassword(password))) {
+    const { password, ...userWithoutPassword } = user._doc;
+
     res.json({
-      _id: user._id,
-      fullname: user.fullname,
-      email: user.email,
-      role: user.role,
-      isActive: user.isActive,
+      ...userWithoutPassword,
       token: generateToken(user._id),
     });
   } else {
@@ -101,7 +101,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/users
 // @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
-  const users = await User.find({}).populate('university.universityId');
+  const users = await User.find({}).populate("university.universityId");
   res.json(users);
 });
 
