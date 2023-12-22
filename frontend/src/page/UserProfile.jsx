@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { listUniversity } from "../feature/globalData/UniversitySlice";
-// import { fetchMajors } from "../../feature/globalData/MajorSlice";
 import {
   degreeList,
   majorList,

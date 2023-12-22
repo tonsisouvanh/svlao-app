@@ -1,12 +1,11 @@
-import { useState, useEffect } from "react";
-import { themes } from "../../../data/data";
+import { useEffect, useState } from "react";
 import { AiFillBell, AiFillInfoCircle } from "react-icons/ai";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { Link, useNavigate } from "react-router-dom";
-import { GiCupcake } from "react-icons/gi";
 import { BiSolidMoon, BiSolidSun } from "react-icons/bi";
+import { GiCupcake } from "react-icons/gi";
+import { RxHamburgerMenu } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
-import Spinner from "../../ui/Spinner";
+import { Link, useNavigate } from "react-router-dom";
+import { themes } from "../../../data/data";
 import { signOut } from "../../../feature/auth/AuthSlice";
 
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
@@ -96,7 +95,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                 </div> */}
                 <div className="avatar">
                   <div className="w-8 rounded-full">
-                    <img src={auth.profileImg} />
+                    <img src={auth?.profileImg} />
                   </div>
                 </div>
               </label>

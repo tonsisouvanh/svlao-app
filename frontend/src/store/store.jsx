@@ -10,7 +10,7 @@ export const store = configureStore({
     user: userReducer,
     students: studentsReducer,
     university: universitiesReducer,
-    majors: majorsReducer,
+    major: majorsReducer,
   },
 });
 

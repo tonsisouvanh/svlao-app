@@ -1,4 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+axios.defaults.baseURL = "http://localhost:5000";
+
 import {
   addDoc,
   collection,
@@ -82,29 +85,23 @@ export const deleteMajor = createAsyncThunk(
   },
 );
 
-export const fetchMajors = createAsyncThunk("majors/fetchMajors", async () => {
-  const collectionRef = collection(db, "majors");
-  const sortedQuery = query(collectionRef, orderBy("laoMajor", "asc"));
-  try {
-    const querySnapshot = await getDocs(sortedQuery);
-    if (!querySnapshot) {
-      console.log(new Error("An error occurred while fetching products."));
-      throw new Error("An error occurred while fetching products.");
+export const listMajors = createAsyncThunk(
+  "universities/listMajors",
+  async (thunkAPI) => {
+    try {
+      const { data } = await axios.get(`/api/majors`);
+      return data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
-    const data = querySnapshot.docs.map((doc) => {
-      const majorData = doc.data();
-      return {
-        id: doc.id,
-        ...majorData,
-      };
-    });
-    return data;
-  } catch (error) {
-    const errorMessage = error.message;
-    toast.error(errorMessage);
-    throw error;
-  }
-});
+  },
+);
 
 const MajorSlice = createSlice({
   name: "majors",
@@ -116,14 +113,14 @@ const MajorSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchMajors.pending, (state) => {
+      .addCase(listMajors.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchMajors.fulfilled, (state, action) => {
+      .addCase(listMajors.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.majors = action.payload;
       })
-      .addCase(fetchMajors.rejected, (state, action) => {
+      .addCase(listMajors.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "";
       })

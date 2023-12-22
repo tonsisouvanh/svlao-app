@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const Filter = ({ filter, setFilter, options, title, fieldName }) => {
-  const [sortedOptions, setsortedOptions] = useState(options);
+  const [sortedOptions, setsortedOptions] = useState(options || []);
   const sortArray = () => {
     const sortedArray = [...sortedOptions].sort((a, b) =>
       a[fieldName].localeCompare(b[fieldName]),
@@ -23,11 +23,12 @@ const Filter = ({ filter, setFilter, options, title, fieldName }) => {
         <option disabled value="">
           {title}
         </option>
-        {sortedOptions.map((ele, index) => (
-          <option key={index} value={ele[fieldName]}>
-            {ele[fieldName]}
-          </option>
-        ))}
+        {sortedOptions &&
+          sortedOptions?.map((ele, index) => (
+            <option key={index} value={ele[fieldName]}>
+              {ele[fieldName]}
+            </option>
+          ))}
       </select>
     </div>
   );

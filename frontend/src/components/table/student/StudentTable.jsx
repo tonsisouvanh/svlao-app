@@ -1,10 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../ui/Spinner";
-import EditStudent from "../../../page/student/EditStudent";
+// import EditUser from "../../../page/user/EditUser";
 import { useGlobalFilter, useSortBy, useTable, useFilters } from "react-table";
-import Filter from "../../input/student/Filter";
-import Searchbar from "../../input/student/Searchbar";
 import {
   AiFillCaretDown,
   AiFillCaretUp,
@@ -15,23 +13,30 @@ import {
 } from "react-icons/ai";
 import { BiSolidSortAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
+
+import InfoModal from "../../modal/InfoModal";
+import consule from "../../../assets/img/consule.jpg";
+import { BsFacebook } from "react-icons/bs";
+import Filter from "../../input/student/Filter";
 import {
   STUDENT_COLUMNS,
   degreeList,
   scholarshipTypes,
-  userStatus,
+  statusList,
 } from "../../../data/data";
-import InfoModal from "../../modal/InfoModal";
-import { adminDeleteStudent } from "../../../feature/student/StudentSlice";
-import consule from "../../../assets/img/consule.jpg";
-import { BsFacebook } from "react-icons/bs";
-import { listUniversity } from "../../../feature/globalData/UniversitySlice";
-import { fetchMajors } from "../../../feature/globalData/MajorSlice";
+import Searchbox from "../../input/student/Searchbox";
 
 const cellStyle = "whitespace-nowrap truncate font-light";
 
-const StudentTable = ({ editToggle, setEditToggle, view }) => {
-  const [totalStudents, setTotalStudents] = useState(0);
+const UserTable = ({
+  editToggle,
+  setEditToggle,
+  view,
+  users,
+  userStatus,
+  userError,
+}) => {
+  const [totalUsers, setTotalUsers] = useState(0);
   const [totalMale, setTotalMale] = useState(0);
   const [totalFemale, setTotalFemale] = useState(0);
   const [totalDegree, setTotalDegree] = useState({
@@ -44,15 +49,12 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
   const isRenderField = (renderFields, passedField) => {
     return renderFields.includes(passedField.toString());
   };
-
-  const { status, students } = useSelector((state) => state.students);
-  const { universities } = useSelector((state) => state.universities);
-  const { majors } = useSelector((state) => state.majors);
-
   const dispatch = useDispatch();
+  const { universities } = useSelector((state) => state.university);
+  const { majors } = useSelector((state) => state.major);
   const [openModal, setOpenModal] = useState(false);
-  const [deletedStudent, setDeletedStudent] = useState("");
-  const data = useMemo(() => students, []);
+  const [deletedUser, setDeletedUser] = useState("");
+  const data = useMemo(() => users, []);
   const columns = useMemo(() => STUDENT_COLUMNS, []);
 
   const {
@@ -66,74 +68,68 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
   } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
 
   const { globalFilter } = state;
-  const [editingStudent, setEditingStudent] = useState();
+  const [editingUser, setEditingUser] = useState();
 
-  const handleClickEdit = (student) => {
+  const handleClickEdit = (user) => {
     setEditToggle(true);
-    setEditingStudent(student.original);
+    setEditingUser(user.original);
   };
   const handleOpenModal = (id) => {
-    setDeletedStudent(id);
+    setDeletedUser(id);
     setOpenModal(true);
   };
-  const handleDeletStudent = () => {
-    dispatch(adminDeleteStudent(deletedStudent));
-    setDeletedStudent("");
+  const handleDeletUser = () => {
+    // dispatch(adminDeleteUser(deletedUser));
+    setDeletedUser("");
     setOpenModal(false);
   };
 
   useEffect(() => {
-    setTotalStudents(rows.length);
+    setTotalUsers(rows.length);
     const maleCount = rows.filter(
-      (student) => student.original.gender === "male",
+      (user) => user.original.gender === "male",
     ).length;
     const femaleCount = rows.filter(
-      (student) => student.original.gender === "female",
+      (user) => user.original.gender === "female",
     ).length;
     setTotalMale(maleCount);
     setTotalFemale(femaleCount);
     setTotalDegree({
       bachelor: rows.filter(
-        (student) =>
-          student.original.degree?.vietDegree.toLowerCase() === "cử nhân",
+        (user) => user.original.degree?.vietDegree.toLowerCase() === "cử nhân",
       ).length,
       master: rows.filter(
-        (student) =>
-          student.original.degree?.vietDegree.toLowerCase() === "thạc sĩ",
+        (user) => user.original.degree?.vietDegree.toLowerCase() === "thạc sĩ",
       ).length,
     });
   }, [rows]);
 
-  useEffect(() => {
-    dispatch(listUniversity());
-    // dispatch(fetchMajors());
-  }, [dispatch]);
-
-  if (status === "loading") {
+  if (userStatus === "loading") {
     return <Spinner />;
   }
+
+  console.log(users)
   return (
     <>
       {editToggle ? (
-        <EditStudent
-          setEditToggle={setEditToggle}
-          editingStudent={editingStudent}
-        />
-      ) : status === "loading" ? (
+        // <EditUser
+        //   setEditToggle={setEditToggle}
+        //   editingUser={editingUser}
+        // />
+        <span>Edit user component here</span>
+      ) : userStatus === "loading" ? (
         <Spinner />
       ) : (
         <>
           {openModal && (
             <InfoModal
-              title={"Delete student"}
+              title={"Delete user"}
               modaltype={"question"}
-              desc={
-                "This student data will be perminently delete, are you sure?"
-              }
+              desc={"This user data will be perminently delete, are you sure?"}
               initialValue={true}
               isOnclickEvent={true}
               confirmLabel={"Delete"}
-              handleClick={handleDeletStudent}
+              handleClick={handleDeletUser}
             />
           )}
           <div className="overflow-x-auto">
@@ -142,7 +138,7 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
               <div className="stat place-items-center">
                 <div className="stat-title text-lg">ນຮ ທັງໝົດ</div>
                 <div className="stat-value">
-                  {totalStudents}
+                  {totalUsers}
                   <span className="ml-4 text-sm font-normal">ຄົນ</span>
                 </div>
                 {/* <div className="stat-desc">Jan 1st - Feb 1st</div> */}
@@ -181,7 +177,7 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
               </div>
             </div>
             <div className="mb-5 flex flex-wrap items-center gap-2">
-              <Searchbar filter={globalFilter} setFilter={setGlobalFilter} />
+              <Searchbox filter={globalFilter} setFilter={setGlobalFilter} />
               <Filter
                 filter={globalFilter}
                 setFilter={setGlobalFilter}
@@ -196,33 +192,33 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
                 title={"ລະດັບການສຶກສາ"}
                 fieldName={"laoDegree"}
               />
-              <Filter
+              {/* <Filter
                 filter={globalFilter}
                 setFilter={setGlobalFilter}
                 options={universities}
                 title={"ມະຫາໄລ"}
                 fieldName={"laoName"}
-              />
+              /> */}
               <Filter
                 filter={globalFilter}
                 setFilter={setGlobalFilter}
-                options={userStatus}
+                options={statusList}
                 title={"ສະຖານະ"}
                 fieldName={"status"}
               />
               {/*  */}
-              <Filter
+              {/* <Filter
                 filter={globalFilter}
                 setFilter={setGlobalFilter}
                 options={majors}
                 title={"ສາຍຮຽນ"}
                 fieldName={"vietMajor"}
-              />
+              /> */}
             </div>
             {view === "grid" ? (
               <div {...getTableProps()} className="font-notosanslao">
                 <div className="">
-                  {students &&
+                  {users &&
                     headerGroups?.map((headerGroup) => (
                       <div
                         className="my-4 flex items-start gap-5 overflow-auto"
@@ -261,7 +257,7 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
                   className="xl:grid-cols-4d grid grid-cols-1 gap-4 font-notosanslao sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
                   {...getTableBodyProps()}
                 >
-                  {students &&
+                  {users &&
                     rows?.map((row) => {
                       prepareRow(row);
                       return (
@@ -278,7 +274,7 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
                               className="h-[10rem] w-full object-cover object-top"
                             />
                           </div>
-                          {students &&
+                          {users &&
                             row?.cells?.map((cell, index) => (
                               <div
                                 className={cellStyle}
@@ -346,7 +342,7 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
                                 >
                                   <AiFillDelete />
                                 </button>
-                                <Link to={`/student-detail/${row.original.id}`}>
+                                <Link to={`/user-detail/${row.original.id}`}>
                                   <button className="btn btn-primary btn-sm whitespace-nowrap font-notosanslao !text-white sm:btn-xs">
                                     <AiFillEye />
                                   </button>
@@ -365,7 +361,7 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
                 className="table table-md font-notosanslao"
               >
                 <thead>
-                  {students &&
+                  {users &&
                     headerGroups?.map((headerGroup) => (
                       <tr
                         key={headerGroup.id}
@@ -398,7 +394,7 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
                     ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                  {students &&
+                  {users &&
                     rows?.map((row) => {
                       prepareRow(row);
                       return (
@@ -434,7 +430,7 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
                                     <AiFillDelete size={15} />
                                   </a>
                                 </li>
-                                <Link to={`/student-detail/${row.original.id}`}>
+                                <Link to={`/user-detail/${row.original.id}`}>
                                   <li className="btn btn-ghost btn-xs">
                                     <AiFillEye size={15} />
                                   </li>
@@ -442,7 +438,7 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
                               </ul>
                             </div>
                           </td>
-                          {students &&
+                          {users &&
                             row?.cells?.map((cell, index) => (
                               <td
                                 className={cellStyle}
@@ -485,4 +481,4 @@ const StudentTable = ({ editToggle, setEditToggle, view }) => {
   );
 };
 
-export default StudentTable;
+export default UserTable;

@@ -26,9 +26,25 @@ function App() {
         <Route path="/" element={<RootLayoutPublic />}>
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<News />} />
-            {/* <Route path="/student-detail/:id" element={<StudentDetail />} /> */}
-            <Route path="/dashboard/studentlist" element={<StudentList />} />
+            {/* <Route path="/dashboard/studentlist" element={<StudentList />} /> */}
+            <Route
+              path="/dashboard/studentlist/page/:pageNumber"
+              element={<StudentList />}
+            />
+            <Route
+              path="/dashboard/studentlist/search/:keyword"
+              element={<StudentList />}
+            />
+            <Route
+              path="/dashboard/studentlist/search/:keyword/page/:pageNumber"
+              element={<StudentList />}
+            />
+            <Route
+              path="/dashboard/studentlist"
+              element={<StudentList />}
+            />
             <Route path="/profile" element={<UserProfile />} />
+            {/* <Route path="/student-detail/:id" element={<StudentDetail />} /> */}
             {/* <Route path="/intro" element={<Intro />} /> */}
             {/* <Route path="/studentlist/add-student" element={<AddStudent />} /> */}
           </Route>

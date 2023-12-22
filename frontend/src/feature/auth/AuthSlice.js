@@ -13,10 +13,10 @@ const initialState = {
 
 //** DONE
 export const signUp = createAsyncThunk(
-  "auth/signin",
+  "auth/signup",
   async (userData, thunkAPI) => {
     try {
-      const { emailAddress, password } = userData;
+      const { emailAddress, password, fullname } = userData;
 
       const config = {
         headers: {
@@ -25,26 +25,26 @@ export const signUp = createAsyncThunk(
       };
 
       const { data } = await axios.post(
-        "/api/users/login",
-        { emailAddress, password },
+        "/api/users",
+        { emailAddress, password, fullname },
         config,
       );
 
-      const fixedData = {
-        ...data,
-        visa: {
-          from: formatDate(data.visa.from),
-          to: formatDate(data.visa.to),
-        },
-        dob: formatDate(data.dob),
-        passport: {
-          ...data.passport,
-          expired: formatDate(data.passport.expired),
-        },
-      };
+      // const fixedData = {
+      //   ...data,
+      //   visa: {
+      //     from: formatDate(data.visa.from),
+      //     to: formatDate(data.visa.to),
+      //   },
+      //   dob: formatDate(data.dob),
+      //   passport: {
+      //     ...data.passport,
+      //     expired: formatDate(data.passport.expired),
+      //   },
+      // };
 
-      sessionStorage.setItem("authInfo", JSON.stringify(fixedData));
-      return fixedData;
+      // sessionStorage.setItem("authInfo", JSON.stringify(data));
+      return null;
     } catch (error) {
       const message =
         (error.response &&
@@ -177,19 +177,19 @@ export const updateUserProfile = createAsyncThunk(
           Authorization: `Bearer ${userData.token}`,
         },
       };
-      const { data } = await axios.put(
-        "/api/users/profile",
-        {
-          ...userData,
-          university: {
-            ...userData.university,
-            universityId: userData.university.universityId?._id,
-          },
-        },
-        config,
-      );
-      sessionStorage.setItem("authInfo", JSON.stringify(userData));
-      return userData;
+      // const { data } = await axios.put(
+      //   "/api/users/profile",
+      //   {
+      //     ...userData,
+      //     university: {
+      //       ...userData.university,
+      //       universityId: userData.university.universityId?._id,
+      //     },
+      //   },
+      //   config,
+      // );
+      // sessionStorage.setItem("authInfo", JSON.stringify(userData));
+      // return userData;
     } catch (error) {
       const message =
         (error.response &&
@@ -216,12 +216,11 @@ const authSlice = createSlice({
       })
       .addCase(signUp.fulfilled, (state) => {
         state.status = "succeeded";
-        // state.auth = action.payload;
         state.error = null;
       })
       .addCase(signUp.rejected, (state, action) => {
         state.status = "failed";
-        state.auth = null;
+          state.auth = null;
         state.error = action.payload;
       })
       // sign in

@@ -12,6 +12,7 @@ import generateToken from "./utils/generateToken.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import bcrypt from "bcryptjs";
 import { modifyData } from "./utils/fixData.js";
+import morgan from "morgan";
 dotenv.config();
 
 connectDB();
@@ -21,6 +22,7 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
+if (process.env.NODE_ENV !== "development") app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
   res.send("API is running....");

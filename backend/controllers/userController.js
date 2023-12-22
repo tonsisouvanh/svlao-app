@@ -6,9 +6,8 @@ import User from "../models/userModel.js";
 // @route   POST /api/users/login
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-
-  const user = await User.findOne({ email }).populate(
+  const { emailAddress, password } = req.body;
+  const user = await User.findOne({ emailAddress }).populate(
     "university.universityId"
   );
 
@@ -96,8 +95,43 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/users
 // @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
-  const users = await User.find({}).populate("university.universityId");
-  res.json(users);
+  const pageSize = 10;
+  const page = Number(req.query.pageNumber) || 1;
+
+  // const keyword = req.query.keyword
+  //   ? {
+  //       name: {
+  //         $regex: req.query.keyword,
+  //         $options: "i",
+  //       },
+  //     }
+  //   : {};
+
+  const searchFields = [
+    "studentId",
+    "emailAddress",
+    "fullname.englishFirstname",
+    "fullname.laoName",
+  ]; // Add more fields as needed
+  const keyword = req.query.keyword
+    ? {
+        $or: searchFields.map((field) => ({
+          [field]: {
+            $regex: req.query.keyword,
+            $options: "i",
+          },
+        })),
+      }
+    : {};
+
+  const count = await User.countDocuments({ ...keyword });
+  const users = await User.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+
+  console.log(users);
+
+  res.json({ users, page, pages: Math.ceil(count / pageSize) });
 });
 
 // @desc    Delete user

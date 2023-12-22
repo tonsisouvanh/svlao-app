@@ -30,6 +30,16 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
+const activeUserCheck = asyncHandler(async (req, res, next) => {
+  const { emailAddress } = req.body;
+  const user = await User.findOne({ emailAddress });
+  if (user && user.userStatus === "inactive") {
+    throw new Error("Your account has not been approved");
+  } else {
+    next();
+  }
+});
+
 const admin = (req, res, next) => {
   if (req.user && req.user.role === "admin") {
     next();
@@ -39,4 +49,4 @@ const admin = (req, res, next) => {
   }
 };
 
-export { protect, admin };
+export { protect, admin, activeUserCheck };

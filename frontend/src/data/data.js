@@ -375,7 +375,7 @@ export const scholarshipTypes = [
 ];
 
 export const relationships = ["ພໍ່", "ແມ່", "ປ້າ", "ອາວ", "ອາ"];
-export const userStatus = [
+export const statusList = [
   { status: "pending" },
   { status: "active" },
   { status: "inactive" },

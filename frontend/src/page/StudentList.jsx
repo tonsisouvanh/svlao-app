@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Spinner from "../components/ui/Spinner";
@@ -6,12 +6,24 @@ import Unauthorized from "./public/Unauthorized";
 import StudentTable from "../components/table/student/StudentTable";
 import { BsGridFill, BsTable } from "react-icons/bs";
 import { AiFillPlusCircle } from "react-icons/ai";
-import { fetchStudents } from "../feature/student/StudentSlice";
+import { listUsers } from "../feature/user/UserSlice";
+import Paginate from "../components/paginate/Paginate";
+import { listUniversity } from "../feature/globalData/UniversitySlice";
+import { listMajors } from "../feature/globalData/MajorSlice";
 
 const StudentList = () => {
+  const { pageNumber, keyword } = useParams();
   const dispatch = useDispatch();
-  const { status: studentStatus } = useSelector((state) => state.students);
+  const {
+    status: userStatus,
+    error: userError,
+    users,
+    page,
+    pages,
+  } = useSelector((state) => state.user);
   const { auth } = useSelector((state) => state.auth);
+  const { majors } = useSelector((state) => state.major);
+  const { universities } = useSelector((state) => state.university);
   const [editToggle, setEditToggle] = useState(false);
 
   const [view, setView] = useState("");
@@ -31,18 +43,20 @@ const StudentList = () => {
   }, [view]);
 
   useEffect(() => {
-    dispatch(fetchStudents());
-  }, []);
-  if (studentStatus === "loading") {
+    dispatch(listUsers({ pageNumber: 1, keyword }));
+    dispatch(listUniversity());
+    dispatch(listMajors());
+  }, [dispatch, pageNumber, keyword]);
+  if (userStatus === "loading") {
     return <Spinner />;
   }
-  if (studentStatus === "failed") {
+  if (userStatus === "failed") {
     return <div>Error loading students</div>;
   }
   return auth?.role === "admin" ? (
     <>
       <section className="">
-        {/* <div className="container mx-auto p-4">
+        <div className="container mx-auto p-4">
           <div className="mb-14">
             {editToggle ? null : (
               <label className="flex justify-center font-notosanslao text-4xl font-bold text-primary">
@@ -96,8 +110,22 @@ const StudentList = () => {
             view={view}
             editToggle={editToggle}
             setEditToggle={setEditToggle}
+            users={users}
+            userStatus={userStatus}
+            userError={userStatus}
           />
-        </div> */}
+          {/* {users.map((user) => (
+            <div key={user._id} className="">
+              <div className="avatar">
+                <div className="w-24 rounded-xl">
+                  <img src={user.profileImg} />
+                </div>
+              </div>
+              <span>{user.fullname.laoName}</span>
+            </div>
+          ))} */}
+          <Paginate page={page} pages={pages} />
+        </div>
       </section>
     </>
   ) : (

@@ -16,7 +16,6 @@ import {
 import { adminUpdateStudent } from "../../feature/student/StudentSlice";
 import { getImageId } from "../../utils/utils";
 import { listUniversity } from "../../feature/globalData/UniversitySlice";
-import { fetchMajors } from "../../feature/globalData/MajorSlice";
 
 const selectInputStyle =
   "select select-md select-bordered w-full max-w-xs hover:shadow-md transition-all duration-200";
@@ -83,7 +82,7 @@ const EditStudent = ({ setEditToggle, editingStudent }) => {
   };
   useEffect(() => {
     dispatch(listUniversity());
-    dispatch(fetchMajors());
+    // dispatch(fetchMajors());
   }, [dispatch]);
   console.log(majors);
   return (

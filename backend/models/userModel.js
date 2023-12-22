@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-
 const userSchema = mongoose.Schema(
   {
     fullname: {
@@ -29,7 +28,7 @@ const userSchema = mongoose.Schema(
       scholarshipUniversity: String,
       scholarshipLao: String,
       scholarshipVn: String,
-      type: String,
+      scholarshipType: String,
     },
     duration: {
       from: String,
@@ -61,6 +60,7 @@ const userSchema = mongoose.Schema(
     userStatus: {
       type: String,
       enum: ["pending", "active", "inactive"],
+      default: "inactive",
     },
     residenceAddress: {
       location: String,
