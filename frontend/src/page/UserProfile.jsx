@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import { listUniversity } from "../feature/globalData/UniversitySlice";
+import { BiUserCircle } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
+import Spinner from "../components/ui/Spinner";
 import {
   degreeList,
   majorList,
   perminentAddressList,
   residenceAddressList,
 } from "../data/data";
-import { updateUserProfile, authReset } from "../feature/auth/AuthSlice";
-import Spinner from "../components/ui/Spinner";
-import { BiUserCircle } from "react-icons/bi";
+import { authReset, updateUserProfile } from "../feature/auth/AuthSlice";
+import { listUniversity } from "../feature/globalData/UniversitySlice";
+import { getYearOptions } from "../utils/utils";
+
+const inputStyle =
+  "input border-slate-50/5 input-bordered w-full text-base-content/80";
+
 const UserProfile = () => {
+  const yearOptions = getYearOptions();
   const {
     auth: studentData,
     status: authStatus,
@@ -59,9 +65,12 @@ const UserProfile = () => {
   useEffect(() => {
     if (authStatus === "succeeded") {
       toast.success("Update Successfully");
-    } else if (authStatus === "failed") toast.error(authError);
-    dispatch(authReset());
-  }, [authStatus, authError, dispatch]);
+      dispatch(authReset());
+    } else if (authStatus === "failed") {
+      toast.error(authError);
+      dispatch(authReset());
+    }
+  }, [authStatus, dispatch, authError]);
 
   const handleEditSubmit = (data) => {
     if (data) {
@@ -106,7 +115,7 @@ const UserProfile = () => {
                       {...register("fullname.englishFirstname", {})}
                       type="text"
                       // placeholder="Enter English Firstname"
-                      className="input input-bordered w-full text-base-content/80"
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -119,7 +128,7 @@ const UserProfile = () => {
                       {...register("fullname.nickName", {})}
                       type="text"
                       // placeholder="Enter Nickname"
-                      className="input input-bordered w-full text-base-content/80"
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -132,7 +141,7 @@ const UserProfile = () => {
                       {...register("fullname.laoName", {})}
                       type="text"
                       // placeholder="Enter Lao Name"
-                      className="input input-bordered w-full text-base-content/80"
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -147,7 +156,7 @@ const UserProfile = () => {
                       {...register("fullname.englishLastname", {})}
                       type="text"
                       // placeholder="Enter English Lastname"
-                      className="input input-bordered w-full text-base-content/80"
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -180,12 +189,18 @@ const UserProfile = () => {
                         Duration (From)
                       </span>
                     </div>
-                    <input
+                    <select
                       {...register("duration.from", {})}
-                      type="text"
-                      // placeholder="Enter Duration (From)"
-                      className="input input-bordered w-full text-base-content/80"
-                    />
+                      className={
+                        "select select-bordered w-full text-base-content/80"
+                      }
+                    >
+                      {yearOptions.map((year) => (
+                        <option key={year} value={year}>
+                          {year}
+                        </option>
+                      ))}
+                    </select>
                   </label>
                 </div>
                 <div className="w-1/2 p-2">
@@ -195,12 +210,18 @@ const UserProfile = () => {
                         Duration (To)
                       </span>
                     </div>
-                    <input
+                    <select
                       {...register("duration.to", {})}
-                      type="text"
-                      // placeholder="Enter Duration (To)"
-                      className="input input-bordered w-full text-base-content/80"
-                    />
+                      className={
+                        "select select-bordered w-full text-base-content/80"
+                      }
+                    >
+                      {yearOptions.map((year) => (
+                        <option key={year} value={year}>
+                          {year}
+                        </option>
+                      ))}
+                    </select>
                   </label>
                 </div>
                 <div className="w-1/2 p-2">
@@ -214,7 +235,7 @@ const UserProfile = () => {
                       {...register("phone.phoneNumber", {})}
                       type="text"
                       // placeholder="Enter Phone Number"
-                      className="input input-bordered w-full text-base-content/80"
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -229,7 +250,7 @@ const UserProfile = () => {
                       {...register("phone.emergency", {})}
                       type="text"
                       // placeholder="Enter Emergency"
-                      className="input input-bordered w-full text-base-content/80"
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -244,7 +265,7 @@ const UserProfile = () => {
                       {...register("phone.relationship", {})}
                       type="text"
                       // placeholder="Enter Relationship"
-                      className="input input-bordered w-full text-base-content/80"
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -282,7 +303,7 @@ const UserProfile = () => {
                       {...register("visa.from", {})}
                       type="date"
                       // placeholder="Enter Visa From"
-                      className="input input-bordered w-full text-base-content/80"
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -295,7 +316,7 @@ const UserProfile = () => {
                       {...register("visa.to", {})}
                       type="date"
                       // placeholder="Enter Visa To"
-                      className="input input-bordered w-full text-base-content/80"
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -334,7 +355,7 @@ const UserProfile = () => {
                       {...register("passport.passportNo", {})}
                       type="text"
                       // placeholder="Enter Passport No"
-                      className="input input-bordered w-full text-base-content/80"
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -350,7 +371,7 @@ const UserProfile = () => {
                       {...register("passport.expired", {})}
                       type="date"
                       // placeholder="Enter Passport Expired"
-                      className="input input-bordered w-full text-base-content/80"
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -363,7 +384,7 @@ const UserProfile = () => {
                     {...register("major.vietMajor", {})}
                     type="text"
                     // placeholder="Enter Viet Major"
-                    className="input input-bordered w-full text-base-content/80"
+                    className={inputStyle}
                   />
                 </label>
               </div> */}
@@ -400,7 +421,7 @@ const UserProfile = () => {
                       {...register("studentId", {})}
                       type="text"
                       // placeholder="Enter Student ID"
-                      className="input input-bordered w-full text-base-content/80"
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -415,7 +436,7 @@ const UserProfile = () => {
                       {...register("dob", {})}
                       type="date"
                       // placeholder="Enter Date of Birth"
-                      className="input input-bordered w-full text-base-content/80"
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -447,7 +468,7 @@ const UserProfile = () => {
                       {...register("facebookUrl", {})}
                       type="text"
                       // placeholder="Enter Facebook URL"
-                      className="input input-bordered w-full text-base-content/80"
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -483,7 +504,7 @@ const UserProfile = () => {
                     {...register("profileImg", {})}
                     type="text"
                     // placeholder="Enter Profile Image URL"
-                    className="input input-bordered w-full text-base-content/80"
+                    className={inputStyle}
                   />
                 </label>
               </div> */}
@@ -498,7 +519,7 @@ const UserProfile = () => {
                       {...register("emailAddress", {})}
                       type="text"
                       // placeholder="Enter Email Address"
-                      className="input input-bordered w-full text-base-content/80"
+                      className={inputStyle}
                     />
                   </label>
                 </div>

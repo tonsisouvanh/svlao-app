@@ -36,6 +36,7 @@ const userSchema = mongoose.Schema(
     },
     dob: {
       type: Date,
+      default: new Date(),
     },
     phone: {
       emergency: String,
@@ -54,8 +55,14 @@ const userSchema = mongoose.Schema(
     },
     facebookUrl: String,
     visa: {
-      from: Date,
-      to: Date,
+      from: {
+        type: Date,
+        default: new Date(),
+      },
+      to: {
+        type: Date,
+        default: new Date(),
+      },
     },
     userStatus: {
       type: String,
@@ -70,7 +77,10 @@ const userSchema = mongoose.Schema(
     passport: {
       img: String,
       passportNo: String,
-      expired: Date,
+      expired: {
+        type: Date,
+        default: new Date(),
+      },
     },
     major: {
       laoMajor: String,

@@ -102,6 +102,7 @@ export const signOut = createAsyncThunk(
 export const updateUserProfile = createAsyncThunk(
   "user/updateUserProfile",
   async (userData, thunkAPI) => {
+    
     try {
       const config = {
         headers: {
@@ -109,19 +110,19 @@ export const updateUserProfile = createAsyncThunk(
           Authorization: `Bearer ${userData.token}`,
         },
       };
-      // const { data } = await axios.put(
-      //   "/api/users/profile",
-      //   {
-      //     ...userData,
-      //     university: {
-      //       ...userData.university,
-      //       universityId: userData.university.universityId?._id,
-      //     },
-      //   },
-      //   config,
-      // );
-      // sessionStorage.setItem("authInfo", JSON.stringify(userData));
-      // return userData;
+      const { data } = await axios.put(
+        "/api/users/profile",
+        {
+          ...userData,
+          university: {
+            ...userData.university,
+            universityId: userData.university.universityId?._id,
+          },
+        },
+        config,
+      );
+      sessionStorage.setItem("authInfo", JSON.stringify(userData));
+      return userData;
     } catch (error) {
       const message =
         (error.response &&

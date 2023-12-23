@@ -54,3 +54,26 @@ export const formatDate = (dateString) => {
   var date = new Date(dateString);
   return moment(date).format("YYYY-MM-DD");
 };
+
+
+// export const getYearOptions = () => {
+//   const currentYear = new Date().getFullYear();
+//   const years = [];
+//   for (let i = currentYear; i <= currentYear + 10; i++) {
+//     years.push(i);
+//   }
+//   return years;
+// };
+
+
+export const getYearOptions = () => {
+  const currentYear = new Date().getFullYear();
+  const years = [];
+  const range = 10; // You can adjust this range as needed
+
+  for (let i = currentYear - range; i <= currentYear + range; i++) {
+    years.push(i);
+  }
+
+  return years;
+};
