@@ -11,6 +11,7 @@ import {
 } from "../data/data";
 import { updateUserProfile, authReset } from "../feature/auth/AuthSlice";
 import Spinner from "../components/ui/Spinner";
+import { BiUserCircle } from "react-icons/bi";
 const UserProfile = () => {
   const {
     auth: studentData,
@@ -80,7 +81,11 @@ const UserProfile = () => {
               <div>
                 <div className="avatar">
                   <div className="w-48 rounded">
-                    <img src={studentData.profileImg} />
+                    {studentData?.profileImg ? (
+                      <img src={studentData?.profileImg} />
+                    ) : (
+                      <BiUserCircle className="h-full w-full text-primary" />
+                    )}
                   </div>
                 </div>
               </div>
@@ -100,7 +105,7 @@ const UserProfile = () => {
                     <input
                       {...register("fullname.englishFirstname", {})}
                       type="text"
-                      placeholder="Enter English Firstname"
+                      // placeholder="Enter English Firstname"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -113,7 +118,7 @@ const UserProfile = () => {
                     <input
                       {...register("fullname.nickName", {})}
                       type="text"
-                      placeholder="Enter Nickname"
+                      // placeholder="Enter Nickname"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -126,7 +131,7 @@ const UserProfile = () => {
                     <input
                       {...register("fullname.laoName", {})}
                       type="text"
-                      placeholder="Enter Lao Name"
+                      // placeholder="Enter Lao Name"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -141,7 +146,7 @@ const UserProfile = () => {
                     <input
                       {...register("fullname.englishLastname", {})}
                       type="text"
-                      placeholder="Enter English Lastname"
+                      // placeholder="Enter English Lastname"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -178,7 +183,7 @@ const UserProfile = () => {
                     <input
                       {...register("duration.from", {})}
                       type="text"
-                      placeholder="Enter Duration (From)"
+                      // placeholder="Enter Duration (From)"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -193,7 +198,7 @@ const UserProfile = () => {
                     <input
                       {...register("duration.to", {})}
                       type="text"
-                      placeholder="Enter Duration (To)"
+                      // placeholder="Enter Duration (To)"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -208,7 +213,7 @@ const UserProfile = () => {
                     <input
                       {...register("phone.phoneNumber", {})}
                       type="text"
-                      placeholder="Enter Phone Number"
+                      // placeholder="Enter Phone Number"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -223,7 +228,7 @@ const UserProfile = () => {
                     <input
                       {...register("phone.emergency", {})}
                       type="text"
-                      placeholder="Enter Emergency"
+                      // placeholder="Enter Emergency"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -238,7 +243,7 @@ const UserProfile = () => {
                     <input
                       {...register("phone.relationship", {})}
                       type="text"
-                      placeholder="Enter Relationship"
+                      // placeholder="Enter Relationship"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -276,7 +281,7 @@ const UserProfile = () => {
                     <input
                       {...register("visa.from", {})}
                       type="date"
-                      placeholder="Enter Visa From"
+                      // placeholder="Enter Visa From"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -289,7 +294,7 @@ const UserProfile = () => {
                     <input
                       {...register("visa.to", {})}
                       type="date"
-                      placeholder="Enter Visa To"
+                      // placeholder="Enter Visa To"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -328,7 +333,7 @@ const UserProfile = () => {
                     <input
                       {...register("passport.passportNo", {})}
                       type="text"
-                      placeholder="Enter Passport No"
+                      // placeholder="Enter Passport No"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -344,7 +349,7 @@ const UserProfile = () => {
                     <input
                       {...register("passport.expired", {})}
                       type="date"
-                      placeholder="Enter Passport Expired"
+                      // placeholder="Enter Passport Expired"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -357,7 +362,7 @@ const UserProfile = () => {
                   <input
                     {...register("major.vietMajor", {})}
                     type="text"
-                    placeholder="Enter Viet Major"
+                    // placeholder="Enter Viet Major"
                     className="input input-bordered w-full text-base-content/80"
                   />
                 </label>
@@ -394,7 +399,7 @@ const UserProfile = () => {
                     <input
                       {...register("studentId", {})}
                       type="text"
-                      placeholder="Enter Student ID"
+                      // placeholder="Enter Student ID"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -409,7 +414,7 @@ const UserProfile = () => {
                     <input
                       {...register("dob", {})}
                       type="date"
-                      placeholder="Enter Date of Birth"
+                      // placeholder="Enter Date of Birth"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -441,7 +446,7 @@ const UserProfile = () => {
                     <input
                       {...register("facebookUrl", {})}
                       type="text"
-                      placeholder="Enter Facebook URL"
+                      // placeholder="Enter Facebook URL"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>
@@ -477,7 +482,7 @@ const UserProfile = () => {
                   <input
                     {...register("profileImg", {})}
                     type="text"
-                    placeholder="Enter Profile Image URL"
+                    // placeholder="Enter Profile Image URL"
                     className="input input-bordered w-full text-base-content/80"
                   />
                 </label>
@@ -492,7 +497,7 @@ const UserProfile = () => {
                     <input
                       {...register("emailAddress", {})}
                       type="text"
-                      placeholder="Enter Email Address"
+                      // placeholder="Enter Email Address"
                       className="input input-bordered w-full text-base-content/80"
                     />
                   </label>

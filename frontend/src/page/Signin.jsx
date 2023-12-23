@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import ErrorMessage from "../components/typography/ErrorMessage";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { signIn } from "../feature/auth/AuthSlice";
+import { authReset, signIn } from "../feature/auth/AuthSlice";
 import toast from "react-hot-toast";
 const initialState = {
   emailAddress: "",
@@ -12,7 +12,7 @@ const initialState = {
 };
 
 const Signin = () => {
-  const { status, error } = useSelector((state) => state.auth);
+  const { auth, status, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -29,10 +29,20 @@ const Signin = () => {
 
   useEffect(() => {
     if (status === "succeeded") {
-      navigate("/");
       toast.success("Login successful");
-    } else if (status === "failed") toast.error(error);
-  }, [status, error, navigate]);
+      dispatch(authReset());
+      navigate("/admin/restaurantlist");
+    } else if (status === "failed") {
+      toast.error(error);
+      dispatch(authReset());
+    }
+  }, [status, dispatch, navigate, error]);
+
+  useEffect(() => {
+    if (auth) {
+      navigate("/");
+    }
+  }, [navigate, auth]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-login-background bg-cover bg-no-repeat">

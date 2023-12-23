@@ -1,27 +1,24 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import ErrorMessage from "../components/typography/ErrorMessage";
+import toast from "react-hot-toast";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { authReset, signIn, signUp } from "../feature/auth/AuthSlice";
-import { auth } from "../firebase";
-import { onAuthStateChanged } from "firebase/auth";
-import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
+import ErrorMessage from "../components/typography/ErrorMessage";
+import { authReset, signUp } from "../feature/auth/AuthSlice";
 const initialState = {
   firstname: "",
   lastname: "",
   emailAddress: "",
   password: "",
 };
-// emailAddress, password, username,role
 const Signup = () => {
-  const { status, error } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const { auth, status, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({ defaultValues: initialState });
   const [showPass, setShowPass] = useState(false);
@@ -40,11 +37,19 @@ const Signup = () => {
   useEffect(() => {
     if (status === "succeeded") {
       toast.success("Sign up successful");
+      dispatch(authReset());
+      navigate("/signin");
     } else if (status === "failed") {
       toast.error(error);
+      dispatch(authReset());
     }
-    dispatch(authReset());
-  }, [status, reset, error, dispatch]);
+  }, [status, dispatch, navigate, error]);
+
+  useEffect(() => {
+    if (auth) {
+      navigate("/");
+    }
+  }, [navigate, auth]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-login-background bg-cover bg-no-repeat">

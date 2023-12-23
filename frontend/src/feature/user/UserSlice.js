@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { formatDate } from "../../utils/utils";
 axios.defaults.baseURL = "http://localhost:5000";
 
 const initialState = {
@@ -34,9 +33,7 @@ export const listUsers = createAsyncThunk(
         `/api/users?keyword=${keyword}&pageNumber=${pageNumber}`,
         config,
       );
-
-      console.log(data);
-      console.log(pageNumber, keyword);
+      console.log("🚀 ~ file: UserSlice.js:36 ~ data:", data)
 
       return data;
     } catch (error) {
@@ -59,21 +56,6 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // sign up
-      // .addCase(signUp.pending, (state) => {
-      //   state.status = "loading";
-      // })
-      // .addCase(signUp.fulfilled, (state) => {
-      //   state.status = "succeeded";
-      //   // state.user = action.payload;
-      //   state.error = null;
-      // })
-      // .addCase(signUp.rejected, (state, action) => {
-      //   state.status = "failed";
-      //   state.user = null;
-      //   state.error = action.payload || "An error occurred during sign-in.";
-      // })
-      // sign in
       .addCase(listUsers.pending, (state) => {
         state.status = "loading";
       })

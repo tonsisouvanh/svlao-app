@@ -10,7 +10,6 @@ const authUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ emailAddress }).populate(
     "university.universityId"
   );
-
   if (user && (await user.matchPassword(password))) {
     const { password, ...userWithoutPassword } = user._doc;
 

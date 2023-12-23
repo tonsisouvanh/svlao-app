@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AiFillBell, AiFillInfoCircle } from "react-icons/ai";
-import { BiSolidMoon, BiSolidSun } from "react-icons/bi";
+import { BiSolidMoon, BiSolidSun, BiUserCircle } from "react-icons/bi";
 import { GiCupcake } from "react-icons/gi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
@@ -86,16 +86,13 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                 tabIndex={0}
                 className="btn btn-circle btn-ghost btn-sm m-1 font-notosanslao"
               >
-                {/* <div className="avatar placeholder">
-                  <div className="w-8 rounded-full bg-neutral-focus text-neutral-content">
-                    <span className="text-md">
-                      {auth ? auth?.emailAddress[0].toUpperCase() : <Spinner />}
-                    </span>
-                  </div>
-                </div> */}
                 <div className="avatar">
                   <div className="w-8 rounded-full">
-                    <img src={auth?.profileImg} />
+                    {auth?.profileImg ? (
+                      <img src={auth?.profileImg} />
+                    ) : (
+                      <BiUserCircle className="w-full h-full text-primary"/>
+                    )}
                   </div>
                 </div>
               </label>
