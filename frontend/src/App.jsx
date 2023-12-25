@@ -14,6 +14,7 @@ import UserProfile from "./page/UserProfile";
 // import AddStudent from "./page/student/AddStudent";
 import NotFoundPage from "./page/NoFoundPage";
 import StudentList from "./page/StudentList";
+import EditStudent from "./page/EditStudent";
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
         <Route path="/" element={<RootLayoutPublic />}>
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<News />} />
-            {/* <Route path="/dashboard/studentlist" element={<StudentList />} /> */}
+            {/* <Route path="/studentlist" element={<StudentList />} /> */}
             <Route
               path="/dashboard/studentlist/page/:pageNumber"
               element={<StudentList />}
@@ -39,12 +40,9 @@ function App() {
               path="/dashboard/studentlist/search/:keyword/page/:pageNumber"
               element={<StudentList />}
             />
-            <Route
-              path="/dashboard/studentlist"
-              element={<StudentList />}
-            />
+            <Route path="/studentlist" element={<StudentList />} />
             <Route path="/profile" element={<UserProfile />} />
-            {/* <Route path="/student-detail/:id" element={<StudentDetail />} /> */}
+            <Route path="/studentlist/student/:id" element={<EditStudent />} />
             {/* <Route path="/intro" element={<Intro />} /> */}
             {/* <Route path="/studentlist/add-student" element={<AddStudent />} /> */}
           </Route>

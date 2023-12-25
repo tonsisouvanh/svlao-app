@@ -9,21 +9,26 @@ import {
   majorList,
   perminentAddressList,
   residenceAddressList,
+  statusList,
 } from "../data/data";
-import { authReset, updateUserProfile } from "../feature/auth/AuthSlice";
+import { getYearOptions, userStatusColor } from "../utils/utils";
+import { getUserById, singleUserReset } from "../feature/user/SingleUserSlice";
+import { useParams } from "react-router-dom";
+import { updateUser, userReset } from "../feature/user/UserSlice";
 import { listUniversity } from "../feature/globalData/UniversitySlice";
-import { getYearOptions } from "../utils/utils";
 
 const inputStyle =
   "input border-slate-50/5 input-bordered w-full text-base-content/80";
 
-const UserProfile = () => {
+const EditStudent = () => {
+  const dispatch = useDispatch();
+  const { id } = useParams();
   const yearOptions = getYearOptions();
-  const {
-    auth: studentData,
-    status: authStatus,
-    error: authError,
-  } = useSelector((state) => state.auth);
+
+  const { singleUser, status, error } = useSelector(
+    (state) => state.singleUser,
+  );
+  const { updateStatus, error: userError } = useSelector((state) => state.user);
   const { universities, status: universityStatus } = useSelector(
     (state) => state.university,
   );
@@ -34,10 +39,10 @@ const UserProfile = () => {
     formState: { errors },
     setValue,
     reset,
-  } = useForm({ defaultValues: studentData });
+  } = useForm({ defaultValues: singleUser });
 
   const [toggleEdit, setToggleEdit] = useState(false);
-  const dispatch = useDispatch((state) => state.user);
+  // const dispatch = useDispatch((state) => state.user);
 
   const handleSelectDegree = (value) => {
     const vietDegree = degreeList.find((d) => d.laoDegree === value);
@@ -57,41 +62,53 @@ const UserProfile = () => {
     );
     setValue("residenceAddress.address", residenceAddress.address);
   };
-
   useEffect(() => {
     dispatch(listUniversity());
   }, [dispatch]);
 
   useEffect(() => {
-    if (authStatus === "succeeded") {
+    if (updateStatus === "succeeded") {
       toast.success("Update Successfully");
-      dispatch(authReset());
-    } else if (authStatus === "failed") {
-      toast.error(authError);
-      dispatch(authReset());
+      dispatch(userReset());
+    } else if (updateStatus === "failed") {
+      toast.error(userError);
+      dispatch(userReset());
     }
-  }, [authStatus, dispatch, authError]);
+  }, [updateStatus, dispatch, userError]);
 
   const handleEditSubmit = (data) => {
     if (data) {
-      dispatch(updateUserProfile(data));
+      dispatch(updateUser(data));
       setToggleEdit(false);
     } else toast.warning("Input data not valid");
   };
+
+  useEffect(() => {
+    dispatch(getUserById(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (status === "succeeded") {
+      reset(singleUser);
+    } else if (status === "failed") {
+      toast.error(error);
+    }
+  }, [status, reset, singleUser, error]);
+
   return (
     <>
       <section className="relative">
-        {studentData && authStatus !== "loading" ? (
+        {singleUser && status !== "loading" ? (
           <div className="container mx-auto px-5 py-24">
             <div className="mb-12 flex w-full flex-col text-center">
-              <h1 className="title-font font-bold m:text-3xl mb-4 text-2xl">
-                Profile
+              <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium">
+                User Info
               </h1>
               <div>
                 <div className="avatar">
                   <div className="w-48 rounded">
-                    {studentData?.profileImg ? (
-                      <img src={studentData?.profileImg} />
+                    {singleUser?.profileImg ? (
+                      <img src={singleUser?.profileImg} />
                     ) : (
                       <BiUserCircle className="h-full w-full text-primary" />
                     )}
@@ -104,6 +121,27 @@ const UserProfile = () => {
                 onSubmit={handleSubmit(handleEditSubmit)}
                 className="flex flex-wrap items-center justify-center"
               >
+                <div className="w-1/2 p-2">
+                  <label className="form-control w-full">
+                    <div className="label">
+                      <span className={`label-text font-semibold `}>
+                        Status
+                      </span>
+                    </div>
+                    <select
+                      {...register("userStatus", {})}
+                      className={`select select-bordered w-full text-base-content/80 ${userStatusColor(
+                        singleUser.userStatus,
+                      )}`}
+                    >
+                      {statusList.map((item, index) => (
+                        <option key={index} value={item.status}>
+                          {item.status}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
@@ -538,9 +576,9 @@ const UserProfile = () => {
                       <button
                         type="submit"
                         className="btn btn-primary"
-                        disabled={authStatus === "loading" ? true : false}
+                        disabled={updateStatus === "loading" ? true : false}
                       >
-                        {authStatus === "loading" ? (
+                        {updateStatus === "loading" ? (
                           <span className="loading loading-spinner loading-xs"></span>
                         ) : (
                           "Submit"
@@ -567,4 +605,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default EditStudent;

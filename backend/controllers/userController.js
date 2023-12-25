@@ -90,21 +90,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-// const updateUserProfile = asyncHandler(async (req, res) => {
-//   const userId = req.user._id;
-//   const { role, userStatus, dob, visa, passport, ...updatedUserData } =
-//     req.body;
-//   const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, {
-//     new: true,
-//   });
-//   if (updatedUser) {
-//     res.json({ ...updatedUser._doc, token: generateToken(updatedUser._id) });
-//   } else {
-//     res.status(404);
-//     throw new Error("User not found");
-//   }
-// });
-
 // @desc    Get all users
 // @route   GET /api/users
 // @access  Private/Admin
@@ -112,20 +97,10 @@ const getUsers = asyncHandler(async (req, res) => {
   const pageSize = 10;
   const page = Number(req.query.pageNumber) || 1;
 
-  // const keyword = req.query.keyword
-  //   ? {
-  //       name: {
-  //         $regex: req.query.keyword,
-  //         $options: "i",
-  //       },
-  //     }
-  //   : {};
-
   const searchFields = [
     "studentId",
     "emailAddress",
     "fullname.englishFirstname",
-    "fullname.laoName",
   ]; // Add more fields as needed
   const keyword = req.query.keyword
     ? {
@@ -139,11 +114,11 @@ const getUsers = asyncHandler(async (req, res) => {
     : {};
 
   const count = await User.countDocuments({ ...keyword });
+  console.log("🚀 ~ file: userController.js:128 ~ getUsers ~ count:", count);
   const users = await User.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
-
-  console.log(users);
+  console.log("🚀 ~ file: userController.js:132 ~ getUsers ~ users:", users);
 
   res.json({ users, page, pages: Math.ceil(count / pageSize) });
 });
@@ -183,6 +158,10 @@ const getUserById = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const userId = req.params.id;
   const updatedUserData = req.body;
+  console.log(
+    "🚀 ~ file: userController.js:161 ~ updateUser ~ updatedUserData:",
+    updatedUserData
+  );
   const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, {
     new: true,
   });

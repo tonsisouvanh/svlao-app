@@ -55,7 +55,6 @@ export const formatDate = (dateString) => {
   return moment(date).format("YYYY-MM-DD");
 };
 
-
 // export const getYearOptions = () => {
 //   const currentYear = new Date().getFullYear();
 //   const years = [];
@@ -64,7 +63,6 @@ export const formatDate = (dateString) => {
 //   }
 //   return years;
 // };
-
 
 export const getYearOptions = () => {
   const currentYear = new Date().getFullYear();
@@ -76,4 +74,20 @@ export const getYearOptions = () => {
   }
 
   return years;
+};
+
+export const userStatusColor = (userStatus) => {
+  let color = "";
+  switch (userStatus.trim()) {
+    case "pending":
+      color = "text-warning";
+      break;
+    case "active":
+      color = "text-info";
+      break;
+    default:
+      color = "";
+      break;
+  }
+  return color;
 };

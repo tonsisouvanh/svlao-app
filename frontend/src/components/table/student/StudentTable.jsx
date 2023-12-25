@@ -96,10 +96,10 @@ const UserTable = ({
     setTotalFemale(femaleCount);
     setTotalDegree({
       bachelor: rows.filter(
-        (user) => user.original.degree?.vietDegree.toLowerCase() === "cử nhân",
+        (user) => user.original.degree?.vietDegree?.toLowerCase() === "cử nhân",
       ).length,
       master: rows.filter(
-        (user) => user.original.degree?.vietDegree.toLowerCase() === "thạc sĩ",
+        (user) => user.original.degree?.vietDegree?.toLowerCase() === "thạc sĩ",
       ).length,
     });
   }, [rows]);
@@ -108,7 +108,6 @@ const UserTable = ({
     return <Spinner />;
   }
 
-  console.log(users)
   return (
     <>
       {editToggle ? (
@@ -178,7 +177,7 @@ const UserTable = ({
             </div>
             <div className="mb-5 flex flex-wrap items-center gap-2">
               <Searchbox filter={globalFilter} setFilter={setGlobalFilter} />
-              <Filter
+              {/* <Filter
                 filter={globalFilter}
                 setFilter={setGlobalFilter}
                 options={scholarshipTypes}
@@ -191,7 +190,7 @@ const UserTable = ({
                 options={degreeList}
                 title={"ລະດັບການສຶກສາ"}
                 fieldName={"laoDegree"}
-              />
+              /> */}
               {/* <Filter
                 filter={globalFilter}
                 setFilter={setGlobalFilter}
@@ -199,14 +198,13 @@ const UserTable = ({
                 title={"ມະຫາໄລ"}
                 fieldName={"laoName"}
               /> */}
-              <Filter
+              {/* <Filter
                 filter={globalFilter}
                 setFilter={setGlobalFilter}
                 options={statusList}
                 title={"ສະຖານະ"}
                 fieldName={"status"}
-              />
-              {/*  */}
+              /> */}
               {/* <Filter
                 filter={globalFilter}
                 setFilter={setGlobalFilter}
@@ -214,6 +212,9 @@ const UserTable = ({
                 title={"ສາຍຮຽນ"}
                 fieldName={"vietMajor"}
               /> */}
+              <Link to="/studentlist">
+                <button className="btn btn-outline btn-xs">All</button>
+              </Link>
             </div>
             {view === "grid" ? (
               <div {...getTableProps()} className="font-notosanslao">
@@ -411,14 +412,16 @@ const UserTable = ({
                                 tabIndex={0}
                                 className="dropdown-content rounded-box absolute !-top-2 !right-0 z-[1] !flex w-fit gap-4 border bg-base-100 p-2 shadow"
                               >
-                                <li
-                                  onClick={() => handleClickEdit(row)}
-                                  className="btn btn-ghost btn-xs"
+                                <Link
+                                  to={`/studentlist/student/${row.original._id}`}
                                 >
-                                  <a>
+                                  <li
+                                    // onClick={() => handleClickEdit(row)}
+                                    className="btn btn-ghost btn-xs"
+                                  >
                                     <AiFillEdit size={15} />
-                                  </a>
-                                </li>
+                                  </li>
+                                </Link>
                                 <li
                                   // onClick={() => setOpenModal(true)}
                                   onClick={() =>
@@ -430,11 +433,11 @@ const UserTable = ({
                                     <AiFillDelete size={15} />
                                   </a>
                                 </li>
-                                <Link to={`/user-detail/${row.original.id}`}>
+                                {/* <Link to={`/user-detail/${row.original.id}`}>
                                   <li className="btn btn-ghost btn-xs">
                                     <AiFillEye size={15} />
                                   </li>
-                                </Link>
+                                </Link> */}
                               </ul>
                             </div>
                           </td>

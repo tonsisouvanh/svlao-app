@@ -13,7 +13,6 @@ const Searchbox = ({ filter, setFilter }) => {
       navigate(`/dashboard/studentlist`);
     }
   };
-  console.log(keyword);
   return (
     // <div className="join flex items-center justify-center font-notosanslao">
     //   <div>
@@ -48,7 +47,7 @@ const Searchbox = ({ filter, setFilter }) => {
           <div>
             <input
               className="input join-item input-bordered input-sm focus:outline-none"
-              placeholder="Search"
+              placeholder="MSSV, Name, and email"
               onChange={(e) => setKeyword(e.target.value)}
             />
           </div>

@@ -15,7 +15,7 @@ const StudentList = () => {
   const { pageNumber, keyword } = useParams();
   const dispatch = useDispatch();
   const {
-    status: userStatus,
+    listStatus: userStatus,
     error: userError,
     users,
     page,
@@ -43,7 +43,7 @@ const StudentList = () => {
   }, [view]);
 
   useEffect(() => {
-    dispatch(listUsers({ pageNumber: 1, keyword }));
+    dispatch(listUsers({ pageNumber, keyword }));
     dispatch(listUniversity());
     dispatch(listMajors());
   }, [dispatch, pageNumber, keyword]);
@@ -125,7 +125,7 @@ const StudentList = () => {
               <span>{user.fullname.laoName}</span>
             </div>
           ))} */}
-          <Paginate page={page} pages={pages} />
+          <Paginate style="mt-10" page={page} pages={pages} />
         </div>
       </section>
     </>
