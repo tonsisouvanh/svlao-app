@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { formatDate } from "../../utils/utils";
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
 
 const initialState = {
   singleUser: localStorage.getItem("singleUserInfo")

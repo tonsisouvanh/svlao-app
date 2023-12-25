@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { formatDate } from "../../utils/utils";
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
 
 const initialState = {
   auth: sessionStorage.getItem("authInfo")
@@ -102,7 +102,6 @@ export const signOut = createAsyncThunk(
 export const updateUserProfile = createAsyncThunk(
   "user/updateUserProfile",
   async (userData, thunkAPI) => {
-    
     try {
       const config = {
         headers: {

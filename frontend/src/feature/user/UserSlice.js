@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
 
 const initialState = {
   users: [],
