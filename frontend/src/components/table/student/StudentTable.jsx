@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Spinner from "../../ui/Spinner";
 import { useGlobalFilter, useSortBy, useTable, useFilters } from "react-table";
 import {
@@ -17,8 +17,8 @@ import consule from "../../../assets/img/consule.jpg";
 import { BsFacebook } from "react-icons/bs";
 import { STUDENT_COLUMNS } from "../../../data/data";
 import Searchbox from "../../input/student/Searchbox";
-import { removeUser } from "../../../feature/user/UserSlice";
-import altImage from '../../../assets/img/profile.png'
+import { listUsers, removeUser } from "../../../feature/user/UserSlice";
+import altImage from "../../../assets/img/profile.png";
 const cellStyle = "whitespace-nowrap truncate font-light";
 
 const UserTable = ({
@@ -117,7 +117,7 @@ const UserTable = ({
           <div className="overflow-x-auto">
             {/* State */}
             <div className="stats my-4 w-full border font-notosanslao shadow">
-              <div className="stat place-items-center">
+              <div className="stat place-items-center bg-primary/10">
                 <div className="stat-title text-lg">ນຮ ທັງໝົດ</div>
                 <div className="stat-value">
                   {totalUsers}
@@ -125,7 +125,7 @@ const UserTable = ({
                 </div>
                 {/* <div className="stat-desc">Jan 1st - Feb 1st</div> */}
               </div>
-              <div className="stat place-items-center">
+              <div className="stat place-items-center bg-accent/10">
                 <div className="stat-title text-lg">ຍິງ</div>
                 <div className="stat-value">
                   {totalFemale}
@@ -133,7 +133,7 @@ const UserTable = ({
                 </div>
                 {/* <div className="stat-desc">↗︎ 400 (22%)</div> */}
               </div>
-              <div className="stat place-items-center">
+              <div className="stat place-items-center bg-secondary/10">
                 <div className="stat-title text-lg">ຊາຍ</div>
                 <div className="stat-value">
                   {totalMale}
@@ -141,7 +141,7 @@ const UserTable = ({
                 </div>
                 {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
               </div>
-              <div className="stat place-items-center">
+              <div className="stat place-items-center bg-neutral/10">
                 <div className="stat-title text-lg">ປ ຕີ</div>
                 <div className="stat-value">
                   {totalDegree.bachelor}
@@ -195,8 +195,8 @@ const UserTable = ({
                 title={"ສາຍຮຽນ"}
                 fieldName={"vietMajor"}
               /> */}
-              <Link to="/studentlist">
-                <button className="btn btn-outline btn-xs">All</button>
+              <Link to="/dashboard/studentlist/search/all">
+                <button className="btn btn-outline btn-sm">ທັງໝົດ</button>
               </Link>
             </div>
             {view === "grid" ? (
@@ -313,7 +313,7 @@ const UserTable = ({
                                   <BsFacebook className="text-2xl text-blue-600" />
                                 </a>
                                 <button
-                                  onClick={() => handleClickEdit(row)}
+                                  // onClick={() => handleClickEdit(row)}
                                   className="btn btn-accent btn-sm whitespace-nowrap font-notosanslao !text-white sm:btn-xs"
                                 >
                                   <AiFillEdit />

@@ -41,7 +41,7 @@ function App() {
               path="/dashboard/studentlist/search/:keyword/page/:pageNumber"
               element={<StudentList />}
             />
-            <Route path="/studentlist" element={<StudentList />} />
+            <Route path="dashboard/studentlist" element={<StudentList />} />
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/studentlist/student/:id" element={<EditStudent />} />
             {/* <Route path="/intro" element={<Intro />} /> */}

@@ -87,7 +87,7 @@ const AddStudent = () => {
             <div className="breadcrumbs text-sm">
               <ul>
                 <li>
-                  <Link to="/studentlist">ລາຍຊື່ນັກຮຽນ</Link>
+                  <Link to="dashboard/studentlist">ລາຍຊື່ນັກຮຽນ</Link>
                 </li>
                 <li className="underline">
                   <span>ເພີ່ມນັກຮຽນ</span>

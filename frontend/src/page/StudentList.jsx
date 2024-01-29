@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Spinner from "../components/ui/Spinner";
@@ -10,8 +10,10 @@ import { listUsers } from "../feature/user/UserSlice";
 import Paginate from "../components/paginate/Paginate";
 import { listUniversity } from "../feature/globalData/UniversitySlice";
 import { listMajors } from "../feature/globalData/MajorSlice";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 const StudentList = () => {
+  const { pathname } = useLocation();
   const { pageNumber, keyword } = useParams();
   const dispatch = useDispatch();
   const {
@@ -57,6 +59,9 @@ const StudentList = () => {
     <>
       <section className="">
         <div className="container mx-auto p-4">
+          <div>
+            <Breadcrumbs pathname={pathname} />
+          </div>
           <div className="mb-14">
             {editToggle ? null : (
               <label className="flex justify-center font-notosanslao text-4xl font-bold text-primary">

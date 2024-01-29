@@ -36,6 +36,7 @@ export const listUsers = createAsyncThunk(
         `/api/users?keyword=${keyword}&pageNumber=${pageNumber}`,
         config,
       );
+
       return data;
     } catch (error) {
       const message =
@@ -169,12 +170,10 @@ const userSlice = createSlice({
         state.removeStatus = "loading";
       })
       .addCase(removeUser.fulfilled, (state, action) => {
-        console.log("🚀 ~ .addCase ~ action:", action.payload)
+        console.log("🚀 ~ .addCase ~ action:", action.payload);
         state.removeStatus = "succeeded";
-        state.users = state.users.filter(
-          (user) => user._id !== action.payload,
-        );
-        console.log("🚀 ~ .addCase ~ state.users:", state.users)
+        state.users = state.users.filter((user) => user._id !== action.payload);
+        console.log("🚀 ~ .addCase ~ state.users:", state.users);
         state.error = null;
       })
       .addCase(removeUser.rejected, (state, action) => {

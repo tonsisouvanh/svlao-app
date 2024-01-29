@@ -695,7 +695,7 @@ const StudentProfile = () => {
               <div className="breadcrumbs text-sm">
                 <ul>
                   <li>
-                    <Link className="" to="/studentlist">
+                    <Link className="" to="dashboard/studentlist">
                       ໜ້າຂ່າວ
                     </Link>
                   </li>

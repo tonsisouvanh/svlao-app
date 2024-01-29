@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
 import User from "../models/userModel.js";
+import mongoose from "mongoose";
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -93,31 +94,80 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @desc    Get all users
 // @route   GET /api/users
 // @access  Private/Admin
+// const getUsers = asyncHandler(async (req, res) => {
+//   const pageSize = 10;
+//   const page = Number(req.query.pageNumber) || 1;
+
+//   const searchFields = [
+//     "_id",
+//     "studentId",
+//     "emailAddress",
+//     "fullname.englishFirstname",
+//   ]; // Add more fields as needed
+//   let keyword;
+//   if (req.query.keyword) {
+//     if (req.query.keyword === "all") {
+//       keyword === "all";
+//     } else {
+//       keyword = {
+//         $or: searchFields.map((field) => ({
+//           [field]: {
+//             $regex: req.query.keyword,
+//             $options: "i",
+//           },
+//         })),
+//       };
+//     }
+//   } else keyword = {};
+//   const count = await User.countDocuments({ ...keyword });
+
+//   const users = await User.find({ ...keyword })
+//     .limit(pageSize)
+//     .skip(pageSize * (page - 1));
+//   // const users =
+//   //   keyword === "all"
+//   //     ? await User.find({})
+//   //     : await User.find({ ...keyword })
+//   //         .limit(pageSize)
+//   //         .skip(pageSize * (page - 1));
+//   res.json({ users, page, pages: Math.ceil(count / pageSize) });
+// });
+
 const getUsers = asyncHandler(async (req, res) => {
   const pageSize = 10;
   const page = Number(req.query.pageNumber) || 1;
 
   const searchFields = [
-    "_id",
     "studentId",
     "emailAddress",
     "fullname.englishFirstname",
-  ]; // Add more fields as needed
+    "phone.phoneNumber",
+  ];
   const keyword = req.query.keyword
-    ? {
-        $or: searchFields.map((field) => ({
-          [field]: {
-            $regex: req.query.keyword,
-            $options: "i",
-          },
-        })),
-      }
+    ? req.query.keyword !== "all"
+      ? {
+          $or: searchFields.map((field) => ({
+            [field]: {
+              $regex: req.query.keyword,
+              $options: "i",
+            },
+          })),
+        }
+      : req.query.keyword
     : {};
 
   const count = await User.countDocuments({ ...keyword });
-  const users = await User.find({ ...keyword })
-    .limit(pageSize)
-    .skip(pageSize * (page - 1));
+  console.log("🚀 ~ getUsers ~ count:", count);
+  const users =
+    keyword === "all"
+      ? await User.find({})
+      : await User.find({ ...keyword })
+          .limit(pageSize)
+          .skip(pageSize * (page - 1));
+  console.log(
+    "🚀 ~ getUsers ~ { users, page, pages: Math.ceil(count / pageSize) }:",
+    { page, pages: Math.ceil(count / pageSize) }
+  );
   res.json({ users, page, pages: Math.ceil(count / pageSize) });
 });
 
@@ -126,8 +176,6 @@ const getUsers = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
-  console.log("🚀 ~ deleteUser ~ req.params.id:", req.params.id);
-  console.log("🚀 ~ deleteUser ~ user:", user);
   if (user) {
     await User.deleteOne({ _id: req.params.id });
     res.json({ _id: req.params.id });
