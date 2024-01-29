@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../ui/Spinner";
-// import EditUser from "../../../page/user/EditUser";
 import { useGlobalFilter, useSortBy, useTable, useFilters } from "react-table";
 import {
   AiFillCaretDown,
@@ -13,19 +12,13 @@ import {
 } from "react-icons/ai";
 import { BiSolidSortAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
-
 import InfoModal from "../../modal/InfoModal";
 import consule from "../../../assets/img/consule.jpg";
 import { BsFacebook } from "react-icons/bs";
-import Filter from "../../input/student/Filter";
-import {
-  STUDENT_COLUMNS,
-  degreeList,
-  scholarshipTypes,
-  statusList,
-} from "../../../data/data";
+import { STUDENT_COLUMNS } from "../../../data/data";
 import Searchbox from "../../input/student/Searchbox";
-
+import { removeUser } from "../../../feature/user/UserSlice";
+import altImage from '../../../assets/img/profile.png'
 const cellStyle = "whitespace-nowrap truncate font-light";
 
 const UserTable = ({
@@ -50,11 +43,9 @@ const UserTable = ({
     return renderFields.includes(passedField.toString());
   };
   const dispatch = useDispatch();
-  const { universities } = useSelector((state) => state.university);
-  const { majors } = useSelector((state) => state.major);
   const [openModal, setOpenModal] = useState(false);
-  const [deletedUser, setDeletedUser] = useState("");
-  const data = useMemo(() => users, []);
+  const [deletedUserId, setDeletedUserId] = useState("");
+  const data = useMemo(() => users, [users]);
   const columns = useMemo(() => STUDENT_COLUMNS, []);
 
   const {
@@ -68,22 +59,18 @@ const UserTable = ({
   } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
 
   const { globalFilter } = state;
-  const [editingUser, setEditingUser] = useState();
-
-  const handleClickEdit = (user) => {
-    setEditToggle(true);
-    setEditingUser(user.original);
-  };
   const handleOpenModal = (id) => {
-    setDeletedUser(id);
+    setDeletedUserId(id);
     setOpenModal(true);
   };
   const handleDeletUser = () => {
-    // dispatch(adminDeleteUser(deletedUser));
-    setDeletedUser("");
+    dispatch(removeUser(deletedUserId));
+    setDeletedUserId("");
     setOpenModal(false);
   };
-
+  const replaceImage = (error) => {
+    error.target.src = altImage;
+  };
   useEffect(() => {
     setTotalUsers(rows.length);
     const maleCount = rows.filter(
@@ -111,10 +98,6 @@ const UserTable = ({
   return (
     <>
       {editToggle ? (
-        // <EditUser
-        //   setEditToggle={setEditToggle}
-        //   editingUser={editingUser}
-        // />
         <span>Edit user component here</span>
       ) : userStatus === "loading" ? (
         <Spinner />
@@ -425,7 +408,7 @@ const UserTable = ({
                                 <li
                                   // onClick={() => setOpenModal(true)}
                                   onClick={() =>
-                                    handleOpenModal(row.original.id)
+                                    handleOpenModal(row.original._id)
                                   }
                                   className="btn btn-ghost btn-xs"
                                 >
@@ -463,7 +446,11 @@ const UserTable = ({
                                 ) : cell.column.id === "profileImg" ? (
                                   <div className="avatar">
                                     <div className="w-10 rounded-full">
-                                      <img src={cell.value} />
+                                      <img
+                                        src={cell.value}
+                                        alt={cell.value}
+                                        onError={replaceImage}
+                                      />
                                     </div>
                                   </div>
                                 ) : (

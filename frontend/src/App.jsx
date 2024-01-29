@@ -15,6 +15,7 @@ import UserProfile from "./page/UserProfile";
 import NotFoundPage from "./page/NoFoundPage";
 import StudentList from "./page/StudentList";
 import EditStudent from "./page/EditStudent";
+import Dashboard from "./page/Dashboard";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
         <Route path="/" element={<RootLayoutPublic />}>
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<News />} />
-            {/* <Route path="/studentlist" element={<StudentList />} /> */}
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route
               path="/dashboard/studentlist/page/:pageNumber"
               element={<StudentList />}
@@ -44,7 +45,6 @@ function App() {
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/studentlist/student/:id" element={<EditStudent />} />
             {/* <Route path="/intro" element={<Intro />} /> */}
-            {/* <Route path="/studentlist/add-student" element={<AddStudent />} /> */}
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />

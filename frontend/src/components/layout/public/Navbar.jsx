@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { themes } from "../../../data/data";
 import { signOut } from "../../../feature/auth/AuthSlice";
+import altImage from "../../../assets/img/profile.png";
+
 
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const dispatch = useDispatch();
@@ -18,6 +20,9 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const handleSignOut = () => {
     dispatch(signOut());
     navigate("/signin");
+  };
+  const replaceImage = (error) => {
+    error.target.src = altImage;
   };
   useEffect(() => {
     localStorage.setItem("theme", theme);
@@ -89,9 +94,13 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                 <div className="avatar">
                   <div className="w-8 rounded-full">
                     {auth?.profileImg ? (
-                      <img src={auth?.profileImg} />
+                      <img
+                        src={auth?.profileImg}
+                        alt={auth.profileImg}
+                        onError={replaceImage}
+                      />
                     ) : (
-                      <BiUserCircle className="w-full h-full text-primary"/>
+                      <BiUserCircle className="h-full w-full text-primary" />
                     )}
                   </div>
                 </div>

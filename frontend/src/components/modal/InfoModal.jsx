@@ -15,6 +15,11 @@ const InfoModal = ({
   handleClick,
 }) => {
   const [openModal, setOpenModal] = useState(initialValue);
+
+  const handleConfirm = () => {
+    handleClick();
+  }
+
   const getIcon = () => {
     let icon;
     switch (modaltype) {
@@ -41,7 +46,7 @@ const InfoModal = ({
         <div className="modal-action">
           {isOnclickEvent ? (
             <button
-              onClick={handleClick}
+              onClick={handleConfirm}
               type="button"
               className="btn btn-primary"
             >

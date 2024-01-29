@@ -53,7 +53,6 @@ const StudentList = () => {
   if (userStatus === "failed") {
     return <div>Error loading students</div>;
   }
-  
   return auth?.role === "admin" ? (
     <>
       <section className="">

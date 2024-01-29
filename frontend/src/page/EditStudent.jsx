@@ -13,14 +13,15 @@ import {
 } from "../data/data";
 import { getYearOptions, userStatusColor } from "../utils/utils";
 import { getUserById, singleUserReset } from "../feature/user/SingleUserSlice";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { updateUser, userReset } from "../feature/user/UserSlice";
 import { listUniversity } from "../feature/globalData/UniversitySlice";
-
-const inputStyle =
-  "input border-slate-50/5 input-bordered w-full text-base-content/80";
+import altImage from "../assets/img/profile.png";
+import Breadcrumbs from "../components/Breadcrumbs";
+const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const EditStudent = () => {
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { id } = useParams();
   const yearOptions = getYearOptions();
@@ -38,6 +39,7 @@ const EditStudent = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    getValues,
     reset,
   } = useForm({ defaultValues: singleUser });
 
@@ -83,6 +85,10 @@ const EditStudent = () => {
     } else toast.warning("Input data not valid");
   };
 
+  const replaceImage = (error) => {
+    error.target.src = altImage;
+  };
+
   useEffect(() => {
     dispatch(getUserById(id));
   }, [dispatch, id]);
@@ -101,19 +107,28 @@ const EditStudent = () => {
         {singleUser && status !== "loading" ? (
           <div className="container mx-auto px-5 py-24">
             <div className="mb-12 flex w-full flex-col text-center">
+              <Breadcrumbs pathname={pathname} />
+
               <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium">
-                User Info
+                ຂໍ້ມູນນັກຮຽນ
               </h1>
               <div>
                 <div className="avatar">
                   <div className="w-48 rounded">
                     {singleUser?.profileImg ? (
-                      <img src={singleUser?.profileImg} />
+                      <img
+                        src={singleUser?.profileImg}
+                        alt={singleUser.profileImg}
+                        onError={replaceImage}
+                      />
                     ) : (
                       <BiUserCircle className="h-full w-full text-primary" />
                     )}
                   </div>
                 </div>
+              </div>
+              <div>
+                <p>{singleUser._id}</p>
               </div>
             </div>
             <div className="mx-auto">
@@ -130,9 +145,7 @@ const EditStudent = () => {
                     </div>
                     <select
                       {...register("userStatus", {})}
-                      className={`select select-bordered w-full text-base-content/80 ${userStatusColor(
-                        singleUser.userStatus,
-                      )}`}
+                      className={`select select-bordered w-full`}
                     >
                       {statusList.map((item, index) => (
                         <option key={index} value={item.status}>
@@ -153,7 +166,7 @@ const EditStudent = () => {
                       {...register("fullname.englishFirstname", {})}
                       type="text"
                       // placeholder="Enter English Firstname"
-                      className={inputStyle}
+                      className={inputStyle + "input-bordered"}
                     />
                   </label>
                 </div>

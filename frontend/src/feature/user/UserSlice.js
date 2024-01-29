@@ -85,6 +85,37 @@ export const updateUser = createAsyncThunk(
   },
 );
 
+// Role: Admin
+export const removeUser = createAsyncThunk(
+  "user/removeUser",
+  async (id, thunkAPI) => {
+    console.log("🚀 ~ id:", id);
+    const auth = sessionStorage.getItem("authInfo")
+      ? JSON.parse(sessionStorage.getItem("authInfo") || "")
+      : null;
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+      };
+      const res = await axios.delete(`/api/users/${id}`, config);
+      console.log("🚀 ~ res:", res);
+      const _id = res.data._id;
+      return _id;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  },
+);
+
 const resetStatus = (state) => {
   state.listStatus = "idle";
   state.createStatus = "idle";
@@ -132,6 +163,22 @@ const userSlice = createSlice({
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.updateStatus = "failed";
+        state.error = action.payload;
+      })
+      .addCase(removeUser.pending, (state) => {
+        state.removeStatus = "loading";
+      })
+      .addCase(removeUser.fulfilled, (state, action) => {
+        console.log("🚀 ~ .addCase ~ action:", action.payload)
+        state.removeStatus = "succeeded";
+        state.users = state.users.filter(
+          (user) => user._id !== action.payload,
+        );
+        console.log("🚀 ~ .addCase ~ state.users:", state.users)
+        state.error = null;
+      })
+      .addCase(removeUser.rejected, (state, action) => {
+        state.removeStatus = "failed";
         state.error = action.payload;
       });
   },

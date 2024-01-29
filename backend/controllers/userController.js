@@ -98,6 +98,7 @@ const getUsers = asyncHandler(async (req, res) => {
   const page = Number(req.query.pageNumber) || 1;
 
   const searchFields = [
+    "_id",
     "studentId",
     "emailAddress",
     "fullname.englishFirstname",
@@ -114,12 +115,9 @@ const getUsers = asyncHandler(async (req, res) => {
     : {};
 
   const count = await User.countDocuments({ ...keyword });
-  console.log("🚀 ~ file: userController.js:128 ~ getUsers ~ count:", count);
   const users = await User.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
-  console.log("🚀 ~ file: userController.js:132 ~ getUsers ~ users:", users);
-
   res.json({ users, page, pages: Math.ceil(count / pageSize) });
 });
 
@@ -128,10 +126,11 @@ const getUsers = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
-
+  console.log("🚀 ~ deleteUser ~ req.params.id:", req.params.id);
+  console.log("🚀 ~ deleteUser ~ user:", user);
   if (user) {
     await User.deleteOne({ _id: req.params.id });
-    res.json({ message: "User removed" });
+    res.json({ _id: req.params.id });
   } else {
     res.status(404);
     throw new Error("User not found");
@@ -158,10 +157,6 @@ const getUserById = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const userId = req.params.id;
   const updatedUserData = req.body;
-  console.log(
-    "🚀 ~ file: userController.js:161 ~ updateUser ~ updatedUserData:",
-    updatedUserData
-  );
   const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, {
     new: true,
   });
