@@ -145,7 +145,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         <ul className="mb-5 mt-4 flex flex-col gap-2.5 pl-6">
                           <li className={dropdownLiStyle}>
                             <NavLink
-                              to="/dashboard/student-chart"
+                              to="/dashboard/"
                               className={({ isActive }) =>
                                 dropdownNavlinkStyle +
                                 (isActive &&
@@ -165,6 +165,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                               }
                             >
                               ລາຍຊື່ນັກຮຽນ
+                            </NavLink>
+                          </li>
+                          <li className={dropdownLiStyle}>
+                            <NavLink
+                              to="/dashboard/university-list/"
+                              className={({ isActive }) =>
+                                dropdownNavlinkStyle +
+                                (isActive &&
+                                  "rounded-md border-r-2 bg-white/10 text-white")
+                              }
+                            >
+                              ຂໍ້ມູນມະຫາໄລ
                             </NavLink>
                           </li>
                         </ul>

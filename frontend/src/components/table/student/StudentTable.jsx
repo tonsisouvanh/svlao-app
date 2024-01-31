@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../ui/Spinner";
 import { useGlobalFilter, useSortBy, useTable, useFilters } from "react-table";
 import {
@@ -47,7 +47,7 @@ const UserTable = ({
   const [deletedUserId, setDeletedUserId] = useState("");
   const data = useMemo(() => users, [users]);
   const columns = useMemo(() => STUDENT_COLUMNS, []);
-
+  const { removeStatus } = useSelector((state) => state.user);
   const {
     getTableProps,
     getTableBodyProps,
@@ -94,12 +94,11 @@ const UserTable = ({
   if (userStatus === "loading") {
     return <Spinner />;
   }
-
   return (
     <>
       {editToggle ? (
         <span>Edit user component here</span>
-      ) : userStatus === "loading" ? (
+      ) : userStatus === "loading" || removeStatus === "loading" ? (
         <Spinner />
       ) : (
         <>
@@ -114,53 +113,51 @@ const UserTable = ({
               handleClick={handleDeletUser}
             />
           )}
-          <div className="overflow-x-auto">
-            {/* State */}
-            <div className="stats my-4 w-full border font-notosanslao shadow">
-              <div className="stat place-items-center bg-primary/10">
-                <div className="stat-title text-lg">ນຮ ທັງໝົດ</div>
-                <div className="stat-value">
-                  {totalUsers}
-                  <span className="ml-4 text-sm font-normal">ຄົນ</span>
-                </div>
-                {/* <div className="stat-desc">Jan 1st - Feb 1st</div> */}
+          <div className="stats my-4 w-full border font-notosanslao shadow">
+            <div className="stat place-items-center bg-neutral/10">
+              <div className="stat-title text-lg">ນຮ ທັງໝົດ</div>
+              <div className="stat-value">
+                {totalUsers}
+                <span className="ml-4 text-sm font-normal">ຄົນ</span>
               </div>
-              <div className="stat place-items-center bg-accent/10">
-                <div className="stat-title text-lg">ຍິງ</div>
-                <div className="stat-value">
-                  {totalFemale}
-                  <span className="ml-4 text-sm font-normal">ຄົນ</span>
-                </div>
-                {/* <div className="stat-desc">↗︎ 400 (22%)</div> */}
-              </div>
-              <div className="stat place-items-center bg-secondary/10">
-                <div className="stat-title text-lg">ຊາຍ</div>
-                <div className="stat-value">
-                  {totalMale}
-                  <span className="ml-4 text-sm font-normal">ຄົນ</span>
-                </div>
-                {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
-              </div>
-              <div className="stat place-items-center bg-neutral/10">
-                <div className="stat-title text-lg">ປ ຕີ</div>
-                <div className="stat-value">
-                  {totalDegree.bachelor}
-                  <span className="ml-4 text-sm font-normal">ຄົນ</span>
-                </div>
-                {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
-              </div>
-              <div className="stat place-items-center">
-                <div className="stat-title text-lg">ປ ໂທ</div>
-                <div className="stat-value">
-                  {totalDegree.master}
-                  <span className="ml-4 text-sm font-normal">ຄົນ</span>
-                </div>
-                {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
-              </div>
+              {/* <div className="stat-desc">Jan 1st - Feb 1st</div> */}
             </div>
-            <div className="mb-5 flex flex-wrap items-center gap-2">
-              <Searchbox filter={globalFilter} setFilter={setGlobalFilter} />
-              {/* <Filter
+            <div className="stat place-items-center bg-neutral/10">
+              <div className="stat-title text-lg">ຍິງ</div>
+              <div className="stat-value">
+                {totalFemale}
+                <span className="ml-4 text-sm font-normal">ຄົນ</span>
+              </div>
+              {/* <div className="stat-desc">↗︎ 400 (22%)</div> */}
+            </div>
+            <div className="stat place-items-center bg-neutral/10">
+              <div className="stat-title text-lg">ຊາຍ</div>
+              <div className="stat-value">
+                {totalMale}
+                <span className="ml-4 text-sm font-normal">ຄົນ</span>
+              </div>
+              {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
+            </div>
+            <div className="stat place-items-center bg-neutral/10">
+              <div className="stat-title text-lg">ປ ຕີ</div>
+              <div className="stat-value">
+                {totalDegree.bachelor}
+                <span className="ml-4 text-sm font-normal">ຄົນ</span>
+              </div>
+              {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
+            </div>
+            <div className="stat place-items-center bg-neutral/10">
+              <div className="stat-title text-lg">ປ ໂທ</div>
+              <div className="stat-value">
+                {totalDegree.master}
+                <span className="ml-4 text-sm font-normal">ຄົນ</span>
+              </div>
+              {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
+            </div>
+          </div>
+          <div className="mb-5 flex flex-wrap items-center gap-2">
+            <Searchbox filter={globalFilter} setFilter={setGlobalFilter} />
+            {/* <Filter
                 filter={globalFilter}
                 setFilter={setGlobalFilter}
                 options={scholarshipTypes}
@@ -174,31 +171,32 @@ const UserTable = ({
                 title={"ລະດັບການສຶກສາ"}
                 fieldName={"laoDegree"}
               /> */}
-              {/* <Filter
+            {/* <Filter
                 filter={globalFilter}
                 setFilter={setGlobalFilter}
                 options={universities}
                 title={"ມະຫາໄລ"}
                 fieldName={"laoName"}
               /> */}
-              {/* <Filter
+            {/* <Filter
                 filter={globalFilter}
                 setFilter={setGlobalFilter}
                 options={statusList}
                 title={"ສະຖານະ"}
                 fieldName={"status"}
               /> */}
-              {/* <Filter
+            {/* <Filter
                 filter={globalFilter}
                 setFilter={setGlobalFilter}
                 options={majors}
                 title={"ສາຍຮຽນ"}
                 fieldName={"vietMajor"}
               /> */}
-              <Link to="/dashboard/studentlist/search/all">
-                <button className="btn btn-outline btn-sm">ທັງໝົດ</button>
-              </Link>
-            </div>
+            <Link to="/dashboard/studentlist/search/all">
+              <button className="btn btn-outline btn-sm">ທັງໝົດ</button>
+            </Link>
+          </div>
+          <div className="overflow-x-auto">
             {view === "grid" ? (
               <div {...getTableProps()} className="font-notosanslao">
                 <div className="">
@@ -384,7 +382,7 @@ const UserTable = ({
                       return (
                         <tr key={row.id} {...row.getRowProps()}>
                           <td>
-                            <div className="dropdown dropdown-right">
+                            <div className="dropdown-right dropdown">
                               <label
                                 tabIndex={0}
                                 className="btn btn-xs px-1 py-0"
@@ -396,7 +394,7 @@ const UserTable = ({
                                 className="dropdown-content rounded-box absolute !-top-2 !right-0 z-[1] !flex w-fit gap-4 border bg-base-100 p-2 shadow"
                               >
                                 <Link
-                                  to={`/studentlist/student/${row.original._id}`}
+                                  to={`/dashboard/studentlist/student/${row.original._id}`}
                                 >
                                   <li
                                     // onClick={() => handleClickEdit(row)}

@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { BiUserCircle } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../components/ui/Spinner";
 import {
@@ -12,24 +11,21 @@ import {
   statusList,
 } from "../data/data";
 import { getYearOptions } from "../utils/utils";
-import { getUserById } from "../feature/user/SingleUserSlice";
-import { useLocation, useParams } from "react-router-dom";
-import { updateUser, userReset } from "../feature/user/UserSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+import { createStudent, userReset } from "../feature/user/UserSlice";
 import { listUniversity } from "../feature/globalData/UniversitySlice";
 import altImage from "../assets/img/profile.png";
 import Breadcrumbs from "../components/Breadcrumbs";
+import ErrorMessage from "../components/typography/ErrorMessage";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
-const EditStudent = () => {
+const AddStudent = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  const { id } = useParams();
   const yearOptions = getYearOptions();
 
-  const { singleUser, status, error } = useSelector(
-    (state) => state.singleUser,
-  );
-  const { updateStatus, error: userError } = useSelector((state) => state.user);
+  const { createStatus, error: userError } = useSelector((state) => state.user);
   const { universities } = useSelector((state) => state.university);
 
   const {
@@ -38,10 +34,64 @@ const EditStudent = () => {
     formState: { errors },
     setValue,
     reset,
-  } = useForm({ defaultValues: singleUser });
-
-  const [toggleEdit, setToggleEdit] = useState(false);
-  // const dispatch = useDispatch((state) => state.user);
+  } = useForm({
+    // defaultValues: {
+    //   fullname: {
+    //     laoName: "ນັກຮຽນ ທຸງອິນດາຫຼາຍ",
+    //     englishFirstname: "John",
+    //     englishLastname: "Doe",
+    //     nickName: "Johnny",
+    //   },
+    //   studentId: "2023001",
+    //   dob: "2000-01-01",
+    //   gender: "Male",
+    //   perminentAddress: "123 Main Street, City, Country",
+    //   university: {
+    //     laoName: "ວິສາຂະອິນ",
+    //     vietName: "Đại học Sư phạm",
+    //     englishName: "University of Education",
+    //     shortcut: "UED",
+    //   },
+    //   major: {
+    //     laoMajor: "ວິສາຂະອິນ",
+    //     vietMajor: "Sư phạm Toán",
+    //   },
+    //   degree: {
+    //     laoDegree: "ປະລິນຍາຕີ",
+    //     vietDegree: "Cao Đẳng",
+    //   },
+    //   scholarship: {
+    //     type: "ລາງວັນ",
+    //     scholarshipLao: "ລາງວັນທະນາ",
+    //     scholarshipVn: "Học bổng toàn phần",
+    //     scholarshipUniversity: "Đại học Sư phạm",
+    //   },
+    //   duration: {
+    //     from: "2022-09-01",
+    //     to: "2026-05-31",
+    //   },
+    //   phone: {
+    //     phoneNumber: "123456789",
+    //     emergency: "987654321",
+    //     relationship: "Family",
+    //   },
+    //   facebookUrl: "https://www.facebook.com/johndoe",
+    //   visa: {
+    //     from: "2022-01-01",
+    //     to: "2023-01-01",
+    //   },
+    //   passport: {
+    //     passportNo: "ABC123456",
+    //     expired: "2025-01-01",
+    //     img: "https://example.com/passport-image.jpg",
+    //   },
+    //   profileImg: "https://example.com/profile-image.jpg",
+    //   residenceAddress: "456 Second Street, City, Country",
+    //   userStatus: "Active",
+    //   userId: "user123",
+    //   emailAddress: "user1@example.com",
+    // },
+  });
 
   const handleSelectDegree = (value) => {
     const vietDegree = degreeList.find((d) => d.laoDegree === value);
@@ -66,41 +116,39 @@ const EditStudent = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (updateStatus === "succeeded") {
+    if (createStatus === "succeeded") {
       toast.success("Update Successfully");
       dispatch(userReset());
-    } else if (updateStatus === "failed") {
+      reset({});
+      navigate(-1);
+    } else if (createStatus === "failed") {
       toast.error(userError);
       dispatch(userReset());
     }
-  }, [updateStatus, dispatch, userError]);
+  }, [createStatus, dispatch, userError, navigate, reset]);
 
   const handleEditSubmit = (data) => {
     if (data) {
-      dispatch(updateUser(data));
-      setToggleEdit(false);
-    } else toast.warning("Input data not valid");
-  };
-
-  const replaceImage = (error) => {
-    error.target.src = altImage;
-  };
-
-  useEffect(() => {
-    dispatch(getUserById(id));
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    if (status === "succeeded") {
-      reset(singleUser);
-    } else if (status === "failed") {
-      toast.error(error);
+      const confirmed = window.confirm(
+        "Are you sure you want to update the user?",
+      );
+      if (confirmed) {
+        dispatch(createStudent({ ...data }));
+      } else {
+        console.log("Update canceled");
+      }
+    } else {
+      toast.warning("Input data not valid");
     }
-  }, [status, reset, singleUser, error]);
+  };
+  // const replaceImage = (error) => {
+  //   error.target.src = altImage;
+  // };
+
   return (
     <>
       <section className="relative">
-        {singleUser && status !== "loading" ? (
+        {createStatus !== "loading" ? (
           <div className="container mx-auto px-5 py-24">
             <div className="mb-12 flex w-full flex-col text-center">
               <Breadcrumbs pathname={pathname} />
@@ -110,21 +158,8 @@ const EditStudent = () => {
               </h1>
               <div>
                 <div className="avatar">
-                  <div className="w-48 rounded">
-                    {singleUser?.profileImg ? (
-                      <img
-                        src={singleUser?.profileImg}
-                        alt={singleUser.profileImg}
-                        onError={replaceImage}
-                      />
-                    ) : (
-                      <BiUserCircle className="h-full w-full text-primary" />
-                    )}
-                  </div>
+                  <img src={altImage} alt="" />
                 </div>
-              </div>
-              <div>
-                <p>{singleUser._id}</p>
               </div>
             </div>
             <div className="mx-auto">
@@ -132,6 +167,48 @@ const EditStudent = () => {
                 onSubmit={handleSubmit(handleEditSubmit)}
                 className="flex flex-wrap items-center justify-center"
               >
+                <div className="w-1/2 p-2">
+                  <label className="form-control w-full">
+                    <div className="label flex items-center">
+                      <span className="label-text font-semibold">
+                        Email Address
+                        <span className="ml-2 text-error">*</span>
+                      </span>
+                      <ErrorMessage
+                        styling="sm:text-md"
+                        error={errors?.emailAddress}
+                      />
+                    </div>
+                    <input
+                      {...register("emailAddress", {
+                        required: "Email required",
+                      })}
+                      type="text"
+                      className={inputStyle}
+                    />
+                  </label>
+                </div>
+                <div className="w-1/2 p-2">
+                  <label className="form-control w-full">
+                    <div className="label flex items-center">
+                      <span className="label-text font-semibold">
+                        Password
+                        <span className="ml-2 text-error">*</span>
+                      </span>
+                      <ErrorMessage
+                        styling="sm:text-md"
+                        error={errors?.password}
+                      />
+                    </div>
+                    <input
+                      {...register("password", {
+                        required: "Password required",
+                      })}
+                      type="text"
+                      className={inputStyle}
+                    />
+                  </label>
+                </div>
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
@@ -155,14 +232,60 @@ const EditStudent = () => {
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text font-semibold">
-                        English Firstname
+                        Firstname
+                        <span className="ml-2 text-error">*</span>
                       </span>
+                      <ErrorMessage
+                        styling="sm:text-md"
+                        error={errors?.fullname?.englishFirstname?.message}
+                      />
                     </div>
                     <input
-                      {...register("fullname.englishFirstname", {})}
+                      {...register("fullname.englishFirstname", {
+                        required: "Field required",
+                      })}
                       type="text"
-                      // placeholder="Enter English Firstname"
                       className={inputStyle + "input-bordered"}
+                    />
+                  </label>
+                </div>
+                <div className="w-1/2 p-2">
+                  <label className="form-control w-full">
+                    <div className="label">
+                      <span className="label-text font-semibold">
+                        Lastname<span className="ml-2 text-error">*</span>
+                      </span>
+                      <ErrorMessage
+                        styling="sm:text-md"
+                        error={errors?.fullname?.englishLastname?.message}
+                      />
+                    </div>
+                    <input
+                      {...register("fullname.englishLastname", {
+                        required: "Field required",
+                      })}
+                      type="text"
+                      className={inputStyle}
+                    />
+                  </label>
+                </div>
+                <div className="w-1/2 p-2">
+                  <label className="form-control w-full">
+                    <div className="label">
+                      <span className="label-text font-semibold">
+                        Lao Name<span className="ml-2 text-error">*</span>
+                      </span>
+                      <ErrorMessage
+                        styling="sm:text-md"
+                        error={errors?.fullname?.laoName}
+                      />
+                    </div>
+                    <input
+                      {...register("fullname.laoName", {
+                        required: "Field required",
+                      })}
+                      type="text"
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -174,39 +297,11 @@ const EditStudent = () => {
                     <input
                       {...register("fullname.nickName", {})}
                       type="text"
-                      // placeholder="Enter Nickname"
                       className={inputStyle}
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">Lao Name</span>
-                    </div>
-                    <input
-                      {...register("fullname.laoName", {})}
-                      type="text"
-                      // placeholder="Enter Lao Name"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        English Lastname
-                      </span>
-                    </div>
-                    <input
-                      {...register("fullname.englishLastname", {})}
-                      type="text"
-                      // placeholder="Enter English Lastname"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
+
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
@@ -281,7 +376,6 @@ const EditStudent = () => {
                     <input
                       {...register("phone.phoneNumber", {})}
                       type="text"
-                      // placeholder="Enter Phone Number"
                       className={inputStyle}
                     />
                   </label>
@@ -296,7 +390,6 @@ const EditStudent = () => {
                     <input
                       {...register("phone.emergency", {})}
                       type="text"
-                      // placeholder="Enter Emergency"
                       className={inputStyle}
                     />
                   </label>
@@ -311,7 +404,6 @@ const EditStudent = () => {
                     <input
                       {...register("phone.relationship", {})}
                       type="text"
-                      // placeholder="Enter Relationship"
                       className={inputStyle}
                     />
                   </label>
@@ -349,7 +441,6 @@ const EditStudent = () => {
                     <input
                       {...register("visa.from", {})}
                       type="date"
-                      // placeholder="Enter Visa From"
                       className={inputStyle}
                     />
                   </label>
@@ -362,7 +453,6 @@ const EditStudent = () => {
                     <input
                       {...register("visa.to", {})}
                       type="date"
-                      // placeholder="Enter Visa To"
                       className={inputStyle}
                     />
                   </label>
@@ -401,7 +491,6 @@ const EditStudent = () => {
                     <input
                       {...register("passport.passportNo", {})}
                       type="text"
-                      // placeholder="Enter Passport No"
                       className={inputStyle}
                     />
                   </label>
@@ -417,7 +506,6 @@ const EditStudent = () => {
                     <input
                       {...register("passport.expired", {})}
                       type="date"
-                      // placeholder="Enter Passport Expired"
                       className={inputStyle}
                     />
                   </label>
@@ -454,7 +542,6 @@ const EditStudent = () => {
                     <input
                       {...register("studentId", {})}
                       type="text"
-                      // placeholder="Enter Student ID"
                       className={inputStyle}
                     />
                   </label>
@@ -469,7 +556,6 @@ const EditStudent = () => {
                     <input
                       {...register("dob", {})}
                       type="date"
-                      // placeholder="Enter Date of Birth"
                       className={inputStyle}
                     />
                   </label>
@@ -501,7 +587,6 @@ const EditStudent = () => {
                     <input
                       {...register("facebookUrl", {})}
                       type="text"
-                      // placeholder="Enter Facebook URL"
                       className={inputStyle}
                     />
                   </label>
@@ -527,53 +612,19 @@ const EditStudent = () => {
                     </select>
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Email Address
-                      </span>
-                    </div>
-                    <input
-                      {...register("emailAddress", {})}
-                      type="text"
-                      // placeholder="Enter Email Address"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
+
                 <div className="w-full space-x-4 p-2">
-                  {!toggleEdit && (
-                    <button
-                      type="button"
-                      onClick={() => setToggleEdit(true)}
-                      className="btn btn-primary"
-                    >
-                      Update
-                    </button>
-                  )}
-                  {toggleEdit && (
-                    <>
-                      <button
-                        type="submit"
-                        className="btn btn-primary"
-                        disabled={updateStatus === "loading" ? true : false}
-                      >
-                        {updateStatus === "loading" ? (
-                          <span className="loading loading-spinner loading-xs"></span>
-                        ) : (
-                          "Submit"
-                        )}
-                      </button>
-                      <button
-                        onClick={() => setToggleEdit(false)}
-                        type="button"
-                        className="btn btn-error btn-outline"
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  )}
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={createStatus === "loading" ? true : false}
+                  >
+                    {createStatus === "loading" ? (
+                      <span className="loading loading-spinner loading-xs"></span>
+                    ) : (
+                      "Submit"
+                    )}
+                  </button>
                 </div>
               </form>
             </div>
@@ -586,4 +637,4 @@ const EditStudent = () => {
   );
 };
 
-export default EditStudent;
+export default AddStudent;

@@ -12,7 +12,7 @@ import { listUniversity } from "../feature/globalData/UniversitySlice";
 import { listMajors } from "../feature/globalData/MajorSlice";
 import Breadcrumbs from "../components/Breadcrumbs";
 
-const StudentList = () => {
+const UniversityList = () => {
   const { pathname } = useLocation();
   const { pageNumber, keyword } = useParams();
   const dispatch = useDispatch();
@@ -88,7 +88,7 @@ const StudentList = () => {
                             auth.role !== "admin" && "btn-disabled"
                           }`}
                         >
-                          ເພີ່ມນັກຮຽນ
+                          ADD STUDENT
                           <AiFillPlusCircle size={20} />
                         </button>
                       </Link>
@@ -111,25 +111,15 @@ const StudentList = () => {
               </>
             )}
           </div>
-          <StudentTable
+          {/* <StudentTable
             view={view}
             editToggle={editToggle}
             setEditToggle={setEditToggle}
             users={users}
             userStatus={userStatus}
             userError={userStatus}
-          />
-          {/* {users.map((user) => (
-            <div key={user._id} className="">
-              <div className="avatar">
-                <div className="w-24 rounded-xl">
-                  <img src={user.profileImg} />
-                </div>
-              </div>
-              <span>{user.fullname.laoName}</span>
-            </div>
-          ))} */}
-          <Paginate style="mt-10" page={page} pages={pages} />
+          /> */}
+          {/* <Paginate style="mt-10" page={page} pages={pages} /> */}
         </div>
       </section>
     </>
@@ -138,4 +128,4 @@ const StudentList = () => {
   );
 };
 
-export default StudentList;
+export default UniversityList;

@@ -1,7 +1,6 @@
 import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
 import User from "../models/userModel.js";
-import mongoose from "mongoose";
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -47,6 +46,34 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(201).json({
       _id: user._id,
       ...userWithoutPassword,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid user data");
+  }
+});
+// @desc    Create a new user
+// @route   POST /api/users/create
+// @access  private
+const createUser = asyncHandler(async (req, res) => {
+  const { emailAddress, password } = req.body;
+
+  const userExists = await User.findOne({ emailAddress });
+
+  if (userExists) {
+    res.status(400);
+    throw new Error("User already exists");
+  }
+
+  const user = await User.create({
+    ...req.body,
+  });
+  if (user) {
+    // const { password, ...userWithoutPassword } = user._doc;
+    res.status(201).json({
+      _id: user._id,
+      ...user._doc,
       token: generateToken(user._id),
     });
   } else {
@@ -205,10 +232,15 @@ const getUserById = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const userId = req.params.id;
   const updatedUserData = req.body;
-  const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, {
-    new: true,
-  });
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { ...updatedUserData },
+    {
+      new: true,
+    }
+  );
   if (updatedUser) {
+    console.log("🚀 ~ updateUser ~ updatedUser:", updatedUser)
     res.json(updatedUser);
   } else {
     res.status(404);
@@ -225,4 +257,5 @@ export {
   deleteUser,
   getUserById,
   updateUser,
+  createUser,
 };

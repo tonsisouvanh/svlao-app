@@ -16,6 +16,8 @@ import NotFoundPage from "./page/NoFoundPage";
 import StudentList from "./page/StudentList";
 import EditStudent from "./page/EditStudent";
 import Dashboard from "./page/Dashboard";
+import AddStudent from "./page/AddStudent";
+import UniversityList from "./page/UniversityList";
 
 function App() {
   return (
@@ -42,8 +44,17 @@ function App() {
               element={<StudentList />}
             />
             <Route path="dashboard/studentlist" element={<StudentList />} />
+            <Route path="dashboard/studentlist" element={<StudentList />} />
+            <Route
+              path="dashboard/studentlist/student/:id"
+              element={<EditStudent />}
+            />
+            <Route path="dashboard/studentlist/add" element={<AddStudent />} />
             <Route path="/profile" element={<UserProfile />} />
-            <Route path="/studentlist/student/:id" element={<EditStudent />} />
+            <Route
+              path="/dashboard/university-list"
+              element={<UniversityList />}
+            />
             {/* <Route path="/intro" element={<Intro />} /> */}
           </Route>
         </Route>

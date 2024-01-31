@@ -54,6 +54,7 @@ export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (userData, thunkAPI) => {
     try {
+      console.log("🚀 ~ userData:", userData)
       const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
@@ -105,6 +106,36 @@ export const removeUser = createAsyncThunk(
       console.log("🚀 ~ res:", res);
       const _id = res.data._id;
       return _id;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  },
+);
+
+// Create student
+export const createStudent = createAsyncThunk(
+  "student/createStudent",
+  async (studentData, thunkAPI) => {
+    console.log("🚀 ~ studentData:", studentData)
+    try {
+      const { auth } = thunkAPI.getState().auth;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+      };
+
+      const { data } = await axios.post("/api/users", studentData, config);
+      console.log("🚀 ~ data:", data);
+
+      return data;
     } catch (error) {
       const message =
         (error.response &&
@@ -178,6 +209,19 @@ const userSlice = createSlice({
       })
       .addCase(removeUser.rejected, (state, action) => {
         state.removeStatus = "failed";
+        state.error = action.payload;
+      })
+      .addCase(createStudent.pending, (state) => {
+        state.createStatus = "loading";
+      })
+      .addCase(createStudent.fulfilled, (state, action) => {
+        state.createStatus = "succeeded";
+        console.log("🚀 ~ .addCase ~ action.payload:", action.payload);
+        state.users.push(action.payload);
+        state.error = null;
+      })
+      .addCase(createStudent.rejected, (state, action) => {
+        state.createStatus = "failed";
         state.error = action.payload;
       });
   },
