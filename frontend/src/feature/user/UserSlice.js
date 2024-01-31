@@ -54,7 +54,6 @@ export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (userData, thunkAPI) => {
     try {
-      console.log("🚀 ~ userData:", userData)
       const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
@@ -91,7 +90,6 @@ export const updateUser = createAsyncThunk(
 export const removeUser = createAsyncThunk(
   "user/removeUser",
   async (id, thunkAPI) => {
-    console.log("🚀 ~ id:", id);
     const auth = sessionStorage.getItem("authInfo")
       ? JSON.parse(sessionStorage.getItem("authInfo") || "")
       : null;
@@ -103,7 +101,6 @@ export const removeUser = createAsyncThunk(
         },
       };
       const res = await axios.delete(`/api/users/${id}`, config);
-      console.log("🚀 ~ res:", res);
       const _id = res.data._id;
       return _id;
     } catch (error) {
@@ -122,7 +119,6 @@ export const removeUser = createAsyncThunk(
 export const createStudent = createAsyncThunk(
   "student/createStudent",
   async (studentData, thunkAPI) => {
-    console.log("🚀 ~ studentData:", studentData)
     try {
       const { auth } = thunkAPI.getState().auth;
       const config = {
@@ -133,8 +129,6 @@ export const createStudent = createAsyncThunk(
       };
 
       const { data } = await axios.post("/api/users", studentData, config);
-      console.log("🚀 ~ data:", data);
-
       return data;
     } catch (error) {
       const message =
@@ -201,10 +195,8 @@ const userSlice = createSlice({
         state.removeStatus = "loading";
       })
       .addCase(removeUser.fulfilled, (state, action) => {
-        console.log("🚀 ~ .addCase ~ action:", action.payload);
         state.removeStatus = "succeeded";
         state.users = state.users.filter((user) => user._id !== action.payload);
-        console.log("🚀 ~ .addCase ~ state.users:", state.users);
         state.error = null;
       })
       .addCase(removeUser.rejected, (state, action) => {
@@ -216,7 +208,6 @@ const userSlice = createSlice({
       })
       .addCase(createStudent.fulfilled, (state, action) => {
         state.createStatus = "succeeded";
-        console.log("🚀 ~ .addCase ~ action.payload:", action.payload);
         state.users.push(action.payload);
         state.error = null;
       })

@@ -54,7 +54,7 @@ const Searchbox = ({ filter, setFilter }) => {
         </div>
         <div className="indicator">
           <button type="submit" className="btn join-item btn-sm">
-            Search
+            ຄົ້ນຫາ
           </button>
         </div>
       </div>

@@ -10,6 +10,7 @@ const universitySchema = new mongoose.Schema({
   shortcut: {
     type: String,
     required: true,
+    unique: true,
   },
 });
 

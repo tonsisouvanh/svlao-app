@@ -561,6 +561,13 @@ export const STUDENT_COLUMNS = [
   },
 ];
 
+export const UNIVERSITY_COLUMNS = [
+  { Header: "EnglishName", accessor: "englishName" },
+  { Header: "VietName", accessor: "vietName" },
+  { Header: "LaoName", accessor: "laoName" },
+  { Header: "Shortcut", accessor: "shortcut" },
+];
+
 // export const residenceAddress = [
 //   {
 //     dormitory: "KTX Khu B",

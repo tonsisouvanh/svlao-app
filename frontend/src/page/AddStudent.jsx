@@ -26,6 +26,7 @@ const AddStudent = () => {
   const yearOptions = getYearOptions();
 
   const { createStatus, error: userError } = useSelector((state) => state.user);
+  console.log("🚀 ~ AddStudent ~ createStatus:", createStatus)
   const { universities } = useSelector((state) => state.university);
 
   const {

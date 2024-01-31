@@ -2,58 +2,35 @@ import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
 import University from "../models/universityModel.js";
 
-// @desc    Auth university & get token
-// @route   POST /api/universitys/login
-// @access  Public
-const authUniversity = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-
-  const university = await University.findOne({ email });
-
-  if (university && (await university.matchPassword(password))) {
-    res.json({
-      _id: university._id,
-      fullname: university.fullname,
-      email: university.email,
-      role: university.role,
-      isActive: university.isActive,
-      token: generateToken(university._id),
-    });
-  } else {
-    res.status(401);
-    throw new Error("Invalid email or password");
-  }
-});
-
-// @desc    Register a new university
-// @route   POST /api/universitys
-// @access  Public
+// @desc    Create a new university
+// @route   POST /api/universities
+// @access  Private
 const createUniversity = asyncHandler(async (req, res) => {
-  const { fullname, email, password, image } = req.body;
+  const { englishName, vietName, laoName, shortcut } = req.body;
 
-  const universityExists = await University.findOne({ email });
+  // Check if the university with the given English name already exists
+  const universityExists = await University.findOne({ shortcut });
 
   if (universityExists) {
     res.status(400);
     throw new Error("University already exists");
   }
 
+  // Create a new university
   const university = await University.create({
-    fullname,
-    email,
-    password,
-    image,
+    englishName,
+    vietName,
+    laoName,
+    shortcut,
   });
 
   if (university) {
     res.status(201).json({
       _id: university._id,
-      fullname: university.fullname,
-      email: university.email,
-      role: university.role,
-      token: generateToken(university._id),
-      image: university.image,
-      isActive: university.isActive,
+      englishName: university.englishName,
+      vietName: university.vietName,
+      laoName: university.laoName,
+      shortcut: university.shortcut,
     });
   } else {
     res.status(400);
@@ -86,11 +63,18 @@ const getUniversityProfile = asyncHandler(async (req, res) => {
 const updateUniversity = asyncHandler(async (req, res) => {
   const universityId = req.university._id;
   const updatedUniversityData = req.body;
-  const updatedUniversity = await University.findByIdAndUpdate(universityId, updatedUniversityData, {
-    new: true,
-  });
+  const updatedUniversity = await University.findByIdAndUpdate(
+    universityId,
+    updatedUniversityData,
+    {
+      new: true,
+    }
+  );
   if (updatedUniversity) {
-    res.json({ ...updatedUniversity._doc, token: generateToken(updatedUniversity._id) });
+    res.json({
+      ...updatedUniversity._doc,
+      token: generateToken(updatedUniversity._id),
+    });
   } else {
     res.status(404);
     throw new Error("University not found");
@@ -110,10 +94,9 @@ const getUniversities = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const deleteUniversity = asyncHandler(async (req, res) => {
   const university = await University.findById(req.params.id);
-
   if (university) {
     await University.deleteOne({ _id: req.params.id });
-    res.json({ message: "University removed" });
+    res.json({ _id: req.params.id });
   } else {
     res.status(404);
     throw new Error("University not found");
@@ -124,7 +107,9 @@ const deleteUniversity = asyncHandler(async (req, res) => {
 // @route   GET /api/universitys/:id
 //* @access  Private/Admin
 const getUniversityById = asyncHandler(async (req, res) => {
-  const university = await University.findById(req.params.id).select("-password");
+  const university = await University.findById(req.params.id).select(
+    "-password"
+  );
 
   if (university) {
     res.json(university);
@@ -134,10 +119,9 @@ const getUniversityById = asyncHandler(async (req, res) => {
   }
 });
 
-
-
 export {
   getUniversities,
   updateUniversity,
-  createUniversity
+  createUniversity,
+  deleteUniversity,
 };

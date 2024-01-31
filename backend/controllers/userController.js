@@ -184,17 +184,12 @@ const getUsers = asyncHandler(async (req, res) => {
     : {};
 
   const count = await User.countDocuments({ ...keyword });
-  console.log("🚀 ~ getUsers ~ count:", count);
   const users =
     keyword === "all"
       ? await User.find({})
       : await User.find({ ...keyword })
           .limit(pageSize)
           .skip(pageSize * (page - 1));
-  console.log(
-    "🚀 ~ getUsers ~ { users, page, pages: Math.ceil(count / pageSize) }:",
-    { page, pages: Math.ceil(count / pageSize) }
-  );
   res.json({ users, page, pages: Math.ceil(count / pageSize) });
 });
 
@@ -240,7 +235,6 @@ const updateUser = asyncHandler(async (req, res) => {
     }
   );
   if (updatedUser) {
-    console.log("🚀 ~ updateUser ~ updatedUser:", updatedUser)
     res.json(updatedUser);
   } else {
     res.status(404);

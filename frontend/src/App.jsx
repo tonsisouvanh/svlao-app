@@ -17,7 +17,8 @@ import StudentList from "./page/StudentList";
 import EditStudent from "./page/EditStudent";
 import Dashboard from "./page/Dashboard";
 import AddStudent from "./page/AddStudent";
-import UniversityList from "./page/UniversityList";
+import UniversityList from "./page/university/UniversityList";
+import AddUniversity from "./page/university/AddUniversity";
 
 function App() {
   return (
@@ -44,12 +45,16 @@ function App() {
               element={<StudentList />}
             />
             <Route path="dashboard/studentlist" element={<StudentList />} />
-            <Route path="dashboard/studentlist" element={<StudentList />} />
             <Route
               path="dashboard/studentlist/student/:id"
               element={<EditStudent />}
             />
             <Route path="dashboard/studentlist/add" element={<AddStudent />} />
+
+            <Route
+              path="dashboard/university-list/add"
+              element={<AddUniversity />}
+            />
             <Route path="/profile" element={<UserProfile />} />
             <Route
               path="/dashboard/university-list"
