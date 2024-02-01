@@ -2,91 +2,106 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
 
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  orderBy,
-  query,
-  setDoc,
-} from "firebase/firestore";
-import toast from "react-hot-toast";
-import { db } from "../../firebase";
+const initialState = {
+  majors: [],
+  status: {
+    list: "idle" | "loading" | "succeeded" | "failed",
+    create: "idle" | "loading" | "succeeded" | "failed",
+    update: "idle" | "loading" | "succeeded" | "failed",
+    remove: "idle" | "loading" | "succeeded" | "failed",
+  },
+  error: null,
+};
 
-// ADMIN ADD STUDENT
-export const addMajor = createAsyncThunk(
+export const createMajor = createAsyncThunk(
   "majors/addMajor",
-  async (newStudent, { rejectWithValue }) => {
+  async (inputData, thunkAPI) => {
     try {
-      const currentDate = new Date();
-      const studentsCollection = collection(db, "majors");
+      const { auth } = thunkAPI.getState().auth;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+      };
 
-      await addDoc(studentsCollection, {
-        ...newStudent,
-        role: "student",
-        userId: "pending",
-        createdDate: currentDate,
-      });
-      toast.success("Student added successfully");
-      return {
-        ...newStudent,
-      };
+      const { data } = await axios.post("/api/majors", inputData, config);
+      return { data };
     } catch (error) {
-      const errorMessage = error.message;
-      const customError = {
-        message: errorMessage,
-        type: "addMajorError",
-      };
-      console.error(error);
-      toast.error(errorMessage);
-      return rejectWithValue(customError);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   },
 );
 
-// ADMIN UPDATE
 export const updateMajor = createAsyncThunk(
   "majors/updateMajor",
-  async (updatedStudent, { rejectWithValue }) => {
-    const currentDate = new Date();
-
+  async (inputData, thunkAPI) => {
     try {
-      // Construct the Firestore document reference for the product
-      const studentRef = doc(db, "majors", updatedStudent.id || "");
+      const { auth } = thunkAPI.getState().auth;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+      };
 
-      // Update the product document in Firestore
-      await setDoc(studentRef, { ...updatedStudent, createdDate: currentDate });
-
-      toast.success("Update student successfully");
-      return updatedStudent;
+      const { data } = await axios.put(
+        `/api/majors/${inputData._id}`,
+        {
+          ...inputData,
+        },
+        config,
+      );
+      return data;
     } catch (error) {
-      const errorMessage = error.message;
-      toast.error(errorMessage);
-      return rejectWithValue(errorMessage);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   },
 );
 
-export const deleteMajor = createAsyncThunk(
-  "majors/deleteMajor",
-  async (majorId, { rejectWithValue }) => {
+export const removeMajor = createAsyncThunk(
+  "majors/removeMajor",
+  async (majorId, thunkAPI) => {
+    const { auth } = thunkAPI.getState().auth;
     try {
-      //Construct the Firestore document reference for the student
-      const majorRef = doc(db, "majors", majorId);
-      //Delete the student document from Firestore
-      await deleteDoc(majorRef);
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+      };
+      const res = await axios.delete(
+        `/api/majors/${majorId}`,
+        config,
+      );
+      const _id = res.data._id;
+      return _id;
     } catch (error) {
-      const errorMessage = error.message;
-      toast.error(errorMessage);
-      return rejectWithValue(errorMessage);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   },
 );
 
-export const listMajors = createAsyncThunk(
-  "universities/listMajors",
+export const listMajor = createAsyncThunk(
+  "majors/listMajor",
   async (thunkAPI) => {
     try {
       const { data } = await axios.get(`/api/majors`);
@@ -103,72 +118,138 @@ export const listMajors = createAsyncThunk(
   },
 );
 
-const MajorSlice = createSlice({
-  name: "majors",
-  initialState: {
-    majors: [],
-    status: "idle" | "loading" | "succeeded" | "failed",
-    error: "",
+export const getMajorById = createAsyncThunk(
+  "user/getMajorById",
+  async (majorId, thunkAPI) => {
+    try {
+      const { auth } = thunkAPI.getState().auth;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+      };
+
+      const { data } = await axios.get(
+        `/api/majors/${majorId}`,
+        config,
+      );
+      return data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   },
-  reducers: {},
+);
+
+const resetStatus = (state) => {
+  state.status = {
+    list: "idle",
+    create: "idle",
+    update: "idle",
+    remove: "idle",
+  };
+  state.error = null;
+};
+
+const setError = (state, action) => {
+  state.error = action.payload;
+};
+
+const majorSlice = createSlice({
+  name: "major",
+  initialState,
+  reducers: {
+    reset: resetStatus,
+    setError,
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(listMajors.pending, (state) => {
-        state.status = "loading";
+      .addCase(listMajor.pending, (state) => {
+        state.status.list = "loading";
       })
-      .addCase(listMajors.fulfilled, (state, action) => {
-        state.status = "succeeded";
+      .addCase(listMajor.fulfilled, (state, action) => {
+        state.status.list = "succeeded";
         state.majors = action.payload;
       })
-      .addCase(listMajors.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message || "";
+      .addCase(listMajor.rejected, (state, action) => {
+        state.status.list = "failed";
+        setError(state, action);
       })
+
+      .addCase(getMajorById.pending, (state) => {
+        state.status.list = "loading";
+      })
+      .addCase(getMajorById.fulfilled, (state, action) => {
+        state.status.list = "succeeded";
+        state.majors = [{ ...action.payload }];
+      })
+      .addCase(getMajorById.rejected, (state, action) => {
+        state.status.list = "failed";
+        setError(state, action);
+      })
+
       // ADD
-      .addCase(addMajor.pending, (state) => {
-        state.status = "loading";
+      .addCase(createMajor.pending, (state) => {
+        state.status.create = "loading";
       })
-      .addCase(addMajor.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.majors.push(action.payload);
+      .addCase(createMajor.fulfilled, (state, action) => {
+        state.status.create = "succeeded";
+        state.majors = [...state.majors, action.payload.data];
       })
-      .addCase(addMajor.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message || "";
+      .addCase(createMajor.rejected, (state, action) => {
+        state.status.create = "failed";
+        setError(state, action);
       })
+
       // UPDATE ADMIN
       .addCase(updateMajor.pending, (state) => {
-        state.status = "loading";
+        state.status.update = "loading";
       })
       .addCase(updateMajor.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        const updatedStudent = action.payload;
-        const studentIndex = state.majors.findIndex(
-          (student) => student.id === updatedStudent.id,
+        state.status.update = "succeeded";
+        const updatedMajorIndex = state.majors.findIndex(
+          (major) => major._id === action.payload._id,
         );
-        if (studentIndex !== -1) {
-          state.majors[studentIndex] = updatedStudent;
+        if (updatedMajorIndex !== -1) {
+          state.majors[updatedMajorIndex] = action.payload;
         }
+        state.error = null;
       })
       .addCase(updateMajor.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message || "";
+        state.status.update = "failed";
+        setError(state, action);
       })
-      // // DELETE
-      .addCase(deleteMajor.pending, (state) => {
-        state.status = "loading";
+
+      // DELETE
+      .addCase(removeMajor.pending, (state) => {
+        state.status.remove = "loading";
       })
-      .addCase(deleteMajor.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.data = state.data.filter(
-          (student) => student.id !== action.payload,
+      .addCase(removeMajor.fulfilled, (state, action) => {
+        state.status.remove = "succeeded";
+        state.majors = state.majors.filter(
+          (major) => major._id !== action.payload,
         );
+        state.error = null;
       })
-      .addCase(deleteMajor.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message || "";
-      });
+      .addCase(removeMajor.rejected, (state, action) => {
+        state.status.remove = "failed";
+        setError(state, action);
+      })
+      .addMatcher(
+        (action) => action.type.endsWith("/pending"),
+        (state) => {
+          state.error = null;
+        },
+      );
   },
 });
 
-export default MajorSlice.reducer;
+export const { reset: majorReset } = majorSlice.actions;
+
+export default majorSlice.reducer;

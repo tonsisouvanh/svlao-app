@@ -127,7 +127,7 @@ export const university = [
   },
 ];
 
-export const themes = ["cupcake", "lofi", "night"];
+export const themes = ["winter", "night"];
 
 export const majorList = [
   {
@@ -567,19 +567,7 @@ export const UNIVERSITY_COLUMNS = [
   { Header: "LaoName", accessor: "laoName" },
   { Header: "Shortcut", accessor: "shortcut" },
 ];
-
-// export const residenceAddress = [
-//   {
-//     dormitory: "KTX Khu B",
-//     address:
-//       "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
-//   },
-//   {
-//     dormitory: "",
-//     address: "14 Đ. 12C, Phường 3, Quận 4, Thành phố Hồ Chí Minh",
-//   },
-//   {
-//     dormitory: "",
-//     address: "30/38 hẻm 30 lâm văn bền ,tân kiểng,q7",
-//   },
-// ];
+export const MAJOR_COLUMNS = [
+  { Header: "Viet name", accessor: "vietMajor" },
+  { Header: "Lao name", accessor: "laoMajor" },
+];

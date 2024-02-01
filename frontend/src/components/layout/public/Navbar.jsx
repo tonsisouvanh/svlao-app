@@ -109,7 +109,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
 
             <ul
               tabIndex={0}
-              className="menu dropdown-content rounded-box z-[1] w-fit space-y-2 border border-primary-focus bg-base-100 p-2 font-notosanslao shadow"
+              className="menu dropdown-content rounded-box z-[1] w-fit space-y-2 border bg-base-100 p-2 font-notosanslao shadow"
             >
               <Link
                 className={`btn btn-ghost btn-sm relative whitespace-nowrap`}

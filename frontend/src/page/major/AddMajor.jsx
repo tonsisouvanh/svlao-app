@@ -4,54 +4,45 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import Spinner from "../../components/ui/Spinner";
-import {
-  createUniversity,
-  universityReset,
-} from "../../feature/globalData/UniversitySlice";
+import { createMajor, majorReset } from "../../feature/globalData/MajorSlice";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import ErrorMessage from "../../components/typography/ErrorMessage";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
-const AddUniversity = () => {
+const AddMajor = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
 
-  const { status, error } = useSelector((state) => state.university);
+  const { status, error } = useSelector((state) => state.major);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({
-    defaultValues: {
-      laoName: "ມລ ",
-    },
-  });
+  } = useForm({});
 
   useEffect(() => {
     if (status.create === "succeeded") {
       toast.success("Create Successfully");
-      dispatch(universityReset());
+      dispatch(majorReset());
       reset({});
       navigate(-1);
     } else if (status.create === "failed") {
       toast.error(error);
-      dispatch(universityReset());
+      dispatch(majorReset());
     }
   }, [status.create, dispatch, error, navigate, reset]);
 
   const handleEditSubmit = (data) => {
     if (data) {
       const confirmed = window.confirm(
-        "Are you sure you want to update the university?",
+        "Are you sure you want to update the major?",
       );
 
       if (confirmed) {
-        dispatch(
-          createUniversity({ ...data, shortcut: data.shortcut.toUpperCase() }),
-        );
+        dispatch(createMajor({ ...data }));
       } else {
         console.log("Create canceled");
       }
@@ -69,36 +60,15 @@ const AddUniversity = () => {
               <Breadcrumbs pathname={pathname} />
 
               <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium">
-                Universities
+                Add Universities
               </h1>
             </div>
             <div className="mx-auto">
               <form
                 onSubmit={handleSubmit(handleEditSubmit)}
-                className="flex flex-wrap items-center justify-center"
+                className="flex flex-col items-center justify-center"
               >
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label flex items-center">
-                      <span className="label-text font-semibold">
-                        English Name
-                        <span className="ml-2 text-error">*</span>
-                      </span>
-                      <ErrorMessage
-                        styling="sm:text-md"
-                        error={errors?.englishName}
-                      />
-                    </div>
-                    <input
-                      {...register("englishName", {
-                        required: "English required",
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
+                <div className="w-full p-2">
                   <label className="form-control w-full">
                     <div className="label flex items-center">
                       <span className="label-text font-semibold">
@@ -107,19 +77,19 @@ const AddUniversity = () => {
                       </span>
                       <ErrorMessage
                         styling="sm:text-md"
-                        error={errors?.vietName}
+                        error={errors?.vietMajor}
                       />
                     </div>
                     <input
-                      {...register("vietName", {
-                        required: "Viet Name is required",
+                      {...register("vietMajor", {
+                        required: "Field required",
                       })}
                       type="text"
                       className={inputStyle}
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-full p-2">
                   <label className="form-control w-full">
                     <div className="label flex items-center">
                       <span className="label-text font-semibold">
@@ -128,34 +98,12 @@ const AddUniversity = () => {
                       </span>
                       <ErrorMessage
                         styling="sm:text-md"
-                        error={errors?.laoName}
+                        error={errors?.laoMajor}
                       />
                     </div>
                     <input
-                      {...register("laoName", {
-                        required: "Lao Name is required",
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label flex items-center">
-                      <span className="label-text font-semibold">
-                        Shortcut
-                        <span className="ml-2 text-error">*</span>
-                      </span>
-                      <ErrorMessage
-                        styling="sm:text-md"
-                        error={errors?.shortcut}
-                      />
-                    </div>
-                    <input
-                      {...register("shortcut", {
-                        required: "Shortcut is required",
+                      {...register("laoMajor", {
+                        required: "Field required",
                       })}
                       type="text"
                       className={inputStyle}
@@ -186,4 +134,4 @@ const AddUniversity = () => {
   );
 };
 
-export default AddUniversity;
+export default AddMajor;

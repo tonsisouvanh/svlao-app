@@ -48,7 +48,7 @@ const InfoModal = ({
             <button
               onClick={handleConfirm}
               type="button"
-              className="btn btn-primary"
+              className="btn btn-error"
             >
               {confirmLabel}
             </button>

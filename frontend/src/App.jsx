@@ -20,6 +20,9 @@ import AddStudent from "./page/AddStudent";
 import UniversityList from "./page/university/UniversityList";
 import AddUniversity from "./page/university/AddUniversity";
 import EditUniversity from "./page/university/EditUniversity";
+import MajorList from "./page/major/MajorList";
+import AddMajor from "./page/major/AddMajor";
+import EditMajor from "./page/major/EditMajor";
 
 function App() {
   return (
@@ -65,6 +68,9 @@ function App() {
               path="/dashboard/university-list"
               element={<UniversityList />}
             />
+            <Route path="/dashboard/major-list" element={<MajorList />} />
+            <Route path="dashboard/major-list/add" element={<AddMajor />} />
+            <Route path="dashboard/major-list/:id" element={<EditMajor />} />
             {/* <Route path="/intro" element={<Intro />} /> */}
           </Route>
         </Route>

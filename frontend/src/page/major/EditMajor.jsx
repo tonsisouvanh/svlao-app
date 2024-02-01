@@ -7,21 +7,19 @@ import ErrorMessage from "../../components/typography/ErrorMessage";
 import Spinner from "../../components/ui/Spinner";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import {
-  getUniversityById,
-  universityReset,
-  updateUniversity,
-} from "../../feature/globalData/UniversitySlice";
+  getMajorById,
+  majorReset,
+  updateMajor,
+} from "../../feature/globalData/MajorSlice";
 
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
-const EditUniversity = () => {
+const EditMajor = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const { status, error, universities } = useSelector(
-    (state) => state.university,
-  );
+  const { status, error, majors } = useSelector((state) => state.major);
 
   const {
     register,
@@ -30,11 +28,9 @@ const EditUniversity = () => {
     reset,
   } = useForm({
     defaultValues: {
-      id: universities[0]?._id,
-      englishName: universities[0]?.englishName,
-      laoName: universities[0]?.laoName,
-      vietName: universities[0]?.vietName,
-      shortcut: universities[0]?.shortcut,
+      id: majors[0]?._id,
+      laoMajor: majors[0]?.laoMajor,
+      vietMajor: majors[0]?.vietMajor,
     },
   });
 
@@ -43,82 +39,57 @@ const EditUniversity = () => {
   useEffect(() => {
     if (status.update === "succeeded") {
       toast.success("Update Successfully");
-      dispatch(universityReset());
+      dispatch(majorReset());
     } else if (status.update === "failed") {
       toast.error(error);
-      dispatch(universityReset());
+      dispatch(majorReset());
     }
   }, [status.update, dispatch, error]);
 
   const handleEditSubmit = (data) => {
     if (data) {
-      dispatch(updateUniversity({ ...data, _id: universities[0]?._id }));
+      dispatch(updateMajor({ ...data, _id: majors[0]?._id }));
       setToggleEdit(false);
     } else toast.warning("Input data not valid");
   };
 
   useEffect(() => {
-    dispatch(getUniversityById(id));
+    dispatch(getMajorById(id));
   }, [dispatch, id]);
 
   useEffect(() => {
     if (status.list === "succeeded") {
       reset({
-        id: universities[0]?._d,
-        englishName: universities[0]?.englishName,
-        laoName: universities[0]?.laoName,
-        vietName: universities[0]?.vietName,
-        shortcut: universities[0]?.shortcut,
+        id: majors[0]?._id,
+        laoMajor: majors[0]?.laoMajor,
+        vietMajor: majors[0]?.vietMajor,
       });
     } else if (status.list === "failed") {
       toast.error(error);
     }
-  }, [status.list, reset, universities, error]);
+  }, [status.list, reset, majors, error]);
 
   return (
     <>
       <section className="relative">
-        {universities[0] &&
-        universities.length > 0 &&
-        status.list !== "loading" ? (
+        {majors[0] && majors.length > 0 && status.list !== "loading" ? (
           <div className="container mx-auto px-5 py-24">
             <div className="mb-12 flex w-full flex-col text-center">
               <Breadcrumbs pathname={pathname} />
 
               <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium">
-                Edit ຂໍ້ມູນນັກຮຽນ
+                Edit major
               </h1>
               <div>
-                <p>{universities[0]?._id}</p>
+                <p>{majors[0]?._id}</p>
               </div>
             </div>
             <div className="mx-auto">
               <form
                 onSubmit={handleSubmit(handleEditSubmit)}
-                className="flex flex-wrap items-center justify-center"
+                className="flex flex-col items-center justify-center"
               >
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label flex items-center">
-                      <span className="label-text font-semibold">
-                        English Name
-                        <span className="ml-2 text-error">*</span>
-                      </span>
-                      <ErrorMessage
-                        styling="sm:text-md"
-                        error={errors?.englishName}
-                      />
-                    </div>
-                    <input
-                      {...register("englishName", {
-                        required: "English required",
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
+                <div className="w-full p-2">
                   <label className="form-control w-full">
                     <div className="label flex items-center">
                       <span className="label-text font-semibold">
@@ -127,19 +98,19 @@ const EditUniversity = () => {
                       </span>
                       <ErrorMessage
                         styling="sm:text-md"
-                        error={errors?.vietName}
+                        error={errors?.vietMajor}
                       />
                     </div>
                     <input
-                      {...register("vietName", {
-                        required: "Viet Name is required",
+                      {...register("vietMajor", {
+                        required: "Field required",
                       })}
                       type="text"
                       className={inputStyle}
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-full p-2">
                   <label className="form-control w-full">
                     <div className="label flex items-center">
                       <span className="label-text font-semibold">
@@ -148,34 +119,12 @@ const EditUniversity = () => {
                       </span>
                       <ErrorMessage
                         styling="sm:text-md"
-                        error={errors?.laoName}
+                        error={errors?.laoMajor}
                       />
                     </div>
                     <input
-                      {...register("laoName", {
-                        required: "Lao Name is required",
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label flex items-center">
-                      <span className="label-text font-semibold">
-                        Shortcut
-                        <span className="ml-2 text-error">*</span>
-                      </span>
-                      <ErrorMessage
-                        styling="sm:text-md"
-                        error={errors?.shortcut}
-                      />
-                    </div>
-                    <input
-                      {...register("shortcut", {
-                        required: "Shortcut is required",
+                      {...register("laoMajor", {
+                        required: "Field required",
                       })}
                       type="text"
                       className={inputStyle}
@@ -226,4 +175,4 @@ const EditUniversity = () => {
   );
 };
 
-export default EditUniversity;
+export default EditMajor;

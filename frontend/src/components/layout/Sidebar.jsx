@@ -179,6 +179,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                               ຂໍ້ມູນມະຫາໄລ
                             </NavLink>
                           </li>
+                          <li className={dropdownLiStyle}>
+                            <NavLink
+                              to="/dashboard/major-list"
+                              className={({ isActive }) =>
+                                dropdownNavlinkStyle +
+                                (isActive &&
+                                  "rounded-md border-r-2 bg-white/10 text-white")
+                              }
+                            >
+                              ຂໍ້ມູນຂະແໜງຮຽນ
+                            </NavLink>
+                          </li>
                         </ul>
                       </div>
 

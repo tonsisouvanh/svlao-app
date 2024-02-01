@@ -4,10 +4,6 @@ axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
 
 const initialState = {
   universities: [],
-  // status.list: "idle" | "loading" | "succeeded" | "failed",
-  // status.create: "idle" | "loading" | "succeeded" | "failed",
-  // status.update: "idle" | "loading" | "succeeded" | "failed",
-  // status.remove: "idle" | "loading" | "succeeded" | "failed",
   status: {
     list: "idle" | "loading" | "succeeded" | "failed",
     create: "idle" | "loading" | "succeeded" | "failed",
@@ -30,7 +26,7 @@ export const createUniversity = createAsyncThunk(
       };
 
       const { data } = await axios.post("/api/universities", inputData, config);
-      return data;
+      return { data };
     } catch (error) {
       const message =
         (error.response &&
@@ -152,18 +148,13 @@ export const getUniversityById = createAsyncThunk(
 );
 
 const resetStatus = (state) => {
-  // state.status.list = "idle";
-  // state.status.create = "idle";
-  // state.status.update = "idle";
-  // state.status.remove = "idle";
-  // state.error = "";
   state.status = {
     list: "idle",
     create: "idle",
     update: "idle",
     remove: "idle",
   };
-  state.error = "";
+  state.error = null;
 };
 
 const setError = (state, action) => {
@@ -188,8 +179,6 @@ const universitySlice = createSlice({
       })
       .addCase(listUniversity.rejected, (state, action) => {
         state.status.list = "failed";
-        // state.error = action.error.message || "";
-        // state.error = action.payload || action.error.message || "";
         setError(state, action);
       })
 
@@ -202,8 +191,6 @@ const universitySlice = createSlice({
       })
       .addCase(getUniversityById.rejected, (state, action) => {
         state.status.list = "failed";
-        // state.error = action.error.message || "";
-        // state.error = action.payload || action.error.message || "";
         setError(state, action);
       })
 
@@ -213,13 +200,10 @@ const universitySlice = createSlice({
       })
       .addCase(createUniversity.fulfilled, (state, action) => {
         state.status.create = "succeeded";
-        // state.universities.push(action.payload);
-        state.universities = [...state.universities, action.payload];
+        state.universities = [...state.universities, action.payload.data];
       })
       .addCase(createUniversity.rejected, (state, action) => {
         state.status.create = "failed";
-        // state.error = action.error.message || "";
-        // state.error = action.payload || action.error.message || "";
         setError(state, action);
       })
 
@@ -239,7 +223,6 @@ const universitySlice = createSlice({
       })
       .addCase(updateUniversity.rejected, (state, action) => {
         state.status.update = "failed";
-        // state.error = action.payload;
         setError(state, action);
       })
 
@@ -256,7 +239,6 @@ const universitySlice = createSlice({
       })
       .addCase(removeUniversity.rejected, (state, action) => {
         state.status.remove = "failed";
-        // state.error = action.payload;
         setError(state, action);
       })
       .addMatcher(

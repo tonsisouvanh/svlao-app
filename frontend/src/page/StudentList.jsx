@@ -9,7 +9,7 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import { listUsers } from "../feature/user/UserSlice";
 import Paginate from "../components/paginate/Paginate";
 import { listUniversity } from "../feature/globalData/UniversitySlice";
-import { listMajors } from "../feature/globalData/MajorSlice";
+import { listMajor } from "../feature/globalData/MajorSlice";
 import Breadcrumbs from "../components/Breadcrumbs";
 
 const StudentList = () => {
@@ -47,7 +47,7 @@ const StudentList = () => {
   useEffect(() => {
     dispatch(listUsers({ pageNumber, keyword }));
     dispatch(listUniversity());
-    dispatch(listMajors());
+    dispatch(listMajor());
   }, [dispatch, pageNumber, keyword]);
   if (userStatus === "loading") {
     return <Spinner />;

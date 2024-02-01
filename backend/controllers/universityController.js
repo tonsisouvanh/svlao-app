@@ -39,7 +39,7 @@ const createUniversity = asyncHandler(async (req, res) => {
 });
 
 // @desc    Get university profile
-// @route   GET /api/universitys/profile
+// @route   GET /api/universitys
 // * @access  Private
 const getUniversityProfile = asyncHandler(async (req, res) => {
   const university = await University.findById(req.university._id).populate(
@@ -58,7 +58,7 @@ const getUniversityProfile = asyncHandler(async (req, res) => {
 });
 
 // @desc    Update university profile
-// @route   PUT /api/universitys/profile
+// @route   PUT /api/universitys
 // * @access  Private
 const updateUniversity = asyncHandler(async (req, res) => {
   const universityId = req.params.id;
