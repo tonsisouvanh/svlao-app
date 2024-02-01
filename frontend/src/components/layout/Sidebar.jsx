@@ -191,6 +191,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                               ຂໍ້ມູນຂະແໜງຮຽນ
                             </NavLink>
                           </li>
+                          <li className={dropdownLiStyle}>
+                            <NavLink
+                              to="/dashboard/residence-address-list"
+                              className={({ isActive }) =>
+                                dropdownNavlinkStyle +
+                                (isActive &&
+                                  "rounded-md border-r-2 bg-white/10 text-white")
+                              }
+                            >
+                              ຂໍ້ມູນທີ່ຢູ່ຖາວອນ
+                            </NavLink>
+                          </li>
                         </ul>
                       </div>
 

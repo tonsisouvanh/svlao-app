@@ -13,7 +13,7 @@ router.route("/").post(protect, admin, createMajor).get(getMajors);
 router
   .route("/:id")
   .delete(protect, admin, deleteMajor)
-  .get(protect, getMajorById)
+  .get(getMajorById)
   .put(protect, admin, updateMajor);
 
 export default router;

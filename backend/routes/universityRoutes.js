@@ -13,7 +13,7 @@ router.route("/").post(protect, admin, createUniversity).get(getUniversities);
 router
   .route("/:id")
   .delete(protect, admin, deleteUniversity)
-  .get(protect, getUniversityById)
+  .get(getUniversityById)
   .put(protect, admin, updateUniversity);
 
 export default router;

@@ -3,7 +3,7 @@ import axios from "axios";
 axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
 
 const initialState = {
-  majors: [],
+  residenceAddresses: [],
   status: {
     list: "idle" | "loading" | "succeeded" | "failed",
     create: "idle" | "loading" | "succeeded" | "failed",
@@ -13,8 +13,8 @@ const initialState = {
   error: null,
 };
 
-export const createMajor = createAsyncThunk(
-  "majors/addMajor",
+export const createResidenceAddress = createAsyncThunk(
+  "residenceAddresses/addResidenceAddress",
   async (inputData, thunkAPI) => {
     try {
       const { auth } = thunkAPI.getState().auth;
@@ -25,7 +25,11 @@ export const createMajor = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.post("/api/majors", inputData, config);
+      const { data } = await axios.post(
+        "/api/residenceAddresses",
+        inputData,
+        config,
+      );
       return { data };
     } catch (error) {
       const message =
@@ -39,8 +43,8 @@ export const createMajor = createAsyncThunk(
   },
 );
 
-export const updateMajor = createAsyncThunk(
-  "majors/updateMajor",
+export const updateResidenceAddress = createAsyncThunk(
+  "residenceAddresses/updateResidenceAddress",
   async (inputData, thunkAPI) => {
     try {
       const { auth } = thunkAPI.getState().auth;
@@ -52,7 +56,7 @@ export const updateMajor = createAsyncThunk(
       };
 
       const { data } = await axios.put(
-        `/api/majors/${inputData._id}`,
+        `/api/residenceAddresses/${inputData._id}`,
         {
           ...inputData,
         },
@@ -71,9 +75,9 @@ export const updateMajor = createAsyncThunk(
   },
 );
 
-export const removeMajor = createAsyncThunk(
-  "majors/removeMajor",
-  async (majorId, thunkAPI) => {
+export const removeResidenceAddress = createAsyncThunk(
+  "residenceAddresses/removeResidenceAddress",
+  async (residenceAddressId, thunkAPI) => {
     const { auth } = thunkAPI.getState().auth;
     try {
       const config = {
@@ -82,7 +86,10 @@ export const removeMajor = createAsyncThunk(
           Authorization: `Bearer ${auth.token}`,
         },
       };
-      const res = await axios.delete(`/api/majors/${majorId}`, config);
+      const res = await axios.delete(
+        `/api/residenceAddresses/${residenceAddressId}`,
+        config,
+      );
       const _id = res.data._id;
       return _id;
     } catch (error) {
@@ -97,11 +104,11 @@ export const removeMajor = createAsyncThunk(
   },
 );
 
-export const listMajor = createAsyncThunk(
-  "majors/listMajor",
+export const listResidenceAddress = createAsyncThunk(
+  "residenceAddresses/listResidenceAddress",
   async (thunkAPI) => {
     try {
-      const { data } = await axios.get(`/api/majors`);
+      const { data } = await axios.get(`/api/residenceAddresses`);
       return data;
     } catch (error) {
       const message =
@@ -115,9 +122,9 @@ export const listMajor = createAsyncThunk(
   },
 );
 
-export const getMajorById = createAsyncThunk(
-  "user/getMajorById",
-  async (majorId, thunkAPI) => {
+export const getResidenceAddressById = createAsyncThunk(
+  "user/getResidenceAddressById",
+  async (residenceAddressId, thunkAPI) => {
     try {
       const config = {
         headers: {
@@ -125,7 +132,10 @@ export const getMajorById = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(`/api/majors/${majorId}`, config);
+      const { data } = await axios.get(
+        `/api/residenceAddresses/${residenceAddressId}`,
+        config,
+      );
       return data;
     } catch (error) {
       const message =
@@ -153,8 +163,8 @@ const setError = (state, action) => {
   state.error = action.payload;
 };
 
-const majorSlice = createSlice({
-  name: "major",
+const residenceAddressSlice = createSlice({
+  name: "residenceAddress",
   initialState,
   reducers: {
     reset: resetStatus,
@@ -162,74 +172,78 @@ const majorSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(listMajor.pending, (state) => {
+      .addCase(listResidenceAddress.pending, (state) => {
         state.status.list = "loading";
       })
-      .addCase(listMajor.fulfilled, (state, action) => {
+      .addCase(listResidenceAddress.fulfilled, (state, action) => {
         state.status.list = "succeeded";
-        state.majors = action.payload;
+        state.residenceAddresses = action.payload;
       })
-      .addCase(listMajor.rejected, (state, action) => {
+      .addCase(listResidenceAddress.rejected, (state, action) => {
         state.status.list = "failed";
         setError(state, action);
       })
 
-      .addCase(getMajorById.pending, (state) => {
+      .addCase(getResidenceAddressById.pending, (state) => {
         state.status.list = "loading";
       })
-      .addCase(getMajorById.fulfilled, (state, action) => {
+      .addCase(getResidenceAddressById.fulfilled, (state, action) => {
         state.status.list = "succeeded";
-        state.majors = [{ ...action.payload }];
+        state.residenceAddresses = [{ ...action.payload }];
       })
-      .addCase(getMajorById.rejected, (state, action) => {
+      .addCase(getResidenceAddressById.rejected, (state, action) => {
         state.status.list = "failed";
         setError(state, action);
       })
 
       // ADD
-      .addCase(createMajor.pending, (state) => {
+      .addCase(createResidenceAddress.pending, (state) => {
         state.status.create = "loading";
       })
-      .addCase(createMajor.fulfilled, (state, action) => {
+      .addCase(createResidenceAddress.fulfilled, (state, action) => {
         state.status.create = "succeeded";
-        state.majors = [...state.majors, action.payload.data];
+        state.residenceAddresses = [
+          ...state.residenceAddresses,
+          action.payload.data,
+        ];
       })
-      .addCase(createMajor.rejected, (state, action) => {
+      .addCase(createResidenceAddress.rejected, (state, action) => {
         state.status.create = "failed";
         setError(state, action);
       })
 
       // UPDATE ADMIN
-      .addCase(updateMajor.pending, (state) => {
+      .addCase(updateResidenceAddress.pending, (state) => {
         state.status.update = "loading";
       })
-      .addCase(updateMajor.fulfilled, (state, action) => {
+      .addCase(updateResidenceAddress.fulfilled, (state, action) => {
         state.status.update = "succeeded";
-        const updatedMajorIndex = state.majors.findIndex(
-          (major) => major._id === action.payload._id,
+        const updatedResidenceAddressIndex = state.residenceAddresses.findIndex(
+          (residenceAddress) => residenceAddress._id === action.payload._id,
         );
-        if (updatedMajorIndex !== -1) {
-          state.majors[updatedMajorIndex] = action.payload;
+        if (updatedResidenceAddressIndex !== -1) {
+          state.residenceAddresses[updatedResidenceAddressIndex] =
+            action.payload;
         }
         state.error = null;
       })
-      .addCase(updateMajor.rejected, (state, action) => {
+      .addCase(updateResidenceAddress.rejected, (state, action) => {
         state.status.update = "failed";
         setError(state, action);
       })
 
       // DELETE
-      .addCase(removeMajor.pending, (state) => {
+      .addCase(removeResidenceAddress.pending, (state) => {
         state.status.remove = "loading";
       })
-      .addCase(removeMajor.fulfilled, (state, action) => {
+      .addCase(removeResidenceAddress.fulfilled, (state, action) => {
         state.status.remove = "succeeded";
-        state.majors = state.majors.filter(
-          (major) => major._id !== action.payload,
+        state.residenceAddresses = state.residenceAddresses.filter(
+          (residenceAddress) => residenceAddress._id !== action.payload,
         );
         state.error = null;
       })
-      .addCase(removeMajor.rejected, (state, action) => {
+      .addCase(removeResidenceAddress.rejected, (state, action) => {
         state.status.remove = "failed";
         setError(state, action);
       })
@@ -242,6 +256,6 @@ const majorSlice = createSlice({
   },
 });
 
-export const { reset: majorReset } = majorSlice.actions;
+export const { reset: residenceAddressReset } = residenceAddressSlice.actions;
 
-export default majorSlice.reducer;
+export default residenceAddressSlice.reducer;

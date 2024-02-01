@@ -6,13 +6,16 @@ const Breadcrumbs = ({ pathname }) => {
   return (
     <div className="breadcrumbs text-sm">
       <ul>
-        {pathParts.map((part, index) => (
-          <li key={index}>
-            <Link to={`/${pathParts.slice(0, index + 1).join("/")}`}>
-              {part}
-            </Link>
-          </li>
-        ))}
+        {pathParts.map((part, index) => {
+          const formattedPart = part.replace(/-/g, " "); // Replace '-' with ' '
+          return (
+            <li key={index}>
+              <Link to={`/${pathParts.slice(0, index + 1).join("/")}`}>
+                {formattedPart}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

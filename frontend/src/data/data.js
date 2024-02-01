@@ -571,3 +571,7 @@ export const MAJOR_COLUMNS = [
   { Header: "Viet name", accessor: "vietMajor" },
   { Header: "Lao name", accessor: "laoMajor" },
 ];
+export const RESIDENCEADDRESS_COLUMNS = [
+  { Header: "Address", accessor: "address" },
+  { Header: "Location (KTX)", accessor: "location" },
+];

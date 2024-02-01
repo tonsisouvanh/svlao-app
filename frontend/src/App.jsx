@@ -23,6 +23,9 @@ import EditUniversity from "./page/university/EditUniversity";
 import MajorList from "./page/major/MajorList";
 import AddMajor from "./page/major/AddMajor";
 import EditMajor from "./page/major/EditMajor";
+import ResidenceAddressList from "./page/residenceAddress/ResidenceAddressList";
+import EditResidenceAddress from "./page/residenceAddress/EditResidenceAddress";
+import AddResidenceAddress from "./page/residenceAddress/AddResidenceAddress";
 
 function App() {
   return (
@@ -54,7 +57,6 @@ function App() {
               element={<EditStudent />}
             />
             <Route path="dashboard/studentlist/add" element={<AddStudent />} />
-
             <Route
               path="dashboard/university-list/add"
               element={<AddUniversity />}
@@ -68,9 +70,31 @@ function App() {
               path="/dashboard/university-list"
               element={<UniversityList />}
             />
+            {/* Major */}
             <Route path="/dashboard/major-list" element={<MajorList />} />
             <Route path="dashboard/major-list/add" element={<AddMajor />} />
             <Route path="dashboard/major-list/:id" element={<EditMajor />} />
+            {/* Residence Address */}
+            <Route
+              path="/dashboard/residence-address-list"
+              element={<ResidenceAddressList />}
+            />
+            <Route
+              path="dashboard/residence-address-list/add"
+              element={<AddResidenceAddress />}
+            />
+            <Route
+              path="dashboard/residence-address-list/:id"
+              element={<EditResidenceAddress />}
+            />
+
+            {/* Perminent Address */}
+            {/* <Route
+              path="/dashboard/perminent-address-list"
+              element={<PerminentAddressList />}
+            /> */}
+            {/* <Route path="dashboard/major-list/add" element={<AddMajor />} /> */}
+            {/* <Route path="dashboard/major-list/:id" element={<EditMajor />} /> */}
             {/* <Route path="/intro" element={<Intro />} /> */}
           </Route>
         </Route>

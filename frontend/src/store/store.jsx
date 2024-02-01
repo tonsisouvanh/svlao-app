@@ -5,6 +5,7 @@ import studentsReducer from "../feature/student/StudentSlice";
 import universitiesReducer from "../feature/globalData/UniversitySlice";
 import majorsReducer from "../feature/globalData/MajorSlice";
 import singleUserReducer from "../feature/user/SingleUserSlice";
+import residenceAddressReducer from "../feature/globalData/ResidenceAddressSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -13,6 +14,7 @@ export const store = configureStore({
     students: studentsReducer,
     university: universitiesReducer,
     major: majorsReducer,
+    residenceAddress: residenceAddressReducer,
   },
 });
 

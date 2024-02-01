@@ -122,11 +122,9 @@ export const getUniversityById = createAsyncThunk(
   "user/getUniversityById",
   async (universityId, thunkAPI) => {
     try {
-      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
 
