@@ -61,20 +61,17 @@ const getUniversityProfile = asyncHandler(async (req, res) => {
 // @route   PUT /api/universitys/profile
 // * @access  Private
 const updateUniversity = asyncHandler(async (req, res) => {
-  const universityId = req.university._id;
+  const universityId = req.params.id;
   const updatedUniversityData = req.body;
   const updatedUniversity = await University.findByIdAndUpdate(
     universityId,
-    updatedUniversityData,
+    { ...updatedUniversityData },
     {
       new: true,
     }
   );
   if (updatedUniversity) {
-    res.json({
-      ...updatedUniversity._doc,
-      token: generateToken(updatedUniversity._id),
-    });
+    res.json(updatedUniversity);
   } else {
     res.status(404);
     throw new Error("University not found");
@@ -107,10 +104,7 @@ const deleteUniversity = asyncHandler(async (req, res) => {
 // @route   GET /api/universitys/:id
 //* @access  Private/Admin
 const getUniversityById = asyncHandler(async (req, res) => {
-  const university = await University.findById(req.params.id).select(
-    "-password"
-  );
-
+  const university = await University.findById(req.params.id);
   if (university) {
     res.json(university);
   } else {
@@ -124,4 +118,5 @@ export {
   updateUniversity,
   createUniversity,
   deleteUniversity,
+  getUniversityById
 };

@@ -19,6 +19,7 @@ import Dashboard from "./page/Dashboard";
 import AddStudent from "./page/AddStudent";
 import UniversityList from "./page/university/UniversityList";
 import AddUniversity from "./page/university/AddUniversity";
+import EditUniversity from "./page/university/EditUniversity";
 
 function App() {
   return (
@@ -54,6 +55,10 @@ function App() {
             <Route
               path="dashboard/university-list/add"
               element={<AddUniversity />}
+            />
+            <Route
+              path="dashboard/university-list/:id"
+              element={<EditUniversity />}
             />
             <Route path="/profile" element={<UserProfile />} />
             <Route

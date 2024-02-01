@@ -1,18 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import toast from "react-hot-toast";
 import axios from "axios";
 axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
 
 const initialState = {
   universities: [],
-  listStatus: "idle" | "loading" | "succeeded" | "failed",
-  createStatus: "idle" | "loading" | "succeeded" | "failed",
-  updateStatus: "idle" | "loading" | "succeeded" | "failed",
-  removeStatus: "idle" | "loading" | "succeeded" | "failed",
-  error: "",
+  // status.list: "idle" | "loading" | "succeeded" | "failed",
+  // status.create: "idle" | "loading" | "succeeded" | "failed",
+  // status.update: "idle" | "loading" | "succeeded" | "failed",
+  // status.remove: "idle" | "loading" | "succeeded" | "failed",
+  status: {
+    list: "idle" | "loading" | "succeeded" | "failed",
+    create: "idle" | "loading" | "succeeded" | "failed",
+    update: "idle" | "loading" | "succeeded" | "failed",
+    remove: "idle" | "loading" | "succeeded" | "failed",
+  },
+  error: null,
 };
 
-// ADMIN ADD STUDENT
 export const createUniversity = createAsyncThunk(
   "universities/addUniversity",
   async (inputData, thunkAPI) => {
@@ -39,20 +43,38 @@ export const createUniversity = createAsyncThunk(
   },
 );
 
-// ADMIN UPDATE
 export const updateUniversity = createAsyncThunk(
   "universities/updateUniversity",
-  async (updatedStudent, { rejectWithValue }) => {
+  async (inputData, thunkAPI) => {
     try {
-      console.log("first");
+      const { auth } = thunkAPI.getState().auth;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `/api/universities/${inputData._id}`,
+        {
+          ...inputData,
+        },
+        config,
+      );
+      return data;
     } catch (error) {
-      const errorMessage = error.message;
-      toast.error(errorMessage);
-      return rejectWithValue(errorMessage);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   },
 );
-// Role: Admin
+
 export const removeUniversity = createAsyncThunk(
   "universities/removeUniversity",
   async (universityId, thunkAPI) => {
@@ -100,12 +122,52 @@ export const listUniversity = createAsyncThunk(
   },
 );
 
+export const getUniversityById = createAsyncThunk(
+  "user/getUniversityById",
+  async (universityId, thunkAPI) => {
+    try {
+      const { auth } = thunkAPI.getState().auth;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+      };
+
+      const { data } = await axios.get(
+        `/api/universities/${universityId}`,
+        config,
+      );
+      return data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  },
+);
+
 const resetStatus = (state) => {
-  state.listStatus = "idle";
-  state.createStatus = "idle";
-  state.updateStatus = "idle";
-  state.removeStatus = "idle";
+  // state.status.list = "idle";
+  // state.status.create = "idle";
+  // state.status.update = "idle";
+  // state.status.remove = "idle";
+  // state.error = "";
+  state.status = {
+    list: "idle",
+    create: "idle",
+    update: "idle",
+    remove: "idle",
+  };
   state.error = "";
+};
+
+const setError = (state, action) => {
+  state.error = action.payload;
 };
 
 const universitySlice = createSlice({
@@ -113,65 +175,96 @@ const universitySlice = createSlice({
   initialState,
   reducers: {
     reset: resetStatus,
+    setError,
   },
   extraReducers: (builder) => {
     builder
       .addCase(listUniversity.pending, (state) => {
-        state.listStatus = "loading";
+        state.status.list = "loading";
       })
       .addCase(listUniversity.fulfilled, (state, action) => {
-        state.listStatus = "succeeded";
+        state.status.list = "succeeded";
         state.universities = action.payload;
       })
       .addCase(listUniversity.rejected, (state, action) => {
-        state.listStatus = "failed";
-        state.error = action.error.message || "";
+        state.status.list = "failed";
+        // state.error = action.error.message || "";
+        // state.error = action.payload || action.error.message || "";
+        setError(state, action);
       })
+
+      .addCase(getUniversityById.pending, (state) => {
+        state.status.list = "loading";
+      })
+      .addCase(getUniversityById.fulfilled, (state, action) => {
+        state.status.list = "succeeded";
+        state.universities = [{ ...action.payload }];
+      })
+      .addCase(getUniversityById.rejected, (state, action) => {
+        state.status.list = "failed";
+        // state.error = action.error.message || "";
+        // state.error = action.payload || action.error.message || "";
+        setError(state, action);
+      })
+
       // ADD
       .addCase(createUniversity.pending, (state) => {
-        state.createStatus = "loading";
+        state.status.create = "loading";
       })
       .addCase(createUniversity.fulfilled, (state, action) => {
-        state.createStatus = "succeeded";
-        state.universities.push(action.payload);
+        state.status.create = "succeeded";
+        // state.universities.push(action.payload);
+        state.universities = [...state.universities, action.payload];
       })
       .addCase(createUniversity.rejected, (state, action) => {
-        state.createStatus = "failed";
-        state.error = action.error.message || "";
+        state.status.create = "failed";
+        // state.error = action.error.message || "";
+        // state.error = action.payload || action.error.message || "";
+        setError(state, action);
       })
-      // // UPDATE ADMIN
-      // .addCase(updateUniversity.pending, (state) => {
-      //   state.status = "loading";
-      // })
-      // .addCase(updateUniversity.fulfilled, (state, action) => {
-      //   state.status = "succeeded";
-      //   const updatedStudent = action.payload;
-      //   const studentIndex = state.universities.findIndex(
-      //     (student) => student.id === updatedStudent.id,
-      //   );
-      //   if (studentIndex !== -1) {
-      //     state.universities[studentIndex] = updatedStudent;
-      //   }
-      // })
-      // .addCase(updateUniversity.rejected, (state, action) => {
-      //   state.status = "failed";
-      //   state.error = action.error.message || "";
-      // })
-      // // DELETE
+
+      // UPDATE ADMIN
+      .addCase(updateUniversity.pending, (state) => {
+        state.status.update = "loading";
+      })
+      .addCase(updateUniversity.fulfilled, (state, action) => {
+        state.status.update = "succeeded";
+        const updatedUniversityIndex = state.universities.findIndex(
+          (university) => university._id === action.payload._id,
+        );
+        if (updatedUniversityIndex !== -1) {
+          state.universities[updatedUniversityIndex] = action.payload;
+        }
+        state.error = null;
+      })
+      .addCase(updateUniversity.rejected, (state, action) => {
+        state.status.update = "failed";
+        // state.error = action.payload;
+        setError(state, action);
+      })
+
+      // DELETE
       .addCase(removeUniversity.pending, (state) => {
-        state.removeStatus = "loading";
+        state.status.remove = "loading";
       })
       .addCase(removeUniversity.fulfilled, (state, action) => {
-        state.removeStatus = "succeeded";
+        state.status.remove = "succeeded";
         state.universities = state.universities.filter(
           (university) => university._id !== action.payload,
         );
         state.error = null;
       })
       .addCase(removeUniversity.rejected, (state, action) => {
-        state.removeStatus = "failed";
-        state.error = action.payload;
-      });
+        state.status.remove = "failed";
+        // state.error = action.payload;
+        setError(state, action);
+      })
+      .addMatcher(
+        (action) => action.type.endsWith("/pending"),
+        (state) => {
+          state.error = null;
+        },
+      );
   },
 });
 

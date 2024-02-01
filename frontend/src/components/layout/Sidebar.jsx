@@ -169,7 +169,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           </li>
                           <li className={dropdownLiStyle}>
                             <NavLink
-                              to="/dashboard/university-list/"
+                              to="/dashboard/university-list"
                               className={({ isActive }) =>
                                 dropdownNavlinkStyle +
                                 (isActive &&

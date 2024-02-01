@@ -1,23 +1,27 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import Spinner from "../../components/ui/Spinner";
-import {
-  createUniversity,
-  universityReset,
-} from "../../feature/globalData/UniversitySlice";
-import Breadcrumbs from "../../components/Breadcrumbs";
+import { useLocation, useParams } from "react-router-dom";
 import ErrorMessage from "../../components/typography/ErrorMessage";
+import Spinner from "../../components/ui/Spinner";
+import Breadcrumbs from "../../components/Breadcrumbs";
+import {
+  getUniversityById,
+  universityReset,
+  updateUniversity,
+} from "../../feature/globalData/UniversitySlice";
+
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
-const AddUniversity = () => {
-  const navigate = useNavigate();
+const EditUniversity = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
+  const { id } = useParams();
 
-  const { createStatus, error } = useSelector((state) => state.university);
+  const { status, error, universities } = useSelector(
+    (state) => state.university,
+  );
 
   const {
     register,
@@ -26,51 +30,67 @@ const AddUniversity = () => {
     reset,
   } = useForm({
     defaultValues: {
-      laoName: "ມລ ",
+      id: universities[0]?._d,
+      englishName: universities[0]?.englishName,
+      laoName: universities[0]?.laoName,
+      vietName: universities[0]?.vietName,
+      shortcut: universities[0]?.shortcut,
     },
   });
 
+  const [toggleEdit, setToggleEdit] = useState(false);
+
   useEffect(() => {
-    if (createStatus === "succeeded") {
-      toast.success("Create Successfully");
+    if (status.update === "succeeded") {
+      toast.success("Update Successfully");
       dispatch(universityReset());
-      reset({});
-      navigate(-1);
-    } else if (createStatus === "failed") {
+    } else if (status.update === "failed") {
       toast.error(error);
       dispatch(universityReset());
     }
-  }, [createStatus, dispatch, error, navigate, reset]);
+  }, [status.update, dispatch, error]);
 
   const handleEditSubmit = (data) => {
     if (data) {
-      const confirmed = window.confirm(
-        "Are you sure you want to update the university?",
-      );
-
-      if (confirmed) {
-        dispatch(
-          createUniversity({ ...data, shortcut: data.shortcut.toUpperCase() }),
-        );
-      } else {
-        console.log("Create canceled");
-      }
-    } else {
-      toast.warning("Input data not valid");
-    }
+      dispatch(updateUniversity({ ...data, _id: universities[0]?._id }));
+      setToggleEdit(false);
+    } else toast.warning("Input data not valid");
   };
+
+  useEffect(() => {
+    dispatch(getUniversityById(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (status.list === "succeeded") {
+      reset({
+        id: universities[0]?._d,
+        englishName: universities[0]?.englishName,
+        laoName: universities[0]?.laoName,
+        vietName: universities[0]?.vietName,
+        shortcut: universities[0]?.shortcut,
+      });
+    } else if (status.list === "failed") {
+      toast.error(error);
+    }
+  }, [status.list, reset, universities, error]);
 
   return (
     <>
       <section className="relative">
-        {createStatus !== "loading" ? (
+        {universities[0] &&
+        universities.length > 0 &&
+        status.list !== "loading" ? (
           <div className="container mx-auto px-5 py-24">
             <div className="mb-12 flex w-full flex-col text-center">
               <Breadcrumbs pathname={pathname} />
 
               <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium">
-                Universities
+                Edit ຂໍ້ມູນນັກຮຽນ
               </h1>
+              <div>
+                <p>{universities[0]?._id}</p>
+              </div>
             </div>
             <div className="mx-auto">
               <form
@@ -163,17 +183,37 @@ const AddUniversity = () => {
                   </label>
                 </div>
                 <div className="w-full space-x-4 p-2">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    disabled={createStatus === "loading" ? true : false}
-                  >
-                    {createStatus === "loading" ? (
-                      <span className="loading loading-spinner loading-xs"></span>
-                    ) : (
-                      "Submit"
-                    )}
-                  </button>
+                  {!toggleEdit && (
+                    <button
+                      type="button"
+                      onClick={() => setToggleEdit(true)}
+                      className="btn btn-primary"
+                    >
+                      Update
+                    </button>
+                  )}
+                  {toggleEdit && (
+                    <>
+                      <button
+                        type="submit"
+                        className="btn btn-primary"
+                        disabled={status.update === "loading" ? true : false}
+                      >
+                        {status.update === "loading" ? (
+                          <span className="loading loading-spinner loading-xs"></span>
+                        ) : (
+                          "Submit"
+                        )}
+                      </button>
+                      <button
+                        onClick={() => setToggleEdit(false)}
+                        type="button"
+                        className="btn btn-error btn-outline"
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  )}
                 </div>
               </form>
             </div>
@@ -186,4 +226,4 @@ const AddUniversity = () => {
   );
 };
 
-export default AddUniversity;
+export default EditUniversity;
