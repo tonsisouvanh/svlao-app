@@ -10,6 +10,7 @@ import {
   getUserById,
   updateUser,
   createUser,
+  resetPassword,
 } from "../controllers/userController.js";
 import {
   protect,
@@ -19,6 +20,7 @@ import {
 
 router.post("/create", protect, admin, createUser);
 router.route("/").post(registerUser).get(protect, admin, getUsers);
+router.route("/reset-password").post(protect, admin, resetPassword);
 router.route("/login").post(activeUserCheck, authUser);
 router
   .route("/profile")

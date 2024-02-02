@@ -134,10 +134,15 @@ const Signup = () => {
                 type={showPass ? "text" : "password"}
                 className="input input-bordered w-full max-w-xs"
               />
-              <ErrorMessage
+              {/* <ErrorMessage
                 styling="mt-3 sm:text-md"
                 error={errors?.password}
-              />
+              /> */}
+              {errors.password && (
+                <span className="text-xs italic mt-3 text-red-400">
+                  Password must be at least 6 character
+                </span>
+              )}
             </div>
           </div>
           <div className="mb-4 flex justify-end gap-3">

@@ -118,48 +118,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Get all users
-// @route   GET /api/users
-// @access  Private/Admin
-// const getUsers = asyncHandler(async (req, res) => {
-//   const pageSize = 10;
-//   const page = Number(req.query.pageNumber) || 1;
-
-//   const searchFields = [
-//     "_id",
-//     "studentId",
-//     "emailAddress",
-//     "fullname.englishFirstname",
-//   ]; // Add more fields as needed
-//   let keyword;
-//   if (req.query.keyword) {
-//     if (req.query.keyword === "all") {
-//       keyword === "all";
-//     } else {
-//       keyword = {
-//         $or: searchFields.map((field) => ({
-//           [field]: {
-//             $regex: req.query.keyword,
-//             $options: "i",
-//           },
-//         })),
-//       };
-//     }
-//   } else keyword = {};
-//   const count = await User.countDocuments({ ...keyword });
-
-//   const users = await User.find({ ...keyword })
-//     .limit(pageSize)
-//     .skip(pageSize * (page - 1));
-//   // const users =
-//   //   keyword === "all"
-//   //     ? await User.find({})
-//   //     : await User.find({ ...keyword })
-//   //         .limit(pageSize)
-//   //         .skip(pageSize * (page - 1));
-//   res.json({ users, page, pages: Math.ceil(count / pageSize) });
-// });
-
 const getUsers = asyncHandler(async (req, res) => {
   const pageSize = 10;
   const page = Number(req.query.pageNumber) || 1;
@@ -252,4 +210,5 @@ export {
   getUserById,
   updateUser,
   createUser,
+  resetPassword,
 };
