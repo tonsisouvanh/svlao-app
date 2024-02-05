@@ -18,9 +18,11 @@ import { updateUser, userReset } from "../feature/user/UserSlice";
 import { listUniversity } from "../feature/globalData/UniversitySlice";
 import altImage from "../assets/img/profile.png";
 import Breadcrumbs from "../components/Breadcrumbs";
+import ResetPasswordModal from "../components/modal/ResetPasswordModal";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const EditStudent = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -29,7 +31,11 @@ const EditStudent = () => {
   const { singleUser, status, error } = useSelector(
     (state) => state.singleUser,
   );
-  const { updateStatus, error: userError } = useSelector((state) => state.user);
+  const {
+    updateStatus,
+    createStatus,
+    error: userError,
+  } = useSelector((state) => state.user);
   const { universities } = useSelector((state) => state.university);
 
   const {
@@ -87,6 +93,17 @@ const EditStudent = () => {
   };
 
   useEffect(() => {
+    if (createStatus === "succeeded") {
+      toast.success("Reset Successfully");
+      dispatch(userReset());
+      reset({});
+    } else if (createStatus === "failed") {
+      toast.error(error);
+      dispatch(userReset());
+    }
+  }, [createStatus, dispatch, error, reset]);
+
+  useEffect(() => {
     dispatch(getUserById(id));
   }, [dispatch, id]);
 
@@ -99,6 +116,17 @@ const EditStudent = () => {
   }, [status, reset, singleUser, error]);
   return (
     <>
+      {isModalOpen && (
+        <ResetPasswordModal
+          title={"Reset user password"}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          userData={{
+            emailAddress: singleUser.emailAddress,
+            id: singleUser._id,
+          }}
+        />
+      )}
       <section className="relative">
         {singleUser && status !== "loading" ? (
           <div className="container mx-auto px-5 py-24">
@@ -128,6 +156,13 @@ const EditStudent = () => {
               </div>
             </div>
             <div className="mx-auto">
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="btn btn-neutral btn-outline btn-sm"
+              >
+                Reset password
+              </button>
+
               <form
                 onSubmit={handleSubmit(handleEditSubmit)}
                 className="flex flex-wrap items-center justify-center"

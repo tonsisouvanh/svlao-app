@@ -4,8 +4,9 @@ const majorSchema = mongoose.Schema(
   {
     vietMajor: {
       type: String,
+      require: true,
     },
-    laoMajor: { type: String },
+    laoMajor: { type: String, require: true },
   },
   { timestamps: true }
 );

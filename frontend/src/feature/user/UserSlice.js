@@ -13,6 +13,39 @@ const initialState = {
   pages: 0,
 };
 
+export const resetPassword = createAsyncThunk(
+  "user/resetPassword",
+  async (userData, thunkAPI) => {
+    try {
+      const { auth } = thunkAPI.getState().auth;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+      };
+
+      await axios.post(
+        `/api/users/resetPassword`,
+        {
+          userId: userData.userId,
+          password: userData.newPassword,
+          emailAddress: userData.emailAddress,
+        },
+        config,
+      );
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  },
+);
+
 // Login user
 export const listUsers = createAsyncThunk(
   "user/listUsers",
@@ -169,9 +202,8 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(listUsers.rejected, (state, action) => {
-        console.log("signin.reject", action.payload);
         state.listStatus = "failed";
-        state.user = null;
+        state.users = null;
         state.error = action.payload;
       })
       .addCase(updateUser.pending, (state) => {
@@ -212,6 +244,18 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(createStudent.rejected, (state, action) => {
+        state.createStatus = "failed";
+        state.error = action.payload;
+      })
+
+      .addCase(resetPassword.pending, (state) => {
+        state.createStatus = "loading";
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.createStatus = "succeeded";
+        state.error = null;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
         state.createStatus = "failed";
         state.error = action.payload;
       });

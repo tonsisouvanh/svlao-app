@@ -1,6 +1,90 @@
 import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
 import User from "../models/userModel.js";
+import crypto from "crypto";
+import bcrypt from "bcryptjs";
+import Token from "../models/tokenModel.js";
+
+// const requestPasswordReset = asyncHandler(async (req, res) => {
+//   const { emailAddress } = req.body;
+//   const user = await User.findOne({ emailAddress });
+
+//   if (!user) throw new Error("User does not exist");
+//   let token = await Token.findOne({ userId: user._id });
+//   if (token) await token.deleteOne();
+//   let resetToken = crypto.randomBytes(32).toString("hex");
+//   const hash = await bcrypt.hash(resetToken, Number(process.env.JWT_SECRET));
+//   await new Token({
+//     userId: user._id,
+//     token: hash,
+//     createdAt: Date.now(),
+//   }).save();
+
+//   const link = `${`http://localhost:3000`}/passwordReset?token=${resetToken}&id=${
+//     user._id
+//   }`;
+//   // sendEmail(
+//   //   user.emailAddress,
+//   //   "Password Reset Request",
+//   //   { name: user.fullname.laoName, link: link },
+//   //   "./template/requestResetPassword.handlebars"
+//   // );
+//   res.json({
+//     link: link,
+//   });
+// });
+
+// @desc    Auth user & get token
+// @route   POST /api/users/resetPassword
+// @access  Private
+const resetPassword = asyncHandler(async (req, res) => {
+  const { userId, password, emailAddress } = req.body;
+  console.log(
+    "🚀 ~ resetPassword ~ userId, password, emailAddress:",
+    userId,
+    password,
+    emailAddress
+  );
+  // reset token
+  const user = await User.findOne({ emailAddress });
+  if (!user) throw new Error("User does not exist");
+  let tokenObj = await Token.findOne({ userId: user._id });
+  if (tokenObj) await tokenObj.deleteOne();
+
+  let resetToken = crypto.randomBytes(32).toString("hex");
+  const hashToken = await bcrypt.hash(
+    resetToken,
+    Number(process.env.JWT_SECRET)
+  );
+
+  await new Token({
+    userId: user._id,
+    token: hashToken,
+    createdAt: Date.now(),
+  }).save();
+
+  // reset password
+  let passwordResetToken = await Token.findOne({ userId });
+  if (!passwordResetToken) {
+    throw new Error("Invalid or expired password reset token");
+  }
+  const isValid = await bcrypt.compare(resetToken, passwordResetToken.token);
+  if (!isValid) {
+    throw new Error("Invalid or expired password reset token");
+  }
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(password, salt);
+  await User.findByIdAndUpdate(
+    userId,
+    { $set: { password: hash } },
+    { new: true }
+  );
+  await passwordResetToken.deleteOne();
+
+  res.json({
+    message: "Password reset successful",
+  });
+});
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -35,7 +119,6 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("User already exists");
   }
-
   const user = await User.create({
     fullname,
     emailAddress,
@@ -43,6 +126,13 @@ const registerUser = asyncHandler(async (req, res) => {
   });
   if (user) {
     const { password, ...userWithoutPassword } = user._doc;
+    // const token = generateToken(user._id);
+
+    // await Token.create({
+    //   userId: user._id,
+    //   token: token,
+    // });
+
     res.status(201).json({
       _id: user._id,
       ...userWithoutPassword,
@@ -53,6 +143,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("Invalid user data");
   }
 });
+
 // @desc    Create a new user
 // @route   POST /api/users/create
 // @access  private
