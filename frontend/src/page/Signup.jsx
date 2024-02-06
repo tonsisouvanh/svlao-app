@@ -35,11 +35,11 @@ const Signup = () => {
   };
 
   useEffect(() => {
-    if (status === "succeeded") {
+    if (status.signup === "succeeded") {
       toast.success("Sign up successful");
       dispatch(authReset());
       navigate("/signin");
-    } else if (status === "failed") {
+    } else if (status.signup === "failed") {
       toast.error(error);
       dispatch(authReset());
     }
@@ -139,14 +139,14 @@ const Signup = () => {
                 error={errors?.password}
               /> */}
               {errors.password && (
-                <span className="text-xs italic mt-3 text-red-400">
+                <span className="mt-3 text-xs italic text-red-400">
                   Password must be at least 6 character
                 </span>
               )}
             </div>
           </div>
           <div className="mb-4 flex justify-end gap-3">
-            {status === "loading" ? (
+            {status.signup === "loading" ? (
               <button className="btn flex-grow">
                 <span className="loading loading-spinner"></span>
                 loading

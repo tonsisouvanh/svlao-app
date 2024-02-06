@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { BiUserCircle } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../components/ui/Spinner";
 import {
@@ -10,34 +9,30 @@ import {
   perminentAddressList,
   residenceAddressList,
 } from "../data/data";
-import { authReset, updateUserProfile } from "../feature/auth/AuthSlice";
+import {
+  authReset,
+  updateUserProfile,
+} from "../feature/auth/AuthSlice";
 import { listUniversity } from "../feature/globalData/UniversitySlice";
-import { getYearOptions } from "../utils/utils";
+import { getYearOptions, replaceImage } from "../utils/utils";
 
-const inputStyle =
-  "input border-slate-50/5 input-bordered w-full text-base-content/80";
+const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const UserProfile = () => {
   const yearOptions = getYearOptions();
   const {
     auth: studentData,
-    status: authStatus,
-    error: authError,
+    status,
+    error,
   } = useSelector((state) => state.auth);
-  const { universities, status: universityStatus } = useSelector(
-    (state) => state.university,
-  );
+  const { universities } = useSelector((state) => state.university);
+  const dispatch = useDispatch();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    reset,
-  } = useForm({ defaultValues: studentData });
+  const { register, handleSubmit, setValue, reset } = useForm({
+    defaultValues: studentData,
+  });
 
   const [toggleEdit, setToggleEdit] = useState(false);
-  const dispatch = useDispatch((state) => state.user);
 
   const handleSelectDegree = (value) => {
     const vietDegree = degreeList.find((d) => d.laoDegree === value);
@@ -63,14 +58,18 @@ const UserProfile = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (authStatus === "succeeded") {
+    reset(studentData);
+  }, [studentData, reset]);
+
+  useEffect(() => {
+    if (status.setInfo === "succeeded") {
       toast.success("Update Successfully");
       dispatch(authReset());
-    } else if (authStatus === "failed") {
-      toast.error(authError);
+    } else if (status.setInfo === "failed") {
+      toast.error(error);
       dispatch(authReset());
     }
-  }, [authStatus, dispatch, authError]);
+  }, [status.setInfo, dispatch, error]);
 
   const handleEditSubmit = (data) => {
     if (data) {
@@ -78,23 +77,20 @@ const UserProfile = () => {
       setToggleEdit(false);
     } else toast.warning("Input data not valid");
   };
+
   return (
     <>
       <section className="relative">
-        {studentData && authStatus !== "loading" ? (
+        {studentData && status.setInfo !== "loading" ? (
           <div className="container mx-auto px-5 py-24">
             <div className="mb-12 flex w-full flex-col text-center">
-              <h1 className="title-font font-bold m:text-3xl mb-4 text-2xl">
+              <h1 className="title-font m:text-3xl mb-4 text-2xl font-bold">
                 Profile
               </h1>
               <div>
                 <div className="avatar">
                   <div className="w-48 rounded">
-                    {studentData?.profileImg ? (
-                      <img src={studentData?.profileImg} />
-                    ) : (
-                      <BiUserCircle className="h-full w-full text-primary" />
-                    )}
+                    <img onError={replaceImage} src={studentData?.profileImg} />
                   </div>
                 </div>
               </div>
@@ -112,9 +108,10 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <input
-                      {...register("fullname.englishFirstname", {})}
+                      {...register("fullname.englishFirstname", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       type="text"
-                      // placeholder="Enter English Firstname"
                       className={inputStyle}
                     />
                   </label>
@@ -125,9 +122,10 @@ const UserProfile = () => {
                       <span className="label-text font-semibold">Nickname</span>
                     </div>
                     <input
-                      {...register("fullname.nickName", {})}
+                      {...register("fullname.nickName", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       type="text"
-                      // placeholder="Enter Nickname"
                       className={inputStyle}
                     />
                   </label>
@@ -138,9 +136,10 @@ const UserProfile = () => {
                       <span className="label-text font-semibold">Lao Name</span>
                     </div>
                     <input
-                      {...register("fullname.laoName", {})}
+                      {...register("fullname.laoName", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       type="text"
-                      // placeholder="Enter Lao Name"
                       className={inputStyle}
                     />
                   </label>
@@ -153,9 +152,10 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <input
-                      {...register("fullname.englishLastname", {})}
+                      {...register("fullname.englishLastname", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       type="text"
-                      // placeholder="Enter English Lastname"
                       className={inputStyle}
                     />
                   </label>
@@ -168,7 +168,9 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <select
-                      {...register("university.shortcut", {})}
+                      {...register("university.shortcut", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       onChange={(e) => handleSelectUniversity(e.target.value)}
                       className={
                         "select select-bordered w-full text-base-content/80"
@@ -190,7 +192,9 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <select
-                      {...register("duration.from", {})}
+                      {...register("duration.from", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       className={
                         "select select-bordered w-full text-base-content/80"
                       }
@@ -211,7 +215,9 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <select
-                      {...register("duration.to", {})}
+                      {...register("duration.to", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       className={
                         "select select-bordered w-full text-base-content/80"
                       }
@@ -232,9 +238,10 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <input
-                      {...register("phone.phoneNumber", {})}
+                      {...register("phone.phoneNumber", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       type="text"
-                      // placeholder="Enter Phone Number"
                       className={inputStyle}
                     />
                   </label>
@@ -247,9 +254,10 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <input
-                      {...register("phone.emergency", {})}
+                      {...register("phone.emergency", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       type="text"
-                      // placeholder="Enter Emergency"
                       className={inputStyle}
                     />
                   </label>
@@ -262,9 +270,10 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <input
-                      {...register("phone.relationship", {})}
+                      {...register("phone.relationship", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       type="text"
-                      // placeholder="Enter Relationship"
                       className={inputStyle}
                     />
                   </label>
@@ -278,7 +287,9 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <select
-                      {...register("degree.laoDegree", {})}
+                      {...register("degree.laoDegree", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       onChange={(e) => handleSelectDegree(e.target.value)}
                       className={
                         "select select-bordered w-full text-base-content/80"
@@ -300,9 +311,10 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <input
-                      {...register("visa.from", {})}
+                      {...register("visa.from", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       type="date"
-                      // placeholder="Enter Visa From"
                       className={inputStyle}
                     />
                   </label>
@@ -313,9 +325,10 @@ const UserProfile = () => {
                       <span className="label-text font-semibold">Visa To</span>
                     </div>
                     <input
-                      {...register("visa.to", {})}
+                      {...register("visa.to", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       type="date"
-                      // placeholder="Enter Visa To"
                       className={inputStyle}
                     />
                   </label>
@@ -328,7 +341,9 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <select
-                      {...register("residenceAddress.location", {})}
+                      {...register("residenceAddress.location", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       onChange={(e) =>
                         handleSelectResidenceAddress(e.target.value)
                       }
@@ -352,9 +367,10 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <input
-                      {...register("passport.passportNo", {})}
+                      {...register("passport.passportNo", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       type="text"
-                      // placeholder="Enter Passport No"
                       className={inputStyle}
                     />
                   </label>
@@ -368,26 +384,14 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <input
-                      {...register("passport.expired", {})}
+                      {...register("passport.expired", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       type="date"
-                      // placeholder="Enter Passport Expired"
                       className={inputStyle}
                     />
                   </label>
                 </div>
-                {/* <div className="w-1/2 p-2">
-                <label className="form-control w-full">
-                  <div className="label">
-                    <span className="label-text font-semibold">Viet Major</span>
-                  </div>
-                  <input
-                    {...register("major.vietMajor", {})}
-                    type="text"
-                    // placeholder="Enter Viet Major"
-                    className={inputStyle}
-                  />
-                </label>
-              </div> */}
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
@@ -396,7 +400,9 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <select
-                      {...register("major.laoMajor", {})}
+                      {...register("major.laoMajor", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       onChange={(e) => handleSelectMajor(e.target.value)}
                       className={
                         "select select-bordered w-full text-base-content/80"
@@ -418,9 +424,10 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <input
-                      {...register("studentId", {})}
+                      {...register("studentId", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       type="text"
-                      // placeholder="Enter Student ID"
                       className={inputStyle}
                     />
                   </label>
@@ -433,9 +440,10 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <input
-                      {...register("dob", {})}
+                      {...register("dob", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       type="date"
-                      // placeholder="Enter Date of Birth"
                       className={inputStyle}
                     />
                   </label>
@@ -446,7 +454,9 @@ const UserProfile = () => {
                       <span className="label-text font-semibold">Gender</span>
                     </div>
                     <select
-                      {...register("gender", {})}
+                      {...register("gender", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       className={
                         "select select-bordered w-full text-base-content/80"
                       }
@@ -465,9 +475,10 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <input
-                      {...register("facebookUrl", {})}
+                      {...register("facebookUrl", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       type="text"
-                      // placeholder="Enter Facebook URL"
                       className={inputStyle}
                     />
                   </label>
@@ -480,7 +491,9 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <select
-                      {...register("perminentAddress", {})}
+                      {...register("perminentAddress", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       className={
                         "select select-bordered w-full text-base-content/80"
                       }
@@ -494,20 +507,21 @@ const UserProfile = () => {
                   </label>
                 </div>
                 {/* <div className="w-1/2 p-2">
-                <label className="form-control w-full">
-                  <div className="label">
-                    <span className="label-text font-semibold">
-                      Profile Image
-                    </span>
-                  </div>
-                  <input
-                    {...register("profileImg", {})}
-                    type="text"
-                    // placeholder="Enter Profile Image URL"
-                    className={inputStyle}
-                  />
-                </label>
-              </div> */}
+        <label className="form-control w-full">
+          <div className="label">
+            <span className="label-text font-semibold">
+              Profile Image
+            </span>
+          </div>
+          <input
+            {...register("profileImg", {
+              disabled: toggleEdit ? false : true
+            })}
+            type="text"
+            className={inputStyle}
+          />
+        </label>
+      </div> */}
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
@@ -516,9 +530,10 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <input
-                      {...register("emailAddress", {})}
+                      {...register("emailAddress", {
+                        disabled: toggleEdit ? false : true,
+                      })}
                       type="text"
-                      // placeholder="Enter Email Address"
                       className={inputStyle}
                     />
                   </label>
@@ -538,9 +553,9 @@ const UserProfile = () => {
                       <button
                         type="submit"
                         className="btn btn-primary"
-                        disabled={authStatus === "loading" ? true : false}
+                        disabled={status.setInfo === "loading" ? true : false}
                       >
-                        {authStatus === "loading" ? (
+                        {status.setInfo === "loading" ? (
                           <span className="loading loading-spinner loading-xs"></span>
                         ) : (
                           "Submit"

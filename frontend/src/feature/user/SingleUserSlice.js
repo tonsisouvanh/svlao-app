@@ -7,10 +7,13 @@ const initialState = {
   singleUser: localStorage.getItem("singleUserInfo")
     ? JSON.parse(localStorage.getItem("singleUserInfo") || "")
     : null,
-  status: "idle" | "loading" | "succeeded" | "failed",
-  createStatus: "idle" | "loading" | "succeeded" | "failed",
-  updateStatus: "idle" | "loading" | "succeeded" | "failed",
-  removeStatus: "idle" | "loading" | "succeeded" | "failed",
+  status: {
+    fetchAll: "idle" | "loading" | "succeeded" | "failed",
+    fetchOne: "idle" | "loading" | "succeeded" | "failed",
+    create: "idle" | "loading" | "succeeded" | "failed",
+    update: "idle" | "loading" | "succeeded" | "failed",
+    remove: "idle" | "loading" | "succeeded" | "failed",
+  },
   error: "",
 };
 
@@ -55,12 +58,16 @@ export const getUserById = createAsyncThunk(
   },
 );
 
+
 const resetStatus = (state) => {
-  state.status = "idle";
-  state.createStatus = "idle";
-  state.updateStatus = "idle";
-  state.removeStatus = "idle";
-  state.error = "";
+  state.error = null;
+  state.status = {
+    fetchAll: "idle",
+    fetchOne: "idle",
+    create: "idle",
+    update: "idle",
+    remove: "idle",
+  };
 };
 
 const singleUserSlice = createSlice({
@@ -72,18 +79,19 @@ const singleUserSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserById.pending, (state) => {
-        state.status = "loading";
+        state.status.fetchOne = "loading";
       })
       .addCase(getUserById.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status.fetchOne = "succeeded";
         state.singleUser = action.payload;
         state.error = null;
       })
       .addCase(getUserById.rejected, (state, action) => {
-        state.status = "failed";
+        state.status.fetchOne = "failed";
         state.user = null;
         state.error = action.payload;
-      });
+      })
+      
   },
 });
 

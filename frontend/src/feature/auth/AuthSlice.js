@@ -7,7 +7,12 @@ const initialState = {
   auth: sessionStorage.getItem("authInfo")
     ? JSON.parse(sessionStorage.getItem("authInfo") || "")
     : null,
-  status: "idle" | "loading" | "succeeded" | "failed",
+  status: {
+    setInfo: "idle" | "loading" | "succeeded" | "failed",
+    signup: "idle" | "loading" | "succeeded" | "failed",
+    signin: "idle" | "loading" | "succeeded" | "failed",
+    signout: "idle" | "loading" | "succeeded" | "failed",
+  },
   error: "",
 };
 
@@ -109,19 +114,22 @@ export const updateUserProfile = createAsyncThunk(
           Authorization: `Bearer ${userData.token}`,
         },
       };
-      const { data } = await axios.put(
+      const formattedData = {
+        ...userData,
+        university: {
+          ...userData.university,
+          universityId: userData.university.universityId?._id,
+        },
+      };
+      await axios.put(
         "/api/users/profile",
         {
-          ...userData,
-          university: {
-            ...userData.university,
-            universityId: userData.university.universityId?._id,
-          },
+          ...formattedData,
         },
         config,
       );
-      sessionStorage.setItem("authInfo", JSON.stringify(userData));
-      return userData;
+      sessionStorage.setItem("authInfo", JSON.stringify(formattedData));
+      return formattedData;
     } catch (error) {
       const message =
         (error.response &&
@@ -134,8 +142,16 @@ export const updateUserProfile = createAsyncThunk(
   },
 );
 
+const setAuthInfo = (state, action) => {
+  state.auth = action.payload;
+};
 const statusReset = (state) => {
-  state.status = "idle";
+  state.status = {
+    setInfo: "idle",
+    signup: "idle",
+    signin: "idle",
+    signout: "idle",
+  };
   state.error = null;
 };
 
@@ -144,56 +160,57 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     reset: statusReset,
+    setAuth: setAuthInfo,
   },
   extraReducers: (builder) => {
     builder
       .addCase(signUp.pending, (state) => {
-        state.status = "loading";
+        state.status.signup = "loading";
       })
       .addCase(signUp.fulfilled, (state) => {
-        state.status = "succeeded";
+        state.status.signup = "succeeded";
         state.error = null;
       })
       .addCase(signUp.rejected, (state, action) => {
-        state.status = "failed";
+        state.status.signup = "failed";
         state.auth = null;
         state.error = action.payload;
       })
       .addCase(signIn.pending, (state) => {
-        state.status = "loading";
+        state.status.signin = "loading";
       })
       .addCase(signIn.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status.signin = "succeeded";
         state.auth = action.payload;
         state.error = null;
       })
       .addCase(signIn.rejected, (state, action) => {
-        state.status = "failed";
-        state.auth = null;
-        state.error = action.payload;
-      })
-      .addCase(updateUserProfile.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(updateUserProfile.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.auth = action.payload;
-        state.error = null;
-      })
-      .addCase(updateUserProfile.rejected, (state, action) => {
-        state.status = "failed";
+        state.status.signin = "failed";
         state.auth = null;
         state.error = action.payload;
       })
       .addCase(signOut.pending, (state) => {
-        state.status = "loading";
+        state.status.signout = "loading";
       })
       .addCase(signOut.fulfilled, (state) => {
-        state.status = "idle";
+        state.status.signout = "idle";
         state.auth = null;
+      })
+      .addCase(updateUserProfile.pending, (state) => {
+        state.status.setInfo = "loading";
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.status.setInfo = "succeeded";
+        state.auth = action.payload;
+        state.error = null;
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
+        state.status.setInfo = "failed";
+        state.auth = null;
+        state.error = action.payload;
       });
   },
 });
 
-export const { reset: authReset } = authSlice.actions;
+export const { reset: authReset, setAuth } = authSlice.actions;
 export default authSlice.reducer;

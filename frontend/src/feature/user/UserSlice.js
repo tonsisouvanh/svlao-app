@@ -175,6 +175,8 @@ export const createStudent = createAsyncThunk(
   },
 );
 
+
+
 const resetStatus = (state) => {
   state.listStatus = "idle";
   state.createStatus = "idle";
@@ -206,6 +208,7 @@ const userSlice = createSlice({
         state.users = null;
         state.error = action.payload;
       })
+
       .addCase(updateUser.pending, (state) => {
         state.updateStatus = "loading";
       })
@@ -223,6 +226,7 @@ const userSlice = createSlice({
         state.updateStatus = "failed";
         state.error = action.payload;
       })
+
       .addCase(removeUser.pending, (state) => {
         state.removeStatus = "loading";
       })
@@ -235,6 +239,7 @@ const userSlice = createSlice({
         state.removeStatus = "failed";
         state.error = action.payload;
       })
+
       .addCase(createStudent.pending, (state) => {
         state.createStatus = "loading";
       })
@@ -258,7 +263,7 @@ const userSlice = createSlice({
       .addCase(resetPassword.rejected, (state, action) => {
         state.createStatus = "failed";
         state.error = action.payload;
-      });
+      })
   },
 });
 

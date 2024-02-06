@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import ErrorMessage from "../typography/ErrorMessage";
 import { resetPassword } from "../../feature/user/UserSlice";
 const inputStyle = "input input-bordered w-full text-base-content/80";
@@ -19,13 +19,10 @@ const ResetPasswordModal = ({
   };
   const dispatch = useDispatch();
 
-  const { createStatus, error } = useSelector((state) => state.user);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({ defaultValues: initialState });
 
   const handleEditSubmit = (data) => {

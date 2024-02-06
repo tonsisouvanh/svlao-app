@@ -28,11 +28,11 @@ const Signin = () => {
   };
 
   useEffect(() => {
-    if (status === "succeeded") {
+    if (status.signin === "succeeded") {
       toast.success("Login successful");
       dispatch(authReset());
       navigate("/admin/restaurantlist");
-    } else if (status === "failed") {
+    } else if (status.signin === "failed") {
       toast.error(error);
       dispatch(authReset());
     }
@@ -101,7 +101,7 @@ const Signin = () => {
             </div>
           </div>
           <div className="mb-4 flex justify-end gap-3">
-            {status === "loading" ? (
+            {status.signin === "loading" ? (
               <button className="btn flex-grow">
                 <span className="loading loading-spinner"></span>
                 loading

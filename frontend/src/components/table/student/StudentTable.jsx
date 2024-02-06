@@ -19,6 +19,7 @@ import { STUDENT_COLUMNS } from "../../../data/data";
 import Searchbox from "../../input/student/Searchbox";
 import { listUsers, removeUser } from "../../../feature/user/UserSlice";
 import altImage from "../../../assets/img/profile.png";
+import { replaceImage } from "../../../utils/utils";
 const cellStyle = "whitespace-nowrap truncate font-light";
 
 const UserTable = ({
@@ -68,9 +69,7 @@ const UserTable = ({
     setDeletedUserId("");
     setOpenModal(false);
   };
-  const replaceImage = (error) => {
-    error.target.src = altImage;
-  };
+
   useEffect(() => {
     setTotalUsers(rows.length);
     const maleCount = rows.filter(
@@ -382,7 +381,7 @@ const UserTable = ({
                       return (
                         <tr key={row.id} {...row.getRowProps()}>
                           <td>
-                            <div className="dropdown-right dropdown">
+                            <div className="dropdown dropdown-right">
                               <label
                                 tabIndex={0}
                                 className="btn btn-xs px-1 py-0"
