@@ -8,6 +8,7 @@ import userRoutes from "./routes/userRoutes.js";
 import universityRoutes from "./routes/universityRoutes.js";
 import majorRoutes from "./routes/majorRoutes.js";
 import residenceAddressRoutes from "./routes/residenceAddressRoutes.js";
+import announcementRoutes from "./routes/announcementRoutes.js";
 
 import generateToken from "./utils/generateToken.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
@@ -33,6 +34,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/universities", universityRoutes);
 app.use("/api/majors", majorRoutes);
 app.use("/api/residenceAddresses", residenceAddressRoutes);
+app.use("/api/announcements", announcementRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
