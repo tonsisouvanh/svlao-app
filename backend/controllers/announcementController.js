@@ -84,8 +84,32 @@ const createAnnouncement = asyncHandler(async (req, res) => {
 // @route   GET /api/announcements
 // @access  Private/Admin
 const getAnnouncements = asyncHandler(async (req, res) => {
-  const announcements = await Announcement.find({});
-  res.json(announcements);
+  const pageSize = 5;
+  const page = Number(req.query.pageNumber) || 1;
+
+  const searchFields = ["title", "content", "category"];
+  const keyword = req.query.keyword
+    ? req.query.keyword !== "all"
+      ? {
+          $or: searchFields.map((field) => ({
+            [field]: {
+              $regex: req.query.keyword,
+              $options: "i",
+            },
+          })),
+        }
+      : req.query.keyword
+    : {};
+
+  const count = await Announcement.countDocuments({ ...keyword });
+  const announcements =
+    keyword === "all"
+      ? await Announcement.find({})
+      : await Announcement.find({ ...keyword })
+          .limit(pageSize)
+          .skip(pageSize * (page - 1));
+
+  res.json({ announcements, page, pages: Math.ceil(count / pageSize) });
 });
 
 // @desc    Delete announcement
@@ -121,5 +145,5 @@ export {
   getAnnouncementById,
   updateAnnouncement,
   createAnnouncement,
-  insertManyAnnouncements
+  insertManyAnnouncements,
 };

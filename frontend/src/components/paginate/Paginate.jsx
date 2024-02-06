@@ -7,12 +7,13 @@ const Paginate = ({
   isAdmin = false,
   keyword = "",
   style = "",
+  path,
 }) => {
   return (
     pages > 1 && (
       <div className={`join ${style}`}>
         {[...Array(pages).keys()].map((x) => (
-          <Link key={x + 1} to={`/dashboard/studentlist/page/${x + 1}`}>
+          <Link key={x + 1} to={`${path}${x + 1}`}>
             <button
               className={`btn join-item ${
                 x + 1 === page && "btn-primary btn-active"

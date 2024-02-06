@@ -129,7 +129,12 @@ const StudentList = () => {
               <span>{user.fullname.laoName}</span>
             </div>
           ))} */}
-          <Paginate style="mt-10" page={page} pages={pages} />
+          <Paginate
+            path="/dashboard/studentlist/page/"
+            style="mt-10"
+            page={page}
+            pages={pages}
+          />
         </div>
       </section>
     </>

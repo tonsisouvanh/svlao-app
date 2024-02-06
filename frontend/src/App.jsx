@@ -6,7 +6,6 @@ import { Toaster } from "react-hot-toast";
 import PrivateRoute from "./route/PrivateRoute";
 import Signin from "./page/Signin";
 import Signup from "./page/Signup";
-import News from "./page/News";
 // import StudentDetail from "./page/StudentDetail";
 // import StudentList from "./page/StudentList";
 import UserProfile from "./page/UserProfile";
@@ -26,6 +25,8 @@ import EditMajor from "./page/major/EditMajor";
 import ResidenceAddressList from "./page/residenceAddress/ResidenceAddressList";
 import EditResidenceAddress from "./page/residenceAddress/EditResidenceAddress";
 import AddResidenceAddress from "./page/residenceAddress/AddResidenceAddress";
+import AnnouncementList from "./page/AnnouncementList";
+import DocumentForm from "./page/DocumentForm";
 
 function App() {
   return (
@@ -37,8 +38,16 @@ function App() {
 
         <Route path="/" element={<RootLayoutPublic />}>
           <Route element={<PrivateRoute />}>
-            <Route path="/" element={<News />} />
+            {/* Announcements */}
+            <Route path="/" element={<AnnouncementList />} />
+            <Route path="/page/:pageNumber" element={<AnnouncementList />} />
+            <Route path="/search/:keyword" element={<AnnouncementList />} />
+            <Route
+              path="/search/:keyword/page/:pageNumber"
+              element={<AnnouncementList />}
+            />
             <Route path="/dashboard" element={<Dashboard />} />
+            {/* student list */}
             <Route
               path="/dashboard/studentlist/page/:pageNumber"
               element={<StudentList />}
@@ -88,14 +97,22 @@ function App() {
               element={<EditResidenceAddress />}
             />
 
-            {/* Perminent Address */}
-            {/* <Route
-              path="/dashboard/perminent-address-list"
-              element={<PerminentAddressList />}
-            /> */}
-            {/* <Route path="dashboard/major-list/add" element={<AddMajor />} /> */}
-            {/* <Route path="dashboard/major-list/:id" element={<EditMajor />} /> */}
-            {/* <Route path="/intro" element={<Intro />} /> */}
+            {/* Announcements */}
+            <Route
+              path="/announcement-list/page/:pageNumber"
+              element={<AnnouncementList />}
+            />
+            <Route
+              path="/announcement-list/search/:keyword"
+              element={<AnnouncementList />}
+            />
+            <Route
+              path="/announcement-list/search/:keyword/page/:pageNumber"
+              element={<AnnouncementList />}
+            />
+            <Route path="/announcement-list" element={<AnnouncementList />} />
+
+            <Route path="/document-form-list" element={<DocumentForm />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />

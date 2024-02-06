@@ -236,8 +236,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item Chart --> */}
               <li>
                 <NavLink
-                  to="/documents"
-                  target="_blank"
+                  to="/document-form-list"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:text-white ${
                     pathname.includes("/") && "bg-graydark dark:bg-meta-4"
                   }`}

@@ -17,8 +17,7 @@ import consule from "../../../assets/img/consule.jpg";
 import { BsFacebook } from "react-icons/bs";
 import { STUDENT_COLUMNS } from "../../../data/data";
 import Searchbox from "../../input/student/Searchbox";
-import { listUsers, removeUser } from "../../../feature/user/UserSlice";
-import altImage from "../../../assets/img/profile.png";
+import { removeUser } from "../../../feature/user/UserSlice";
 import { replaceImage } from "../../../utils/utils";
 const cellStyle = "whitespace-nowrap truncate font-light";
 
@@ -93,6 +92,7 @@ const UserTable = ({
   if (userStatus === "loading") {
     return <Spinner />;
   }
+  console.log(users);
   return (
     <>
       {editToggle ? (
