@@ -575,3 +575,5 @@ export const RESIDENCEADDRESS_COLUMNS = [
   { Header: "Address", accessor: "address" },
   { Header: "Location (KTX)", accessor: "location" },
 ];
+
+export const roleList = ["admin", "user", "assistant"];

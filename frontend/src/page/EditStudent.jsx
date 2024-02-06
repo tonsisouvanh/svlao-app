@@ -9,6 +9,7 @@ import {
   majorList,
   perminentAddressList,
   residenceAddressList,
+  roleList,
   statusList,
 } from "../data/data";
 import { getYearOptions } from "../utils/utils";
@@ -167,7 +168,7 @@ const EditStudent = () => {
                 onSubmit={handleSubmit(handleEditSubmit)}
                 className="flex flex-wrap items-center justify-center"
               >
-                <div className="w-1/2 p-2">
+                <div className="flex w-1/2 items-center gap-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className={`label-text font-semibold `}>
@@ -181,6 +182,21 @@ const EditStudent = () => {
                       {statusList.map((item, index) => (
                         <option key={index} value={item.status}>
                           {item.status}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="form-control w-full">
+                    <div className="label">
+                      <span className={`label-text font-semibold `}>Role</span>
+                    </div>
+                    <select
+                      {...register("role", {})}
+                      className={`select select-bordered w-full`}
+                    >
+                      {roleList.map((item, index) => (
+                        <option key={index} value={item}>
+                          {item}
                         </option>
                       ))}
                     </select>

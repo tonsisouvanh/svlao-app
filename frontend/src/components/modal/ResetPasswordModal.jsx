@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 import ErrorMessage from "../typography/ErrorMessage";
-import { resetPassword, userReset } from "../../feature/user/UserSlice";
+import { resetPassword } from "../../feature/user/UserSlice";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const ResetPasswordModal = ({
@@ -29,17 +27,6 @@ const ResetPasswordModal = ({
     formState: { errors },
     reset,
   } = useForm({ defaultValues: initialState });
-
-//   useEffect(() => {
-//     if (createStatus === "succeeded") {
-//       toast.success("Reset Successfully");
-//       dispatch(userReset());
-//       reset({});
-//     } else if (createStatus === "failed") {
-//       toast.error(error);
-//       dispatch(userReset());
-//     }
-//   }, [createStatus, dispatch, error, reset]);
 
   const handleEditSubmit = (data) => {
     if (data) {

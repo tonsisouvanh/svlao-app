@@ -86,7 +86,7 @@ const userSchema = mongoose.Schema(
       laoMajor: String,
       vietMajor: String,
     },
-    profileImg: String,
+    profileImg: { type: String, default: "https://#" },
     emailAddress: {
       type: String,
       required: true,
