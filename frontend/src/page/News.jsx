@@ -19,7 +19,7 @@ const News = () => {
       <section className="body-font overflow-hidden">
         <div className="container mx-auto p-3">
           <div className="divide-base-900 divide-y-2">
-            <h1 className="title-font mb-4 text-center font-notosanslao text-2xl font-bold text-primary sm:text-3xl">
+            <h1 className="title-font mb-4 text-center font-notosanslao text-2xl text-base font-bold sm:text-3xl">
               ແຈ້ງການຕ່າງໆ
             </h1>
             <ActivitySlider

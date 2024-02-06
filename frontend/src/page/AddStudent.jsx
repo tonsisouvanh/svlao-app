@@ -25,8 +25,7 @@ const AddStudent = () => {
   const dispatch = useDispatch();
   const yearOptions = getYearOptions();
 
-  const { createStatus, error: userError } = useSelector((state) => state.user);
-  console.log("🚀 ~ AddStudent ~ createStatus:", createStatus)
+  const { status, error: userError } = useSelector((state) => state.user);
   const { universities } = useSelector((state) => state.university);
 
   const {
@@ -117,16 +116,16 @@ const AddStudent = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (createStatus === "succeeded") {
+    if (status.create === "succeeded") {
       toast.success("Update Successfully");
       dispatch(userReset());
       reset({});
       navigate(-1);
-    } else if (createStatus === "failed") {
+    } else if (status.create === "failed") {
       toast.error(userError);
       dispatch(userReset());
     }
-  }, [createStatus, dispatch, userError, navigate, reset]);
+  }, [status.create, dispatch, userError, navigate, reset]);
 
   const handleEditSubmit = (data) => {
     if (data) {
@@ -149,7 +148,7 @@ const AddStudent = () => {
   return (
     <>
       <section className="relative">
-        {createStatus !== "loading" ? (
+        {status.create !== "loading" ? (
           <div className="container mx-auto px-5 py-24">
             <div className="mb-12 flex w-full flex-col text-center">
               <Breadcrumbs pathname={pathname} />
@@ -618,9 +617,9 @@ const AddStudent = () => {
                   <button
                     type="submit"
                     className="btn btn-primary"
-                    disabled={createStatus === "loading" ? true : false}
+                    disabled={status.create === "loading" ? true : false}
                   >
-                    {createStatus === "loading" ? (
+                    {status.create === "loading" ? (
                       <span className="loading loading-spinner loading-xs"></span>
                     ) : (
                       "Submit"

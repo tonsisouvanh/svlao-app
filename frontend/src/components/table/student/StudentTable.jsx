@@ -48,7 +48,7 @@ const UserTable = ({
   const [deletedUserId, setDeletedUserId] = useState("");
   const data = useMemo(() => users, [users]);
   const columns = useMemo(() => STUDENT_COLUMNS, []);
-  const { removeStatus } = useSelector((state) => state.user);
+  const { status } = useSelector((state) => state.user);
   const {
     getTableProps,
     getTableBodyProps,
@@ -97,7 +97,7 @@ const UserTable = ({
     <>
       {editToggle ? (
         <span>Edit user component here</span>
-      ) : userStatus === "loading" || removeStatus === "loading" ? (
+      ) : userStatus === "loading" || status.remove === "loading" ? (
         <Spinner />
       ) : (
         <>
@@ -192,7 +192,10 @@ const UserTable = ({
                 fieldName={"vietMajor"}
               /> */}
             <Link to="/dashboard/studentlist/search/all">
-              <button className="btn btn-outline btn-sm">ທັງໝົດ</button>
+              <button className="btn btn-outline btn-sm">ເບິ່ງທັງໝົດ</button>
+            </Link>
+            <Link to="/dashboard/studentlist/page/1">
+              <button className="btn btn-outline btn-sm">ເບິ່ງເປັນໜ້າ</button>
             </Link>
           </div>
           <div className="overflow-x-auto">

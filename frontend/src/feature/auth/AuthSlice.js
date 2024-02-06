@@ -117,8 +117,8 @@ export const updateUserProfile = createAsyncThunk(
       const formattedData = {
         ...userData,
         university: {
-          ...userData.university,
-          universityId: userData.university.universityId?._id,
+          universityId: userData?.university?.universityId,
+          shortcut: userData.university.shortcut,
         },
       };
       await axios.put(

@@ -235,8 +235,9 @@ const getUsers = asyncHandler(async (req, res) => {
   const count = await User.countDocuments({ ...keyword });
   const users =
     keyword === "all"
-      ? await User.find({})
+      ? await User.find({}).populate("university.universityId")
       : await User.find({ ...keyword })
+          .populate("university.universityId")
           .limit(pageSize)
           .skip(pageSize * (page - 1));
   res.json({ users, page, pages: Math.ceil(count / pageSize) });

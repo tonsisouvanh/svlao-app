@@ -29,26 +29,24 @@ const EditStudent = () => {
   const { id } = useParams();
   const yearOptions = getYearOptions();
 
-  const { singleUser, status, error } = useSelector(
-    (state) => state.singleUser,
-  );
+  //state
+  const [toggleEdit, setToggleEdit] = useState(false);
+
+  // Slice
   const {
-    updateStatus,
-    createStatus,
-    error: userError,
-  } = useSelector((state) => state.user);
+    singleUser,
+    status: singleUserStatus,
+    error,
+  } = useSelector((state) => state.singleUser);
+  const { status: userStatus, error: userError } = useSelector(
+    (state) => state.user,
+  );
   const { universities } = useSelector((state) => state.university);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    reset,
-  } = useForm({ defaultValues: singleUser });
-
-  const [toggleEdit, setToggleEdit] = useState(false);
-  // const dispatch = useDispatch((state) => state.user);
+  // react hook form
+  const { register, handleSubmit, setValue, reset } = useForm({
+    defaultValues: { singleUser },
+  });
 
   const handleSelectDegree = (value) => {
     const vietDegree = degreeList.find((d) => d.laoDegree === value);
@@ -60,7 +58,8 @@ const EditStudent = () => {
   };
   const handleSelectUniversity = (value) => {
     const university = universities.find((d) => d.shortcut === value);
-    setValue("university", university);
+    setValue("university.universityId", university._id);
+    setValue("university.shortcut", university.shortcut);
   };
   const handleSelectResidenceAddress = (value) => {
     const residenceAddress = residenceAddressList.find(
@@ -68,19 +67,20 @@ const EditStudent = () => {
     );
     setValue("residenceAddress.address", residenceAddress.address);
   };
+
   useEffect(() => {
     dispatch(listUniversity());
   }, [dispatch]);
 
   useEffect(() => {
-    if (updateStatus === "succeeded") {
+    if (userStatus.update === "succeeded") {
       toast.success("Update Successfully");
       dispatch(userReset());
-    } else if (updateStatus === "failed") {
+    } else if (userStatus.update === "failed") {
       toast.error(userError);
       dispatch(userReset());
     }
-  }, [updateStatus, dispatch, userError]);
+  }, [userStatus.update, dispatch, userError]);
 
   const handleEditSubmit = (data) => {
     if (data) {
@@ -94,27 +94,27 @@ const EditStudent = () => {
   };
 
   useEffect(() => {
-    if (createStatus === "succeeded") {
+    if (userStatus.reset === "succeeded") {
       toast.success("Reset Successfully");
       dispatch(userReset());
       reset({});
-    } else if (createStatus === "failed") {
+    } else if (userStatus.reset === "failed") {
       toast.error(error);
       dispatch(userReset());
     }
-  }, [createStatus, dispatch, error, reset]);
+  }, [userStatus.reset, dispatch, error, reset]);
 
   useEffect(() => {
     dispatch(getUserById(id));
   }, [dispatch, id]);
 
   useEffect(() => {
-    if (status === "succeeded") {
+    if (singleUserStatus.fetchOne === "succeeded") {
       reset(singleUser);
-    } else if (status === "failed") {
+    } else if (singleUserStatus.fetchOne === "failed") {
       toast.error(error);
     }
-  }, [status, reset, singleUser, error]);
+  }, [singleUserStatus.fetchOne, reset, singleUser, error]);
   return (
     <>
       {isModalOpen && (
@@ -129,7 +129,7 @@ const EditStudent = () => {
         />
       )}
       <section className="relative">
-        {singleUser && status !== "loading" ? (
+        {singleUser && userStatus.update !== "loading" ? (
           <div className="container mx-auto px-5 py-24">
             <div className="mb-12 flex w-full flex-col text-center">
               <Breadcrumbs pathname={pathname} />
@@ -608,9 +608,11 @@ const EditStudent = () => {
                       <button
                         type="submit"
                         className="btn btn-primary"
-                        disabled={updateStatus === "loading" ? true : false}
+                        disabled={
+                          userStatus.update === "loading" ? true : false
+                        }
                       >
-                        {updateStatus === "loading" ? (
+                        {userStatus.update === "loading" ? (
                           <span className="loading loading-spinner loading-xs"></span>
                         ) : (
                           "Submit"

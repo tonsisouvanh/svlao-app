@@ -44,7 +44,8 @@ const UserProfile = () => {
   };
   const handleSelectUniversity = (value) => {
     const university = universities.find((d) => d.shortcut === value);
-    setValue("university", university);
+    setValue("university.universityId", university._id);
+    setValue("university.shortcut", university.shortcut);
   };
   const handleSelectResidenceAddress = (value) => {
     const residenceAddress = residenceAddressList.find(

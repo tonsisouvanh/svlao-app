@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import laosboy from "../../assets/img/laosboy.png";
 import laosgirl from "../../assets/img/laosgirl.png";
 const Unauthorized = () => {
@@ -21,9 +21,11 @@ const Unauthorized = () => {
               ທ່ານບໍ່ມີສິດເຂົ້າເຖິງ
             </p>
           </div>
-          <button className="btn btn-primary btn-sm mt-10 whitespace-nowrap">
-            BACK HOME
-          </button>
+          <Link to="/">
+            <button className="btn btn-primary btn-sm mt-10 whitespace-nowrap">
+              Go back
+            </button>
+          </Link>
         </center>
         <div>
           <img

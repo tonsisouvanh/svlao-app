@@ -4,10 +4,13 @@ axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
 
 const initialState = {
   users: [],
-  listStatus: "idle" | "loading" | "succeeded" | "failed",
-  createStatus: "idle" | "loading" | "succeeded" | "failed",
-  updateStatus: "idle" | "loading" | "succeeded" | "failed",
-  removeStatus: "idle" | "loading" | "succeeded" | "failed",
+  status: {
+    fetchAll: "idle" | "loading" | "succeeded" | "failed",
+    create: "idle" | "loading" | "succeeded" | "failed",
+    update: "idle" | "loading" | "succeeded" | "failed",
+    remove: "idle" | "loading" | "succeeded" | "failed",
+    reset: "idle" | "loading" | "succeeded" | "failed",
+  },
   error: "",
   page: 1,
   pages: 0,
@@ -64,12 +67,10 @@ export const listUsers = createAsyncThunk(
       //     : `/api/users?keyword=${keyword}&pageNumber=${pageNumber}`,
       //   config,
       // );
-
       const { data } = await axios.get(
         `/api/users?keyword=${keyword}&pageNumber=${pageNumber}`,
         config,
       );
-
       return data;
     } catch (error) {
       const message =
@@ -94,15 +95,17 @@ export const updateUser = createAsyncThunk(
           Authorization: `Bearer ${auth.token}`,
         },
       };
-
+      const formattedData = {
+        ...userData,
+        university: {
+          universityId: userData?.university?.universityId,
+          shortcut: userData.university.shortcut,
+        },
+      };
       const { data } = await axios.put(
         `/api/users/${userData._id}`,
         {
-          ...userData,
-          university: {
-            ...userData.university,
-            universityId: userData.university.universityId?._id,
-          },
+          ...formattedData,
         },
         config,
       );
@@ -175,13 +178,14 @@ export const createStudent = createAsyncThunk(
   },
 );
 
-
-
 const resetStatus = (state) => {
-  state.listStatus = "idle";
-  state.createStatus = "idle";
-  state.updateStatus = "idle";
-  state.removeStatus = "idle";
+  state.status = {
+    fetchAll: "idle",
+    create: "idle",
+    update: "idle",
+    remove: "idle",
+    reset: "idle",
+  };
   state.error = "";
 };
 
@@ -194,26 +198,26 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(listUsers.pending, (state) => {
-        state.listStatus = "loading";
+        state.status.fetchAll = "loading";
       })
       .addCase(listUsers.fulfilled, (state, action) => {
-        state.listStatus = "succeeded";
+        state.status.fetchAll = "succeeded";
         state.users = action.payload.users;
         state.page = action.payload.page;
         state.pages = action.payload.pages;
         state.error = null;
       })
       .addCase(listUsers.rejected, (state, action) => {
-        state.listStatus = "failed";
+        state.status.fetchAll = "failed";
         state.users = null;
         state.error = action.payload;
       })
 
       .addCase(updateUser.pending, (state) => {
-        state.updateStatus = "loading";
+        state.status.update = "loading";
       })
       .addCase(updateUser.fulfilled, (state, action) => {
-        state.updateStatus = "succeeded";
+        state.status.update = "succeeded";
         const updatedUserIndex = state.users.findIndex(
           (user) => user._id === action.payload._id,
         );
@@ -223,47 +227,47 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(updateUser.rejected, (state, action) => {
-        state.updateStatus = "failed";
+        state.status.update = "failed";
         state.error = action.payload;
       })
 
       .addCase(removeUser.pending, (state) => {
-        state.removeStatus = "loading";
+        state.status.remove = "loading";
       })
       .addCase(removeUser.fulfilled, (state, action) => {
-        state.removeStatus = "succeeded";
+        state.status.remove = "succeeded";
         state.users = state.users.filter((user) => user._id !== action.payload);
         state.error = null;
       })
       .addCase(removeUser.rejected, (state, action) => {
-        state.removeStatus = "failed";
+        state.status.remove = "failed";
         state.error = action.payload;
       })
 
       .addCase(createStudent.pending, (state) => {
-        state.createStatus = "loading";
+        state.status.create = "loading";
       })
       .addCase(createStudent.fulfilled, (state, action) => {
-        state.createStatus = "succeeded";
+        state.status.create = "succeeded";
         state.users.push(action.payload);
         state.error = null;
       })
       .addCase(createStudent.rejected, (state, action) => {
-        state.createStatus = "failed";
+        state.status.create = "failed";
         state.error = action.payload;
       })
 
       .addCase(resetPassword.pending, (state) => {
-        state.createStatus = "loading";
+        state.status.reset = "loading";
       })
       .addCase(resetPassword.fulfilled, (state) => {
-        state.createStatus = "succeeded";
+        state.status.reset = "succeeded";
         state.error = null;
       })
       .addCase(resetPassword.rejected, (state, action) => {
-        state.createStatus = "failed";
+        state.status.reset = "failed";
         state.error = action.payload;
-      })
+      });
   },
 });
 

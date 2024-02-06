@@ -545,11 +545,11 @@ export const STUDENT_COLUMNS = [
   // },
   {
     Header: "University (Viet Name)",
-    accessor: "university.vietName",
+    accessor: "university.universityId.vietName",
   },
   {
     Header: "University (Lao Name)",
-    accessor: "university.laoName",
+    accessor: "university.universityId.laoName",
   },
   // {
   //   Header: "University Shortcut",

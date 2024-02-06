@@ -43,8 +43,6 @@ export const getUserById = createAsyncThunk(
           expired: formatDate(data.passport.expired),
         },
       };
-      // localStorage.setItem("singleUserInfo", JSON.stringify(formattedData));
-
       return formattedData;
     } catch (error) {
       const message =
@@ -57,7 +55,6 @@ export const getUserById = createAsyncThunk(
     }
   },
 );
-
 
 const resetStatus = (state) => {
   state.error = null;
@@ -90,8 +87,7 @@ const singleUserSlice = createSlice({
         state.status.fetchOne = "failed";
         state.user = null;
         state.error = action.payload;
-      })
-      
+      });
   },
 });
 
