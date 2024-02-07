@@ -104,6 +104,9 @@ const EditAnnouncement = () => {
     );
   }, [announcements, setValue]);
 
+  if (status.update === "loading") {
+    return <Spinner />;
+  }
   if (status.fetchOne === "failed") {
     return navigate(-1);
   }
@@ -116,7 +119,6 @@ const EditAnnouncement = () => {
           <div className="container mx-auto px-5 py-24">
             <div className="mb-12 flex w-full flex-col text-center">
               <Breadcrumbs pathname={pathname} />
-
               <h1 className="title-font m:text-3xl mb-4 mt-10 text-2xl font-medium">
                 Edit announcement
               </h1>
@@ -166,7 +168,7 @@ const EditAnnouncement = () => {
                       {...register("content", {
                         required: "Field required",
                       })}
-                      className={`${inputStyle} textarea h-24`}
+                      className={`textarea h-48 w-full max-w-full`}
                     />
                   </label>
                 </div>

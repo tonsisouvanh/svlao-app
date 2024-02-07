@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { themes } from "../../../data/data";
 import { signOut } from "../../../feature/auth/AuthSlice";
 import altImage from "../../../assets/img/profile.png";
+import { replaceImage } from "../../../utils/utils";
 
 
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
@@ -21,9 +22,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
     dispatch(signOut());
     navigate("/signin");
   };
-  const replaceImage = (error) => {
-    error.target.src = altImage;
-  };
+
   useEffect(() => {
     localStorage.setItem("theme", theme);
     const localTheme = localStorage.getItem("theme");

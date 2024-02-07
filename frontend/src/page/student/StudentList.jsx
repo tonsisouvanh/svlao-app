@@ -50,7 +50,7 @@ const StudentList = () => {
     return <Spinner />;
   }
   if (userStatus.fetchAll === "failed") {
-    return <div>Error loading students</div>;
+    return <Unauthorized />;
   }
   return auth?.role === "admin" ? (
     <>

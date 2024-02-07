@@ -26,6 +26,7 @@ import Announcement from "./page/announcement/Announcement";
 import AnnouncementList from "./page/announcement/private/AnnouncementList";
 import AddAnnouncement from "./page/announcement/private/AddAnnouncement";
 import EditAnnouncement from "./page/announcement/private/EditAnnouncement";
+import AnnouncementDetail from "./page/announcement/AnnouncementDetail";
 
 function App() {
   return (
@@ -85,6 +86,10 @@ function App() {
             <Route
               path="/announcement-list/search/:keyword/page/:pageNumber"
               element={<Announcement />}
+            />
+            <Route
+              path="/announcement-list/announcement/:id"
+              element={<AnnouncementDetail />}
             />
 
             {/* ================================================================== */}

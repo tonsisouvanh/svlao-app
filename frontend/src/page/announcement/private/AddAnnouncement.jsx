@@ -114,7 +114,7 @@ const AddAnnouncement = () => {
                       {...register("content", {
                         required: "Field required",
                       })}
-                      className={`${inputStyle} textarea h-24`}
+                      className={`textarea h-48 w-full max-w-full`}
                     />
                   </label>
                 </div>

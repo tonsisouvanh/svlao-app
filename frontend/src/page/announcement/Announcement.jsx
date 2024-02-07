@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Spinner from "../../components/ui/Spinner";
 import Paginate from "../../components/paginate/Paginate";
+import { AiOutlineArrowRight } from "react-icons/ai";
 
 const Announcement = () => {
   const { pageNumber, keyword } = useParams();
@@ -138,31 +139,25 @@ const Announcement = () => {
                         <h2 className="title-font mb-2 text-2xl font-bold">
                           {announcement.title}
                         </h2>
-                        <p className="leading-relaxed">
+                        <p className="truncate leading-relaxed">
                           {announcement.content}
                         </p>
                         <Link
-                          to="#"
+                          to={`/announcement-list/announcement/${announcement._id}`}
                           className="btn-link mt-4 inline-flex items-center text-primary-focus"
                         >
                           See more
-                          <svg
-                            className="ml-2 h-4 w-4"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M5 12h14"></path>
-                            <path d="M12 5l7 7-7 7"></path>
-                          </svg>
+                          <AiOutlineArrowRight className="ml-2" />
                         </Link>
                       </div>
                     </div>
                   ))}
-                  <Paginate path="/announcement-list/page/" style="mt-10" page={page} pages={pages} />
+                  <Paginate
+                    path="/announcement-list/page/"
+                    style="mt-10"
+                    page={page}
+                    pages={pages}
+                  />
                 </>
               )}
             </div>

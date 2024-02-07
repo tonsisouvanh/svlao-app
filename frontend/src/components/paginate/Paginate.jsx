@@ -15,7 +15,7 @@ const Paginate = ({
         {[...Array(pages).keys()].map((x) => (
           <Link key={x + 1} to={`${path}${x + 1}`}>
             <button
-              className={`btn join-item ${
+              className={`btn join-item btn-sm ${
                 x + 1 === page && "btn-primary btn-active"
               }`}
             >
