@@ -2,21 +2,21 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import Spinner from "../components/ui/Spinner";
+import Spinner from "../../components/ui/Spinner";
 import {
   degreeList,
   majorList,
   perminentAddressList,
   residenceAddressList,
   statusList,
-} from "../data/data";
-import { getYearOptions } from "../utils/utils";
+} from "../../data/data";
+import { getYearOptions } from "../../utils/utils";
 import { useLocation, useNavigate } from "react-router-dom";
-import { createStudent, userReset } from "../feature/user/UserSlice";
-import { listUniversity } from "../feature/globalData/UniversitySlice";
-import altImage from "../assets/img/profile.png";
-import Breadcrumbs from "../components/Breadcrumbs";
-import ErrorMessage from "../components/typography/ErrorMessage";
+import { createStudent, userReset } from "../../feature/user/UserSlice";
+import { listUniversity } from "../../feature/globalData/UniversitySlice";
+import altImage from "../../assets/img/profile.png";
+import Breadcrumbs from "../../components/Breadcrumbs";
+import ErrorMessage from "../../components/typography/ErrorMessage";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const AddStudent = () => {

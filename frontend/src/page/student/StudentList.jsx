@@ -1,31 +1,28 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import Spinner from "../components/ui/Spinner";
-import Unauthorized from "./public/Unauthorized";
-import StudentTable from "../components/table/student/StudentTable";
+import Unauthorized from "../public/Unauthorized";
+import StudentTable from "../../components/table/student/StudentTable";
 import { BsGridFill, BsTable } from "react-icons/bs";
 import { AiFillPlusCircle } from "react-icons/ai";
-import { listUsers } from "../feature/user/UserSlice";
-import Paginate from "../components/paginate/Paginate";
-import { listUniversity } from "../feature/globalData/UniversitySlice";
-import { listMajor } from "../feature/globalData/MajorSlice";
-import Breadcrumbs from "../components/Breadcrumbs";
+import { listUsers } from "../../feature/user/UserSlice";
+import Paginate from "../../components/paginate/Paginate";
+import { listUniversity } from "../../feature/globalData/UniversitySlice";
+import { listMajor } from "../../feature/globalData/MajorSlice";
+import Breadcrumbs from "../../components/Breadcrumbs";
+import Spinner from "../../components/ui/Spinner";
 
 const StudentList = () => {
   const { pathname } = useLocation();
   const { pageNumber, keyword } = useParams();
   const dispatch = useDispatch();
   const {
-    listStatus: userStatus,
-    error: userError,
+    status: userStatus,
     users,
     page,
     pages,
   } = useSelector((state) => state.user);
   const { auth } = useSelector((state) => state.auth);
-  const { majors } = useSelector((state) => state.major);
-  const { universities } = useSelector((state) => state.university);
   const [editToggle, setEditToggle] = useState(false);
 
   const [view, setView] = useState("");
@@ -49,10 +46,10 @@ const StudentList = () => {
     dispatch(listUniversity());
     dispatch(listMajor());
   }, [dispatch, pageNumber, keyword]);
-  if (userStatus === "loading") {
+  if (userStatus.fetchAll === "loading") {
     return <Spinner />;
   }
-  if (userStatus === "failed") {
+  if (userStatus.fetchAll === "failed") {
     return <div>Error loading students</div>;
   }
   return auth?.role === "admin" ? (
@@ -83,7 +80,6 @@ const StudentList = () => {
                         }
                       >
                         <button
-                          // data-tip="ເພີ່ມນັກຮຽນ"
                           className={`tooltipp btn btn-primary font-notosanslao text-white ${
                             auth.role !== "admin" && "btn-disabled"
                           }`}

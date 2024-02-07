@@ -2,19 +2,16 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import Spinner from "../components/ui/Spinner";
 import {
   degreeList,
   majorList,
   perminentAddressList,
   residenceAddressList,
-} from "../data/data";
-import {
-  authReset,
-  updateUserProfile,
-} from "../feature/auth/AuthSlice";
-import { listUniversity } from "../feature/globalData/UniversitySlice";
-import { getYearOptions, replaceImage } from "../utils/utils";
+} from "../../data/data";
+import { authReset, updateUserProfile } from "../../feature/auth/AuthSlice";
+import { listUniversity } from "../../feature/globalData/UniversitySlice";
+import { getYearOptions, replaceImage } from "../../utils/utils";
+import Spinner from "../../components/ui/Spinner";
 
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
@@ -78,6 +75,8 @@ const UserProfile = () => {
       setToggleEdit(false);
     } else toast.warning("Input data not valid");
   };
+
+  if (status.setInfo === "loading") return <Spinner />;
 
   return (
     <>

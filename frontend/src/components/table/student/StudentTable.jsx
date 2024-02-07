@@ -23,11 +23,9 @@ const cellStyle = "whitespace-nowrap truncate font-light";
 
 const UserTable = ({
   editToggle,
-  setEditToggle,
   view,
   users,
   userStatus,
-  userError,
 }) => {
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalMale, setTotalMale] = useState(0);
@@ -89,15 +87,14 @@ const UserTable = ({
     });
   }, [rows]);
 
-  if (userStatus === "loading") {
+  if (userStatus.fetchAll === "loading") {
     return <Spinner />;
   }
-  console.log(users);
   return (
     <>
       {editToggle ? (
         <span>Edit user component here</span>
-      ) : userStatus === "loading" || status.remove === "loading" ? (
+      ) : userStatus.fetchAll === "loading" || status.remove === "loading" ? (
         <Spinner />
       ) : (
         <>

@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import ErrorMessage from "../../components/typography/ErrorMessage";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import ErrorMessage from "../components/typography/ErrorMessage";
-import { authReset, signUp } from "../feature/auth/AuthSlice";
+import { authReset, signIn } from "../../feature/auth/AuthSlice";
+import toast from "react-hot-toast";
 const initialState = {
-  firstname: "",
-  lastname: "",
   emailAddress: "",
   password: "",
 };
-const Signup = () => {
-  const navigate = useNavigate();
+
+const Signin = () => {
   const { auth, status, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -23,23 +22,17 @@ const Signup = () => {
   } = useForm({ defaultValues: initialState });
   const [showPass, setShowPass] = useState(false);
 
-  const handleSignup = async (data) => {
-    const userInput = {
-      ...data,
-      fullname: {
-        englishFirstname: data.firstname,
-        englishLastname: data.lastname,
-      },
-    };
-    dispatch(signUp(userInput));
+  const handleLogin = async (data) => {
+    const userInput = { ...data };
+    dispatch(signIn(userInput));
   };
 
   useEffect(() => {
-    if (status.signup === "succeeded") {
-      toast.success("Sign up successful");
+    if (status.signin === "succeeded") {
+      toast.success("Login successful");
       dispatch(authReset());
-      navigate("/signin");
-    } else if (status.signup === "failed") {
+      navigate("/admin/restaurantlist");
+    } else if (status.signin === "failed") {
       toast.error(error);
       dispatch(authReset());
     }
@@ -55,44 +48,8 @@ const Signup = () => {
     <div className="flex min-h-screen items-center justify-center bg-login-background bg-cover bg-no-repeat">
       <div className="absolute h-full w-full bg-gradient-to-b from-black via-black/70 to-transparent"></div>
       <div className="absolute w-96 rounded bg-base-200 p-8 shadow-md">
-        <h1 className="mb-4 text-2xl font-bold">Student Signup</h1>
-        <form onSubmit={handleSubmit(handleSignup)}>
-          <div className="mb-4">
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">First Name</span>
-              </label>
-              <input
-                {...register("firstname", {
-                  required: "Firstname is required",
-                })}
-                type="text"
-                className="input input-bordered w-full max-w-xs"
-              />
-              <ErrorMessage
-                styling="mt-3 sm:text-md"
-                error={errors?.firstname}
-              />
-            </div>
-          </div>
-          <div className="mb-4">
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Last Name</span>
-              </label>
-              <input
-                {...register("lastname", {
-                  required: "Lastname is required",
-                })}
-                type="text"
-                className="input input-bordered w-full max-w-xs"
-              />
-              <ErrorMessage
-                styling="mt-3 sm:text-md"
-                error={errors?.lastname}
-              />
-            </div>
-          </div>
+        <h1 className="mb-4 text-2xl font-bold">Student Login</h1>
+        <form onSubmit={handleSubmit(handleLogin)}>
           <div className="mb-4">
             <div className="form-control w-full max-w-xs">
               <label className="label">
@@ -129,39 +86,41 @@ const Signup = () => {
               <input
                 {...register("password", {
                   required: "Password is required",
-                  minLength: 6,
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
                 })}
                 type={showPass ? "text" : "password"}
                 className="input input-bordered w-full max-w-xs"
               />
-              {/* <ErrorMessage
+              <ErrorMessage
                 styling="mt-3 sm:text-md"
                 error={errors?.password}
-              /> */}
-              {errors.password && (
-                <span className="mt-3 text-xs italic text-red-400">
-                  Password must be at least 6 character
-                </span>
-              )}
+              />
             </div>
           </div>
           <div className="mb-4 flex justify-end gap-3">
-            {status.signup === "loading" ? (
+            {status.signin === "loading" ? (
               <button className="btn flex-grow">
                 <span className="loading loading-spinner"></span>
                 loading
               </button>
             ) : (
               <button type="submit" className={`btn btn-primary flex-grow`}>
-                sign up
+                Sign In
               </button>
             )}
+
+            <button type="button" className="btn btn-ghost">
+              Forgot Password
+            </button>
           </div>
         </form>
         <div>
-          <label className="label-text">Already have an account?</label>
-          <Link to="/signin" className="link-primary link">
-            Sign in
+          <label className="label-text">No account?</label>
+          <Link to="/signup" className="link-primary link">
+            Register now
           </Link>
         </div>
       </div>
@@ -169,4 +128,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Signin;

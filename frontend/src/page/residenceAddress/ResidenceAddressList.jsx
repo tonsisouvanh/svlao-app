@@ -34,7 +34,7 @@ const ResidenceAddressList = () => {
           <div className="mb-14">
             {editToggle ? null : (
               <label className="flex justify-center font-notosanslao text-4xl font-bold text-primary">
-                Unviersity list
+                Residence address list
               </label>
             )}
           </div>

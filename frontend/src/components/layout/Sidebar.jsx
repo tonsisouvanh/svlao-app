@@ -96,7 +96,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           </button>
         </div>
       </div>
-      {/* <!-- SIDEBAR HEADER --> */}
+      {/* <!-- SIDEBAR MENU --> */}
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
         {/* <!-- Sidebar Menu --> */}
         <nav className="mt-5 px-4 py-4 text-base-100 lg:mt-9 lg:px-6">
@@ -167,9 +167,52 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                               ລາຍຊື່ນັກຮຽນ
                             </NavLink>
                           </li>
+                        </ul>
+                      </div>
+                      {/* <!-- Dropdown Menu End --> */}
+                    </React.Fragment>
+                  );
+                }}
+              </SidebarLinkGroup>
+              <SidebarLinkGroup
+                activeCondition={
+                  pathname === "/" && pathname.includes("dashboard")
+                }
+              >
+                {(handleClick, open) => {
+                  return (
+                    <React.Fragment>
+                      <NavLink
+                        to="#"
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao font-semibold duration-300 ease-in-out ${
+                          pathname.includes("manage-others-data") &&
+                          "rounded-md bg-primary-focus text-white"
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          sidebarExpanded
+                            ? handleClick()
+                            : setSidebarExpanded(true);
+                        }}
+                      >
+                        <AiOutlineDashboard size={23} />
+                        ຈັກການຂໍ້ມູນອື່ນຯ
+                        <BsFillCaretDownFill
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                            open && "rotate-180"
+                          }`}
+                        />
+                      </NavLink>
+                      {/* <!-- Dropdown Menu Start --> */}
+                      <div
+                        className={`translate transform overflow-hidden ${
+                          !open && "hidden"
+                        }`}
+                      >
+                        <ul className="mb-5 mt-4 flex flex-col gap-2.5 pl-6">
                           <li className={dropdownLiStyle}>
                             <NavLink
-                              to="/dashboard/university-list"
+                              to="/manage-others-data/university-list"
                               className={({ isActive }) =>
                                 dropdownNavlinkStyle +
                                 (isActive &&
@@ -181,7 +224,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           </li>
                           <li className={dropdownLiStyle}>
                             <NavLink
-                              to="/dashboard/major-list"
+                              to="/manage-others-data/major-list"
                               className={({ isActive }) =>
                                 dropdownNavlinkStyle +
                                 (isActive &&
@@ -193,19 +236,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           </li>
                           <li className={dropdownLiStyle}>
                             <NavLink
-                              to="/dashboard/residence-address-list"
+                              to="/manage-others-data/residence-address-list"
                               className={({ isActive }) =>
                                 dropdownNavlinkStyle +
                                 (isActive &&
                                   "rounded-md border-r-2 bg-white/10 text-white")
                               }
                             >
-                              ຂໍ້ມູນທີ່ຢູ່ຖາວອນ
+                              ຂໍ້ມູນທີ່ຢູ່ປັດຈຸບັນ
                             </NavLink>
                           </li>
                         </ul>
                       </div>
-
                       {/* <!-- Dropdown Menu End --> */}
                     </React.Fragment>
                   );

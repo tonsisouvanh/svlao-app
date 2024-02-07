@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { BiUserCircle } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import Spinner from "../components/ui/Spinner";
 import {
   degreeList,
   majorList,
@@ -11,15 +10,16 @@ import {
   residenceAddressList,
   roleList,
   statusList,
-} from "../data/data";
-import { getYearOptions } from "../utils/utils";
-import { getUserById } from "../feature/user/SingleUserSlice";
+} from "../../data/data";
+import { getYearOptions } from "../../utils/utils";
+import { getUserById } from "../../feature/user/SingleUserSlice";
 import { useLocation, useParams } from "react-router-dom";
-import { updateUser, userReset } from "../feature/user/UserSlice";
-import { listUniversity } from "../feature/globalData/UniversitySlice";
-import altImage from "../assets/img/profile.png";
-import Breadcrumbs from "../components/Breadcrumbs";
-import ResetPasswordModal from "../components/modal/ResetPasswordModal";
+import { updateUser, userReset } from "../../feature/user/UserSlice";
+import { listUniversity } from "../../feature/globalData/UniversitySlice";
+import altImage from "../../assets/img/profile.png";
+import Breadcrumbs from "../../components/Breadcrumbs";
+import ResetPasswordModal from "../../components/modal/ResetPasswordModal";
+import Spinner from "../../components/ui/Spinner";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const EditStudent = () => {
