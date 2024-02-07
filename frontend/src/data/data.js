@@ -403,6 +403,14 @@ export const residenceAddressList = [
   },
 ];
 
+export const announcementCategoryList = [
+  { value: "Event", label: "Event" },
+  { value: "News", label: "News" },
+  { value: "Meeting", label: "Meeting" },
+  { value: "Dormitory", label: "Dormitory" },
+];
+
+// COLUMN
 export const STUDENT_COLUMNS = [
   // {
   //   Header: "ID",
@@ -574,6 +582,13 @@ export const MAJOR_COLUMNS = [
 export const RESIDENCEADDRESS_COLUMNS = [
   { Header: "Address", accessor: "address" },
   { Header: "Location (KTX)", accessor: "location" },
+];
+export const ANNOUNCEMENT_COLUMNS = [
+  { Header: "Title", accessor: "title" },
+  { Header: "Timestamp", accessor: "timestamp" },
+  { Header: "Category", accessor: "category" },
+  { Header: "Content", accessor: "content" },
+  { Header: "Image", accessor: "image" },
 ];
 
 export const roleList = ["admin", "user", "assistant"];

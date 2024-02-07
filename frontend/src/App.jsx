@@ -21,8 +21,11 @@ import EditMajor from "./page/major/EditMajor";
 import ResidenceAddressList from "./page/residenceAddress/ResidenceAddressList";
 import EditResidenceAddress from "./page/residenceAddress/EditResidenceAddress";
 import AddResidenceAddress from "./page/residenceAddress/AddResidenceAddress";
-import AnnouncementList from "./page/AnnouncementList";
 import DocumentForm from "./page/DocumentForm";
+import Announcement from "./page/announcement/Announcement";
+import AnnouncementList from "./page/announcement/private/AnnouncementList";
+import AddAnnouncement from "./page/announcement/private/AddAnnouncement";
+import EditAnnouncement from "./page/announcement/private/EditAnnouncement";
 
 function App() {
   return (
@@ -37,26 +40,53 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
 
             {/* ======================= Announcement ======================================== */}
-            <Route path="/" element={<AnnouncementList />} />
-            <Route path="/page/:pageNumber" element={<AnnouncementList />} />
-            <Route path="/search/:keyword" element={<AnnouncementList />} />
+            {/* private */}
+            <Route
+              path="/manage-others-data/announcement-list"
+              element={<AnnouncementList />}
+            />
+            <Route
+              path="/manage-others-data/announcement-list/page/:pageNumber"
+              element={<AnnouncementList />}
+            />
+            <Route
+              path="/manage-others-data/announcement-list/search/:keyword"
+              element={<AnnouncementList />}
+            />
+            <Route
+              path="/manage-others-data/announcement-list/search/:keyword/page/:pageNumber"
+              element={<AnnouncementList />}
+            />
+            <Route
+              path="/manage-others-data/announcement-list/add"
+              element={<AddAnnouncement />}
+            />
+            <Route
+              path="/manage-others-data/announcement-list/:id"
+              element={<EditAnnouncement />}
+            />
+
+            {/* public */}
+            <Route path="/" element={<Announcement />} />
+            <Route path="/page/:pageNumber" element={<Announcement />} />
+            <Route path="/search/:keyword" element={<Announcement />} />
             <Route
               path="/search/:keyword/page/:pageNumber"
-              element={<AnnouncementList />}
+              element={<Announcement />}
             />
             <Route
               path="/announcement-list/page/:pageNumber"
-              element={<AnnouncementList />}
+              element={<Announcement />}
             />
             <Route
               path="/announcement-list/search/:keyword"
-              element={<AnnouncementList />}
+              element={<Announcement />}
             />
             <Route
               path="/announcement-list/search/:keyword/page/:pageNumber"
-              element={<AnnouncementList />}
+              element={<Announcement />}
             />
-            {/* <Route path="/announcement-list" element={<AnnouncementList />} /> */}
+
             {/* ================================================================== */}
 
             {/* ======================= Student ======================================== */}

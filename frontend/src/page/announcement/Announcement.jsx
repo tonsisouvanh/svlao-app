@@ -1,14 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import InfoModal from "../components/modal/InfoModal";
-import ActivitySlider from "../components/slider/ActivitySlider";
-import { listAnnouncements } from "../feature/announcement/AnnouncementSlice";
+import InfoModal from "../../components/modal/InfoModal";
+import ActivitySlider from "../../components/slider/ActivitySlider";
+import { listAnnouncements } from "../../feature/announcement/AnnouncementSlice";
 import { useEffect } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
-import Spinner from "../components/ui/Spinner";
-import Paginate from "../components/paginate/Paginate";
+import { Link, useParams } from "react-router-dom";
+import Spinner from "../../components/ui/Spinner";
+import Paginate from "../../components/paginate/Paginate";
 
-const AnnouncementList = () => {
-  const { pathname } = useLocation();
+const Announcement = () => {
   const { pageNumber, keyword } = useParams();
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.auth);
@@ -174,4 +173,4 @@ const AnnouncementList = () => {
   );
 };
 
-export default AnnouncementList;
+export default Announcement;

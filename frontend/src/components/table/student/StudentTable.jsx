@@ -18,15 +18,10 @@ import { BsFacebook } from "react-icons/bs";
 import { STUDENT_COLUMNS } from "../../../data/data";
 import Searchbox from "../../input/student/Searchbox";
 import { removeUser } from "../../../feature/user/UserSlice";
-import { replaceImage } from "../../../utils/utils";
+import { formatDateDDMMYYYY, replaceImage } from "../../../utils/utils";
 const cellStyle = "whitespace-nowrap truncate font-light";
 
-const UserTable = ({
-  editToggle,
-  view,
-  users,
-  userStatus,
-}) => {
+const UserTable = ({ editToggle, view, users, userStatus }) => {
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalMale, setTotalMale] = useState(0);
   const [totalFemale, setTotalFemale] = useState(0);
@@ -381,7 +376,7 @@ const UserTable = ({
                       return (
                         <tr key={row.id} {...row.getRowProps()}>
                           <td>
-                            <div className="dropdown dropdown-right">
+                            <div className="dropdown-right dropdown">
                               <label
                                 tabIndex={0}
                                 className="btn btn-xs px-1 py-0"
@@ -450,6 +445,12 @@ const UserTable = ({
                                       />
                                     </div>
                                   </div>
+                                ) : cell.column.id === "dob" ? (
+                                  <>
+                                    <span>
+                                      {formatDateDDMMYYYY(cell.value)}
+                                    </span>
+                                  </>
                                 ) : (
                                   cell.render("Cell")
                                 )}

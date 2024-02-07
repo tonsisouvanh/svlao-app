@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import moment from "moment";
-import altImage from '../assets/img/profile.png'
+import altImage from "../assets/img/profile.png";
 export const checkRole = (role) => {
   let approve = false;
   switch (role) {
@@ -54,6 +54,16 @@ export const copyToClipboard = async (text) => {
 export const formatDate = (dateString) => {
   var date = new Date(dateString);
   return moment(date).format("YYYY-MM-DD");
+};
+
+export const formatDateDDMMYYYY = (dateString) => {
+  var date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+
+  const formattedDate = `${day}-${month}-${year}`;
+  return formattedDate;
 };
 
 // export const getYearOptions = () => {

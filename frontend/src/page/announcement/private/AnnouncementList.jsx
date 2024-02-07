@@ -1,23 +1,26 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import Spinner from "../../components/ui/Spinner";
-import Unauthorized from "../public/Unauthorized";
 import { AiFillPlusCircle } from "react-icons/ai";
-import Breadcrumbs from "../../components/Breadcrumbs";
-import { listMajor } from "../../feature/globalData/MajorSlice";
-import MajorTable from "../../components/table/major/MajorTable";
+import Spinner from "../../../components/ui/Spinner";
+import Breadcrumbs from "../../../components/Breadcrumbs";
+import Unauthorized from "../../public/Unauthorized";
+import { listAnnouncements } from "../../../feature/announcement/AnnouncementSlice";
+import AnnounceTable from "../../../components/table/announcement/AnnouncementTable";
+import Paginate from "../../../components/paginate/Paginate";
 
-const MajorList = () => {
+const AnnouncementList = () => {
+  const { pageNumber, keyword } = useParams();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.auth);
-  const { status } = useSelector((state) => state.major);
   const [editToggle, setEditToggle] = useState(false);
 
+  const { status, page, pages } = useSelector((state) => state.announcement);
   useEffect(() => {
-    dispatch(listMajor());
-  }, [dispatch]);
+    dispatch(listAnnouncements({ pageNumber, keyword }));
+  }, [dispatch, pageNumber, keyword]);
+
   if (status.list === "loading") {
     return <Spinner />;
   }
@@ -34,7 +37,7 @@ const MajorList = () => {
           <div className="mb-14">
             {editToggle ? null : (
               <label className="flex justify-center font-notosanslao text-4xl font-bold text-primary">
-                Unviersity list
+                Announcement list
               </label>
             )}
           </div>
@@ -48,7 +51,7 @@ const MajorList = () => {
                         to={
                           auth.role !== "admin"
                             ? "#"
-                            : "/manage-others-data/major-list/add"
+                            : "/manage-others-data/announcement-list/add"
                         }
                       >
                         <button
@@ -56,7 +59,7 @@ const MajorList = () => {
                             auth.role !== "admin" && "btn-disabled"
                           }`}
                         >
-                          Add Major
+                          Add Announcement
                           <AiFillPlusCircle size={20} />
                         </button>
                       </Link>
@@ -66,7 +69,16 @@ const MajorList = () => {
               </>
             )}
           </div>
-          <MajorTable editToggle={editToggle} setEditToggle={setEditToggle} />
+          <AnnounceTable
+            editToggle={editToggle}
+            setEditToggle={setEditToggle}
+          />
+          <Paginate
+            path="/manage-others-data/announcement-list/page/"
+            style="mt-10"
+            page={page}
+            pages={pages}
+          />
         </div>
       </section>
     </>
@@ -75,4 +87,4 @@ const MajorList = () => {
   );
 };
 
-export default MajorList;
+export default AnnouncementList;

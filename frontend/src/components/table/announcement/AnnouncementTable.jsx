@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../ui/Spinner";
 import { useGlobalFilter, useSortBy, useTable, useFilters } from "react-table";
@@ -11,19 +11,21 @@ import {
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import InfoModal from "../../modal/InfoModal";
-import { MAJOR_COLUMNS } from "../../../data/data";
-// import Searchbox from "../../input/student/Searchbox";
-import altImage from "../../../assets/img/profile.png";
-import { removeMajor } from "../../../feature/globalData/MajorSlice";
+import Searchbox from "../../input/student/Searchbox";
+import { removeAnnouncement } from "../../../feature/announcement/AnnouncementSlice";
+import { formatDateDDMMYYYY } from "../../../utils/utils";
+import { ANNOUNCEMENT_COLUMNS } from "../../../data/data";
+import toast from "react-hot-toast";
 const cellStyle = "whitespace-nowrap truncate font-light";
 
-const MajorTable = ({ editToggle, setEditToggle }) => {
-  const { majors, status } = useSelector((state) => state.major);
+const AnnounceTable = ({ editToggle, setEditToggle }) => {
+  const { announcements, status } = useSelector((state) => state.announcement);
+
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
-  const [deletedMajorId, setDeletedMajorId] = useState("");
-  const data = useMemo(() => majors, [majors]);
-  const columns = useMemo(() => MAJOR_COLUMNS, []);
+  const [deletedAnnouncementId, setDeletedAnnouncementId] = useState("");
+  const data = useMemo(() => announcements, [announcements]);
+  const columns = useMemo(() => ANNOUNCEMENT_COLUMNS, []);
   const {
     getTableProps,
     getTableBodyProps,
@@ -36,50 +38,61 @@ const MajorTable = ({ editToggle, setEditToggle }) => {
 
   const { globalFilter } = state;
   const handleOpenModal = (id) => {
-    setDeletedMajorId(id);
+    setDeletedAnnouncementId(id);
     setOpenModal(true);
   };
-  const handleDeleteMajor = () => {
-    dispatch(removeMajor(deletedMajorId));
-    setDeletedMajorId("");
+  const handleDeletAnnouncement = () => {
+    dispatch(removeAnnouncement(deletedAnnouncementId));
+    setDeletedAnnouncementId("");
     setOpenModal(false);
   };
-  const replaceImage = (error) => {
-    error.target.src = altImage;
-  };
 
-  if (status.list === "loading") {
+  useEffect(() => {
+    if (status.remove === "succeeded") {
+      toast.success("Deleted announcement");
+    } else if(status.remove === 'failed') toast.error("Failed to delete");
+  }, [status.remove]);
+
+  if (status.fetchAll === "loading") {
     return <Spinner />;
   }
   return (
     <>
       {editToggle ? (
-        <span>Edit major component here</span>
-      ) : status.list === "loading" || status.remove === "loading" ? (
+        <span>Edit announcement component here</span>
+      ) : status.fetchAll === "loading" || status.remove === "loading" ? (
         <Spinner />
       ) : (
         <>
           {openModal && (
             <InfoModal
-              title={"Delete major"}
+              title={"Delete announcement"}
               modaltype={"question"}
-              desc={"This major data will be perminently delete, are you sure?"}
+              desc={
+                "This announcement data will be perminently delete, are you sure?"
+              }
               initialValue={true}
               isOnclickEvent={true}
               confirmLabel={"Delete"}
-              handleClick={handleDeleteMajor}
+              handleClick={handleDeletAnnouncement}
             />
           )}
-          {/* <div className="mb-5 flex flex-wrap items-center gap-2">
+          <div className="mb-5 flex flex-wrap items-center gap-2">
             <Searchbox filter={globalFilter} setFilter={setGlobalFilter} />
-          </div> */}
+            <Link to="/manage-others-data/announcement-list/search/all">
+              <button className="btn btn-outline btn-sm">ເບິ່ງທັງໝົດ</button>
+            </Link>
+            <Link to="/manage-others-data/announcement-list/page/1">
+              <button className="btn btn-outline btn-sm">ເບິ່ງເປັນໜ້າ</button>
+            </Link>
+          </div>
           <div className="overflow-x-auto">
             <table
               {...getTableProps()}
               className="table table-md font-notosanslao"
             >
               <thead>
-                {majors &&
+                {announcements &&
                   headerGroups?.map((headerGroup) => (
                     <tr
                       key={headerGroup.id}
@@ -112,13 +125,13 @@ const MajorTable = ({ editToggle, setEditToggle }) => {
                   ))}
               </thead>
               <tbody {...getTableBodyProps()}>
-                {majors &&
+                {announcements &&
                   rows?.map((row) => {
                     prepareRow(row);
                     return (
                       <tr key={row.id} {...row.getRowProps()}>
                         <td>
-                          <div className="dropdown dropdown-right">
+                          <div className="dropdown-right dropdown">
                             <label
                               tabIndex={0}
                               className="btn btn-xs px-1 py-0"
@@ -130,7 +143,7 @@ const MajorTable = ({ editToggle, setEditToggle }) => {
                               className="dropdown-content rounded-box absolute !-top-2 !right-0 z-[1] !flex w-fit gap-4 border bg-base-100 p-2 shadow"
                             >
                               <Link
-                                to={`/manage-others-data/major-list/${row.original._id}`}
+                                to={`/manage-others-data/announcement-list/${row.original._id}`}
                               >
                                 <li className="btn btn-ghost btn-xs">
                                   <AiFillEdit size={15} />
@@ -149,35 +162,19 @@ const MajorTable = ({ editToggle, setEditToggle }) => {
                             </ul>
                           </div>
                         </td>
-                        {majors &&
+                        {announcements &&
                           row?.cells?.map((cell, index) => (
                             <td
                               className={cellStyle}
                               key={index}
                               {...cell.getCellProps()}
                             >
-                              {cell.column.id === "status.list" ? (
-                                <span
-                                  className={`badge ${
-                                    cell.value === "active"
-                                      ? " badge-success text-white"
-                                      : "badge-warning"
-                                  }`}
-                                >
-                                  {cell.render("Cell")}
-                                </span>
-                              ) : cell.column.id === "gender" ? (
-                                <>{cell.value === "male" ? "ຊາຍ" : "ຍິງ"}</>
-                              ) : cell.column.id === "profileImg" ? (
-                                <div className="avatar">
-                                  <div className="w-10 rounded-full">
-                                    <img
-                                      src={cell.value}
-                                      alt={cell.value}
-                                      onError={replaceImage}
-                                    />
-                                  </div>
-                                </div>
+                              {cell.column.id === "timestamp" ? (
+                                <>{formatDateDDMMYYYY(cell.value)}</>
+                              ) : cell.column.id === "content" ? (
+                                <>
+                                  <span className="truncate">{cell.value}</span>
+                                </>
                               ) : (
                                 cell.render("Cell")
                               )}
@@ -195,4 +192,4 @@ const MajorTable = ({ editToggle, setEditToggle }) => {
   );
 };
 
-export default MajorTable;
+export default AnnounceTable;

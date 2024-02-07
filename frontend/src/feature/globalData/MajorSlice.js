@@ -6,6 +6,7 @@ const initialState = {
   majors: [],
   status: {
     list: "idle" | "loading" | "succeeded" | "failed",
+    fetchOne: "idle" | "loading" | "succeeded" | "failed",
     create: "idle" | "loading" | "succeeded" | "failed",
     update: "idle" | "loading" | "succeeded" | "failed",
     remove: "idle" | "loading" | "succeeded" | "failed",
@@ -142,6 +143,7 @@ export const getMajorById = createAsyncThunk(
 const resetStatus = (state) => {
   state.status = {
     list: "idle",
+    fetchOne: "idle",
     create: "idle",
     update: "idle",
     remove: "idle",
@@ -175,14 +177,14 @@ const majorSlice = createSlice({
       })
 
       .addCase(getMajorById.pending, (state) => {
-        state.status.list = "loading";
+        state.status.fetchOne = "loading";
       })
       .addCase(getMajorById.fulfilled, (state, action) => {
-        state.status.list = "succeeded";
+        state.status.fetchOne = "succeeded";
         state.majors = [{ ...action.payload }];
       })
       .addCase(getMajorById.rejected, (state, action) => {
-        state.status.list = "failed";
+        state.status.fetchOne = "failed";
         setError(state, action);
       })
 
