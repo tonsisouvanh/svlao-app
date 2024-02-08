@@ -96,6 +96,6 @@ export const userStatusColor = (userStatus) => {
   return color;
 };
 
-export const replaceImage = (error) => {
-  error.target.src = altImage;
+export const replaceImage = (error, image) => {
+  error.target.src = image;
 };

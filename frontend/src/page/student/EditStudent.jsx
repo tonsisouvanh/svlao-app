@@ -144,7 +144,7 @@ const EditStudent = () => {
                       <img
                         src={singleUser?.profileImg}
                         alt={singleUser.profileImg}
-                        onError={replaceImage}
+                        onError={(error) => replaceImage(error, altImage)}
                       />
                     ) : (
                       <BiUserCircle className="h-full w-full text-primary" />

@@ -1,5 +1,13 @@
 import asyncHandler from "express-async-handler";
 import Announcement from "../models/announcementModel.js";
+import { uploadSingleImage } from "../utils/imageUpload.js";
+const opts = {
+  overwrite: true,
+  invalidate: true,
+  resource_type: "auto",
+  folder: "/laostudenthcm/announcement",
+  transformation: { quality: "50" },
+};
 
 // @desc    Insert multiple announcements
 // @route   POST /api/announcements/insertMany
@@ -49,8 +57,13 @@ const updateAnnouncement = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const createAnnouncement = asyncHandler(async (req, res) => {
   const { title, content, category, image } = req.body;
+  console.log("🚀 ~ createAnnouncement ~ req.body:", req.body)
+  let addImage = [];
 
-  // Check if the announcement with the given title already exists
+  if (image?.length > 0) {
+    const imageUrl = await uploadSingleImage(image[0], opts);
+    addImage = imageUrl;
+  }
   const announcementExist = await Announcement.findOne({ title });
 
   if (announcementExist) {
@@ -58,12 +71,11 @@ const createAnnouncement = asyncHandler(async (req, res) => {
     throw new Error("Announcement already exists");
   }
 
-  // Create a new announcement
   const announcement = await Announcement.create({
     title,
     content,
     category,
-    image,
+    image: addImage || "",
   });
 
   if (announcement) {

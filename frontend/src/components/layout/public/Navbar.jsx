@@ -10,7 +10,6 @@ import { signOut } from "../../../feature/auth/AuthSlice";
 import altImage from "../../../assets/img/profile.png";
 import { replaceImage } from "../../../utils/utils";
 
-
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -96,7 +95,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                       <img
                         src={auth?.profileImg}
                         alt={auth.profileImg}
-                        onError={replaceImage}
+                        onError={(error) => replaceImage(error,altImage)}
                       />
                     ) : (
                       <BiUserCircle className="h-full w-full text-primary" />

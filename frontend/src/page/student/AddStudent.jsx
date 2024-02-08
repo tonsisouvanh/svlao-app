@@ -141,9 +141,6 @@ const AddStudent = () => {
       toast.warning("Input data not valid");
     }
   };
-  // const replaceImage = (error) => {
-  //   error.target.src = altImage;
-  // };
 
   return (
     <>

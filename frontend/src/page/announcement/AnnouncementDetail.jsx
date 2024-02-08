@@ -1,13 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getAnnouncementById } from "../../feature/announcement/AnnouncementSlice";
 import Spinner from "../../components/ui/Spinner";
 import FetchErrorModal from "../../components/modal/FetchErrorModal";
-import Breadcrumbs from "../../components/Breadcrumbs";
 import consule from "../../assets/img/consule.jpg";
 import { FaArrowCircleLeft } from "react-icons/fa";
+import { replaceImage } from "../../utils/utils";
+import LazyLoad from "react-lazy-load";
 const AnnouncementDetail = () => {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const { pathname } = useLocation();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -70,8 +72,9 @@ const AnnouncementDetail = () => {
           <div className="w-5/6 md:w-1/2 lg:w-full lg:max-w-lg">
             <img
               className="rounded object-cover object-center"
-              alt="hero"
-              src={consule}
+              alt="img"
+              src={announcement?.image}
+              onError={(error) => replaceImage(error, consule)}
             />
           </div>
         </div>

@@ -12,7 +12,7 @@ import { authReset, updateUserProfile } from "../../feature/auth/AuthSlice";
 import { listUniversity } from "../../feature/globalData/UniversitySlice";
 import { getYearOptions, replaceImage } from "../../utils/utils";
 import Spinner from "../../components/ui/Spinner";
-
+import altImage from "../../assets/img/profile.png";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const UserProfile = () => {
@@ -90,7 +90,10 @@ const UserProfile = () => {
               <div>
                 <div className="avatar">
                   <div className="w-48 rounded">
-                    <img onError={replaceImage} src={studentData?.profileImg} />
+                    <img
+                      onError={(error) => replaceImage(error, altImage)}
+                      src={studentData?.profileImg}
+                    />
                   </div>
                 </div>
               </div>

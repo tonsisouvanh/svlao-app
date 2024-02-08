@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,9 +12,11 @@ import ErrorMessage from "../../../components/typography/ErrorMessage";
 import Spinner from "../../../components/ui/Spinner";
 import Select from "react-select";
 import { announcementCategoryList } from "../../../data/data";
+import ImageUpload from "../../../components/input/ImageUpload";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const AddAnnouncement = () => {
+  const [base64, setBase64] = useState(null);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -41,11 +43,18 @@ const AddAnnouncement = () => {
     }
   }, [status.create, dispatch, error, navigate, reset]);
 
+  const clearImage = () => {
+    setBase64(null);
+  };
+
   const handleCreateSubmit = (data) => {
     if (data) {
+      const addImage = base64 ? [base64] : null;
+
       const formattedData = {
         ...data,
-        category: data.category.map((item) => item.value),
+        image: addImage ? addImage : [],
+        category: data?.category?.map((item) => item.value) || [],
       };
       const confirmed = window.confirm(
         "Are you sure you want to update the announcement?",
@@ -60,7 +69,6 @@ const AddAnnouncement = () => {
       toast.warning("Input data not valid");
     }
   };
-
   return (
     <>
       <section className="relative">
@@ -114,7 +122,7 @@ const AddAnnouncement = () => {
                       {...register("content", {
                         required: "Field required",
                       })}
-                      className={`textarea h-48 w-full max-w-full`}
+                      className={`textarea textarea-bordered h-48 w-full max-w-full`}
                     />
                   </label>
                 </div>
@@ -142,6 +150,27 @@ const AddAnnouncement = () => {
                     />
                   </label>
                 </div>
+                <div className="w-full p-2">
+                  <label className="form-control w-full">
+                    <div className="label flex items-center">
+                      <span className="label-text font-semibold">
+                        Upload Image
+                      </span>
+                    </div>
+                    {base64 ? (
+                      <img src={base64} alt="Base64 Image" />
+                    ) : (
+                      <ImageUpload setBase64={setBase64} />
+                    )}
+                  </label>
+                </div>
+                <button
+                  type="button"
+                  onClick={clearImage}
+                  className="btn btn-error btn-outline btn-sm ml-10"
+                >
+                  Clear
+                </button>
                 <div className="w-full space-x-4 p-2">
                   <button
                     type="submit"

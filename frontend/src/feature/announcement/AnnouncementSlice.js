@@ -19,6 +19,7 @@ const initialState = {
 export const createAnnouncement = createAsyncThunk(
   "announcements/addAnnouncement",
   async (inputData, thunkAPI) => {
+    console.log("🚀 ~ inputData:", inputData);
     try {
       const { auth } = thunkAPI.getState().auth;
       const config = {
@@ -27,7 +28,6 @@ export const createAnnouncement = createAsyncThunk(
           Authorization: `Bearer ${auth.token}`,
         },
       };
-
       const { data } = await axios.post(
         "/api/announcements",
         inputData,

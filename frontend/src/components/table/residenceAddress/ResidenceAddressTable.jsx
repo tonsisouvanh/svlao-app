@@ -179,7 +179,9 @@ const ResidenceAddressTable = ({ editToggle, setEditToggle }) => {
                                     <img
                                       src={cell.value}
                                       alt={cell.value}
-                                      onError={replaceImage}
+                                      onError={(error) =>
+                                        replaceImage(error, altImage)
+                                      }
                                     />
                                   </div>
                                 </div>

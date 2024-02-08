@@ -168,7 +168,7 @@ const EditAnnouncement = () => {
                       {...register("content", {
                         required: "Field required",
                       })}
-                      className={`textarea h-48 w-full max-w-full`}
+                      className={`textarea textarea-bordered h-48 w-full max-w-full`}
                     />
                   </label>
                 </div>

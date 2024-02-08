@@ -445,7 +445,9 @@ const UserTable = ({ editToggle, view, users, userStatus }) => {
                                       <img
                                         src={cell.value}
                                         alt={cell.value}
-                                        onError={replaceImage}
+                                        onError={(error) =>
+                                          replaceImage(error, altImage)
+                                        }
                                       />
                                     </div>
                                   </div>
