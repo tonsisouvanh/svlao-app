@@ -49,7 +49,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ນະຄອນຫຼວງວຽງຈັນ",
+    province: "ນະຄອນຫຼວງວຽງຈັນ",
     passport: {
       expired: "2031-10-24",
       img: "",
@@ -116,7 +116,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ສະຫວັນ",
+    province: "ສະຫວັນ",
     passport: {
       img: "",
       passportNo: "PA0368691",
@@ -179,7 +179,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ນະຄອນຫຼວງວຽງຈັນ",
+    province: "ນະຄອນຫຼວງວຽງຈັນ",
     passport: {
       expired: "2032-08-31",
       passportNo: "PA0453114",
@@ -243,7 +243,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ອຸດົມໄຊ",
+    province: "ອຸດົມໄຊ",
     passport: {
       expired: "2032-07-26",
       img: "",
@@ -307,7 +307,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ຫົວພັນ",
+    province: "ຫົວພັນ",
     passport: {
       img: "",
       expired: "2025-09-03",
@@ -370,7 +370,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ນະຄອນຫຼວງວຽງຈັນ",
+    province: "ນະຄອນຫຼວງວຽງຈັນ",
     passport: {
       img: "",
       expired: "2033-08-13",
@@ -433,7 +433,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ຊຽງຂວາງ",
+    province: "ຊຽງຂວາງ",
     passport: {
       passportNo: "P2532137",
       expired: "2033-01-24",
@@ -496,7 +496,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ສະຫວັນ",
+    province: "ສະຫວັນ",
     passport: {
       expired: "2032-11-18",
       passportNo: "PA0442258",
@@ -559,7 +559,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ຫົວພັນ",
+    province: "ຫົວພັນ",
     passport: {
       img: "",
       passportNo: "P 2415364",
@@ -622,7 +622,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ອຸດົມໄຊ",
+    province: "ອຸດົມໄຊ",
     passport: {
       expired: "2023-11-10",
       passportNo: "PA 04730390",
@@ -686,7 +686,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ຈໍາປາສັກ",
+    province: "ຈໍາປາສັກ",
     passport: {
       img: "",
       expired: "2028-09-06",
@@ -749,7 +749,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ສະຫວັນ",
+    province: "ສະຫວັນ",
     passport: {
       img: "",
       passportNo: "PA​0369708​",
@@ -812,7 +812,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ນະຄອນຫຼວງວຽງຈັນ",
+    province: "ນະຄອນຫຼວງວຽງຈັນ",
     passport: {
       img: "",
       passportNo: "PA0365938",
@@ -876,7 +876,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ສະຫວັນ",
+    province: "ສະຫວັນ",
     passport: {
       img: "",
       expired: "2033-08-21",
@@ -940,7 +940,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ນະຄອນຫຼວງວຽງຈັນ",
+    province: "ນະຄອນຫຼວງວຽງຈັນ",
     passport: {
       img: "",
       expired: "2032-06-02",
@@ -1004,7 +1004,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ເຊກອງ",
+    province: "ເຊກອງ",
     passport: {
       passportNo: "P2750016",
       expired: "2033-08-28",
@@ -1067,7 +1067,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ຫົວພັນ",
+    province: "ຫົວພັນ",
     passport: {
       img: "",
       expired: "2028-10-28",
@@ -1131,7 +1131,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ອັດຕະປື",
+    province: "ອັດຕະປື",
     passport: {
       expired: "2028-05-21",
       img: "",
@@ -1194,7 +1194,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ຊຽງຂວາງ",
+    province: "ຊຽງຂວາງ",
     passport: {
       passportNo: "PA 0373403",
       img: "",
@@ -1258,7 +1258,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ເຊກອງ",
+    province: "ເຊກອງ",
     passport: {
       expired: "2033-07-06",
       passportNo: "P2668102",
@@ -1322,7 +1322,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ຈໍາປາສັກ",
+    province: "ຈໍາປາສັກ",
     passport: {
       expired: "2028-05-01",
       passportNo: "P2623798",
@@ -1385,7 +1385,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ຫຼວງພະບາງ",
+    province: "ຫຼວງພະບາງ",
     passport: {
       passportNo: "P2369240",
       img: "",
@@ -1449,7 +1449,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ອັດຕະປື",
+    province: "ອັດຕະປື",
     passport: {
       img: "",
       expired: "2033-05-11",
@@ -1512,7 +1512,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ຊຽງຂວາງ",
+    province: "ຊຽງຂວາງ",
     passport: {
       passportNo: "PA 0368060",
       expired: "2031-09-04",
@@ -1576,7 +1576,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ຫົວພັນ",
+    province: "ຫົວພັນ",
     passport: {
       img: "",
       passportNo: "P2391028 ",
@@ -1639,7 +1639,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ຈໍາປາສັກ",
+    province: "ຈໍາປາສັກ",
     passport: {
       img: "",
       passportNo: "PA0370524",
@@ -1703,7 +1703,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ຈໍາປາສັກ",
+    province: "ຈໍາປາສັກ",
     passport: {
       img: "",
       expired: "2027-08-10",
@@ -1768,7 +1768,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ຈໍາປາສັກ",
+    province: "ຈໍາປາສັກ",
     passport: {
       img: "",
       passportNo: "PA0369188",
@@ -1832,7 +1832,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ສະຫວັນ",
+    province: "ສະຫວັນ",
     passport: {
       passportNo: "P2585943",
       expired: "2033-03-27",
@@ -1896,7 +1896,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ນະຄອນຫຼວງວຽງຈັນ",
+    province: "ນະຄອນຫຼວງວຽງຈັນ",
     passport: {
       img: "",
       expired: "2029-07-14",
@@ -1968,7 +1968,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ບໍລິຄຳໄຊ",
+    province: "ບໍລິຄຳໄຊ",
     passport: {
       passportNo: "P2665892",
       expired: "2023-06-07",
@@ -2033,7 +2033,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ສາລະວັນ",
+    province: "ສາລະວັນ",
     passport: {
       passportNo: "P2710136",
       img: "",
@@ -2103,7 +2103,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ນະຄອນຫຼວງວຽງຈັນ",
+    province: "ນະຄອນຫຼວງວຽງຈັນ",
     passport: {
       img: "",
       passportNo: "P2535495",
@@ -2167,7 +2167,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ຊຽງຂວາງ",
+    province: "ຊຽງຂວາງ",
     passport: {
       img: "",
       passportNo: "P2699792",
@@ -2231,7 +2231,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ຊຽງຂວາງ",
+    province: "ຊຽງຂວາງ",
     passport: {
       expired: "2032-06-11",
       img: "",
@@ -2301,7 +2301,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ນະຄອນຫຼວງວຽງຈັນ",
+    province: "ນະຄອນຫຼວງວຽງຈັນ",
     passport: {
       expired: "2033-08-21",
       passportNo: "P 2743754",
@@ -2366,7 +2366,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ສາລະວັນ",
+    province: "ສາລະວັນ",
     passport: {
       passportNo: "2678061",
       expired: "2024-10-25",
@@ -2430,7 +2430,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ສະຫວັນ",
+    province: "ສະຫວັນ",
     passport: {
       img: "",
       passportNo: "P2455942",
@@ -2494,7 +2494,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ອັດຕະປື",
+    province: "ອັດຕະປື",
     passport: {
       expired: "2033-04-29",
       img: "",
@@ -2557,7 +2557,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ສະຫວັນ",
+    province: "ສະຫວັນ",
     passport: {
       passportNo: "P 2720203",
       img: "",
@@ -2622,7 +2622,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ຈໍາປາສັກ",
+    province: "ຈໍາປາສັກ",
     passport: {
       passportNo: "P2751246",
       expired: "2033-08-28",
@@ -2685,7 +2685,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ສະຫວັນ",
+    province: "ສະຫວັນ",
     passport: {
       img: "",
       passportNo: "PA0422567",
@@ -2748,7 +2748,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ນະຄອນຫຼວງວຽງຈັນ",
+    province: "ນະຄອນຫຼວງວຽງຈັນ",
     passport: {
       passportNo: "PA0331844",
       expired: "2029-08-29",
@@ -2813,7 +2813,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ສາລະວັນ",
+    province: "ສາລະວັນ",
     passport: {
       expired: "2032-08-08",
       img: "",
@@ -2877,7 +2877,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ຈໍາປາສັກ",
+    province: "ຈໍາປາສັກ",
     passport: {
       expired: "2033-07-13",
       passportNo: "P 2702696",
@@ -2942,7 +2942,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ຈໍາປາສັກ",
+    province: "ຈໍາປາສັກ",
     passport: {
       passportNo: "P2752019",
       expired: "2033-08-30",
@@ -3007,7 +3007,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ສະຫວັນ",
+    province: "ສະຫວັນ",
     passport: {
       img: "",
       passportNo: "PA0259675",
@@ -3071,7 +3071,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ຈໍາປາສັກ",
+    province: "ຈໍາປາສັກ",
     passport: {
       passportNo: "PA 0474286",
       img: "",
@@ -3135,7 +3135,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ເຊກອງ",
+    province: "ເຊກອງ",
     passport: {
       expired: "2033-08-28",
       img: "",
@@ -3198,7 +3198,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ຊຽງຂວາງ",
+    province: "ຊຽງຂວາງ",
     passport: {
       expired: "2026-08-13",
       img: "",
@@ -3262,7 +3262,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ຈໍາປາສັກ",
+    province: "ຈໍາປາສັກ",
     passport: {
       img: "",
       expired: "2033-08-27",
@@ -3325,7 +3325,7 @@ export const usersData = [
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
       location: "KTX Khu B ĐHQG",
     },
-    perminentAddress: "ນະຄອນຫຼວງວຽງຈັນ",
+    province: "ນະຄອນຫຼວງວຽງຈັນ",
     passport: {
       passportNo: "PA0368124",
       expired: "2030-09-04",
@@ -3388,7 +3388,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ສະຫວັນ",
+    province: "ສະຫວັນ",
     passport: {
       img: "",
       passportNo: "P2787108",
@@ -3402,85 +3402,85 @@ export const usersData = [
       "https://drive.google.com/uc?export=view&id=1qgM9gmk9HudI6VLD5hyPar1w9pBCAiJM",
     emailAddress: "alexphamdara@gmail.com",
   },
-    {
-      _id: {
-        $oid: "657ef15fad56bd9902cd2974",
-      },
-      fullname: {
-        englishFirstname: "Sisouvanhs",
-        nickName: "Tons",
-        laoName: "ສີສຸວັນ ພົມມາລາ",
-        englishLastname: "Phommala",
-      },
-      university: {
-        shortcut: "KHTN",
-        universityId: {
-          $oid: "657f155aa6649e2cf683622f",
-        },
-      },
-      scholarship: {
-        scholarshipVn: "3722/GDT.CTSV - 17/08/2016",
-        scholarshipUniversity: "1450/QĐ-KHTN-ĐT - 5/09/2017",
-        scholarshipLao: "587/ສກລ.ຮຈມ - 21/07/2016",
-        type: "ຮ່ວມມື",
-      },
-      duration: {
-        from: "2017",
-        to: "2024",
-      },
-      studentId: "1712935",
-      dob: {
-        $date: "1996-01-12T00:00:00.000Z",
-      },
-      phone: {
-        phoneNumber: "0375002568",
-        relationship: "ພໍ່",
-        emergency: "56655903",
-      },
-      gender: "male",
-      degree: {
-        laoDegree: "ປະລິນຍາຕີ",
-        vietDegree: "Cử Nhân",
-      },
-      facebookUrl: "https://www.facebook.com/ton.sisouvanh",
-      visa: {
-        from: {
-          $date: "2023-12-23T00:00:00.000Z",
-        },
-        to: {
-          $date: "2024-05-12T00:00:00.000Z",
-        },
-      },
-      userStatus: "pending",
-      userId: "LNPYu3jOURXGQukTQH5nJjKt0kk2",
-      residenceAddress: {
-        address:
-          "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
-        location: "KTX Khu B ĐHQG",
-      },
-      perminentAddress: "ນະຄອນຫຼວງວຽງຈັນ",
-      passport: {
-        passportNo: "PA0176039",
-        img: "",
-        expired: {
-          $date: "2027-08-25T00:00:00.000Z",
-        },
-      },
-      major: {
-        vietMajor: "Công nghệ thông tin",
-        laoMajor: "ເຕັກໂນໂລຊີຂໍ້ມູນຂ່າວສານ",
-      },
-      profileImg:
-        "https://drive.google.com/uc?export=view&id=1qqYSH537CpvQtVzuaOTiBlXTyxak26hI",
-      emailAddress: "tonsisouvanh_1996@hotmail.com",
-      password: "$2a$10$FvyHeZTBtw1nsb7.X9LnO.by4tX.hqy.3J0NNDKBxo.lA.OqNN7Q.",
-      token:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1N2VmMTVmYWQ1NmJkOTkwMmNkMjk3NCIsImlhdCI6MTcwMjgyNTQ3MywiZXhwIjoxNzA1NDE3NDczfQ.sbx-LWcutlFKYicN8ALiJ0G-TqP5Ekv8i_7VeU4BnrA",
-      role: "admin",
-      updatedAt: {
-        $date: "2023-12-17T15:08:32.579Z",
+  {
+    _id: {
+      $oid: "657ef15fad56bd9902cd2974",
+    },
+    fullname: {
+      englishFirstname: "Sisouvanhs",
+      nickName: "Tons",
+      laoName: "ສີສຸວັນ ພົມມາລາ",
+      englishLastname: "Phommala",
+    },
+    university: {
+      shortcut: "KHTN",
+      universityId: {
+        $oid: "657f155aa6649e2cf683622f",
       },
     },
+    scholarship: {
+      scholarshipVn: "3722/GDT.CTSV - 17/08/2016",
+      scholarshipUniversity: "1450/QĐ-KHTN-ĐT - 5/09/2017",
+      scholarshipLao: "587/ສກລ.ຮຈມ - 21/07/2016",
+      type: "ຮ່ວມມື",
+    },
+    duration: {
+      from: "2017",
+      to: "2024",
+    },
+    studentId: "1712935",
+    dob: {
+      $date: "1996-01-12T00:00:00.000Z",
+    },
+    phone: {
+      phoneNumber: "0375002568",
+      relationship: "ພໍ່",
+      emergency: "56655903",
+    },
+    gender: "male",
+    degree: {
+      laoDegree: "ປະລິນຍາຕີ",
+      vietDegree: "Cử Nhân",
+    },
+    facebookUrl: "https://www.facebook.com/ton.sisouvanh",
+    visa: {
+      from: {
+        $date: "2023-12-23T00:00:00.000Z",
+      },
+      to: {
+        $date: "2024-05-12T00:00:00.000Z",
+      },
+    },
+    userStatus: "pending",
+    userId: "LNPYu3jOURXGQukTQH5nJjKt0kk2",
+    residenceAddress: {
+      address:
+        "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
+      location: "KTX Khu B ĐHQG",
+    },
+    province: "ນະຄອນຫຼວງວຽງຈັນ",
+    passport: {
+      passportNo: "PA0176039",
+      img: "",
+      expired: {
+        $date: "2027-08-25T00:00:00.000Z",
+      },
+    },
+    major: {
+      vietMajor: "Công nghệ thông tin",
+      laoMajor: "ເຕັກໂນໂລຊີຂໍ້ມູນຂ່າວສານ",
+    },
+    profileImg:
+      "https://drive.google.com/uc?export=view&id=1qqYSH537CpvQtVzuaOTiBlXTyxak26hI",
+    emailAddress: "tonsisouvanh_1996@hotmail.com",
+    password: "$2a$10$FvyHeZTBtw1nsb7.X9LnO.by4tX.hqy.3J0NNDKBxo.lA.OqNN7Q.",
+    token:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1N2VmMTVmYWQ1NmJkOTkwMmNkMjk3NCIsImlhdCI6MTcwMjgyNTQ3MywiZXhwIjoxNzA1NDE3NDczfQ.sbx-LWcutlFKYicN8ALiJ0G-TqP5Ekv8i_7VeU4BnrA",
+    role: "admin",
+    updatedAt: {
+      $date: "2023-12-17T15:08:32.579Z",
+    },
+  },
   {
     _id: {
       $oid: "657ef15fad56bd9902cd2975",
@@ -3532,7 +3532,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ຈໍາປາສັກ",
+    province: "ຈໍາປາສັກ",
     passport: {
       passportNo: "PA0076838",
       expired: "2027-01-03",
@@ -3595,7 +3595,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ເຊກອງ",
+    province: "ເຊກອງ",
     passport: {
       img: "",
       expired: "2024-08-08",
@@ -3658,7 +3658,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ຫົວພັນ",
+    province: "ຫົວພັນ",
     passport: {
       passportNo: "PA 0334622",
       expired: "2024-09-10",
@@ -3723,7 +3723,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ເຊກອງ",
+    province: "ເຊກອງ",
     passport: {
       expired: "2033-08-28",
       img: "",
@@ -3787,7 +3787,7 @@ export const usersData = [
       address:
         "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
     },
-    perminentAddress: "ຫຼວງພະບາງ",
+    province: "ຫຼວງພະບາງ",
     passport: {
       img: "",
       passportNo: "PA 0458101",

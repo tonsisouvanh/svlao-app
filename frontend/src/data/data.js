@@ -259,7 +259,7 @@ export const degreeList = [
   { laoDegree: "ປະລິນຍາເອກ", vietDegree: "Tiến Sĩ" },
 ];
 
-export const perminentAddressList = [
+export const provinceList = [
   {
     id: "hTzhuZfScEPnce8XUfxj",
     englishName: "Khammouane",

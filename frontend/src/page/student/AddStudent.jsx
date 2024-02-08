@@ -6,7 +6,7 @@ import Spinner from "../../components/ui/Spinner";
 import {
   degreeList,
   majorList,
-  perminentAddressList,
+  provinceList,
   residenceAddressList,
   statusList,
 } from "../../data/data";
@@ -45,7 +45,7 @@ const AddStudent = () => {
     //   studentId: "2023001",
     //   dob: "2000-01-01",
     //   gender: "Male",
-    //   perminentAddress: "123 Main Street, City, Country",
+    //   province: "123 Main Street, City, Country",
     //   university: {
     //     laoName: "ວິສາຂະອິນ",
     //     vietName: "Đại học Sư phạm",
@@ -599,12 +599,12 @@ const AddStudent = () => {
                       </span>
                     </div>
                     <select
-                      {...register("perminentAddress", {})}
+                      {...register("province", {})}
                       className={
                         "select select-bordered w-full text-base-content/80"
                       }
                     >
-                      {perminentAddressList.map((item, index) => (
+                      {provinceList.map((item, index) => (
                         <option key={index} value={item.laoName}>
                           {item.laoName}
                         </option>

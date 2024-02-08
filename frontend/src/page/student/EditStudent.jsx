@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   degreeList,
   majorList,
-  perminentAddressList,
+  provinceList,
   residenceAddressList,
   roleList,
   statusList,
@@ -565,12 +565,12 @@ const EditStudent = () => {
                       </span>
                     </div>
                     <select
-                      {...register("perminentAddress", {})}
+                      {...register("province", {})}
                       className={
                         "select select-bordered w-full text-base-content/80"
                       }
                     >
-                      {perminentAddressList.map((item, index) => (
+                      {provinceList.map((item, index) => (
                         <option key={index} value={item.laoName}>
                           {item.laoName}
                         </option>

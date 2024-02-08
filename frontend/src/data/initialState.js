@@ -8,7 +8,7 @@ export const initialStudentInput = {
   studentId: "",
   dob: "",
   gender: "",
-  perminentAddress: "",
+  province: "",
 
   university: {
     laoName: "",
@@ -51,8 +51,8 @@ export const initialStudentInput = {
   },
   profileImg: "",
   residenceAddress: {
-    address:"",
-    location:"",
+    address: "",
+    location: "",
   },
   userStatus: "",
   userId: "",

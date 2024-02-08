@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   degreeList,
   majorList,
-  perminentAddressList,
+  provinceList,
   residenceAddressList,
 } from "../../data/data";
 import { authReset, updateUserProfile } from "../../feature/auth/AuthSlice";
@@ -491,14 +491,14 @@ const UserProfile = () => {
                       </span>
                     </div>
                     <select
-                      {...register("perminentAddress", {
+                      {...register("province", {
                         disabled: toggleEdit ? false : true,
                       })}
                       className={
                         "select select-bordered w-full text-base-content/80"
                       }
                     >
-                      {perminentAddressList.map((item, index) => (
+                      {provinceList.map((item, index) => (
                         <option key={index} value={item.laoName}>
                           {item.laoName}
                         </option>

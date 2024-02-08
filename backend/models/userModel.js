@@ -73,7 +73,7 @@ const userSchema = mongoose.Schema(
       location: String,
       address: String,
     },
-    perminentAddress: String,
+    province: String,
     passport: {
       img: String,
       passportNo: String,
