@@ -1,6 +1,5 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-
 import RootLayoutPublic from "./components/layout/public/rootLayoutPublic";
 import { Toaster } from "react-hot-toast";
 import PrivateRoute from "./route/PrivateRoute";
@@ -21,13 +20,12 @@ import EditMajor from "./page/major/EditMajor";
 import ResidenceAddressList from "./page/residenceAddress/ResidenceAddressList";
 import EditResidenceAddress from "./page/residenceAddress/EditResidenceAddress";
 import AddResidenceAddress from "./page/residenceAddress/AddResidenceAddress";
-import DocumentForm from "./page/document/DocumentForm";
-import AnnouncementRoutes from "./page/announcement/AnnoucementRoutes";
 import AnnouncementList from "./page/announcement/private/AnnouncementList";
 import AddAnnouncement from "./page/announcement/private/AddAnnouncement";
 import EditAnnouncement from "./page/announcement/private/EditAnnouncement";
-import Announcement from "./page/announcement/Announcement";
 import AnnouncementDetail from "./page/announcement/AnnouncementDetail";
+import DocumentPage from "./page/document/DocumentPage";
+import AnnouncementPage from "./page/announcement/AnnouncementPage";
 
 function App() {
   return (
@@ -69,24 +67,24 @@ function App() {
             />
 
             {/* public */}
-            <Route path="/" element={<Announcement />} />
-            <Route path="/page/:pageNumber" element={<Announcement />} />
-            <Route path="/search/:keyword" element={<Announcement />} />
+            <Route path="/" element={<AnnouncementPage />} />
+            <Route path="/page/:pageNumber" element={<AnnouncementPage />} />
+            <Route path="/search/:keyword" element={<AnnouncementPage />} />
             <Route
               path="/search/:keyword/page/:pageNumber"
-              element={<Announcement />}
+              element={<AnnouncementPage />}
             />
             <Route
               path="/announcement-list/page/:pageNumber"
-              element={<Announcement />}
+              element={<AnnouncementPage />}
             />
             <Route
               path="/announcement-list/search/:keyword"
-              element={<Announcement />}
+              element={<AnnouncementPage />}
             />
             <Route
               path="/announcement-list/search/:keyword/page/:pageNumber"
-              element={<Announcement />}
+              element={<AnnouncementPage />}
             />
             <Route
               path="/announcement-list/announcement/:id"
@@ -157,7 +155,25 @@ function App() {
               element={<EditResidenceAddress />}
             />
 
-            <Route path="/document-form-list" element={<DocumentForm />} />
+            {/* Document */}
+            <Route path="/document-form-list" element={<DocumentPage />} />
+            <Route
+              path="/document-form-list/page/:pageNumber"
+              element={<DocumentPage />}
+            />
+            <Route
+              path="/document-form-list/search/:keyword"
+              element={<DocumentPage />}
+            />
+            <Route
+              path="/document-form-list/search/:keyword/page/:pageNumber"
+              element={<DocumentPage />}
+            />
+            <Route
+              path="/document-form-list/search/:keyword/page/:pageNumber"
+              element={<DocumentPage />}
+            />
+            {/* ================================================================== */}
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />

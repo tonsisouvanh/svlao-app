@@ -8,7 +8,7 @@ import Spinner from "../../components/ui/Spinner";
 import Paginate from "../../components/paginate/Paginate";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
-const Announcement = () => {
+const AnnouncementPage = () => {
   const { pageNumber, keyword } = useParams();
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.auth);
@@ -168,4 +168,4 @@ const Announcement = () => {
   );
 };
 
-export default Announcement;
+export default AnnouncementPage;

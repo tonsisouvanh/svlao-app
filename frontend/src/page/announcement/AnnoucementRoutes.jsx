@@ -1,7 +1,7 @@
 import { Route } from "react-router-dom";
 import AddAnnouncement from "./private/AddAnnouncement";
 import EditAnnouncement from "./private/EditAnnouncement";
-import Announcement from "./Announcement";
+import Announcement from "./AnnouncementPage";
 import AnnouncementDetail from "./AnnouncementDetail";
 import AnnouncementList from "./private/AnnouncementList";
 

@@ -86,7 +86,7 @@ const createDocument = asyncHandler(async (req, res) => {
 // @route   GET /api/documents
 // @access  Private/Admin
 const getDocuments = asyncHandler(async (req, res) => {
-  const pageSize = 5;
+  const pageSize = 10;
   const page = Number(req.query.pageNumber) || 1;
 
   const searchFields = ["title", "content", "category"];

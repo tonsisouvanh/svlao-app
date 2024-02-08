@@ -7,6 +7,7 @@ import majorsReducer from "../feature/globalData/MajorSlice";
 import singleUserReducer from "../feature/user/SingleUserSlice";
 import residenceAddressReducer from "../feature/globalData/ResidenceAddressSlice";
 import announcementReducer from "../feature/announcement/AnnouncementSlice";
+import documentReducer from "../feature/document/DocumentSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -17,6 +18,7 @@ export const store = configureStore({
     major: majorsReducer,
     residenceAddress: residenceAddressReducer,
     announcement: announcementReducer,
+    document: documentReducer,
   },
 });
 
