@@ -131,7 +131,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         <AiOutlineDashboard size={23} />
                         ຈັດການນັກຮຽນ
                         <BsFillCaretDownFill
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current transition-all duration-300 ${
                             open && "rotate-180"
                           }`}
                         />
@@ -198,7 +198,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         <AiOutlineDashboard size={23} />
                         ຈັກການຂໍ້ມູນອື່ນຯ
                         <BsFillCaretDownFill
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current transition-all duration-300 ${
                             open && "rotate-180"
                           }`}
                         />
@@ -279,7 +279,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               </SidebarLinkGroup>
               <li>
                 <NavLink
-                  to="/establishment"
+                  to="/formal-organization"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out ${
                     pathname.includes("settings") &&
                     "bg-graydark dark:bg-meta-4"

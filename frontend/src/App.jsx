@@ -29,6 +29,7 @@ import AnnouncementPage from "./page/announcement/AnnouncementPage";
 import DocumentList from "./page/document/private/DocumentList";
 import AddDocument from "./page/document/private/AddDocument";
 import EditDocument from "./page/document/private/EditDocument";
+import FormalOrganizationPage from "./page/FormalOrganizationPage";
 
 function App() {
   return (
@@ -203,6 +204,10 @@ function App() {
               element={<DocumentPage />}
             />
             {/* ================================================================== */}
+            <Route
+              path="/formal-organization"
+              element={<FormalOrganizationPage />}
+            />
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />

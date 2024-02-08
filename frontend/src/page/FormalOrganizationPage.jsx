@@ -1,5 +1,6 @@
 import { AiOutlineCaretDown } from "react-icons/ai";
-const Establishment = () => {
+
+const FormalOrganizationPage = () => {
   return (
     <div>
       <section className="body-font text-gray-600">
@@ -175,4 +176,4 @@ const Establishment = () => {
   );
 };
 
-export default Establishment;
+export default FormalOrganizationPage;
