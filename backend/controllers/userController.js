@@ -277,6 +277,14 @@ const getUserById = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const userId = req.params.id;
   const updatedUserData = req.body;
+
+  const existingUser = await User.findById(userId);
+
+  if (!existingUser) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
   const updatedUser = await User.findByIdAndUpdate(
     userId,
     { ...updatedUserData },

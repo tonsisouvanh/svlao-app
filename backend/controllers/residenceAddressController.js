@@ -7,6 +7,16 @@ import ResidenceAddress from "../models/residenceAddressModel.js";
 const updateResidenceAddress = asyncHandler(async (req, res) => {
   const residenceAddressId = req.params.id;
   const { address, location } = req.body;
+
+  const existingResidenceAddress = await ResidenceAddress.findById(
+    residenceAddressId
+  );
+
+  if (!existingResidenceAddress) {
+    res.status(404);
+    throw new Error("ResidenceAddress not found");
+  }
+
   const updatedResidenceAddress = await ResidenceAddress.findByIdAndUpdate(
     residenceAddressId,
     { address, location },

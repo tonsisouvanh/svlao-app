@@ -21,11 +21,12 @@ import EditMajor from "./page/major/EditMajor";
 import ResidenceAddressList from "./page/residenceAddress/ResidenceAddressList";
 import EditResidenceAddress from "./page/residenceAddress/EditResidenceAddress";
 import AddResidenceAddress from "./page/residenceAddress/AddResidenceAddress";
-import DocumentForm from "./page/DocumentForm";
-import Announcement from "./page/announcement/Announcement";
+import DocumentForm from "./page/document/DocumentForm";
+import AnnouncementRoutes from "./page/announcement/AnnoucementRoutes";
 import AnnouncementList from "./page/announcement/private/AnnouncementList";
 import AddAnnouncement from "./page/announcement/private/AddAnnouncement";
 import EditAnnouncement from "./page/announcement/private/EditAnnouncement";
+import Announcement from "./page/announcement/Announcement";
 import AnnouncementDetail from "./page/announcement/AnnouncementDetail";
 
 function App() {

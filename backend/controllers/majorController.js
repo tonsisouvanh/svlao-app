@@ -7,6 +7,15 @@ import Major from "../models/majorModel.js";
 const updateMajor = asyncHandler(async (req, res) => {
   const majorId = req.params.id;
   const { laoMajor, vietMajor } = req.body;
+
+  // Check if the document with the given ID exists
+  const existingMajor = await Major.findById(majorId);
+
+  if (!existingMajor) {
+    res.status(404);
+    throw new Error("Major not found");
+  }
+
   const updatedMajor = await Major.findByIdAndUpdate(
     majorId,
     { laoMajor, vietMajor },

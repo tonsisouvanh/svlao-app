@@ -38,31 +38,21 @@ const createUniversity = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Get university profile
-// @route   GET /api/universitys
-// * @access  Private
-const getUniversityProfile = asyncHandler(async (req, res) => {
-  const university = await University.findById(req.university._id).populate(
-    "university.universityId"
-  );
-
-  if (university) {
-    res.json({
-      _id: university._id,
-      ...university._doc,
-    });
-  } else {
-    res.status(404);
-    throw new Error("University not found");
-  }
-});
-
 // @desc    Update university profile
 // @route   PUT /api/universitys
 // * @access  Private
 const updateUniversity = asyncHandler(async (req, res) => {
   const universityId = req.params.id;
   const updatedUniversityData = req.body;
+
+  // Check if the document with the given ID exists
+  const existingUniversity = await University.findById(universityId);
+
+  if (!existingUniversity) {
+    res.status(404);
+    throw new Error("University not found");
+  }
+
   const updatedUniversity = await University.findByIdAndUpdate(
     universityId,
     { ...updatedUniversityData },
@@ -118,5 +108,5 @@ export {
   updateUniversity,
   createUniversity,
   deleteUniversity,
-  getUniversityById
+  getUniversityById,
 };

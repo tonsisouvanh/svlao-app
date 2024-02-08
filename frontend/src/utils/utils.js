@@ -1,22 +1,15 @@
 import toast from "react-hot-toast";
 import moment from "moment";
 import altImage from "../assets/img/profile.png";
+
 export const checkRole = (role) => {
-  let approve = false;
-  switch (role) {
-    case "admin":
-      approve = true;
-      break;
-    case "assistant":
-      approve = true;
-      break;
-    case "student":
-      approve = true;
-      break;
-    default:
-      break;
+  const approvedRoles = ["admin", "assistant", "student"];
+
+  if (approvedRoles.includes(role)) {
+    return true;
   }
-  return approve;
+
+  return false;
 };
 
 export const getImageId = (passedUrl) => {

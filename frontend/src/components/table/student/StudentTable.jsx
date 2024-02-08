@@ -304,10 +304,7 @@ const UserTable = ({ editToggle, view, users, userStatus }) => {
                                 >
                                   <BsFacebook className="text-2xl text-blue-600" />
                                 </a>
-                                <button
-                                  // onClick={() => handleClickEdit(row)}
-                                  className="btn btn-accent btn-sm whitespace-nowrap font-notosanslao !text-white sm:btn-xs"
-                                >
+                                <button className="btn btn-accent btn-sm whitespace-nowrap font-notosanslao !text-white sm:btn-xs">
                                   <AiFillEdit />
                                 </button>
                                 <button
@@ -379,7 +376,7 @@ const UserTable = ({ editToggle, view, users, userStatus }) => {
                             <div className="dropdown-right dropdown">
                               <label
                                 tabIndex={0}
-                                className="btn btn-xs px-1 py-0"
+                                className="btn btn-primary btn-xs px-1 py-0"
                               >
                                 <AiOutlineMore />
                               </label>
@@ -390,15 +387,11 @@ const UserTable = ({ editToggle, view, users, userStatus }) => {
                                 <Link
                                   to={`/dashboard/studentlist/student/${row.original._id}`}
                                 >
-                                  <li
-                                    // onClick={() => handleClickEdit(row)}
-                                    className="btn btn-ghost btn-xs"
-                                  >
+                                  <li className="btn btn-ghost btn-xs">
                                     <AiFillEdit size={15} />
                                   </li>
                                 </Link>
                                 <li
-                                  // onClick={() => setOpenModal(true)}
                                   onClick={() =>
                                     handleOpenModal(row.original._id)
                                   }
