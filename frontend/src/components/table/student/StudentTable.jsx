@@ -17,8 +17,9 @@ import consule from "../../../assets/img/consule.jpg";
 import { BsFacebook } from "react-icons/bs";
 import { STUDENT_COLUMNS } from "../../../data/data";
 import Searchbox from "../../input/student/Searchbox";
-import { removeUser } from "../../../feature/user/UserSlice";
+import { removeUser, userReset } from "../../../feature/user/UserSlice";
 import { formatDateDDMMYYYY, replaceImage } from "../../../utils/utils";
+import toast from "react-hot-toast";
 const cellStyle = "whitespace-nowrap truncate font-light";
 
 const UserTable = ({ editToggle, view, users, userStatus }) => {
@@ -81,6 +82,16 @@ const UserTable = ({ editToggle, view, users, userStatus }) => {
       ).length,
     });
   }, [rows]);
+
+  useEffect(() => {
+    if (status.remove === "succeeded") {
+      toast.success("Deleted announcement");
+      dispatch(userReset());
+    } else if (status.remove === "failed") {
+      toast.error("Failed to delete");
+      dispatch(userReset());
+    }
+  }, [status.remove, dispatch]);
 
   if (userStatus.fetchAll === "loading") {
     return <Spinner />;
@@ -373,7 +384,7 @@ const UserTable = ({ editToggle, view, users, userStatus }) => {
                       return (
                         <tr key={row.id} {...row.getRowProps()}>
                           <td>
-                            <div className="dropdown-right dropdown">
+                            <div className="dropdown dropdown-right">
                               <label
                                 tabIndex={0}
                                 className="btn btn-primary btn-xs px-1 py-0"

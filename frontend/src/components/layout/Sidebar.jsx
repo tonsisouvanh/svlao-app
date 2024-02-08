@@ -258,6 +258,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                               ຂໍ້ມູນປະກາດ
                             </NavLink>
                           </li>
+                          <li className={dropdownLiStyle}>
+                            <NavLink
+                              to="/manage-others-data/document-form-list"
+                              className={({ isActive }) =>
+                                dropdownNavlinkStyle +
+                                (isActive &&
+                                  "rounded-md border-r-2 bg-white/10 text-white")
+                              }
+                            >
+                              ຂໍ້ມູນຟອມເອກກະສານ
+                            </NavLink>
+                          </li>
                         </ul>
                       </div>
                       {/* <!-- Dropdown Menu End --> */}

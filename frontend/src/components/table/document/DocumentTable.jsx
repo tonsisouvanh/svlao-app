@@ -13,22 +13,22 @@ import { Link } from "react-router-dom";
 import InfoModal from "../../modal/InfoModal";
 import Searchbox from "../../input/student/Searchbox";
 import {
-  announcementReset,
-  removeAnnouncement,
-} from "../../../feature/announcement/AnnouncementSlice";
+  documentReset,
+  removeDocument,
+} from "../../../feature/document/DocumentSlice";
 import { formatDateDDMMYYYY } from "../../../utils/utils";
-import { ANNOUNCEMENT_COLUMNS } from "../../../data/data";
+import { DOCUMENT_COLUMNS } from "../../../data/data";
 import toast from "react-hot-toast";
 const cellStyle = "whitespace-nowrap truncate font-light";
 
-const AnnounceTable = ({ editToggle, setEditToggle }) => {
-  const { announcements, status } = useSelector((state) => state.announcement);
+const DocumentTable = ({ editToggle, setEditToggle }) => {
+  const { documents, status } = useSelector((state) => state.document);
 
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
-  const [deletedAnnouncementId, setDeletedAnnouncementId] = useState("");
-  const data = useMemo(() => announcements, [announcements]);
-  const columns = useMemo(() => ANNOUNCEMENT_COLUMNS, []);
+  const [deletedDocumentId, setDeletedDocumentId] = useState("");
+  const data = useMemo(() => documents, [documents]);
+  const columns = useMemo(() => DOCUMENT_COLUMNS, []);
   const {
     getTableProps,
     getTableBodyProps,
@@ -41,24 +41,24 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
 
   const { globalFilter } = state;
   const handleOpenModal = (id) => {
-    setDeletedAnnouncementId(id);
+    setDeletedDocumentId(id);
     setOpenModal(true);
   };
-  const handleDeletAnnouncement = () => {
-    dispatch(removeAnnouncement(deletedAnnouncementId));
-    setDeletedAnnouncementId("");
+  const handleDeletDocument = () => {
+    dispatch(removeDocument(deletedDocumentId));
+    setDeletedDocumentId("");
     setOpenModal(false);
   };
 
   useEffect(() => {
     if (status.remove === "succeeded") {
-      toast.success("Deleted announcement");
-      dispatch(announcementReset());
+      toast.success("Deleted document");
+      dispatch(documentReset());
     } else if (status.remove === "failed") {
       toast.error("Failed to delete");
-      dispatch(announcementReset());
+      dispatch(documentReset());
     }
-  }, [status.remove, dispatch]);
+  }, [status.remove,dispatch]);
 
   if (status.fetchAll === "loading") {
     return <Spinner />;
@@ -66,30 +66,30 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
   return (
     <>
       {editToggle ? (
-        <span>Edit announcement component here</span>
+        <span>Edit document component here</span>
       ) : status.fetchAll === "loading" || status.remove === "loading" ? (
         <Spinner />
       ) : (
         <>
           {openModal && (
             <InfoModal
-              title={"Delete announcement"}
+              title={"Delete document"}
               modaltype={"question"}
               desc={
-                "This announcement data will be perminently delete, are you sure?"
+                "This document data will be perminently delete, are you sure?"
               }
               initialValue={true}
               isOnclickEvent={true}
               confirmLabel={"Delete"}
-              handleClick={handleDeletAnnouncement}
+              handleClick={handleDeletDocument}
             />
           )}
           <div className="mb-5 flex flex-wrap items-center gap-2">
             <Searchbox filter={globalFilter} setFilter={setGlobalFilter} />
-            <Link to="/manage-others-data/announcement-list/search/all">
+            <Link to="/manage-others-data/document-form-list/search/all">
               <button className="btn btn-outline btn-sm">ເບິ່ງທັງໝົດ</button>
             </Link>
-            <Link to="/manage-others-data/announcement-list/page/1">
+            <Link to="/manage-others-data/document-form-list/page/1">
               <button className="btn btn-outline btn-sm">ເບິ່ງເປັນໜ້າ</button>
             </Link>
           </div>
@@ -99,7 +99,7 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
               className="table table-md font-notosanslao"
             >
               <thead>
-                {announcements &&
+                {documents &&
                   headerGroups?.map((headerGroup) => (
                     <tr
                       key={headerGroup.id}
@@ -132,13 +132,13 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
                   ))}
               </thead>
               <tbody {...getTableBodyProps()}>
-                {announcements &&
+                {documents &&
                   rows?.map((row) => {
                     prepareRow(row);
                     return (
                       <tr key={row.id} {...row.getRowProps()}>
                         <td>
-                          <div className="dropdown-right dropdown">
+                          <div className="dropdown dropdown-right">
                             <label
                               tabIndex={0}
                               className="btn btn-xs px-1 py-0"
@@ -150,7 +150,7 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
                               className="dropdown-content rounded-box absolute !-top-2 !right-0 z-[1] !flex w-fit gap-4 border bg-base-100 p-2 shadow"
                             >
                               <Link
-                                to={`/manage-others-data/announcement-list/${row.original._id}`}
+                                to={`/manage-others-data/document-form-list/${row.original._id}`}
                               >
                                 <li className="btn btn-ghost btn-xs">
                                   <AiFillEdit size={15} />
@@ -169,7 +169,7 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
                             </ul>
                           </div>
                         </td>
-                        {announcements &&
+                        {documents &&
                           row?.cells?.map((cell, index) => (
                             <td
                               className={cellStyle}
@@ -199,4 +199,4 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
   );
 };
 
-export default AnnounceTable;
+export default DocumentTable;

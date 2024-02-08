@@ -28,11 +28,7 @@ export const createDocument = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.post(
-        "/api/documents",
-        inputData,
-        config,
-      );
+      const { data } = await axios.post("/api/documents", inputData, config);
       return { data };
     } catch (error) {
       const message =
@@ -59,7 +55,7 @@ export const updateDocument = createAsyncThunk(
       };
 
       const { data } = await axios.put(
-        `/api/documents/${inputData._id}`,
+        `/api/documents/${inputData.id}`,
         {
           ...inputData,
         },
@@ -89,10 +85,7 @@ export const removeDocument = createAsyncThunk(
           Authorization: `Bearer ${auth.token}`,
         },
       };
-      const res = await axios.delete(
-        `/api/documents/${documentId}`,
-        config,
-      );
+      const res = await axios.delete(`/api/documents/${documentId}`, config);
       const _id = res.data._id;
       return _id;
     } catch (error) {
@@ -145,10 +138,7 @@ export const getDocumentById = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(
-        `/api/documents/${documentId}`,
-        config,
-      );
+      const { data } = await axios.get(`/api/documents/${documentId}`, config);
       return data;
     } catch (error) {
       const message =

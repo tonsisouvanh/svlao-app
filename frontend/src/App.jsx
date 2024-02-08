@@ -26,6 +26,9 @@ import EditAnnouncement from "./page/announcement/private/EditAnnouncement";
 import AnnouncementDetail from "./page/announcement/AnnouncementDetail";
 import DocumentPage from "./page/document/DocumentPage";
 import AnnouncementPage from "./page/announcement/AnnouncementPage";
+import DocumentList from "./page/document/private/DocumentList";
+import AddDocument from "./page/document/private/AddDocument";
+import EditDocument from "./page/document/private/EditDocument";
 
 function App() {
   return (
@@ -156,6 +159,32 @@ function App() {
             />
 
             {/* Document */}
+            {/* private */}
+            <Route
+              path="/manage-others-data/document-form-list"
+              element={<DocumentList />}
+            />
+            <Route
+              path="/manage-others-data/document-form-list/page/:pageNumber"
+              element={<DocumentList />}
+            />
+            <Route
+              path="/manage-others-data/document-form-list/search/:keyword"
+              element={<DocumentList />}
+            />
+            <Route
+              path="/manage-others-data/document-form-list/search/:keyword/page/:pageNumber"
+              element={<DocumentList />}
+            />
+            <Route
+              path="/manage-others-data/document-form-list/add"
+              element={<AddDocument />}
+            />
+            <Route
+              path="/manage-others-data/document-form-list/:id"
+              element={<EditDocument />}
+            />
+            {/* Public */}
             <Route path="/document-form-list" element={<DocumentPage />} />
             <Route
               path="/document-form-list/page/:pageNumber"

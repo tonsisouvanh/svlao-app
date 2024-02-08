@@ -590,5 +590,11 @@ export const ANNOUNCEMENT_COLUMNS = [
   { Header: "Content", accessor: "content" },
   { Header: "Image", accessor: "image" },
 ];
+export const DOCUMENT_COLUMNS = [
+  { Header: "Title", accessor: "title" },
+  { Header: "Description", accessor: "description" },
+  { Header: "Downloads Count", accessor: "downloadsCount" },
+  { Header: "Timestamp", accessor: "timestamp" },
+];
 
 export const roleList = ["admin", "user", "assistant"];
