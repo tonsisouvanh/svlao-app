@@ -1,6 +1,10 @@
 import asyncHandler from "express-async-handler";
 import Announcement from "../models/announcementModel.js";
-import { uploadSingleImage } from "../utils/imageUpload.js";
+import {
+  deleteImage,
+  extractImageId,
+  uploadSingleImage,
+} from "../utils/imageUpload.js";
 const opts = {
   overwrite: true,
   invalidate: true,
@@ -35,10 +39,20 @@ const insertManyAnnouncements = asyncHandler(async (req, res) => {
 const updateAnnouncement = asyncHandler(async (req, res) => {
   const announcementId = req.params.id;
   const { title, content, category, image } = req.body;
+  console.log("🚀 ~ updateAnnouncement ~ req.body:", req.body);
+
+  let addimage = "";
+  if (image.startsWith("data:")) {
+    const { image } = req.body;
+    const imageUrl = await uploadSingleImage(image[0], opts);
+    addimage = imageUrl;
+  } else {
+    addimage = image;
+  }
 
   const updatedAnnouncement = await Announcement.findByIdAndUpdate(
     announcementId,
-    { title, content, category, image },
+    { title, content, category, image: addimage },
     {
       new: true,
     }
@@ -57,7 +71,6 @@ const updateAnnouncement = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const createAnnouncement = asyncHandler(async (req, res) => {
   const { title, content, category, image } = req.body;
-  console.log("🚀 ~ createAnnouncement ~ req.body:", req.body)
   let addImage = [];
 
   if (image?.length > 0) {
@@ -131,6 +144,8 @@ const deleteAnnouncement = asyncHandler(async (req, res) => {
   const announcement = await Announcement.findById(req.params.id);
   if (announcement) {
     await Announcement.deleteOne({ _id: req.params.id });
+    const imageId = extractImageId(announcement.image);
+    await deleteImage(imageId, opts);
     res.json({ _id: req.params.id });
   } else {
     res.status(404);

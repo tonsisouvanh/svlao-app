@@ -7,7 +7,6 @@ import FetchErrorModal from "../../components/modal/FetchErrorModal";
 import consule from "../../assets/img/consule.jpg";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { replaceImage } from "../../utils/utils";
-import LazyLoad from "react-lazy-load";
 const AnnouncementDetail = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { pathname } = useLocation();

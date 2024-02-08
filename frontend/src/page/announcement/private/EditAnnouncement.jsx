@@ -14,9 +14,14 @@ import Breadcrumbs from "../../../components/Breadcrumbs";
 import ErrorMessage from "../../../components/typography/ErrorMessage";
 import Spinner from "../../../components/ui/Spinner";
 import { announcementCategoryList } from "../../../data/data";
+import ImageUpload from "../../../components/input/ImageUpload";
+import { AiFillFileImage } from "react-icons/ai";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const EditAnnouncement = () => {
+  const [base64, setBase64] = useState(null);
+  const [uploadImageToggle, setuploadImageToggle] = useState(false);
+
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -47,6 +52,7 @@ const EditAnnouncement = () => {
     if (status.update === "succeeded") {
       toast.success("Update Successfully");
       dispatch(announcementReset());
+      setuploadImageToggle(false);
     } else if (status.update === "failed") {
       toast.error(error);
       dispatch(announcementReset());
@@ -55,8 +61,10 @@ const EditAnnouncement = () => {
 
   const handleEditSubmit = (data) => {
     if (data) {
+      const addImage = base64 ? [base64] : null;
       const formattedData = {
         ...data,
+        image: addImage ? addImage : announcements[0].image,
         category: data.category.map((item) => item.value),
       };
       dispatch(
@@ -194,6 +202,34 @@ const EditAnnouncement = () => {
                       )}
                     />
                   </label>
+                </div>
+                <div className="w-full p-2">
+                  <label className="form-control w-full">
+                    <div className="label">
+                      <span className="label-text">Image</span>
+                    </div>
+                    {base64 ? (
+                      <img
+                        src={base64}
+                        alt={announcements[0]?.title || "image"}
+                        className="mb-4 h-[20rem] w-fit"
+                      />
+                    ) : (
+                      <img
+                        src={announcements[0]?.image}
+                        alt={announcements[0]?.title || "image"}
+                      />
+                    )}
+                    {uploadImageToggle && <ImageUpload setBase64={setBase64} />}
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setuploadImageToggle(!uploadImageToggle)}
+                    className="btn btn-outline btn-sm mt-4"
+                  >
+                    <AiFillFileImage />
+                    {uploadImageToggle ? "Close" : "Edit"}
+                  </button>
                 </div>
                 <div className="w-full space-x-4 p-2">
                   {!toggleEdit && (

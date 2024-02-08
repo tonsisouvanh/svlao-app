@@ -26,11 +26,8 @@ const ImageUpload = ({ setBase64 }) => {
 
   const uploadImage = async (event) => {
     const files = event.target.files;
-    console.log("🚀 ~ uploadImage ~ files:", files);
-
     if (files && files.length === 1) {
       const base64 = await convertBase64(files[0]);
-      //   uploadSingleImage(base64);
       setBase64(base64);
       return;
     }

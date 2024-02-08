@@ -14,9 +14,9 @@ import { getYearOptions } from "../../utils/utils";
 import { useLocation, useNavigate } from "react-router-dom";
 import { createStudent, userReset } from "../../feature/user/UserSlice";
 import { listUniversity } from "../../feature/globalData/UniversitySlice";
-import altImage from "../../assets/img/profile.png";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import ErrorMessage from "../../components/typography/ErrorMessage";
+import altImage from "../../assets/img/profile.png";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const AddStudent = () => {
