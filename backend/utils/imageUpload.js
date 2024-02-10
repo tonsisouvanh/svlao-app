@@ -70,7 +70,6 @@ export const deleteImage = async (imageId, opts) => {
 
 
 export const extractImageId = (imageUrl) => {
-  console.log("🚀 ~ extractImageId ~ imageUrl:", imageUrl);
   if (imageUrl) {
     const urlParts = imageUrl.split("/");
     const filenameWithExtension =

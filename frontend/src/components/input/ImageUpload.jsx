@@ -100,7 +100,7 @@ const ImageUpload = ({ setBase64 }) => {
         <div>
           {loading ? (
             <div className="flex items-center justify-center">
-              <img src={assets} />{" "}
+              <img src={assets}/>
             </div>
           ) : (
             <UploadInput />

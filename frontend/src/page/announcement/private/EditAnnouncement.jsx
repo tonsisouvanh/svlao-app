@@ -43,6 +43,7 @@ const EditAnnouncement = () => {
       id: announcements[0]?._id,
       title: announcements[0]?.title,
       content: announcements[0]?.content,
+      image: announcements[0]?.image,
     },
   });
 
@@ -100,6 +101,7 @@ const EditAnnouncement = () => {
         id: announcements[0]?._id,
         title: announcements[0]?.title,
         content: announcements[0]?.content,
+        image: announcements[0]?.image,
       });
     } else if (status.fetchOne === "failed") {
       toast.error(error);
@@ -111,7 +113,6 @@ const EditAnnouncement = () => {
       announcements[0]?.category?.map((c) => ({ value: c, label: c })),
     );
   }, [announcements, setValue]);
-
   if (status.update === "loading") {
     return <Spinner />;
   }
@@ -218,6 +219,7 @@ const EditAnnouncement = () => {
                       <img
                         src={announcements[0]?.image}
                         alt={announcements[0]?.title || "image"}
+                        className="mb-4 h-[20rem] w-fit"
                       />
                     )}
                     {uploadImageToggle && <ImageUpload setBase64={setBase64} />}

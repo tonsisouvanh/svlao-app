@@ -13,6 +13,21 @@ const opts = {
   transformation: { quality: "50" },
 };
 
+const handleSingleImageUpload = async (image) => {
+  if (
+    Array.isArray(image) &&
+    image.length > 0 &&
+    image[0].startsWith("data:")
+  ) {
+    console.log("first");
+    const imageUrl = await uploadSingleImage(image[0], opts);
+    return imageUrl;
+  } else {
+    console.log("second");
+    return image;
+  }
+};
+
 // @desc    Insert multiple announcements
 // @route   POST /api/announcements/insertMany
 // @access  Private/Admin
@@ -39,20 +54,26 @@ const insertManyAnnouncements = asyncHandler(async (req, res) => {
 const updateAnnouncement = asyncHandler(async (req, res) => {
   const announcementId = req.params.id;
   const { title, content, category, image } = req.body;
-  console.log("🚀 ~ updateAnnouncement ~ req.body:", req.body);
+  const announcementExist = await Announcement.findById(announcementId);
 
-  let addimage = "";
-  if (image.startsWith("data:")) {
-    const { image } = req.body;
-    const imageUrl = await uploadSingleImage(image[0], opts);
-    addimage = imageUrl;
-  } else {
-    addimage = image;
+  // check to delete image and replace new one
+  if (announcementExist) {
+    const imageId = extractImageId(announcementExist.image);
+    if (imageId) {
+      await deleteImage(imageId);
+    }
   }
+
+  let addImage = await handleSingleImageUpload(image);
 
   const updatedAnnouncement = await Announcement.findByIdAndUpdate(
     announcementId,
-    { title, content, category, image: addimage },
+    {
+      title,
+      content,
+      category,
+      image: Array.isArray(image) && image.length > 0 ? addImage : "",
+    },
     {
       new: true,
     }
@@ -71,24 +92,17 @@ const updateAnnouncement = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const createAnnouncement = asyncHandler(async (req, res) => {
   const { title, content, category, image } = req.body;
-  let addImage = [];
-
-  if (image?.length > 0) {
-    const imageUrl = await uploadSingleImage(image[0], opts);
-    addImage = imageUrl;
-  }
+  let addImage = await handleSingleImageUpload(image);
   const announcementExist = await Announcement.findOne({ title });
-
   if (announcementExist) {
     res.status(400);
     throw new Error("Announcement already exists");
   }
-
   const announcement = await Announcement.create({
     title,
     content,
     category,
-    image: addImage || "",
+    image: Array.isArray(image) && image.length > 0 ? addImage : "",
   });
 
   if (announcement) {

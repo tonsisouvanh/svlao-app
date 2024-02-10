@@ -1,6 +1,5 @@
 import toast from "react-hot-toast";
 import moment from "moment";
-import altImage from "../assets/img/profile.png";
 
 export const checkRole = (role) => {
   const approvedRoles = ["admin", "assistant", "student"];
@@ -99,5 +98,3 @@ export const userStatusColor = (userStatus) => {
 export const replaceImage = (error, image) => {
   error.target.src = image;
 };
-
-
