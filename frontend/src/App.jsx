@@ -99,23 +99,23 @@ function App() {
 
             {/* ======================= Student ======================================== */}
             <Route
-              path="/dashboard/studentlist/page/:pageNumber"
+              path="/dashboard/student-list/page/:pageNumber"
               element={<StudentList />}
             />
             <Route
-              path="/dashboard/studentlist/search/:keyword"
+              path="/dashboard/student-list/search/:keyword"
               element={<StudentList />}
             />
             <Route
-              path="/dashboard/studentlist/search/:keyword/page/:pageNumber"
+              path="/dashboard/student-list/search/:keyword/page/:pageNumber"
               element={<StudentList />}
             />
-            <Route path="dashboard/studentlist" element={<StudentList />} />
+            <Route path="dashboard/student-list" element={<StudentList />} />
             <Route
-              path="dashboard/studentlist/student/:id"
+              path="dashboard/student-list/student/:id"
               element={<EditStudent />}
             />
-            <Route path="dashboard/studentlist/add" element={<AddStudent />} />
+            <Route path="dashboard/student-list/add" element={<AddStudent />} />
             {/* ================================================================== */}
             {/* ======================= University ======================================== */}
             <Route

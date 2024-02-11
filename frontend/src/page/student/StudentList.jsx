@@ -76,7 +76,7 @@ const StudentList = () => {
                         to={
                           auth.role !== "admin"
                             ? "#"
-                            : "/dashboard/studentlist/add"
+                            : "/dashboard/student-list/add"
                         }
                       >
                         <button
@@ -126,7 +126,7 @@ const StudentList = () => {
             </div>
           ))} */}
           <Paginate
-            path="/dashboard/studentlist/page/"
+            path="/dashboard/student-list/page/"
             style="mt-10"
             page={page}
             pages={pages}

@@ -10,6 +10,7 @@ import {
   AiFillEye,
   AiOutlineMore,
 } from "react-icons/ai";
+import altImage from "../../../assets/img/profile.png";
 import { BiSolidSortAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import InfoModal from "../../modal/InfoModal";
@@ -194,10 +195,10 @@ const UserTable = ({ editToggle, view, users, userStatus }) => {
                 title={"ສາຍຮຽນ"}
                 fieldName={"vietMajor"}
               /> */}
-            <Link to="/dashboard/studentlist/search/all">
+            <Link to="/dashboard/student-list/search/all">
               <button className="btn btn-outline btn-sm">ເບິ່ງທັງໝົດ</button>
             </Link>
-            <Link to="/dashboard/studentlist/page/1">
+            <Link to="/dashboard/student-list/page/1">
               <button className="btn btn-outline btn-sm">ເບິ່ງເປັນໜ້າ</button>
             </Link>
           </div>
@@ -396,7 +397,7 @@ const UserTable = ({ editToggle, view, users, userStatus }) => {
                                 className="dropdown-content rounded-box absolute !-top-2 !right-0 z-[1] !flex w-fit gap-4 border bg-base-100 p-2 shadow"
                               >
                                 <Link
-                                  to={`/dashboard/studentlist/student/${row.original._id}`}
+                                  to={`/dashboard/student-list/student/${row.original._id}`}
                                 >
                                   <li className="btn btn-ghost btn-xs">
                                     <AiFillEdit size={15} />

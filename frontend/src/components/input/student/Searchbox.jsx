@@ -8,9 +8,9 @@ const Searchbox = ({ filter, setFilter }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (keyword.trim()) {
-      navigate(`/dashboard/studentlist/search/${keyword}`);
+      navigate(`/dashboard/student-list/search/${keyword}`);
     } else {
-      navigate(`/dashboard/studentlist`);
+      navigate(`/dashboard/student-list`);
     }
   };
   return (

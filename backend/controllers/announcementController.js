@@ -57,14 +57,17 @@ const updateAnnouncement = asyncHandler(async (req, res) => {
   const announcementExist = await Announcement.findById(announcementId);
 
   // check to delete image and replace new one
-  if (announcementExist) {
+  if (announcementExist && image[0].startsWith("data:")) {
     const imageId = extractImageId(announcementExist.image);
     if (imageId) {
       await deleteImage(imageId);
     }
   }
-
-  let addImage = await handleSingleImageUpload(image);
+  // if image is array and length > 0, then upload new image
+  let addImage;
+  if (Array.isArray(image) && image.length > 0) {
+    addImage = await handleSingleImageUpload(image);
+  } else addImage = image;
 
   const updatedAnnouncement = await Announcement.findByIdAndUpdate(
     announcementId,
@@ -72,7 +75,8 @@ const updateAnnouncement = asyncHandler(async (req, res) => {
       title,
       content,
       category,
-      image: Array.isArray(image) && image.length > 0 ? addImage : "",
+      image: addImage,
+      // image: Array.isArray(image) && image.length > 0 ? addImage : image,
     },
     {
       new: true,
