@@ -4,47 +4,37 @@ import User from "../models/userModel.js";
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import Token from "../models/tokenModel.js";
+import {
+  deleteImage,
+  extractImageId,
+  uploadSingleImage,
+} from "../utils/imageUpload.js";
+const opts = {
+  overwrite: true,
+  invalidate: true,
+  resource_type: "auto",
+  folder: "/laostudenthcm/users",
+  transformation: { quality: "50" },
+};
 
-// const requestPasswordReset = asyncHandler(async (req, res) => {
-//   const { emailAddress } = req.body;
-//   const user = await User.findOne({ emailAddress });
-
-//   if (!user) throw new Error("User does not exist");
-//   let token = await Token.findOne({ userId: user._id });
-//   if (token) await token.deleteOne();
-//   let resetToken = crypto.randomBytes(32).toString("hex");
-//   const hash = await bcrypt.hash(resetToken, Number(process.env.JWT_SECRET));
-//   await new Token({
-//     userId: user._id,
-//     token: hash,
-//     createdAt: Date.now(),
-//   }).save();
-
-//   const link = `${`http://localhost:3000`}/passwordReset?token=${resetToken}&id=${
-//     user._id
-//   }`;
-//   // sendEmail(
-//   //   user.emailAddress,
-//   //   "Password Reset Request",
-//   //   { name: user.fullname.laoName, link: link },
-//   //   "./template/requestResetPassword.handlebars"
-//   // );
-//   res.json({
-//     link: link,
-//   });
-// });
+const handleSingleImageUpload = async (image) => {
+  if (
+    Array.isArray(image) &&
+    image.length > 0 &&
+    image[0].startsWith("data:")
+  ) {
+    const imageUrl = await uploadSingleImage(image[0], opts);
+    return imageUrl;
+  } else {
+    return image;
+  }
+};
 
 // @desc    Auth user & get token
 // @route   POST /api/users/resetPassword
 // @access  Private
 const resetPassword = asyncHandler(async (req, res) => {
   const { userId, password, emailAddress } = req.body;
-  console.log(
-    "🚀 ~ resetPassword ~ userId, password, emailAddress:",
-    userId,
-    password,
-    emailAddress
-  );
   // reset token
   const user = await User.findOne({ emailAddress });
   if (!user) throw new Error("User does not exist");
@@ -148,20 +138,19 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/create
 // @access  private
 const createUser = asyncHandler(async (req, res) => {
-  const { emailAddress, password } = req.body;
-
+  const { emailAddress, profileImg } = req.body;
   const userExists = await User.findOne({ emailAddress });
-
   if (userExists) {
     res.status(400);
     throw new Error("User already exists");
   }
-
+  let addImage = await handleSingleImageUpload(profileImg);
   const user = await User.create({
     ...req.body,
+    profileImg:
+      Array.isArray(profileImg) && profileImg.length > 0 ? addImage : "",
   });
   if (user) {
-    // const { password, ...userWithoutPassword } = user._doc;
     res.status(201).json({
       _id: user._id,
       ...user._doc,
@@ -195,6 +184,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @desc    Update user profile
 // @route   PUT /api/users/profile
 // * @access  Private
+//TODO: do update with image upload
 const updateUserProfile = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   const { role, userStatus, ...updatedUserData } = req.body; //extract role out
@@ -250,6 +240,8 @@ const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   if (user) {
     await User.deleteOne({ _id: req.params.id });
+    const imageId = extractImageId(user.profileImg);
+    await deleteImage(imageId, opts);
     res.json({ _id: req.params.id });
   } else {
     res.status(404);
@@ -276,18 +268,31 @@ const getUserById = asyncHandler(async (req, res) => {
 //* @access  Private/Admin
 const updateUser = asyncHandler(async (req, res) => {
   const userId = req.params.id;
-  const updatedUserData = req.body;
+  const { profileImg, ...updatedUserData } = req.body;
 
   const existingUser = await User.findById(userId);
-
   if (!existingUser) {
     res.status(404);
     throw new Error("User not found");
   }
 
+  // delete existing image
+  if (profileImg[0].startsWith("data:")) {
+    const imageId = extractImageId(existingUser.profileImg);
+    if (imageId) {
+      await deleteImage(imageId);
+    }
+  }
+
+  // upload new image
+  let addImage;
+  if (Array.isArray(profileImg) && profileImg.length > 0) {
+    addImage = await handleSingleImageUpload(profileImg);
+  } else addImage = profileImg;
+
   const updatedUser = await User.findByIdAndUpdate(
     userId,
-    { ...updatedUserData },
+    { ...updatedUserData, profileImg: addImage },
     {
       new: true,
     }

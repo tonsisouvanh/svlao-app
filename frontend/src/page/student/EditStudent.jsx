@@ -20,9 +20,13 @@ import altImage from "../../assets/img/profile.png";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import ResetPasswordModal from "../../components/modal/ResetPasswordModal";
 import Spinner from "../../components/ui/Spinner";
+import { AiFillEye, AiFillFileImage } from "react-icons/ai";
+import ImageUpload from "../../components/input/ImageUpload";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const EditStudent = () => {
+  const [base64, setBase64] = useState(null);
+  const [uploadImageToggle, setuploadImageToggle] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -84,7 +88,12 @@ const EditStudent = () => {
 
   const handleEditSubmit = (data) => {
     if (data) {
-      dispatch(updateUser(data));
+      const addImage = base64 ? [base64] : null;
+      const formattedData = {
+        ...data,
+        profileImg: addImage ? addImage : singleUser.profileImg,
+      };
+      dispatch(updateUser({ ...formattedData }));
       setToggleEdit(false);
     } else toast.warning("Input data not valid");
   };
@@ -592,6 +601,49 @@ const EditStudent = () => {
                       className={inputStyle}
                     />
                   </label>
+                </div>
+                <div className="w-full p-2">
+                  <label className="form-control w-full">
+                    <div className="label">
+                      <span className="label-text font-semibold">
+                        Upload your image:
+                      </span>
+                    </div>
+                    {base64 ? (
+                      <div className="avatar">
+                        <div className="w-64 rounded">
+                          <button
+                            type="button"
+                            className="btn btn-neutral btn-xs absolute left-2 top-2"
+                          >
+                            <AiFillEye />
+                          </button>
+                          <img
+                            src={base64}
+                            alt={singleUser?.title || "image"}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="avatar">
+                        <div className="w-64 rounded">
+                          <img
+                            src={singleUser?.profileImg}
+                            alt={singleUser?.title || "image"}
+                          />
+                        </div>
+                      </div>
+                    )}
+                    {uploadImageToggle && <ImageUpload setBase64={setBase64} />}
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setuploadImageToggle(!uploadImageToggle)}
+                    className="btn btn-outline btn-sm mt-4"
+                  >
+                    <AiFillFileImage />
+                    {uploadImageToggle ? "Close" : "Upload"}
+                  </button>
                 </div>
                 <div className="w-full space-x-4 p-2">
                   {!toggleEdit && (

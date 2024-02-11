@@ -223,7 +223,6 @@ const EditAnnouncement = () => {
                           <img
                             src={base64}
                             alt={announcements[0]?.title || "image"}
-                            // className="mb-4 h-[20rem] w-1/2"
                           />
                         </div>
                       </div>
@@ -233,7 +232,6 @@ const EditAnnouncement = () => {
                           <img
                             src={announcements[0]?.image}
                             alt={announcements[0]?.title || "image"}
-                            // className="mb-4 h-[20rem] w-1/2"
                           />
                         </div>
                       </div>

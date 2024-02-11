@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,9 +17,11 @@ import { listUniversity } from "../../feature/globalData/UniversitySlice";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import ErrorMessage from "../../components/typography/ErrorMessage";
 import altImage from "../../assets/img/profile.png";
+import ImageUpload from "../../components/input/ImageUpload";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const AddStudent = () => {
+  const [base64, setBase64] = useState(null);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -34,64 +36,7 @@ const AddStudent = () => {
     formState: { errors },
     setValue,
     reset,
-  } = useForm({
-    // defaultValues: {
-    //   fullname: {
-    //     laoName: "ນັກຮຽນ ທຸງອິນດາຫຼາຍ",
-    //     englishFirstname: "John",
-    //     englishLastname: "Doe",
-    //     nickName: "Johnny",
-    //   },
-    //   studentId: "2023001",
-    //   dob: "2000-01-01",
-    //   gender: "Male",
-    //   province: "123 Main Street, City, Country",
-    //   university: {
-    //     laoName: "ວິສາຂະອິນ",
-    //     vietName: "Đại học Sư phạm",
-    //     englishName: "University of Education",
-    //     shortcut: "UED",
-    //   },
-    //   major: {
-    //     laoMajor: "ວິສາຂະອິນ",
-    //     vietMajor: "Sư phạm Toán",
-    //   },
-    //   degree: {
-    //     laoDegree: "ປະລິນຍາຕີ",
-    //     vietDegree: "Cao Đẳng",
-    //   },
-    //   scholarship: {
-    //     type: "ລາງວັນ",
-    //     scholarshipLao: "ລາງວັນທະນາ",
-    //     scholarshipVn: "Học bổng toàn phần",
-    //     scholarshipUniversity: "Đại học Sư phạm",
-    //   },
-    //   duration: {
-    //     from: "2022-09-01",
-    //     to: "2026-05-31",
-    //   },
-    //   phone: {
-    //     phoneNumber: "123456789",
-    //     emergency: "987654321",
-    //     relationship: "Family",
-    //   },
-    //   facebookUrl: "https://www.facebook.com/johndoe",
-    //   visa: {
-    //     from: "2022-01-01",
-    //     to: "2023-01-01",
-    //   },
-    //   passport: {
-    //     passportNo: "ABC123456",
-    //     expired: "2025-01-01",
-    //     img: "https://example.com/passport-image.jpg",
-    //   },
-    //   profileImg: "https://example.com/profile-image.jpg",
-    //   residenceAddress: "456 Second Street, City, Country",
-    //   userStatus: "Active",
-    //   userId: "user123",
-    //   emailAddress: "user1@example.com",
-    // },
-  });
+  } = useForm({});
 
   const handleSelectDegree = (value) => {
     const vietDegree = degreeList.find((d) => d.laoDegree === value);
@@ -111,6 +56,9 @@ const AddStudent = () => {
     );
     setValue("residenceAddress.address", residenceAddress.address);
   };
+  const clearImage = () => {
+    setBase64(null);
+  };
   useEffect(() => {
     dispatch(listUniversity());
   }, [dispatch]);
@@ -129,11 +77,17 @@ const AddStudent = () => {
 
   const handleEditSubmit = (data) => {
     if (data) {
+      const addImage = base64 ? [base64] : null;
+      const formattedData = {
+        ...data,
+        profileImg: addImage ? addImage : [],
+      };
+      console.log("🚀 ~ handleEditSubmit ~ formattedData:", formattedData);
       const confirmed = window.confirm(
         "Are you sure you want to update the user?",
       );
       if (confirmed) {
-        dispatch(createStudent({ ...data }));
+        dispatch(createStudent({ ...formattedData }));
       } else {
         console.log("Update canceled");
       }
@@ -609,7 +563,27 @@ const AddStudent = () => {
                     </select>
                   </label>
                 </div>
-
+                <div className="w-full p-2">
+                  <label className="form-control w-full">
+                    <div className="label flex items-center">
+                      <span className="label-text font-semibold">
+                        Upload Image
+                      </span>
+                    </div>
+                    {base64 ? (
+                      <img src={base64} alt="Base64 Image" />
+                    ) : (
+                      <ImageUpload setBase64={setBase64} />
+                    )}
+                  </label>
+                </div>
+                <button
+                  type="button"
+                  onClick={clearImage}
+                  className="btn btn-error btn-outline btn-sm ml-10"
+                >
+                  Clear
+                </button>
                 <div className="w-full space-x-4 p-2">
                   <button
                     type="submit"

@@ -164,7 +164,11 @@ export const createStudent = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.post("/api/users", studentData, config);
+      const { data } = await axios.post(
+        "/api/users/create",
+        studentData,
+        config,
+      );
       return data;
     } catch (error) {
       const message =

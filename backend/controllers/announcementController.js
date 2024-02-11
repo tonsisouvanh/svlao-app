@@ -19,11 +19,9 @@ const handleSingleImageUpload = async (image) => {
     image.length > 0 &&
     image[0].startsWith("data:")
   ) {
-    console.log("first");
     const imageUrl = await uploadSingleImage(image[0], opts);
     return imageUrl;
   } else {
-    console.log("second");
     return image;
   }
 };
@@ -56,8 +54,13 @@ const updateAnnouncement = asyncHandler(async (req, res) => {
   const { title, content, category, image } = req.body;
   const announcementExist = await Announcement.findById(announcementId);
 
+  if (!announcementExist) {
+    res.status(404);
+    throw new Error("Announcement not found");
+  }
+
   // check to delete image and replace new one
-  if (announcementExist && image[0].startsWith("data:")) {
+  if (image[0].startsWith("data:")) {
     const imageId = extractImageId(announcementExist.image);
     if (imageId) {
       await deleteImage(imageId);
