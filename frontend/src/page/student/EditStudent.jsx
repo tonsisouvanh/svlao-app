@@ -5,9 +5,7 @@ import { BiUserCircle } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import {
   degreeList,
-  majorList,
   provinceList,
-  residenceAddressList,
   roleList,
   statusList,
 } from "../../data/data";
@@ -46,7 +44,8 @@ const EditStudent = () => {
     (state) => state.user,
   );
   const { universities } = useSelector((state) => state.university);
-
+  const { residenceAddresses } = useSelector((state) => state.residenceAddress);
+  const { majors } = useSelector((state) => state.major);
   // react hook form
   const { register, handleSubmit, setValue, reset } = useForm({
     defaultValues: { singleUser },
@@ -57,7 +56,7 @@ const EditStudent = () => {
     setValue("degree.vietDegree", vietDegree.vietDegree);
   };
   const handleSelectMajor = (value) => {
-    const major = majorList.find((d) => d.laoMajor === value);
+    const major = majors.find((d) => d.laoMajor === value);
     setValue("major.vietMajor", major.vietMajor);
   };
   const handleSelectUniversity = (value) => {
@@ -66,7 +65,7 @@ const EditStudent = () => {
     setValue("university.shortcut", university.shortcut);
   };
   const handleSelectResidenceAddress = (value) => {
-    const residenceAddress = residenceAddressList.find(
+    const residenceAddress = residenceAddresses.find(
       (d) => d.location === value,
     );
     setValue("residenceAddress.address", residenceAddress.address);
@@ -180,9 +179,7 @@ const EditStudent = () => {
                 <div className="flex w-1/2 items-center gap-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className={`label-text font-semibold `}>
-                        Status
-                      </span>
+                      <span className={`label-text text-lg `}>Status</span>
                     </div>
                     <select
                       {...register("userStatus", {})}
@@ -197,7 +194,7 @@ const EditStudent = () => {
                   </label>
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className={`label-text font-semibold `}>Role</span>
+                      <span className={`label-text text-lg `}>Role</span>
                     </div>
                     <select
                       {...register("role", {})}
@@ -214,7 +211,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
+                      <span className="label-text text-lg">
                         English Firstname
                       </span>
                     </div>
@@ -229,7 +226,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">Nickname</span>
+                      <span className="label-text text-lg">Nickname</span>
                     </div>
                     <input
                       {...register("fullname.nickName", {})}
@@ -242,7 +239,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">Lao Name</span>
+                      <span className="label-text text-lg">Lao Name</span>
                     </div>
                     <input
                       {...register("fullname.laoName", {})}
@@ -255,7 +252,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
+                      <span className="label-text text-lg">
                         English Lastname
                       </span>
                     </div>
@@ -270,7 +267,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
+                      <span className="label-text text-lg">
                         University Shortcut
                       </span>
                     </div>
@@ -292,7 +289,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
+                      <span className="label-text text-lg">
                         Duration (From)
                       </span>
                     </div>
@@ -313,9 +310,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
-                        Duration (To)
-                      </span>
+                      <span className="label-text text-lg">Duration (To)</span>
                     </div>
                     <select
                       {...register("duration.to", {})}
@@ -334,9 +329,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
-                        Phone Number
-                      </span>
+                      <span className="label-text text-lg">Phone Number</span>
                     </div>
                     <input
                       {...register("phone.phoneNumber", {})}
@@ -349,9 +342,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
-                        Emergency
-                      </span>
+                      <span className="label-text text-lg">Emergency</span>
                     </div>
                     <input
                       {...register("phone.emergency", {})}
@@ -364,9 +355,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
-                        Relationship
-                      </span>
+                      <span className="label-text text-lg">Relationship</span>
                     </div>
                     <input
                       {...register("phone.relationship", {})}
@@ -380,9 +369,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
-                        Lao Degree
-                      </span>
+                      <span className="label-text text-lg">Lao Degree</span>
                     </div>
                     <select
                       {...register("degree.laoDegree", {})}
@@ -402,9 +389,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
-                        Visa From
-                      </span>
+                      <span className="label-text text-lg">Visa From</span>
                     </div>
                     <input
                       {...register("visa.from", {})}
@@ -417,7 +402,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">Visa To</span>
+                      <span className="label-text text-lg">Visa To</span>
                     </div>
                     <input
                       {...register("visa.to", {})}
@@ -430,7 +415,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
+                      <span className="label-text text-lg">
                         Residence Address
                       </span>
                     </div>
@@ -443,7 +428,7 @@ const EditStudent = () => {
                         "select select-bordered w-full text-base-content/80"
                       }
                     >
-                      {residenceAddressList.map((item, index) => (
+                      {residenceAddresses.map((item, index) => (
                         <option key={index} value={item.location}>
                           {item.location}
                         </option>
@@ -454,9 +439,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
-                        Passport No
-                      </span>
+                      <span className="label-text text-lg">Passport No</span>
                     </div>
                     <input
                       {...register("passport.passportNo", {})}
@@ -470,7 +453,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
+                      <span className="label-text text-lg">
                         Passport Expired
                       </span>
                     </div>
@@ -485,9 +468,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
-                        Lao Major
-                      </span>
+                      <span className="label-text text-lg">Lao Major</span>
                     </div>
                     <select
                       {...register("major.laoMajor", {})}
@@ -496,7 +477,7 @@ const EditStudent = () => {
                         "select select-bordered w-full text-base-content/80"
                       }
                     >
-                      {majorList.map((item, index) => (
+                      {majors.map((item, index) => (
                         <option key={index} value={item.laoMajor}>
                           {item.laoMajor}
                         </option>
@@ -507,9 +488,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
-                        Student ID
-                      </span>
+                      <span className="label-text text-lg">Student ID</span>
                     </div>
                     <input
                       {...register("studentId", {})}
@@ -522,9 +501,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
-                        Date of Birth
-                      </span>
+                      <span className="label-text text-lg">Date of Birth</span>
                     </div>
                     <input
                       {...register("dob", {})}
@@ -537,7 +514,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">Gender</span>
+                      <span className="label-text text-lg">Gender</span>
                     </div>
                     <select
                       {...register("gender", {})}
@@ -554,9 +531,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
-                        Facebook URL
-                      </span>
+                      <span className="label-text text-lg">Facebook URL</span>
                     </div>
                     <input
                       {...register("facebookUrl", {})}
@@ -569,7 +544,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
+                      <span className="label-text text-lg">
                         Permanent Address
                       </span>
                     </div>
@@ -590,9 +565,7 @@ const EditStudent = () => {
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
-                        Email Address
-                      </span>
+                      <span className="label-text text-lg">Email Address</span>
                     </div>
                     <input
                       {...register("emailAddress", {})}
@@ -605,7 +578,7 @@ const EditStudent = () => {
                 <div className="w-full p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text font-semibold">
+                      <span className="label-text text-lg">
                         Upload your image:
                       </span>
                     </div>

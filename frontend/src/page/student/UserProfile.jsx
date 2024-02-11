@@ -22,6 +22,7 @@ const UserProfile = () => {
     status,
     error,
   } = useSelector((state) => state.auth);
+  //TODO: use major data from database instead
   const { universities } = useSelector((state) => state.university);
   const dispatch = useDispatch();
 
@@ -69,6 +70,7 @@ const UserProfile = () => {
     }
   }, [status.setInfo, dispatch, error]);
 
+  //TODO: Needed to check and add image upload
   const handleEditSubmit = (data) => {
     if (data) {
       dispatch(updateUserProfile(data));
@@ -77,7 +79,6 @@ const UserProfile = () => {
   };
 
   if (status.setInfo === "loading") return <Spinner />;
-
   return (
     <>
       <section className="relative">

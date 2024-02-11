@@ -48,7 +48,7 @@ const ResidenceAddressList = () => {
                         to={
                           auth.role !== "admin"
                             ? "#"
-                            : "/dashboard/residence-address-list/add"
+                            : "/manage-others-data/residence-address-list/add"
                         }
                       >
                         <button

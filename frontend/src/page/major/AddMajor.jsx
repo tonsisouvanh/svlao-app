@@ -60,7 +60,7 @@ const AddMajor = () => {
               <Breadcrumbs pathname={pathname} />
 
               <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium">
-                Add Universities
+                Add Major
               </h1>
             </div>
             <div className="mx-auto">

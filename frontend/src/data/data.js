@@ -409,6 +409,7 @@ export const announcementCategoryList = [
   { value: "Meeting", label: "Meeting" },
   { value: "Dormitory", label: "Dormitory" },
 ];
+export const roleList = ["admin", "user", "assistant"];
 
 // COLUMN
 export const STUDENT_COLUMNS = [
@@ -596,5 +597,3 @@ export const DOCUMENT_COLUMNS = [
   { Header: "Downloads Count", accessor: "downloadsCount" },
   { Header: "Timestamp", accessor: "timestamp" },
 ];
-
-export const roleList = ["admin", "user", "assistant"];

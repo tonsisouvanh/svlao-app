@@ -110,20 +110,20 @@ function App() {
               path="/dashboard/student-list/search/:keyword/page/:pageNumber"
               element={<StudentList />}
             />
-            <Route path="dashboard/student-list" element={<StudentList />} />
+            <Route path="/dashboard/student-list" element={<StudentList />} />
             <Route
-              path="dashboard/student-list/student/:id"
+              path="/dashboard/student-list/student/:id"
               element={<EditStudent />}
             />
-            <Route path="dashboard/student-list/add" element={<AddStudent />} />
+            <Route path="/dashboard/student-list/add" element={<AddStudent />} />
             {/* ================================================================== */}
             {/* ======================= University ======================================== */}
             <Route
-              path="manage-others-data/university-list/add"
+              path="/manage-others-data/university-list/add"
               element={<AddUniversity />}
             />
             <Route
-              path="manage-others-data/university-list/:id"
+              path="/manage-others-data/university-list/:id"
               element={<EditUniversity />}
             />
             <Route path="/profile" element={<UserProfile />} />

@@ -62,8 +62,8 @@ const AddResidenceAddress = () => {
             <div className="mb-12 flex w-full flex-col text-center">
               <Breadcrumbs pathname={pathname} />
 
-              <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium">
-                Add Universities
+              <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium text-primary">
+                Add Residence Address
               </h1>
             </div>
             <div className="mx-auto">

@@ -5,7 +5,7 @@ axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
 const initialState = {
   residenceAddresses: [],
   status: {
-    list: "idle" | "loading" | "succeeded" | "failed",
+    fetchAll: "idle" | "loading" | "succeeded" | "failed",
     create: "idle" | "loading" | "succeeded" | "failed",
     update: "idle" | "loading" | "succeeded" | "failed",
     remove: "idle" | "loading" | "succeeded" | "failed",
@@ -151,7 +151,7 @@ export const getResidenceAddressById = createAsyncThunk(
 
 const resetStatus = (state) => {
   state.status = {
-    list: "idle",
+    fetchAll: "idle",
     create: "idle",
     update: "idle",
     remove: "idle",
@@ -173,26 +173,26 @@ const residenceAddressSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(listResidenceAddress.pending, (state) => {
-        state.status.list = "loading";
+        state.status.fetchAll = "loading";
       })
       .addCase(listResidenceAddress.fulfilled, (state, action) => {
-        state.status.list = "succeeded";
+        state.status.fetchAll = "succeeded";
         state.residenceAddresses = action.payload;
       })
       .addCase(listResidenceAddress.rejected, (state, action) => {
-        state.status.list = "failed";
+        state.status.fetchAll = "failed";
         setError(state, action);
       })
 
       .addCase(getResidenceAddressById.pending, (state) => {
-        state.status.list = "loading";
+        state.status.fetchAll = "loading";
       })
       .addCase(getResidenceAddressById.fulfilled, (state, action) => {
-        state.status.list = "succeeded";
+        state.status.fetchAll = "succeeded";
         state.residenceAddresses = [{ ...action.payload }];
       })
       .addCase(getResidenceAddressById.rejected, (state, action) => {
-        state.status.list = "failed";
+        state.status.fetchAll = "failed";
         setError(state, action);
       })
 

@@ -62,23 +62,24 @@ const EditResidenceAddress = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    if (status.list === "succeeded") {
+    if (status.fetchAll === "succeeded") {
       reset({
         id: residenceAddresses[0]?._id,
         address: residenceAddresses[0]?.address,
         location: residenceAddresses[0]?.location,
       });
-    } else if (status.list === "failed") {
+    } else if (status.fetchAll === "failed") {
       toast.error(error);
     }
-  }, [status.list, reset, residenceAddresses, error]);
+  }, [status.fetchAll, reset, residenceAddresses, error]);
 
+  if (status.update === "loading") return <Spinner />;
   return (
     <>
       <section className="relative">
         {residenceAddresses[0] &&
         residenceAddresses.length > 0 &&
-        status.list !== "loading" ? (
+        status.fetchAll !== "loading" ? (
           <div className="container mx-auto px-5 py-24">
             <div className="mb-12 flex w-full flex-col text-center">
               <Breadcrumbs pathname={pathname} />

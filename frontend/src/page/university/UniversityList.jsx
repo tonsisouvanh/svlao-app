@@ -48,7 +48,7 @@ const UniversityList = () => {
                         to={
                           auth.role !== "admin"
                             ? "#"
-                            : "/dashboard/university-list/add"
+                            : "/manage-others-data/university-list/add"
                         }
                       >
                         <button

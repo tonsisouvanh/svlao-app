@@ -51,14 +51,14 @@ const ResidenceAddressTable = ({ editToggle, setEditToggle }) => {
     error.target.src = altImage;
   };
 
-  if (status.list === "loading") {
+  if (status.fetchAll === "loading") {
     return <Spinner />;
   }
   return (
     <>
       {editToggle ? (
         <span>Edit residenceAddress component here</span>
-      ) : status.list === "loading" || status.remove === "loading" ? (
+      ) : status.fetchAll === "loading" || status.remove === "loading" ? (
         <Spinner />
       ) : (
         <>
@@ -135,7 +135,7 @@ const ResidenceAddressTable = ({ editToggle, setEditToggle }) => {
                               className="dropdown-content rounded-box absolute !-top-2 !right-0 z-[1] !flex w-fit gap-4 border bg-base-100 p-2 shadow"
                             >
                               <Link
-                                to={`/dashboard/residence-address-list/${row.original._id}`}
+                                to={`/manage-others-data/residence-address-list/${row.original._id}`}
                               >
                                 <li className="btn btn-ghost btn-xs">
                                   <AiFillEdit size={15} />
@@ -161,7 +161,7 @@ const ResidenceAddressTable = ({ editToggle, setEditToggle }) => {
                               key={index}
                               {...cell.getCellProps()}
                             >
-                              {cell.column.id === "status.list" ? (
+                              {cell.column.id === "status.fetchAll" ? (
                                 <span
                                   className={`badge ${
                                     cell.value === "active"
