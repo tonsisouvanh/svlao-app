@@ -9,7 +9,7 @@ import UserProfile from "./page/student/UserProfile";
 import NotFoundPage from "./page/NoFoundPage";
 import StudentList from "./page/student/StudentList";
 import EditStudent from "./page/student/EditStudent";
-import Dashboard from "./page/Dashboard";
+import Dashboard from "./page/DashboardPage";
 import AddStudent from "./page/student/AddStudent";
 import UniversityList from "./page/university/UniversityList";
 import AddUniversity from "./page/university/AddUniversity";

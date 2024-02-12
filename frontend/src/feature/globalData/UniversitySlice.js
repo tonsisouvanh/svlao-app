@@ -5,7 +5,8 @@ axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
 const initialState = {
   universities: [],
   status: {
-    list: "idle" | "loading" | "succeeded" | "failed",
+    fetchAll: "idle" | "loading" | "succeeded" | "failed",
+    fetchOne: "idle" | "loading" | "succeeded" | "failed",
     create: "idle" | "loading" | "succeeded" | "failed",
     update: "idle" | "loading" | "succeeded" | "failed",
     remove: "idle" | "loading" | "succeeded" | "failed",
@@ -147,7 +148,8 @@ export const getUniversityById = createAsyncThunk(
 
 const resetStatus = (state) => {
   state.status = {
-    list: "idle",
+    fetchAll: "idle",
+    fetchOne: "idle",
     create: "idle",
     update: "idle",
     remove: "idle",
@@ -169,26 +171,26 @@ const universitySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(listUniversity.pending, (state) => {
-        state.status.list = "loading";
+        state.status.fetchAll = "loading";
       })
       .addCase(listUniversity.fulfilled, (state, action) => {
-        state.status.list = "succeeded";
+        state.status.fetchAll = "succeeded";
         state.universities = action.payload;
       })
       .addCase(listUniversity.rejected, (state, action) => {
-        state.status.list = "failed";
+        state.status.fetchAll = "failed";
         setError(state, action);
       })
 
       .addCase(getUniversityById.pending, (state) => {
-        state.status.list = "loading";
+        state.status.fetchOne = "loading";
       })
       .addCase(getUniversityById.fulfilled, (state, action) => {
-        state.status.list = "succeeded";
+        state.status.fetchOne = "succeeded";
         state.universities = [{ ...action.payload }];
       })
       .addCase(getUniversityById.rejected, (state, action) => {
-        state.status.list = "failed";
+        state.status.fetchOne = "failed";
         setError(state, action);
       })
 

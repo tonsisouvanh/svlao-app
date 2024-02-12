@@ -12,16 +12,16 @@ const UniversityList = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.auth);
-  const { listStatus } = useSelector((state) => state.university);
+  const { status } = useSelector((state) => state.university);
   const [editToggle, setEditToggle] = useState(false);
 
   useEffect(() => {
     dispatch(listUniversity());
   }, [dispatch]);
-  if (listStatus === "loading") {
+  if (status.fetchAll === "loading") {
     return <Spinner />;
   }
-  if (listStatus === "failed") {
+  if (status.fetchAll === "failed") {
     return <div>Error loading universities</div>;
   }
   return auth?.role === "admin" ? (

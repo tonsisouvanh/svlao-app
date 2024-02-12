@@ -12,31 +12,20 @@ import {
 import { Link } from "react-router-dom";
 import InfoModal from "../../modal/InfoModal";
 import { UNIVERSITY_COLUMNS } from "../../../data/data";
-// import Searchbox from "../../input/student/Searchbox";
 import altImage from "../../../assets/img/profile.png";
 import { removeUniversity } from "../../../feature/globalData/UniversitySlice";
 const cellStyle = "whitespace-nowrap truncate font-light";
 
 const UniversityTable = ({ editToggle, setEditToggle }) => {
-  const { universities, listStatus, removeStatus } = useSelector(
-    (state) => state.university,
-  );
+  const { universities, status } = useSelector((state) => state.university);
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const [deletedUniversityId, setDeletedUniversityId] = useState("");
   const data = useMemo(() => universities, [universities]);
   const columns = useMemo(() => UNIVERSITY_COLUMNS, []);
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    state,
-    setGlobalFilter,
-  } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
 
-  const { globalFilter } = state;
   const handleOpenModal = (id) => {
     setDeletedUniversityId(id);
     setOpenModal(true);
@@ -50,14 +39,14 @@ const UniversityTable = ({ editToggle, setEditToggle }) => {
     error.target.src = altImage;
   };
 
-  if (listStatus === "loading") {
+  if (status.fetchAll === "loading") {
     return <Spinner />;
   }
   return (
     <>
       {editToggle ? (
         <span>Edit university component here</span>
-      ) : listStatus === "loading" || removeStatus === "loading" ? (
+      ) : status.fetchAll === "loading" || status.remove === "loading" ? (
         <Spinner />
       ) : (
         <>
@@ -74,9 +63,6 @@ const UniversityTable = ({ editToggle, setEditToggle }) => {
               handleClick={handleDeleteUniversity}
             />
           )}
-          {/* <div className="mb-5 flex flex-wrap items-center gap-2">
-            <Searchbox filter={globalFilter} setFilter={setGlobalFilter} />
-          </div> */}
           <div className="overflow-x-auto">
             <table
               {...getTableProps()}
@@ -122,7 +108,7 @@ const UniversityTable = ({ editToggle, setEditToggle }) => {
                     return (
                       <tr key={row.id} {...row.getRowProps()}>
                         <td>
-                          <div className="dropdown dropdown-right">
+                          <div className="dropdown-right dropdown">
                             <label
                               tabIndex={0}
                               className="btn btn-xs px-1 py-0"
@@ -160,7 +146,7 @@ const UniversityTable = ({ editToggle, setEditToggle }) => {
                               key={index}
                               {...cell.getCellProps()}
                             >
-                              {cell.column.id === "listStatus" ? (
+                              {cell.column.id === "status.fetchAll" ? (
                                 <span
                                   className={`badge ${
                                     cell.value === "active"
