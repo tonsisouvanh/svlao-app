@@ -136,7 +136,7 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
                   rows?.map((row) => {
                     prepareRow(row);
                     return (
-                      <tr key={row.id} {...row.getRowProps()}>
+                      <tr key={row?.id} {...row?.getRowProps()}>
                         <td>
                           <div className="dropdown-right dropdown">
                             <label
@@ -150,7 +150,7 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
                               className="dropdown-content rounded-box absolute !-top-2 !right-0 z-[1] !flex w-fit gap-4 border bg-base-100 p-2 shadow"
                             >
                               <Link
-                                to={`/manage-others-data/announcement-list/${row.original._id}`}
+                                to={`/manage-others-data/announcement-list/${row?.original?._id}`}
                               >
                                 <li className="btn btn-ghost btn-xs">
                                   <AiFillEdit size={15} />
@@ -158,7 +158,7 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
                               </Link>
                               <li
                                 onClick={() =>
-                                  handleOpenModal(row.original._id)
+                                  handleOpenModal(row?.original?._id)
                                 }
                                 className="btn btn-ghost btn-xs"
                               >
@@ -174,16 +174,16 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
                             <td
                               className={cellStyle}
                               key={index}
-                              {...cell.getCellProps()}
+                              {...cell?.getCellProps()}
                             >
-                              {cell.column.id === "timestamp" ? (
-                                <>{formatDateDDMMYYYY(cell.value)}</>
-                              ) : cell.column.id === "content" ? (
+                              {cell?.column?.id === "timestamp" ? (
+                                <>{formatDateDDMMYYYY(cell?.value)}</>
+                              ) : cell?.column?.id === "content" ? (
                                 <>
-                                  <span className="truncate">{cell.value}</span>
+                                  <span className="truncate">{cell?.value}</span>
                                 </>
                               ) : (
-                                cell.render("Cell")
+                                cell?.render("Cell")
                               )}
                             </td>
                           ))}
