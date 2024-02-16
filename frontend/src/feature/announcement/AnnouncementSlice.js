@@ -19,7 +19,6 @@ const initialState = {
 export const createAnnouncement = createAsyncThunk(
   "announcements/addAnnouncement",
   async (inputData, thunkAPI) => {
-    console.log("🚀 ~ inputData:", inputData);
     try {
       const { auth } = thunkAPI.getState().auth;
       const config = {
@@ -118,10 +117,12 @@ export const listAnnouncements = createAsyncThunk(
           Authorization: `Bearer ${auth.token}`,
         },
       };
-      const { data } = await axios.get(
-        `/api/announcements?keyword=${keyword}&pageNumber=${pageNumber}`,
-        config,
-      );
+      // const url =
+      //   pageNumber === 0
+      //     ? `/api/announcements`
+      //     : `/api/announcements?keyword=${keyword}&pageNumber=${pageNumber}`;
+      const url = `/api/announcements?keyword=${keyword}&pageNumber=${pageNumber}`;
+      const { data } = await axios.get(url, config);
       return data;
     } catch (error) {
       const message =

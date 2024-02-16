@@ -233,6 +233,56 @@ const getUsers = asyncHandler(async (req, res) => {
   res.json({ users, page, pages: Math.ceil(count / pageSize) });
 });
 
+// @desc    Get filtered users
+// @route   GET /api/users/filter
+// @access  Private/Admin
+// @desc    Get filtered users
+// @route   GET /api/users/filter
+// @access  Private/Admin
+const getFilteredUsers = asyncHandler(async (req, res) => {
+  const { page, limit, ...filters } = req.query;
+
+  // Convert page and limit to integers (you may want to add validation here)
+  const currentPage = parseInt(page) || 1;
+  const itemsPerPage = parseInt(limit) || 10;
+
+  // Calculate the skip value for pagination
+  const skip = (currentPage - 1) * itemsPerPage;
+
+  // Construct the filter object based on the provided parameters
+  const filterObject = {};
+
+  // Iterate through the filters and add them to the filterObject
+  Object.keys(filters).forEach((key) => {
+    filterObject[key] = filters[key];
+  });
+
+  // Fetch users based on the filters and pagination
+  const users = await User.find(filterObject).skip(skip).limit(itemsPerPage);
+
+  res.json({
+    users,
+    currentPage,
+    itemsPerPage,
+    total: await User.countDocuments(filterObject),
+  });
+});
+
+// const getFilteredUsers = asyncHandler(async (req, res) => {
+//   const filters = req.query; // Use req.query to access query parameters
+//   // Construct the filter object based on the provided parameters
+//   const filterObject = {};
+
+//   // Iterate through the filters and add them to the filterObject
+//   Object.keys(filters).forEach((key) => {
+//     filterObject[key] = filters[key];
+//   });
+//   // Fetch users based on the filters
+//   const users = await User.find(filterObject);
+
+//   res.json(users);
+// });
+
 // @desc    Delete user
 // @route   DELETE /api/users/:id
 // @access  Private/Admin
@@ -307,6 +357,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
 export {
   authUser,
+  getFilteredUsers,
   registerUser,
   getUserProfile,
   updateUserProfile,
