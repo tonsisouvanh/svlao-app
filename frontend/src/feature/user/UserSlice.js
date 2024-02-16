@@ -14,6 +14,7 @@ const initialState = {
   error: "",
   page: 1,
   pages: 0,
+  total: 0,
 };
 
 export const resetPassword = createAsyncThunk(
@@ -71,6 +72,40 @@ export const listUsers = createAsyncThunk(
         `/api/users?keyword=${keyword}&pageNumber=${pageNumber}`,
         config,
       );
+      return data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  },
+);
+
+export const getFilteredUsers = createAsyncThunk(
+  "user/listFilteredUsers",
+  async (filter, thunkAPI) => {
+    try {
+      const { auth } = thunkAPI.getState().auth;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+      };
+
+      // Constructing the query string dynamically based on the filter object
+      const queryString = Object.keys(filter)
+        .map((key) => `${key}=${filter[key]}`)
+        .join("&");
+      const { data } = await axios.get(
+        `/api/users/filter?${queryString}`,
+        config,
+      );
+
       return data;
     } catch (error) {
       const message =
@@ -212,6 +247,23 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(listUsers.rejected, (state, action) => {
+        state.status.fetchAll = "failed";
+        state.users = null;
+        state.error = action.payload;
+      })
+
+      .addCase(getFilteredUsers.pending, (state) => {
+        state.status.fetchAll = "loading";
+      })
+      .addCase(getFilteredUsers.fulfilled, (state, action) => {
+        state.status.fetchAll = "succeeded";
+        state.users = action.payload.users;
+        state.page = action.payload.currentPage;
+        state.pages = action.payload.itemsPerPage;
+        state.total = action.payload.total;
+        state.error = null;
+      })
+      .addCase(getFilteredUsers.rejected, (state, action) => {
         state.status.fetchAll = "failed";
         state.users = null;
         state.error = action.payload;

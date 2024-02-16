@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  AiFillBook,
-  AiFillSound,
-  AiOutlineAudit,
-  AiOutlineDashboard,
-  AiOutlineLogout,
-} from "react-icons/ai";
+  foldermanagement,
+  hierarchy,
+  speedometer,
+  documentation,
+  promotion,
+  logout,
+} from "../../assets/icons/index";
+import { AiFillBook, AiFillSound, AiOutlineLogout } from "react-icons/ai";
 import { BsArrowLeft, BsFillCaretDownFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -128,7 +130,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             : setSidebarExpanded(true);
                         }}
                       >
-                        <AiOutlineDashboard size={23} />
+                        {/* <AiOutlineDashboard size={23} /> */}
+                        <img src={speedometer} className="w-6" alt="" />
                         ຈັດການນັກຮຽນ
                         <BsFillCaretDownFill
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current transition-all duration-300 ${
@@ -195,7 +198,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             : setSidebarExpanded(true);
                         }}
                       >
-                        <AiOutlineDashboard size={23} />
+                        {/* <AiOutlineDashboard size={23} /> */}
+                        <img src={foldermanagement} className="w-6" alt="" />
                         ຈັກການຂໍ້ມູນອື່ນຯ
                         <BsFillCaretDownFill
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current transition-all duration-300 ${
@@ -219,7 +223,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   "rounded-md border-r-2 bg-white/10 text-white")
                               }
                             >
-                              ຂໍ້ມູນມະຫາໄລ
+                              ມະຫາໄລ
                             </NavLink>
                           </li>
                           <li className={dropdownLiStyle}>
@@ -231,7 +235,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   "rounded-md border-r-2 bg-white/10 text-white")
                               }
                             >
-                              ຂໍ້ມູນຂະແໜງຮຽນ
+                              ຂະແໜງຮຽນ
                             </NavLink>
                           </li>
                           <li className={dropdownLiStyle}>
@@ -243,7 +247,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   "rounded-md border-r-2 bg-white/10 text-white")
                               }
                             >
-                              ຂໍ້ມູນທີ່ຢູ່ປັດຈຸບັນ
+                              ທີ່ຢູ່ປັດຈຸບັນ
                             </NavLink>
                           </li>
                           <li className={dropdownLiStyle}>
@@ -255,7 +259,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   "rounded-md border-r-2 bg-white/10 text-white")
                               }
                             >
-                              ຂໍ້ມູນປະກາດ
+                              ປະກາດ
                             </NavLink>
                           </li>
                           <li className={dropdownLiStyle}>
@@ -267,7 +271,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   "rounded-md border-r-2 bg-white/10 text-white")
                               }
                             >
-                              ຂໍ້ມູນຟອມເອກກະສານ
+                              ຟອມເອກກະສານ
                             </NavLink>
                           </li>
                         </ul>
@@ -285,7 +289,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                  <AiOutlineAudit size={23} />
+                  {/* <AiOutlineAudit size={23} /> */}
+                  <img src={hierarchy} className="w-6" alt="" />
                   ອົງການຈັດຕັ້ງຕ່າງໆ
                 </NavLink>
               </li>
@@ -307,7 +312,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     pathname.includes("/") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                  <AiFillBook size={23} />
+                  {/* <AiFillBook size={23} /> */}
+                  <img src={documentation} className="w-6" alt="" />
                   ແບບຟອມເອກະສານຕ່າງໆ
                 </NavLink>
               </li>
@@ -318,7 +324,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     pathname === "/" && "rounded-md bg-primary-focus text-white"
                   }`}
                 >
-                  <AiFillSound size={23} />
+                  {/* <AiFillSound size={23} /> */}
+                  <img src={promotion} className="w-6" alt="" />
                   ປະກາດ
                 </NavLink>
               </li>
@@ -328,7 +335,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   type="button"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:text-white`}
                 >
-                  <AiOutlineLogout size={23} />
+                  {/* <AiOutlineLogout size={23} /> */}
+                  <img src={logout} className="w-6" alt="" />
                   ອອກຈາກລະບົບ
                 </button>
               </li>

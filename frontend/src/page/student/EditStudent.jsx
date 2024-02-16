@@ -147,7 +147,7 @@ const EditStudent = () => {
               </h1>
               <div>
                 <div className="avatar">
-                  <div className="w-48 rounded">
+                  <div className=" w-48 rounded-full">
                     {singleUser?.profileImg ? (
                       <img
                         src={singleUser?.profileImg}
@@ -160,11 +160,9 @@ const EditStudent = () => {
                   </div>
                 </div>
               </div>
-              <div>
-                <p>{singleUser._id}</p>
-              </div>
             </div>
             <div className="mx-auto">
+              <p className="label-text mb-2">{singleUser._id}</p>
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="btn btn-neutral btn-outline btn-sm"
