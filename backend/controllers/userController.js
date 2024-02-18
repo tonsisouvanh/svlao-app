@@ -240,14 +240,15 @@ const getUsers = asyncHandler(async (req, res) => {
 // @route   GET /api/users/filter
 // @access  Private/Admin
 const getFilteredUsers = asyncHandler(async (req, res) => {
-  const { page, limit, ...filters } = req.query;
+  const { ...filters } = req.query;
+  console.log("🚀 ~ getFilteredUsers ~ filters:", filters);
 
   // Convert page and limit to integers (you may want to add validation here)
-  const currentPage = parseInt(page) || 1;
-  const itemsPerPage = parseInt(limit) || 10;
+  // const currentPage = parseInt(page) || 1;
+  // const itemsPerPage = parseInt(limit) || 10;
 
   // Calculate the skip value for pagination
-  const skip = (currentPage - 1) * itemsPerPage;
+  // const skip = (currentPage - 1) * itemsPerPage;
 
   // Construct the filter object based on the provided parameters
   const filterObject = {};
@@ -258,12 +259,13 @@ const getFilteredUsers = asyncHandler(async (req, res) => {
   });
 
   // Fetch users based on the filters and pagination
-  const users = await User.find(filterObject).skip(skip).limit(itemsPerPage);
+  const users = await User.find(filterObject);
+  // const users = await User.find(filterObject).skip(skip).limit(itemsPerPage);
 
   res.json({
     users,
-    currentPage,
-    itemsPerPage,
+    // currentPage,
+    // itemsPerPage,
     total: await User.countDocuments(filterObject),
   });
 });

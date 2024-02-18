@@ -7,14 +7,13 @@ import {
   promotion,
   logout,
 } from "../../assets/icons/index";
-import { AiFillBook, AiFillSound, AiOutlineLogout } from "react-icons/ai";
 import { BsArrowLeft, BsFillCaretDownFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "../../feature/auth/AuthSlice";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 
-const dropdownLiStyle = "hover:text-white hover:bg-white/10 rounded-md";
+const dropdownLiStyle = "hover:opacity-60 hover:bg-white/10 rounded-md";
 const dropdownNavlinkStyle =
   "group relative flex items-center gap-2 px-4 py-2 font-semibold duration-300 ease-in-out";
 
@@ -284,7 +283,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <li>
                 <NavLink
                   to="/formal-organization"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out ${
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60 ${
                     pathname.includes("settings") &&
                     "bg-graydark dark:bg-meta-4"
                   }`}
@@ -308,7 +307,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <li>
                 <NavLink
                   to="/document-form-list"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:text-white ${
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60 ${
                     pathname.includes("/") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
@@ -320,7 +319,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <li>
                 <NavLink
                   to="/"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:text-white ${
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60 ${
                     pathname === "/" && "rounded-md bg-primary-focus text-white"
                   }`}
                 >
@@ -333,7 +332,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 <button
                   onClick={handleSignOut}
                   type="button"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:text-white`}
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60`}
                 >
                   {/* <AiOutlineLogout size={23} /> */}
                   <img src={logout} className="w-6" alt="" />

@@ -115,7 +115,7 @@ const UserTable = ({
           handleClick={handleDeletUser}
         />
       )}
-      <div className="stats my-4 w-full border font-notosanslao shadow">
+      <div className="stats my-4 w-full font-notosanslao shadow">
         <div className="stat place-items-center bg-neutral/10">
           <div className="stat-title text-lg">ນຮ ທັງໝົດ</div>
           <div className="stat-value">
