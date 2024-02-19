@@ -2,6 +2,7 @@ import Navbar from "./Navbar";
 import Sidebar from "../Sidebar";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import Footer from "./Footer";
 
 function RootLayoutPublic() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -24,10 +25,12 @@ function RootLayoutPublic() {
 
             {/* <!-- ===== Main Content Start ===== --> */}
             <main>
-              <div className="max-w-screen-2xld mx-auto min-h-screen md:p-6 2xl:p-10 font-notosanslao">
+              <div className="max-w-screen-2xld mx-auto min-h-screen font-notosanslao md:p-6 2xl:p-10">
                 <Outlet />
               </div>
             </main>
+            
+            <Footer />
             {/* <!-- ===== Main Content End ===== --> */}
           </div>
           {/* <!-- ===== Content Area End ===== --> */}

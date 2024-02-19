@@ -1,9 +1,9 @@
 const Footer = () => {
   return (
-    <footer className="footer footer-center p-4 bg-white text-base-content  ">
-      <aside>
-        <p>Create by IDEVU</p>
-      </aside>
+    <footer className="footer footer-center bg-white p-4 text-base-content">
+      <div className="mt-4 text-sm text-gray-500">
+        <p>&copy; 2024 IDEVU. All rights reserved.</p>
+      </div>
     </footer>
   );
 };
