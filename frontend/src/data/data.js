@@ -253,10 +253,10 @@ export const majorList = [
 ];
 
 export const degreeList = [
-  { laoDegree: "ຊັ້ນສູງ", vietDegree: "Cao Học" },
-  { laoDegree: "ປະລິນຍາຕີ", vietDegree: "Cử Nhân" },
-  { laoDegree: "ປະລິນຍາໂທ", vietDegree: "Thạc Sĩ" },
-  { laoDegree: "ປະລິນຍາເອກ", vietDegree: "Tiến Sĩ" },
+  { laoDegree: "ຊັ້ນສູງ", vietDegree: "Cao Học", englishDegree: "" },
+  { laoDegree: "ປະລິນຍາຕີ", vietDegree: "Cử Nhân", englishDegree: "bachelor" },
+  { laoDegree: "ປະລິນຍາໂທ", vietDegree: "Thạc Sĩ", englishDegree: "master" },
+  { laoDegree: "ປະລິນຍາເອກ", vietDegree: "Tiến Sĩ", englishDegree: "doctor" },
 ];
 
 export const provinceList = [

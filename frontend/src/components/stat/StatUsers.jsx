@@ -62,7 +62,7 @@ const StatUsers = ({ users, total, status }) => {
   return (
     <>
       <div className="space-y-6">
-        <div className="stats stats-vertical w-full shadow lg:stats-horizontal">
+        <div className="stats stats-vertical w-full border shadow lg:stats-horizontal">
           <div className="stat">
             <div className="stat-figure">
               <img src={student} className="w-16" alt="icon" />
@@ -92,7 +92,7 @@ const StatUsers = ({ users, total, status }) => {
             <div className="stat-value">{totalActive() | 0}</div>
           </div>
         </div>
-        <div className="stats-horizal stats w-full shadow">
+        <div className="stats-horizal stats w-full border shadow">
           <div className="stat">
             <div className="stat-title">Bachelor</div>
             <div className="stat-value">{totalBachelor | 0}</div>

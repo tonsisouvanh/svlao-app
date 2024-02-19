@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Unauthorized from "./public/Unauthorized";
 import { getFilteredUsers } from "../feature/user/UserSlice";
 import StatUsers from "../components/stat/StatUsers";
-import PaginateNoPath from "../components/paginate/PaginateNoPath";
-import UserTable from "../components/table/dashboard/StudenTable";
 import { listAnnouncements } from "../feature/announcement/AnnouncementSlice";
 import { formatDateDDMMYYYY } from "../utils/utils";
 import { Link } from "react-router-dom";
+import VerticalBarChart from "../components/chart/Dashboard/VerticalBarChart";
+import PieChart from "../components/chart/Dashboard/PieChart";
+
 const Dashboard = () => {
   const { auth } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -16,7 +17,6 @@ const Dashboard = () => {
   const sortedAnnouncements = [...announcements].sort(
     (a, b) => new Date(a.timestamp) - new Date(b.timestamp),
   );
-
   const { residenceAddresses } = useSelector((state) => state.residenceAddress);
   const {
     users,
@@ -26,8 +26,6 @@ const Dashboard = () => {
   const [selectedUniversity, setSelectedUniversity] = useState("");
   const [selectedResidenceAddress, setSelectedResidenceAddress] = useState("");
   const [filterChoice, setFilterChoice] = useState("all");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   useEffect(() => {
     let filters = {};
@@ -45,22 +43,8 @@ const Dashboard = () => {
       filters = {};
     }
 
-    dispatch(
-      // getFilteredUsers({
-      //   ...filters,
-      //   page: currentPage,
-      //   limit: itemsPerPage,
-      // }),
-      getFilteredUsers({ ...filters }),
-    );
-  }, [
-    dispatch,
-    filterChoice,
-    selectedResidenceAddress,
-    selectedUniversity,
-    currentPage,
-    itemsPerPage,
-  ]);
+    dispatch(getFilteredUsers({ ...filters }));
+  }, [dispatch, filterChoice, selectedResidenceAddress, selectedUniversity]);
 
   useEffect(() => {
     dispatch(listAnnouncements({}));
@@ -137,7 +121,7 @@ const Dashboard = () => {
           </div>
           <div className="mb-10 flex flex-col items-start gap-4 md:flex-row md:justify-between">
             <StatUsers status={userStatus} users={users} total={total} />
-            <ul className="menu rounded-box max-w-sm bg-base-200">
+            <ul className="menu rounded-box max-w-sm border bg-base-200 shadow-sm">
               <div className="flex w-full flex-row items-start justify-between p-2">
                 <span className="font-bold">Announcement</span>
                 <Link to="/manage-others-data/announcement-list">
@@ -146,7 +130,7 @@ const Dashboard = () => {
                   </button>
                 </Link>
               </div>
-              {sortedAnnouncements.map((announcement) => (
+              {sortedAnnouncements?.map((announcement) => (
                 <li key={announcement._id}>
                   <Link
                     to={`/manage-others-data/announcement-list/${announcement._id}`}
@@ -207,11 +191,25 @@ const Dashboard = () => {
           <div className="mt-6 flex justify-center">
             <PaginateNoPath
               setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
+              currentPage={currentPage
               total={total}
               itemsPerPage={itemsPerPage}
             />
           </div> */}
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="card max-w-full border bg-base-200 p-4 shadow-sm">
+              <h2 className="text-md mb-4 font-semibold">
+                Students count / Degree
+              </h2>
+              <VerticalBarChart users={users} />
+            </div>
+            <div className="card max-w-full border bg-base-200 p-4 shadow-sm">
+              <h2 className="text-md mb-4 font-semibold">
+                Student count / Univeristy
+              </h2>
+              <PieChart />
+            </div>
+          </div>
         </div>
       </section>
     </>

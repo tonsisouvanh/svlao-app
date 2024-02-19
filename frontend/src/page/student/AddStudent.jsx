@@ -57,9 +57,6 @@ const AddStudent = () => {
   const clearImage = () => {
     setBase64(null);
   };
-  // useEffect(() => {
-  //   dispatch(listUniversity());
-  // }, [dispatch]);
 
   useEffect(() => {
     if (status.create === "succeeded") {

@@ -15,9 +15,7 @@ const ResidenceAddressList = () => {
   const { status } = useSelector((state) => state.residenceAddress);
   const [editToggle, setEditToggle] = useState(false);
 
-  useEffect(() => {
-    dispatch(listResidenceAddress());
-  }, [dispatch]);
+ 
   if (status.list === "loading") {
     return <Spinner />;
   }

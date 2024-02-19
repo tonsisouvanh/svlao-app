@@ -13,7 +13,6 @@ import { getYearOptions } from "../../utils/utils";
 import { getUserById } from "../../feature/user/SingleUserSlice";
 import { useLocation, useParams } from "react-router-dom";
 import { updateUser, userReset } from "../../feature/user/UserSlice";
-import { listUniversity } from "../../feature/globalData/UniversitySlice";
 import altImage from "../../assets/img/profile.png";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import ResetPasswordModal from "../../components/modal/ResetPasswordModal";
@@ -71,9 +70,6 @@ const EditStudent = () => {
     setValue("residenceAddress.address", residenceAddress.address);
   };
 
-  useEffect(() => {
-    dispatch(listUniversity());
-  }, [dispatch]);
 
   useEffect(() => {
     if (userStatus.update === "succeeded") {

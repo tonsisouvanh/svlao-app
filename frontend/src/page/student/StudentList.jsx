@@ -7,7 +7,6 @@ import { BsGridFill, BsTable } from "react-icons/bs";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { listUsers } from "../../feature/user/UserSlice";
 import Paginate from "../../components/paginate/Paginate";
-import { listUniversity } from "../../feature/globalData/UniversitySlice";
 import { listMajor } from "../../feature/globalData/MajorSlice";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import Spinner from "../../components/ui/Spinner";
@@ -43,8 +42,6 @@ const StudentList = () => {
 
   useEffect(() => {
     dispatch(listUsers({ pageNumber, keyword }));
-    dispatch(listUniversity());
-    dispatch(listMajor());
   }, [dispatch, pageNumber, keyword]);
   if (userStatus.fetchAll === "loading") {
     return <Spinner />;

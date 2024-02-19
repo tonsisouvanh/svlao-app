@@ -9,7 +9,6 @@ import {
   residenceAddressList,
 } from "../../data/data";
 import { authReset, updateUserProfile } from "../../feature/auth/AuthSlice";
-import { listUniversity } from "../../feature/globalData/UniversitySlice";
 import { getYearOptions, replaceImage } from "../../utils/utils";
 import Spinner from "../../components/ui/Spinner";
 import altImage from "../../assets/img/profile.png";
@@ -53,7 +52,6 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    dispatch(listUniversity());
   }, [dispatch]);
 
   useEffect(() => {
