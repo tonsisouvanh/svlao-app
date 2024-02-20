@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  degreeList,
-  majorList,
-  provinceList,
-  residenceAddressList,
-} from "../../data/data";
+import { degreeList, provinceList } from "../../data/data";
 import { authReset, updateUserProfile } from "../../feature/auth/AuthSlice";
 import { getYearOptions, replaceImage } from "../../utils/utils";
 import Spinner from "../../components/ui/Spinner";
@@ -21,8 +16,11 @@ const UserProfile = () => {
     status,
     error,
   } = useSelector((state) => state.auth);
-  //TODO: use major data from database instead
   const { universities } = useSelector((state) => state.university);
+  const { majors: majorList } = useSelector((state) => state.major);
+  const { residenceAddresses: residenceAddressList } = useSelector(
+    (state) => state.residenceAddress,
+  );
   const dispatch = useDispatch();
 
   const { register, handleSubmit, setValue, reset } = useForm({
@@ -51,8 +49,7 @@ const UserProfile = () => {
     setValue("residenceAddress.address", residenceAddress.address);
   };
 
-  useEffect(() => {
-  }, [dispatch]);
+  useEffect(() => {}, [dispatch]);
 
   useEffect(() => {
     reset(studentData);

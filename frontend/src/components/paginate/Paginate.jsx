@@ -1,4 +1,34 @@
-import React from "react";
+// import { Link } from "react-router-dom";
+
+// const Paginate = ({
+//   pages,
+//   page,
+//   isAdmin = false,
+//   keyword = "",
+//   style = "",
+//   path,
+// }) => {
+//   return (
+//     pages > 1 && (
+//       <div className={`join ${style}`}>
+//         {[...Array(pages).keys()].map((x) => (
+//           <Link key={x + 1} to={`${path}${x + 1}`}>
+//             <button
+//               className={`btn join-item btn-sm ${
+//                 x + 1 === page && "btn-primary btn-active"
+//               }`}
+//             >
+//               {x + 1}
+//             </button>
+//           </Link>
+//         ))}
+//       </div>
+//     )
+//   );
+// };
+
+// export default Paginate;
+
 import { Link } from "react-router-dom";
 
 const Paginate = ({
@@ -9,22 +39,66 @@ const Paginate = ({
   style = "",
   path,
 }) => {
+  const renderPageNumber = (pageNumber) => {
+    return (
+      <Link key={pageNumber} to={`${path}${pageNumber}`}>
+        <button
+          className={`btn join-item btn-sm ${
+            pageNumber === page ? "btn-primary btn-active" : ""
+          }`}
+        >
+          {pageNumber}
+        </button>
+      </Link>
+    );
+  };
+
+  const renderEllipsis = () => {
+    return (
+      <button key="ellipsis" disabled className="btn join-item btn-sm">
+        ...
+      </button>
+    );
+  };
+
+  const renderPrevButton = () => {
+    const prevPage = page - 1 > 0 ? page - 1 : 1;
+    return (
+      <Link key="prev" to={`${path}${prevPage}`} disabled={page === 1}>
+        <button className={`btn join-item btn-sm`} disabled={page === 1}>
+          Prev
+        </button>
+      </Link>
+    );
+  };
+
+  const renderNextButton = () => {
+    const nextPage = page + 1 <= pages ? page + 1 : pages;
+    return (
+      <Link key="next" to={`${path}${nextPage}`} disabled={page === pages}>
+        <button className={`btn join-item btn-sm`} disabled={page === pages}>
+          Next
+        </button>
+      </Link>
+    );
+  };
+
   return (
-    pages > 1 && (
-      <div className={`join ${style}`}>
-        {[...Array(pages).keys()].map((x) => (
-          <Link key={x + 1} to={`${path}${x + 1}`}>
-            <button
-              className={`btn join-item btn-sm ${
-                x + 1 === page && "btn-primary btn-active"
-              }`}
-            >
-              {x + 1}
-            </button>
-          </Link>
-        ))}
-      </div>
-    )
+    <div className={`join ${style}`}>
+      {renderPrevButton()}
+      {[...Array(pages).keys()].map((x) => {
+        if (pages <= 5 || x + 1 === page || x + 1 === 1 || x + 1 === pages) {
+          return renderPageNumber(x + 1);
+        } else if (x + 1 >= page - 1 && x + 1 <= page + 1) {
+          return renderPageNumber(x + 1);
+        } else if (x + 1 === page - 2 || x + 1 === page + 2) {
+          return renderEllipsis();
+        } else {
+          return null;
+        }
+      })}
+      {renderNextButton()}
+    </div>
   );
 };
 

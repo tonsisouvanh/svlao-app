@@ -137,7 +137,7 @@ const ResidenceAddressTable = ({ editToggle, setEditToggle }) => {
                               <Link
                                 to={`/manage-others-data/residence-address-list/${row.original._id}`}
                               >
-                                <li className="btn btn-ghost btn-xs">
+                                <li className="btn btn-success btn-xs">
                                   <AiFillEdit size={15} />
                                 </li>
                               </Link>
@@ -145,7 +145,7 @@ const ResidenceAddressTable = ({ editToggle, setEditToggle }) => {
                                 onClick={() =>
                                   handleOpenModal(row.original._id)
                                 }
-                                className="btn btn-ghost btn-xs"
+                                className="btn btn-error btn-xs"
                               >
                                 <a>
                                   <AiFillDelete size={15} />

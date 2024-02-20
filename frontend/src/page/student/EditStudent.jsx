@@ -70,7 +70,6 @@ const EditStudent = () => {
     setValue("residenceAddress.address", residenceAddress.address);
   };
 
-
   useEffect(() => {
     if (userStatus.update === "succeeded") {
       toast.success("Update Successfully");
@@ -138,7 +137,7 @@ const EditStudent = () => {
             <div className="mb-12 flex w-full flex-col text-center">
               <Breadcrumbs pathname={pathname} />
 
-              <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium">
+              <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium text-base-content">
                 ຂໍ້ມູນນັກຮຽນ
               </h1>
               <div>

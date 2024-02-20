@@ -241,8 +241,6 @@ const getUsers = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const getFilteredUsers = asyncHandler(async (req, res) => {
   const { ...filters } = req.query;
-  console.log("🚀 ~ getFilteredUsers ~ filters:", filters);
-
   // Convert page and limit to integers (you may want to add validation here)
   // const currentPage = parseInt(page) || 1;
   // const itemsPerPage = parseInt(limit) || 10;

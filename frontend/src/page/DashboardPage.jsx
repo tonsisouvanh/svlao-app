@@ -10,8 +10,9 @@ import VerticalBarChart from "../components/chart/Dashboard/VerticalBarChart";
 import PieChart from "../components/chart/Dashboard/PieChart";
 
 const Dashboard = () => {
-  const { auth } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  // ======================== Redux state ======================= //
+  const { auth } = useSelector((state) => state.auth);
   const { universities } = useSelector((state) => state.university);
   const { announcements } = useSelector((state) => state.announcement);
   const sortedAnnouncements = [...announcements].sort(
@@ -23,6 +24,8 @@ const Dashboard = () => {
     status: userStatus,
     total,
   } = useSelector((state) => state.user);
+  // ====================================================== //
+
   const [selectedUniversity, setSelectedUniversity] = useState("");
   const [selectedResidenceAddress, setSelectedResidenceAddress] = useState("");
   const [filterChoice, setFilterChoice] = useState("all");
@@ -55,7 +58,7 @@ const Dashboard = () => {
       <section className="body-font">
         <div className="container mx-auto px-5 py-24">
           <div className="mb-20 text-center">
-            <h1 className="title-font mb-4 text-center font-notosanslao text-2xl font-bold text-primary sm:text-3xl">
+            <h1 className="title-font mb-4 text-center font-notosanslao text-2xl font-bold text-base-content sm:text-3xl">
               ສັງລວມນັກຮຽນທີ່ຢູ່ຕາມໂຮງຮຽນຕ່າງໆ
             </h1>
           </div>
@@ -124,11 +127,6 @@ const Dashboard = () => {
             <ul className="menu rounded-box max-w-sm border bg-base-200 shadow-sm">
               <div className="flex w-full flex-row items-start justify-between p-2">
                 <span className="font-bold">Announcement</span>
-                <Link to="/manage-others-data/announcement-list">
-                  <button className="btn btn-link btn-xs whitespace-nowrap">
-                    View all
-                  </button>
-                </Link>
               </div>
               {sortedAnnouncements?.map((announcement) => (
                 <li key={announcement._id}>
@@ -143,12 +141,14 @@ const Dashboard = () => {
                       </span>
                       )
                     </p>
-                    {/* <p className="text-xs opacity-50">
-                      {formatDateDDMMYYYY(announcement.timestamp)}
-                    </p> */}
                   </Link>
                 </li>
               ))}
+              <Link to="/manage-others-data/announcement-list">
+                <button className="btn btn-link btn-xs whitespace-nowrap">
+                  View all
+                </button>
+              </Link>
             </ul>
           </div>
           {/* <label className="form-control w-full max-w-fit">

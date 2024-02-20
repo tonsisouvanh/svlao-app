@@ -7,17 +7,11 @@ import {
   AiFillCaretUp,
   AiFillDelete,
   AiFillEdit,
-  AiFillEye,
   AiOutlineMore,
 } from "react-icons/ai";
 import altImage from "../../../assets/img/profile.png";
-import { BiSolidSortAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import InfoModal from "../../modal/InfoModal";
-import consule from "../../../assets/img/consule.jpg";
-import { BsFacebook } from "react-icons/bs";
-import { STUDENT_COLUMNS } from "../../../data/data";
-import Searchbox from "../../input/student/Searchbox";
 import { removeUser, userReset } from "../../../feature/user/UserSlice";
 import { formatDateDDMMYYYY, replaceImage } from "../../../utils/utils";
 import toast from "react-hot-toast";

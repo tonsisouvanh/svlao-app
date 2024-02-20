@@ -7,9 +7,9 @@ import { BsGridFill, BsTable } from "react-icons/bs";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { listUsers } from "../../feature/user/UserSlice";
 import Paginate from "../../components/paginate/Paginate";
-import { listMajor } from "../../feature/globalData/MajorSlice";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import Spinner from "../../components/ui/Spinner";
+import GobackButton from "../../components/button/GoBackButton";
 
 const StudentList = () => {
   const { pathname } = useLocation();
@@ -20,11 +20,12 @@ const StudentList = () => {
     users,
     page,
     pages,
+    total,
   } = useSelector((state) => state.user);
   const { auth } = useSelector((state) => state.auth);
   const [editToggle, setEditToggle] = useState(false);
 
-  const [view, setView] = useState("");
+  const [view, setView] = useState("table");
   const toggleView = () => {
     setView((prevView) => (prevView === "table" ? "grid" : "table"));
   };
@@ -51,14 +52,15 @@ const StudentList = () => {
   }
   return auth?.role === "admin" ? (
     <>
-      <section className="">
+      <section className="relative">
+        <GobackButton />
         <div className="container mx-auto p-4">
           <div>
             <Breadcrumbs pathname={pathname} />
           </div>
           <div className="mb-14">
             {editToggle ? null : (
-              <label className="flex justify-center font-notosanslao text-4xl font-bold text-primary">
+              <label className="flex justify-center font-notosanslao text-4xl font-bold text-base-content">
                 ລາຍຊື່ນັກຮຽນ
               </label>
             )}
@@ -123,6 +125,11 @@ const StudentList = () => {
             </div>
           ))} */}
           <Paginate
+            // setCurrentPage={setCurrentPage}
+            // currentPage={currentPage}
+            // total={total}
+            // itemsPerPage={itemsPerPage}
+
             path="/dashboard/student-list/page/"
             style="mt-10"
             page={page}

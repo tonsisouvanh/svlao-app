@@ -23,7 +23,6 @@ const updateMajor = asyncHandler(async (req, res) => {
       new: true,
     }
   );
-  console.log("🚀 ~ updateMajor ~ updatedMajor:", updatedMajor);
   if (updatedMajor) {
     res.json(updatedMajor);
   } else {
