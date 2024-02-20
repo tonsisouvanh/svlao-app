@@ -54,7 +54,7 @@ const ResidenceAddressList = () => {
                             auth.role !== "admin" && "btn-disabled"
                           }`}
                         >
-                          Add New
+                          Add
                           <AiFillPlusCircle size={20} />
                         </button>
                       </Link>

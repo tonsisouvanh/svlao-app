@@ -17,11 +17,13 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light",
   );
   const { auth } = useSelector((state) => state.auth);
-  const handleSignOut = () => {
-    dispatch(signOut());
-    navigate("/signin");
-  };
 
+  const handleSignOut = () => {
+    if (window.confirm("Are you sure you want to sign out?")) {
+      dispatch(signOut());
+      navigate("/signin");
+    }
+  };
   useEffect(() => {
     localStorage.setItem("theme", theme);
     const localTheme = localStorage.getItem("theme");
@@ -95,7 +97,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                       <img
                         src={auth?.profileImg}
                         alt={auth.profileImg}
-                        onError={(error) => replaceImage(error,altImage)}
+                        onError={(error) => replaceImage(error, altImage)}
                       />
                     ) : (
                       <BiUserCircle className="h-full w-full text-primary" />
@@ -107,13 +109,13 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
 
             <ul
               tabIndex={0}
-              className="menu dropdown-content rounded-box z-[1] w-fit space-y-2 border bg-base-100 p-2 font-notosanslao shadow"
+              className="menu dropdown-content rounded-box z-[1] w-40 space-y-2 bg-base-100 p-2 font-notosanslao shadow"
             >
               <Link
                 className={`btn btn-ghost btn-sm relative whitespace-nowrap`}
                 to={`/profile`}
               >
-                Profile
+                <span className="mr-auto">Profile</span>
                 {auth?.userStatus === "pending" && (
                   <AiFillInfoCircle className="absolute right-0 top-0 text-secondary" />
                 )}
@@ -122,7 +124,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                 onClick={handleSignOut}
                 className="btn btn-ghost btn-sm whitespace-nowrap"
               >
-                Log out
+                <span className="mr-auto">Log out</span>
               </button>
             </ul>
           </div>

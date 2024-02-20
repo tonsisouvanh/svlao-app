@@ -32,8 +32,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   );
 
   const handleSignOut = () => {
-    dispatch(signOut());
-    navigate("/signin");
+    if (window.confirm("Are you sure you want to sign out?")) {
+      dispatch(signOut());
+      navigate("/signin");
+    }
   };
 
   // close on click outside
@@ -81,9 +83,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="py-5.5 lg:py-6.5 flex items-center justify-between gap-2 px-6">
         <div className="mt-5 flex w-full items-center gap-16">
-          <div className="bg-white p-2">
-            <a className="mb-16 whitespace-nowrap text-center font-notosanslao text-sm font-semibold normal-case !text-neutral ">
-              <p>LAO STUDENT HCM</p>
+          <div className=" p-2">
+            <a className="mb-16 whitespace-nowrap text-center font-sans text-sm font-bold normal-case text-base-200">
+              <p>LAOS-HCM STUDENT.</p>
             </a>
           </div>
           <button
@@ -154,7 +156,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   "rounded-md border-r-2 bg-white/10 text-white")
                               }
                             >
-                              ສັງລວມນັກຮຽນ
+                              <p className="font-normal">ສັງລວມນັກຮຽນ</p>
                             </NavLink>
                           </li>
                           <li className={dropdownLiStyle}>
@@ -166,7 +168,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   "rounded-md border-r-2 bg-white/10 text-white")
                               }
                             >
-                              ລາຍຊື່ນັກຮຽນ
+                              <p className="font-normal">ລາຍຊື່ນັກຮຽນ</p>
                             </NavLink>
                           </li>
                         </ul>
@@ -222,7 +224,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   "rounded-md border-r-2 bg-white/10 text-white")
                               }
                             >
-                              ມະຫາໄລ
+                              <p className="font-normal">ມະຫາໄລ</p>
                             </NavLink>
                           </li>
                           <li className={dropdownLiStyle}>
@@ -234,7 +236,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   "rounded-md border-r-2 bg-white/10 text-white")
                               }
                             >
-                              ຂະແໜງຮຽນ
+                              <p className="font-normal">ຂະແໜງຮຽນ</p>
                             </NavLink>
                           </li>
                           <li className={dropdownLiStyle}>
@@ -246,7 +248,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   "rounded-md border-r-2 bg-white/10 text-white")
                               }
                             >
-                              ທີ່ຢູ່ປັດຈຸບັນ
+                              <p className="font-normal">ທີ່ຢູ່ປັດຈຸບັນ</p>
                             </NavLink>
                           </li>
                           <li className={dropdownLiStyle}>
@@ -258,7 +260,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   "rounded-md border-r-2 bg-white/10 text-white")
                               }
                             >
-                              ປະກາດ
+                              <p className="font-normal">ປະກາດ</p>
                             </NavLink>
                           </li>
                           <li className={dropdownLiStyle}>
@@ -270,7 +272,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   "rounded-md border-r-2 bg-white/10 text-white")
                               }
                             >
-                              ຟອມເອກກະສານ
+                              <p className="font-normal">ຟອມເອກກະສານ</p>
                             </NavLink>
                           </li>
                         </ul>

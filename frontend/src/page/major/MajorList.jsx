@@ -51,7 +51,7 @@ const MajorList = () => {
                             auth.role !== "admin" && "btn-disabled"
                           }`}
                         >
-                          Add Major
+                          Add
                           <AiFillPlusCircle size={20} />
                         </button>
                       </Link>

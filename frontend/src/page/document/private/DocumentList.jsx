@@ -59,7 +59,7 @@ const DocumentList = () => {
                             auth.role !== "admin" && "btn-disabled"
                           }`}
                         >
-                          Add Document
+                          Add
                           <AiFillPlusCircle size={20} />
                         </button>
                       </Link>

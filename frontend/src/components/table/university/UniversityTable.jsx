@@ -108,7 +108,7 @@ const UniversityTable = ({ editToggle, setEditToggle }) => {
                     return (
                       <tr key={row.id} {...row.getRowProps()}>
                         <td>
-                          <div className="dropdown-right dropdown">
+                          <div className="dropdown dropdown-right">
                             <label
                               tabIndex={0}
                               className="btn btn-xs px-1 py-0"
@@ -120,7 +120,7 @@ const UniversityTable = ({ editToggle, setEditToggle }) => {
                               className="dropdown-content rounded-box absolute !-top-2 !right-0 z-[1] !flex w-fit gap-4 border bg-base-100 p-2 shadow"
                             >
                               <Link
-                                to={`/dashboard/university-list/${row.original._id}`}
+                                to={`/manage-others-data/university-list/${row.original._id}`}
                               >
                                 <li className="btn btn-ghost btn-xs">
                                   <AiFillEdit size={15} />

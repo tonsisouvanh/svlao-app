@@ -53,8 +53,8 @@ const StudentList = () => {
   return auth?.role === "admin" ? (
     <>
       <section className="relative">
-        <GobackButton />
         <div className="container mx-auto p-4">
+        <GobackButton />
           <div>
             <Breadcrumbs pathname={pathname} />
           </div>

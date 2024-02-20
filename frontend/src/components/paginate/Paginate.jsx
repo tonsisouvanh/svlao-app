@@ -31,14 +31,7 @@
 
 import { Link } from "react-router-dom";
 
-const Paginate = ({
-  pages,
-  page,
-  isAdmin = false,
-  keyword = "",
-  style = "",
-  path,
-}) => {
+const Paginate = ({ pages, page, style = "", path }) => {
   const renderPageNumber = (pageNumber) => {
     return (
       <Link key={pageNumber} to={`${path}${pageNumber}`}>
@@ -55,7 +48,7 @@ const Paginate = ({
 
   const renderEllipsis = () => {
     return (
-      <button key="ellipsis" disabled className="btn join-item btn-sm">
+      <button key="ellipsis" className="btn join-item btn-sm">
         ...
       </button>
     );
@@ -66,7 +59,7 @@ const Paginate = ({
     return (
       <Link key="prev" to={`${path}${prevPage}`} disabled={page === 1}>
         <button className={`btn join-item btn-sm`} disabled={page === 1}>
-          Prev
+          &lt;
         </button>
       </Link>
     );
@@ -77,7 +70,7 @@ const Paginate = ({
     return (
       <Link key="next" to={`${path}${nextPage}`} disabled={page === pages}>
         <button className={`btn join-item btn-sm`} disabled={page === pages}>
-          Next
+          &gt;
         </button>
       </Link>
     );

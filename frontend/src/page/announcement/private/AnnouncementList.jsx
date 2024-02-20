@@ -61,7 +61,7 @@ const AnnouncementList = () => {
                             auth.role !== "admin" && "btn-disabled"
                           }`}
                         >
-                          Add Announcement
+                          Add
                           <AiFillPlusCircle size={20} />
                         </button>
                       </Link>

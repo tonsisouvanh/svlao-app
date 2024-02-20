@@ -3,11 +3,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../components/ui/Spinner";
-import {
-  degreeList,
-  provinceList,
-  statusList,
-} from "../../data/data";
+import { degreeList, provinceList, statusList } from "../../data/data";
 import { getYearOptions } from "../../utils/utils";
 import { useLocation, useNavigate } from "react-router-dom";
 import { createStudent, userReset } from "../../feature/user/UserSlice";
@@ -15,6 +11,7 @@ import Breadcrumbs from "../../components/Breadcrumbs";
 import ErrorMessage from "../../components/typography/ErrorMessage";
 import altImage from "../../assets/img/profile.png";
 import ImageUpload from "../../components/input/ImageUpload";
+import GobackButton from "../../components/button/GobackButton";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const AddStudent = () => {
@@ -94,7 +91,8 @@ const AddStudent = () => {
     <>
       <section className="relative">
         {status.create !== "loading" ? (
-          <div className="container mx-auto px-5 py-24">
+          <div className="container mx-auto px-5 py-8">
+            <GobackButton />
             <div className="mb-12 flex w-full flex-col text-center">
               <Breadcrumbs pathname={pathname} />
 

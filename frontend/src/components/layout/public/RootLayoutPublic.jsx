@@ -25,7 +25,7 @@ function RootLayoutPublic() {
 
             {/* <!-- ===== Main Content Start ===== --> */}
             <main>
-              <div className="max-w-screen-2xld mx-auto min-h-screen font-notosanslao md:p-6 2xl:p-10">
+              <div className="max-w-screen-2xl mx-auto min-h-screen font-notosanslao md:p-6 2xl:p-10">
                 <Outlet />
               </div>
             </main>

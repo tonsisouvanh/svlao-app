@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 const GobackButton = () => {
@@ -9,17 +9,9 @@ const GobackButton = () => {
   };
 
   return (
-    // <button
-    //   className={`btn btn-primary fixed z-[10]
-
-    // ${isVisible ? "opacity-100" : "opacity-50"}
-    // `}
-    //   onClick={handleClick}
-    // >
-    //   go back
-    // </button>
-    <button onClick={handleClick} className="btn btn-sm fixed right-10 z-[10]">
-      Go Back
+    <button onClick={handleClick} className="btn btn-sm btn-neutral fixed right-10 z-[10]">
+      {/* Go Back */}
+      <BiArrowBack size={20} />
     </button>
   );
 };

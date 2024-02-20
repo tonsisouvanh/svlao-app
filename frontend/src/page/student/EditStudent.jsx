@@ -19,6 +19,7 @@ import ResetPasswordModal from "../../components/modal/ResetPasswordModal";
 import Spinner from "../../components/ui/Spinner";
 import { AiFillEye, AiFillFileImage } from "react-icons/ai";
 import ImageUpload from "../../components/input/ImageUpload";
+import GobackButton from "../../components/button/GobackButton";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const EditStudent = () => {
@@ -132,11 +133,11 @@ const EditStudent = () => {
         />
       )}
       <section className="relative">
+        <GobackButton />
         {singleUser && userStatus.update !== "loading" ? (
-          <div className="container mx-auto px-5 py-24">
+          <div className="container mx-auto px-5 py-14">
             <div className="mb-12 flex w-full flex-col text-center">
               <Breadcrumbs pathname={pathname} />
-
               <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium text-base-content">
                 ຂໍ້ມູນນັກຮຽນ
               </h1>

@@ -16,8 +16,8 @@ const PieChart = () => {
     const dynamicColors = [];
     const getRandomColor = () => {
       const hue = Math.floor(Math.random() * 360);
-      const saturation = Math.floor(Math.random() * 50) + 90; // 50-100 for vibrant colors
-      const lightness = Math.floor(Math.random() * 30) + 65; // 60-90 for lighter colors
+      const saturation = Math.floor(Math.random() * 50) + 55;
+      const lightness = Math.floor(Math.random() * 30) + 60;
       return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
     };
 

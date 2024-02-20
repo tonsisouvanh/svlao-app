@@ -52,7 +52,7 @@ const UniversityList = () => {
                             auth.role !== "admin" && "btn-disabled"
                           }`}
                         >
-                          Add University
+                          Add
                           <AiFillPlusCircle size={20} />
                         </button>
                       </Link>

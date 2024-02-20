@@ -81,15 +81,14 @@ const EditUniversity = () => {
         {universities[0] &&
         universities.length > 0 &&
         status.list !== "loading" ? (
-          <div className="container mx-auto px-5 py-24">
+          <div className="container mx-auto px-5 py-10">
             <div className="mb-12 flex w-full flex-col text-center">
               <Breadcrumbs pathname={pathname} />
-
-              <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium">
-                Edit ຂໍ້ມູນນັກຮຽນ
+              <h1 className="title-font m:text-3xl mb-4 mt-10 text-2xl font-medium">
+                Edit University
               </h1>
               <div>
-                <p>{universities[0]?._id}</p>
+                <p className="text-xs">{universities[0]?._id}</p>
               </div>
             </div>
             <div className="mx-auto">
