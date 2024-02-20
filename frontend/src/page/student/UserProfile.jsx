@@ -7,9 +7,13 @@ import { authReset, updateUserProfile } from "../../feature/auth/AuthSlice";
 import { getYearOptions, replaceImage } from "../../utils/utils";
 import Spinner from "../../components/ui/Spinner";
 import altImage from "../../assets/img/profile.png";
+import { AiFillEye, AiFillFileImage } from "react-icons/ai";
+import ImageUpload from "../../components/input/ImageUpload";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const UserProfile = () => {
+  const [base64, setBase64] = useState(null);
+  const [uploadImageToggle, setuploadImageToggle] = useState(false);
   const yearOptions = getYearOptions();
   const {
     auth: studentData,
@@ -49,8 +53,6 @@ const UserProfile = () => {
     setValue("residenceAddress.address", residenceAddress.address);
   };
 
-  useEffect(() => {}, [dispatch]);
-
   useEffect(() => {
     reset(studentData);
   }, [studentData, reset]);
@@ -65,20 +67,23 @@ const UserProfile = () => {
     }
   }, [status.setInfo, dispatch, error]);
 
-  //TODO: Needed to check and add image upload
   const handleEditSubmit = (data) => {
     if (data) {
-      dispatch(updateUserProfile(data));
+      const addImage = base64 ? [base64] : null;
+      const formattedData = {
+        ...data,
+        profileImg: addImage ? addImage : studentData.profileImg,
+      };
+      dispatch(updateUserProfile({ ...formattedData }));
       setToggleEdit(false);
     } else toast.warning("Input data not valid");
   };
-
   if (status.setInfo === "loading") return <Spinner />;
   return (
     <>
       <section className="relative">
         {studentData && status.setInfo !== "loading" ? (
-          <div className="container mx-auto px-5 py-24">
+          <div className="container mx-auto px-5 py-12">
             <div className="mb-12 flex w-full flex-col text-center">
               <h1 className="title-font m:text-3xl mb-4 text-2xl font-bold">
                 Profile
@@ -505,22 +510,7 @@ const UserProfile = () => {
                     </select>
                   </label>
                 </div>
-                {/* <div className="w-1/2 p-2">
-        <label className="form-control w-full">
-          <div className="label">
-            <span className="label-text font-semibold">
-              Profile Image
-            </span>
-          </div>
-          <input
-            {...register("profileImg", {
-              disabled: toggleEdit ? false : true
-            })}
-            type="text"
-            className={inputStyle}
-          />
-        </label>
-      </div> */}
+
                 <div className="w-1/2 p-2">
                   <label className="form-control w-full">
                     <div className="label">
@@ -536,6 +526,49 @@ const UserProfile = () => {
                       className={inputStyle}
                     />
                   </label>
+                </div>
+                <div className="w-full p-2">
+                  <label className="form-control w-full">
+                    <div className="label">
+                      <span className="label-text text-lg">
+                        Upload your image
+                      </span>
+                    </div>
+                    {base64 ? (
+                      <div className="avatar">
+                        <div className="w-64 rounded">
+                          <button
+                            type="button"
+                            className="btn btn-neutral btn-xs absolute left-2 top-2"
+                          >
+                            <AiFillEye />
+                          </button>
+                          <img
+                            src={base64}
+                            alt={studentData?.englishFirstname || "image"}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="avatar">
+                        <div className="w-64 rounded">
+                          <img
+                            src={studentData?.profileImg}
+                            alt={studentData?.englishFirstname || "image"}
+                          />
+                        </div>
+                      </div>
+                    )}
+                    {uploadImageToggle && <ImageUpload setBase64={setBase64} />}
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setuploadImageToggle(!uploadImageToggle)}
+                    className="btn btn-outline btn-sm mt-4"
+                  >
+                    <AiFillFileImage />
+                    {uploadImageToggle ? "Close" : "Upload"}
+                  </button>
                 </div>
                 <div className="w-full space-x-4 p-2">
                   {!toggleEdit && (

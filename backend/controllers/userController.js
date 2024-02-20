@@ -81,9 +81,7 @@ const resetPassword = asyncHandler(async (req, res) => {
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
   const { emailAddress, password } = req.body;
-  const user = await User.findOne({ emailAddress }).populate(
-    "university.universityId"
-  );
+  const user = await User.findOne({ emailAddress });
   if (user && (await user.matchPassword(password))) {
     const { password, ...userWithoutPassword } = user._doc;
 
@@ -184,13 +182,35 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @desc    Update user profile
 // @route   PUT /api/users/profile
 // * @access  Private
-//TODO: do update with image upload
 const updateUserProfile = asyncHandler(async (req, res) => {
   const userId = req.user._id;
-  const { role, userStatus, ...updatedUserData } = req.body; //extract role out
-  const updatedUser = await User.findByIdAndUpdate(userId, updatedUserData, {
-    new: true,
-  });
+  const { profileImg, role, ...updatedUserData } = req.body;
+  const existingUser = await User.findById(userId);
+  if (!existingUser) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+  // delete existing image
+  if (profileImg[0].startsWith("data:")) {
+    const imageId = extractImageId(existingUser.profileImg);
+    if (imageId) {
+      await deleteImage(imageId);
+    }
+  }
+
+  // upload new image
+  let addImage;
+  if (Array.isArray(profileImg) && profileImg.length > 0) {
+    addImage = await handleSingleImageUpload(profileImg);
+  } else addImage = profileImg;
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { ...updatedUserData, profileImg: addImage },
+    {
+      new: true,
+    }
+  );
   if (updatedUser) {
     res.json({ ...updatedUser._doc, token: generateToken(updatedUser._id) });
   } else {
@@ -198,6 +218,29 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 });
+// const updateUserProfile = asyncHandler(async (req, res) => {
+//   const userId = req.user._id;
+//   const { role, ...updatedUserData } = req.body;
+//   const existingUser = await User.findById(userId);
+//   if (!existingUser) {
+//     res.status(404);
+//     throw new Error("User not found");
+//   }
+
+//   const updatedUser = await User.findByIdAndUpdate(
+//     userId,
+//     { ...updatedUserData },
+//     {
+//       new: true,
+//     }
+//   );
+//   if (updatedUser) {
+//     res.json({ ...updatedUser._doc, token: generateToken(updatedUser._id) });
+//   } else {
+//     res.status(404);
+//     throw new Error("User not found");
+//   }
+// });
 
 const getUsers = asyncHandler(async (req, res) => {
   const pageSize = 10;
@@ -267,21 +310,6 @@ const getFilteredUsers = asyncHandler(async (req, res) => {
     total: await User.countDocuments(filterObject),
   });
 });
-
-// const getFilteredUsers = asyncHandler(async (req, res) => {
-//   const filters = req.query; // Use req.query to access query parameters
-//   // Construct the filter object based on the provided parameters
-//   const filterObject = {};
-
-//   // Iterate through the filters and add them to the filterObject
-//   Object.keys(filters).forEach((key) => {
-//     filterObject[key] = filters[key];
-//   });
-//   // Fetch users based on the filters
-//   const users = await User.find(filterObject);
-
-//   res.json(users);
-// });
 
 // @desc    Delete user
 // @route   DELETE /api/users/:id

@@ -27,7 +27,7 @@ router.route("/login").post(activeUserCheck, authUser);
 router
   .route("/profile")
   .get(protect, getUserProfile)
-  .put(protect, updateUserProfile);
+  .put(protect, updateUserProfile)
 router
   .route("/:id")
   .delete(protect, admin, deleteUser)

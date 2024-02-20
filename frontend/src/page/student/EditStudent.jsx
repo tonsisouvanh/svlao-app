@@ -262,7 +262,7 @@ const EditStudent = () => {
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">
-                        University Shortcut
+                        University
                       </span>
                     </div>
                     <select
@@ -587,7 +587,7 @@ const EditStudent = () => {
                           </button>
                           <img
                             src={base64}
-                            alt={singleUser?.title || "image"}
+                            alt={singleUser?.englishFirstname || "image"}
                           />
                         </div>
                       </div>
@@ -596,7 +596,7 @@ const EditStudent = () => {
                         <div className="w-64 rounded">
                           <img
                             src={singleUser?.profileImg}
-                            alt={singleUser?.title || "image"}
+                            alt={singleUser?.englishFirstname || "image"}
                           />
                         </div>
                       </div>

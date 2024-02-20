@@ -8,7 +8,7 @@ import {
   logout,
 } from "../../assets/icons/index";
 import { BsArrowLeft, BsFillCaretDownFill } from "react-icons/bs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "../../feature/auth/AuthSlice";
 import SidebarLinkGroup from "./SidebarLinkGroup";
@@ -22,7 +22,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
-
+  const { auth } = useSelector((state) => state.auth);
   const trigger = useRef(null);
   const sidebar = useRef(null);
 
@@ -110,178 +110,186 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             </h3>
             <ul className="mb-6 flex flex-col gap-2">
               {/* <!-- Menu Item Dashboard --> */}
-              <SidebarLinkGroup
-                activeCondition={
-                  pathname === "/" && pathname.includes("dashboard")
-                }
-              >
-                {(handleClick, open) => {
-                  return (
-                    <React.Fragment>
-                      <NavLink
-                        to="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao font-semibold duration-300 ease-in-out ${
-                          pathname.includes("dashboard") &&
-                          "rounded-md bg-primary-focus text-white"
-                        }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
-                        }}
-                      >
-                        {/* <AiOutlineDashboard size={23} /> */}
-                        <img src={speedometer} className="w-6" alt="" />
-                        ຈັດການນັກຮຽນ
-                        <BsFillCaretDownFill
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current transition-all duration-300 ${
-                            open && "rotate-180"
-                          }`}
-                        />
-                      </NavLink>
-                      {/* <!-- Dropdown Menu Start --> */}
-                      <div
-                        className={`translate transform overflow-hidden ${
-                          !open && "hidden"
-                        }`}
-                      >
-                        <ul className="mb-5 mt-4 flex flex-col gap-2.5 pl-6">
-                          <li className={dropdownLiStyle}>
-                            <NavLink
-                              to="/dashboard/"
-                              className={({ isActive }) =>
-                                dropdownNavlinkStyle +
-                                (isActive &&
-                                  "rounded-md border-r-2 bg-white/10 text-white")
-                              }
-                            >
-                              <p className="font-normal">ສັງລວມນັກຮຽນ</p>
-                            </NavLink>
-                          </li>
-                          <li className={dropdownLiStyle}>
-                            <NavLink
-                              to="/dashboard/student-list/page/1"
-                              className={({ isActive }) =>
-                                dropdownNavlinkStyle +
-                                (isActive &&
-                                  "rounded-md border-r-2 bg-white/10 text-white")
-                              }
-                            >
-                              <p className="font-normal">ລາຍຊື່ນັກຮຽນ</p>
-                            </NavLink>
-                          </li>
-                        </ul>
-                      </div>
-                      {/* <!-- Dropdown Menu End --> */}
-                    </React.Fragment>
-                  );
-                }}
-              </SidebarLinkGroup>
-              <SidebarLinkGroup
-                activeCondition={
-                  pathname === "/" && pathname.includes("dashboard")
-                }
-              >
-                {(handleClick, open) => {
-                  return (
-                    <React.Fragment>
-                      <NavLink
-                        to="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao font-semibold duration-300 ease-in-out ${
-                          pathname.includes("manage-others-data") &&
-                          "rounded-md bg-primary-focus text-white"
-                        }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
-                        }}
-                      >
-                        {/* <AiOutlineDashboard size={23} /> */}
-                        <img src={foldermanagement} className="w-6" alt="" />
-                        ຈັກການຂໍ້ມູນອື່ນຯ
-                        <BsFillCaretDownFill
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current transition-all duration-300 ${
-                            open && "rotate-180"
-                          }`}
-                        />
-                      </NavLink>
-                      {/* <!-- Dropdown Menu Start --> */}
-                      <div
-                        className={`translate transform overflow-hidden ${
-                          !open && "hidden"
-                        }`}
-                      >
-                        <ul className="mb-5 mt-4 flex flex-col gap-2.5 pl-6">
-                          <li className={dropdownLiStyle}>
-                            <NavLink
-                              to="/manage-others-data/university-list"
-                              className={({ isActive }) =>
-                                dropdownNavlinkStyle +
-                                (isActive &&
-                                  "rounded-md border-r-2 bg-white/10 text-white")
-                              }
-                            >
-                              <p className="font-normal">ມະຫາໄລ</p>
-                            </NavLink>
-                          </li>
-                          <li className={dropdownLiStyle}>
-                            <NavLink
-                              to="/manage-others-data/major-list"
-                              className={({ isActive }) =>
-                                dropdownNavlinkStyle +
-                                (isActive &&
-                                  "rounded-md border-r-2 bg-white/10 text-white")
-                              }
-                            >
-                              <p className="font-normal">ຂະແໜງຮຽນ</p>
-                            </NavLink>
-                          </li>
-                          <li className={dropdownLiStyle}>
-                            <NavLink
-                              to="/manage-others-data/residence-address-list"
-                              className={({ isActive }) =>
-                                dropdownNavlinkStyle +
-                                (isActive &&
-                                  "rounded-md border-r-2 bg-white/10 text-white")
-                              }
-                            >
-                              <p className="font-normal">ທີ່ຢູ່ປັດຈຸບັນ</p>
-                            </NavLink>
-                          </li>
-                          <li className={dropdownLiStyle}>
-                            <NavLink
-                              to="/manage-others-data/announcement-list"
-                              className={({ isActive }) =>
-                                dropdownNavlinkStyle +
-                                (isActive &&
-                                  "rounded-md border-r-2 bg-white/10 text-white")
-                              }
-                            >
-                              <p className="font-normal">ປະກາດ</p>
-                            </NavLink>
-                          </li>
-                          <li className={dropdownLiStyle}>
-                            <NavLink
-                              to="/manage-others-data/document-form-list"
-                              className={({ isActive }) =>
-                                dropdownNavlinkStyle +
-                                (isActive &&
-                                  "rounded-md border-r-2 bg-white/10 text-white")
-                              }
-                            >
-                              <p className="font-normal">ຟອມເອກກະສານ</p>
-                            </NavLink>
-                          </li>
-                        </ul>
-                      </div>
-                      {/* <!-- Dropdown Menu End --> */}
-                    </React.Fragment>
-                  );
-                }}
-              </SidebarLinkGroup>
+              {auth?.role === "admin" && (
+                <>
+                  <SidebarLinkGroup
+                    activeCondition={
+                      pathname === "/" && pathname.includes("dashboard")
+                    }
+                  >
+                    {(handleClick, open) => {
+                      return (
+                        <React.Fragment>
+                          <NavLink
+                            to="#"
+                            className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao font-semibold duration-300 ease-in-out ${
+                              pathname.includes("dashboard") &&
+                              "rounded-md bg-primary-focus text-white"
+                            }`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              sidebarExpanded
+                                ? handleClick()
+                                : setSidebarExpanded(true);
+                            }}
+                          >
+                            {/* <AiOutlineDashboard size={23} /> */}
+                            <img src={speedometer} className="w-6" alt="" />
+                            ຈັດການນັກຮຽນ
+                            <BsFillCaretDownFill
+                              className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current transition-all duration-300 ${
+                                open && "rotate-180"
+                              }`}
+                            />
+                          </NavLink>
+                          {/* <!-- Dropdown Menu Start --> */}
+                          <div
+                            className={`translate transform overflow-hidden ${
+                              !open && "hidden"
+                            }`}
+                          >
+                            <ul className="mb-5 mt-4 flex flex-col gap-2.5 pl-6">
+                              <li className={dropdownLiStyle}>
+                                <NavLink
+                                  to="/dashboard/"
+                                  className={({ isActive }) =>
+                                    dropdownNavlinkStyle +
+                                    (isActive &&
+                                      "rounded-md border-r-2 bg-white/10 text-white")
+                                  }
+                                >
+                                  <p className="font-normal">ສັງລວມນັກຮຽນ</p>
+                                </NavLink>
+                              </li>
+                              <li className={dropdownLiStyle}>
+                                <NavLink
+                                  to="/dashboard/student-list/page/1"
+                                  className={({ isActive }) =>
+                                    dropdownNavlinkStyle +
+                                    (isActive &&
+                                      "rounded-md border-r-2 bg-white/10 text-white")
+                                  }
+                                >
+                                  <p className="font-normal">ລາຍຊື່ນັກຮຽນ</p>
+                                </NavLink>
+                              </li>
+                            </ul>
+                          </div>
+                          {/* <!-- Dropdown Menu End --> */}
+                        </React.Fragment>
+                      );
+                    }}
+                  </SidebarLinkGroup>
+                  <SidebarLinkGroup
+                    activeCondition={
+                      pathname === "/" && pathname.includes("dashboard")
+                    }
+                  >
+                    {(handleClick, open) => {
+                      return (
+                        <React.Fragment>
+                          <NavLink
+                            to="#"
+                            className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao font-semibold duration-300 ease-in-out ${
+                              pathname.includes("manage-others-data") &&
+                              "rounded-md bg-primary-focus text-white"
+                            }`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              sidebarExpanded
+                                ? handleClick()
+                                : setSidebarExpanded(true);
+                            }}
+                          >
+                            {/* <AiOutlineDashboard size={23} /> */}
+                            <img
+                              src={foldermanagement}
+                              className="w-6"
+                              alt=""
+                            />
+                            ຈັກການຂໍ້ມູນອື່ນຯ
+                            <BsFillCaretDownFill
+                              className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current transition-all duration-300 ${
+                                open && "rotate-180"
+                              }`}
+                            />
+                          </NavLink>
+                          {/* <!-- Dropdown Menu Start --> */}
+                          <div
+                            className={`translate transform overflow-hidden ${
+                              !open && "hidden"
+                            }`}
+                          >
+                            <ul className="mb-5 mt-4 flex flex-col gap-2.5 pl-6">
+                              <li className={dropdownLiStyle}>
+                                <NavLink
+                                  to="/manage-others-data/university-list"
+                                  className={({ isActive }) =>
+                                    dropdownNavlinkStyle +
+                                    (isActive &&
+                                      "rounded-md border-r-2 bg-white/10 text-white")
+                                  }
+                                >
+                                  <p className="font-normal">ມະຫາໄລ</p>
+                                </NavLink>
+                              </li>
+                              <li className={dropdownLiStyle}>
+                                <NavLink
+                                  to="/manage-others-data/major-list"
+                                  className={({ isActive }) =>
+                                    dropdownNavlinkStyle +
+                                    (isActive &&
+                                      "rounded-md border-r-2 bg-white/10 text-white")
+                                  }
+                                >
+                                  <p className="font-normal">ຂະແໜງຮຽນ</p>
+                                </NavLink>
+                              </li>
+                              <li className={dropdownLiStyle}>
+                                <NavLink
+                                  to="/manage-others-data/residence-address-list"
+                                  className={({ isActive }) =>
+                                    dropdownNavlinkStyle +
+                                    (isActive &&
+                                      "rounded-md border-r-2 bg-white/10 text-white")
+                                  }
+                                >
+                                  <p className="font-normal">ທີ່ຢູ່ປັດຈຸບັນ</p>
+                                </NavLink>
+                              </li>
+                              <li className={dropdownLiStyle}>
+                                <NavLink
+                                  to="/manage-others-data/announcement-list"
+                                  className={({ isActive }) =>
+                                    dropdownNavlinkStyle +
+                                    (isActive &&
+                                      "rounded-md border-r-2 bg-white/10 text-white")
+                                  }
+                                >
+                                  <p className="font-normal">ປະກາດ</p>
+                                </NavLink>
+                              </li>
+                              <li className={dropdownLiStyle}>
+                                <NavLink
+                                  to="/manage-others-data/document-form-list"
+                                  className={({ isActive }) =>
+                                    dropdownNavlinkStyle +
+                                    (isActive &&
+                                      "rounded-md border-r-2 bg-white/10 text-white")
+                                  }
+                                >
+                                  <p className="font-normal">ຟອມເອກກະສານ</p>
+                                </NavLink>
+                              </li>
+                            </ul>
+                          </div>
+                          {/* <!-- Dropdown Menu End --> */}
+                        </React.Fragment>
+                      );
+                    }}
+                  </SidebarLinkGroup>
+                </>
+              )}
               <li>
                 <NavLink
                   to="/formal-organization"

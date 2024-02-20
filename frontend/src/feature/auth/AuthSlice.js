@@ -108,28 +108,39 @@ export const updateUserProfile = createAsyncThunk(
   "user/updateUserProfile",
   async (userData, thunkAPI) => {
     try {
+      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${userData.token}`,
+          Authorization: `Bearer ${auth.token}`,
         },
       };
+
       const formattedData = {
         ...userData,
         university: {
           universityId: userData?.university?.universityId,
           shortcut: userData.university.shortcut,
         },
+        // visa: {
+        //   from: formatDate(data.visa.from),
+        //   to: formatDate(data.visa.to),
+        // },
+        // dob: formatDate(data.dob),
+        // passport: {
+        //   ...data.passport,
+        //   expired: formatDate(data.passport.expired),
+        // },
       };
-      await axios.put(
+      const { data } = await axios.put(
         "/api/users/profile",
         {
           ...formattedData,
         },
         config,
       );
-      sessionStorage.setItem("authInfo", JSON.stringify(formattedData));
-      return formattedData;
+      sessionStorage.setItem("authInfo", JSON.stringify(data));
+      return data;
     } catch (error) {
       const message =
         (error.response &&
