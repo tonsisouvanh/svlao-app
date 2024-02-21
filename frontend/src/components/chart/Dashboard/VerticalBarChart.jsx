@@ -24,7 +24,19 @@ const VerticalBarChart = ({ data }) => {
     plugins: {
       legend: {
         position: "top",
+        labels: {
+          font: {
+            size: 14,
+          },
+        },
       },
+      yAxes: [
+        {
+          font: {
+            size: 14,
+          },
+        },
+      ],
     },
   };
   // const labels = ["Bachelor", "Master", "Doctor"];

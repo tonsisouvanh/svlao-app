@@ -108,9 +108,9 @@ const AddStudent = () => {
             <div className="mx-auto">
               <form
                 onSubmit={handleSubmit(handleEditSubmit)}
-                className="flex flex-wrap items-center justify-center"
+                className="flex flex-wrap items-center justify-center gap-6"
               >
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label flex items-center">
                       <span className="label-text text-lg">
@@ -131,7 +131,7 @@ const AddStudent = () => {
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label flex items-center">
                       <span className="label-text text-lg">
@@ -152,7 +152,7 @@ const AddStudent = () => {
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className={`label-text text-lg`}>Status</span>
@@ -169,7 +169,7 @@ const AddStudent = () => {
                     </select>
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">
@@ -190,7 +190,7 @@ const AddStudent = () => {
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">
@@ -210,7 +210,7 @@ const AddStudent = () => {
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">
@@ -230,7 +230,7 @@ const AddStudent = () => {
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">Nickname</span>
@@ -243,7 +243,7 @@ const AddStudent = () => {
                   </label>
                 </div>
 
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">
@@ -265,7 +265,7 @@ const AddStudent = () => {
                     </select>
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">
@@ -286,7 +286,7 @@ const AddStudent = () => {
                     </select>
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">Duration (To)</span>
@@ -305,7 +305,7 @@ const AddStudent = () => {
                     </select>
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">Phone Number</span>
@@ -317,7 +317,7 @@ const AddStudent = () => {
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">Emergency</span>
@@ -329,7 +329,7 @@ const AddStudent = () => {
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">Relationship</span>
@@ -342,7 +342,7 @@ const AddStudent = () => {
                   </label>
                 </div>
 
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">Lao Degree</span>
@@ -362,7 +362,7 @@ const AddStudent = () => {
                     </select>
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">Visa From</span>
@@ -374,7 +374,7 @@ const AddStudent = () => {
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">Visa To</span>
@@ -386,7 +386,7 @@ const AddStudent = () => {
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">
@@ -410,7 +410,7 @@ const AddStudent = () => {
                     </select>
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">Passport No</span>
@@ -423,7 +423,7 @@ const AddStudent = () => {
                   </label>
                 </div>
 
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">
@@ -437,7 +437,7 @@ const AddStudent = () => {
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">Lao Major</span>
@@ -457,7 +457,7 @@ const AddStudent = () => {
                     </select>
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">Student ID</span>
@@ -469,7 +469,7 @@ const AddStudent = () => {
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">Date of Birth</span>
@@ -481,7 +481,7 @@ const AddStudent = () => {
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">Gender</span>
@@ -498,7 +498,7 @@ const AddStudent = () => {
                     </select>
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">Facebook URL</span>
@@ -510,7 +510,7 @@ const AddStudent = () => {
                     />
                   </label>
                 </div>
-                <div className="w-1/2 p-2">
+                <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg">

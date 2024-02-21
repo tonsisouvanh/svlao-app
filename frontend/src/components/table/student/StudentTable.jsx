@@ -8,7 +8,6 @@ import {
   AiFillDelete,
   AiFillEdit,
   AiFillEye,
-  AiOutlineMore,
 } from "react-icons/ai";
 import altImage from "../../../assets/img/profile.png";
 import { BiSolidSortAlt } from "react-icons/bi";
@@ -118,7 +117,7 @@ const UserTable = ({
         />
       )}
       <div className="stats my-4 w-full font-notosanslao shadow">
-        <div className="stat place-items-center bg-neutral/10">
+        <div className="stat place-items-center bg-base-200">
           <div className="stat-title text-lg">ນຮ ທັງໝົດ</div>
           <div className="stat-value">
             {totalUsers}
@@ -126,7 +125,7 @@ const UserTable = ({
           </div>
           {/* <div className="stat-desc">Jan 1st - Feb 1st</div> */}
         </div>
-        <div className="stat place-items-center bg-neutral/10">
+        <div className="stat place-items-center bg-base-200">
           <div className="stat-title text-lg">ຍິງ</div>
           <div className="stat-value">
             {totalFemale}
@@ -134,7 +133,7 @@ const UserTable = ({
           </div>
           {/* <div className="stat-desc">↗︎ 400 (22%)</div> */}
         </div>
-        <div className="stat place-items-center bg-neutral/10">
+        <div className="stat place-items-center bg-base-200">
           <div className="stat-title text-lg">ຊາຍ</div>
           <div className="stat-value">
             {totalMale}
@@ -142,7 +141,7 @@ const UserTable = ({
           </div>
           {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
         </div>
-        <div className="stat place-items-center bg-neutral/10">
+        <div className="stat place-items-center bg-base-200">
           <div className="stat-title text-lg">ປ ຕີ</div>
           <div className="stat-value">
             {totalDegree.bachelor}
@@ -150,7 +149,7 @@ const UserTable = ({
           </div>
           {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
         </div>
-        <div className="stat place-items-center bg-neutral/10">
+        <div className="stat place-items-center bg-base-200">
           <div className="stat-title text-lg">ປ ໂທ</div>
           <div className="stat-value">
             {totalDegree.master}
@@ -366,7 +365,7 @@ const UserTable = ({
                     key={headerGroup.id}
                     {...headerGroup.getHeaderGroupProps()}
                   >
-                    <th></th>
+                    <th className=""></th>
                     {headerGroup &&
                       headerGroup?.headers?.map((column, index) => (
                         <th
@@ -398,8 +397,8 @@ const UserTable = ({
                   prepareRow(row);
                   return (
                     <tr key={row.id} {...row.getRowProps()}>
-                      <td>
-                        <div className="dropdown dropdown-right">
+                      <td className="">
+                        {/* <div className="dropdown dropdown-right">
                           <label
                             tabIndex={0}
                             className="btn btn-primary btn-xs px-1 py-0"
@@ -425,12 +424,20 @@ const UserTable = ({
                                 <AiFillDelete size={15} />
                               </a>
                             </li>
-                            {/* <Link to={`/user-detail/${row.original.id}`}>
-                                  <li className="btn btn-ghost btn-xs">
-                                    <AiFillEye size={15} />
-                                  </li>
-                                </Link> */}
                           </ul>
+                        </div> */}
+                        <div className="flex flex-wrap gap-2 whitespace-nowrap">
+                          <Link
+                            to={`/dashboard/student-list/student/${row.original._id}`}
+                            className="btn btn-primary btn-outline btn-xs sm:btn-sm"
+                          >
+                            ແກ້ໄຂ
+                            <AiFillEdit size={15} />
+                          </Link>
+                          <button className="btn btn-error btn-outline btn-xs sm:btn-sm">
+                            ລົບ
+                            <AiFillDelete size={15} />
+                          </button>
                         </div>
                       </td>
                       {users &&

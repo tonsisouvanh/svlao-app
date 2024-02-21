@@ -6,6 +6,7 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { authReset, signIn } from "../../feature/auth/AuthSlice";
 import toast from "react-hot-toast";
+import Spinner from "../../components/ui/Spinner";
 const initialState = {
   emailAddress: "",
   password: "",
@@ -43,7 +44,7 @@ const Signin = () => {
       navigate("/");
     }
   }, [navigate, auth]);
-
+  if (status.signin === "loading") return <Spinner />;
   return (
     <div className="flex min-h-screen items-center justify-center bg-login-background bg-cover bg-no-repeat">
       <div className="absolute h-full w-full bg-gradient-to-b from-black via-black/70 to-transparent"></div>

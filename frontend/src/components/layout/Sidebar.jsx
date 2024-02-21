@@ -100,7 +100,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         </div>
       </div>
       {/* <!-- SIDEBAR MENU --> */}
-      <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
+      <div className="no-scrollbar flex h-full flex-col justify-between overflow-y-auto duration-300 ease-linear">
         {/* <!-- Sidebar Menu --> */}
         <nav className="mt-5 px-4 py-4 text-base-100 lg:mt-9 lg:px-6">
           {/* <!-- Menu Group --> */}
@@ -338,23 +338,32 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   ປະກາດ
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <button
                   onClick={handleSignOut}
                   type="button"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60`}
                 >
-                  {/* <AiOutlineLogout size={23} /> */}
                   <img src={logout} className="w-6" alt="" />
                   ອອກຈາກລະບົບ
                 </button>
-              </li>
+              </li> */}
               {/* <!-- Menu Item Chart --> */}
 
               {/* <!-- Menu Item Auth Pages --> */}
             </ul>
           </div>
         </nav>
+        <div className="mb-10 px-5 font-notosanslao">
+          <button
+            onClick={handleSignOut}
+            type="button"
+            className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60`}
+          >
+            <img src={logout} className="w-6" alt="" />
+            <span className="text-base-100">ອອກຈາກລະບົບ</span>
+          </button>
+        </div>
         {/* <!-- Sidebar Menu --> */}
       </div>
     </aside>

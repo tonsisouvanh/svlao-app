@@ -4,7 +4,7 @@ import Unauthorized from "./public/Unauthorized";
 import { getFilteredUsers } from "../feature/user/UserSlice";
 import StatUsers from "../components/stat/StatUsers";
 import { listAnnouncements } from "../feature/announcement/AnnouncementSlice";
-import {  formatDateDDMMYYYY } from "../utils/utils";
+import { formatDateDDMMYYYY } from "../utils/utils";
 import { Link } from "react-router-dom";
 import VerticalBarChart from "../components/chart/Dashboard/VerticalBarChart";
 import PieChart from "../components/chart/Dashboard/PieChart";
@@ -17,7 +17,7 @@ const Dashboard = () => {
   const { universities } = useSelector((state) => state.university);
   const { announcements } = useSelector((state) => state.announcement);
   const sortedAnnouncements = [...announcements].sort(
-    (a, b) => new Date(a.timestamp) - new Date(b.timestamp),
+    (a, b) => new Date(b.timestamp) - new Date(a.timestamp),
   );
   const { residenceAddresses } = useSelector((state) => state.residenceAddress);
   const {
@@ -126,9 +126,9 @@ const Dashboard = () => {
   return (
     <>
       <section className="body-font">
-        <div className="container mx-auto px-5 py-14">
+        <div className="container mx-auto rounded-xl border bg-base-300 px-14 py-14">
           <div className="mb-20 text-center">
-            <h1 className="title-font mb-4 text-center font-notosanslao text-2xl font-bold text-base-content sm:text-3xl">
+            <h1 className="title-font mb-4 text-center font-notosanslao text-2xl font-bold text-base-content sm:text-4xl">
               ສັງລວມນັກຮຽນທີ່ຢູ່ຕາມໂຮງຮຽນຕ່າງໆ
             </h1>
           </div>
@@ -192,9 +192,27 @@ const Dashboard = () => {
               </select>
             </div>
           </div>
-          <div className="mb-10 flex flex-col items-start gap-4 md:flex-row md:justify-between">
+          <div className="mb-10 flex w-full justify-center">
             <StatUsers status={userStatus} users={users} total={total} />
-            <ul className="menu rounded-box max-w-sm border border-base-300 shadow-lg">
+          </div>
+          <div className="mb-12 grid grid-cols-1 gap-9 md:grid-cols-2 md:grid-rows-2">
+            <div className="card max-w-full border border-base-300 bg-base-200 p-6 shadow-lg">
+              <h2 className="mb-4 text-xl font-semibold">Degree count</h2>
+              <VerticalBarChart data={dataDegree} />
+            </div>
+            <div className="card row-start-2 max-w-full border border-base-300 bg-base-200 p-6 shadow-lg md:col-start-1">
+              <h2 className="mb-4 text-xl font-semibold">Scholarship count</h2>
+              <VerticalBarChart data={dataScholarship} />
+            </div>
+            <div className="card max-w-full border border-base-300 bg-base-200 p-6 shadow-lg md:col-start-2 md:row-span-2 md:row-start-1">
+              <h2 className="mb-4 text-xl font-semibold">
+                Student count / Univeristy
+              </h2>
+              <PieChart />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+            <ul className="menu rounded-box bg-base-200 shadow-lg">
               <div className="flex w-full flex-row items-start justify-between p-2">
                 <span className="font-bold">Announcement</span>
               </div>
@@ -220,21 +238,44 @@ const Dashboard = () => {
                 </button>
               </Link>
             </ul>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="card max-w-full border border-base-300 p-6 shadow-lg">
-              <h2 className="mb-4 text-xl font-semibold">
-                Students count / Degree
-              </h2>
-              <VerticalBarChart data={dataDegree} />
-              <VerticalBarChart data={dataScholarship} />
-            </div>
-            <div className="card max-w-full border border-base-300 p-6 shadow-lg">
-              <h2 className="mb-4 text-xl font-semibold">
-                Student count / Univeristy
-              </h2>
-              <PieChart />
+            <div className="overflow-x-auto rounded-xl bg-base-200 shadow-lg">
+              <div className="flex w-full flex-row items-start justify-between p-4">
+                <span className="text-sm font-bold">Student list</span>
+              </div>
+              <table className="table">
+                {/* head */}
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Job</th>
+                    <th>Favorite Color</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* row 1 */}
+                  <tr>
+                    <th>1</th>
+                    <td>Cy Ganderton</td>
+                    <td>Quality Control Specialist</td>
+                    <td>Blue</td>
+                  </tr>
+                  {/* row 2 */}
+                  <tr className="hover">
+                    <th>2</th>
+                    <td>Hart Hagerty</td>
+                    <td>Desktop Support Technician</td>
+                    <td>Purple</td>
+                  </tr>
+                  {/* row 3 */}
+                  <tr>
+                    <th>3</th>
+                    <td>Brice Swyre</td>
+                    <td>Tax Accountant</td>
+                    <td>Red</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

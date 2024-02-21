@@ -6,9 +6,12 @@ import Footer from "./Footer";
 
 function RootLayoutPublic() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <>
-      <div className="dark:bg-boxdark-2 dark:text-bodydark">
+      <div
+      // className={`${theme === "winter" ? "bg-[#F1F5F9]" : null}`}
+      >
         {/* <!-- ===== Page Wrapper Start ===== --> */}
         <div className="flex h-screen overflow-hidden">
           {/* <!-- ===== Sidebar Start ===== --> */}
@@ -25,11 +28,11 @@ function RootLayoutPublic() {
 
             {/* <!-- ===== Main Content Start ===== --> */}
             <main>
-              <div className="max-w-screen-2xl mx-auto min-h-screen font-notosanslao md:p-6 2xl:p-10">
+              <div className="mx-auto min-h-screen max-w-screen-2xl font-notosanslao md:p-6 2xl:p-10">
                 <Outlet />
               </div>
             </main>
-            
+
             <Footer />
             {/* <!-- ===== Main Content End ===== --> */}
           </div>

@@ -12,24 +12,39 @@ const PieChart = () => {
       users.filter((user) => user.university.universityId === university._id)
         .length,
   );
-  const generateColors = (count) => {
-    const dynamicColors = [];
-    const getRandomColor = () => {
-      const hue = Math.floor(Math.random() * 360);
-      const saturation = Math.floor(Math.random() * 50) + 55;
-      const lightness = Math.floor(Math.random() * 30) + 60;
-      return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-    };
+  // const generateColors = (count) => {
+  //   const dynamicColors = [];
+  //   const getRandomColor = () => {
+  //     const hue = Math.floor(Math.random() * 360);
+  //     const saturation = Math.floor(Math.random() * 50) + 55;
+  //     const lightness = Math.floor(Math.random() * 30) + 60;
+  //     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+  //   };
 
-    for (let i = 0; i < count; i++) {
-      dynamicColors.push(getRandomColor());
-    }
+  //   for (let i = 0; i < count; i++) {
+  //     dynamicColors.push(getRandomColor());
+  //   }
 
-    return dynamicColors;
-  };
+  //   return dynamicColors;
+  // };
 
-  const backgroundColors = generateColors(universityCounts.length);
-
+  // const backgroundColors = generateColors(universityCounts.length);
+  const backgroundColors = [
+    "rgba(53, 162, 235)",
+    "rgba(255, 99, 132)",
+    "rgba(255, 199, 132)",
+    "rgba(75, 192, 192)",
+    "rgba(153, 102, 255)",
+    "rgba(255, 159, 64)",
+    "rgba(174, 168, 211)",
+    "rgba(119, 204, 89)",
+    "rgba(101, 205, 182)",
+    "rgba(250, 182, 209)",
+    "rgba(92, 107, 192)",
+    "rgba(255, 69, 123)",
+    "rgba(0, 184, 148)",
+    "rgba(70, 130, 180)",
+  ];
   const data = {
     labels: universities.map((university) => university.shortcut),
     datasets: [

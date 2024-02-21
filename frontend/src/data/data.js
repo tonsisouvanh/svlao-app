@@ -422,10 +422,10 @@ export const STUDENT_COLUMNS = [
     Header: "Pic",
     accessor: "profileImg",
   },
-  {
-    Header: "Lao Name",
-    accessor: "fullname.laoName",
-  },
+  // {
+  //   Header: "Lao Name",
+  //   accessor: "fullname.laoName",
+  // },
   {
     Header: "Last Name (English)",
     accessor: "fullname.englishLastname",
@@ -434,14 +434,14 @@ export const STUDENT_COLUMNS = [
     Header: "First Name (English)",
     accessor: "fullname.englishFirstname",
   },
-  {
-    Header: "Major (Lao)",
-    accessor: "major.laoMajor",
-  },
-  {
-    Header: "Major (Viet)",
-    accessor: "major.vietMajor",
-  },
+  // {
+  //   Header: "Major (Lao)",
+  //   accessor: "major.laoMajor",
+  // },
+  // {
+  //   Header: "Major (Viet)",
+  //   accessor: "major.vietMajor",
+  // },
   // {
   //   Header: "Visa From",
   //   accessor: "visa.from",
@@ -452,10 +452,10 @@ export const STUDENT_COLUMNS = [
   //   accessor: "visa.to",
   //   disableFilters: true,
   // },
-  {
-    Header: "Date of Birth",
-    accessor: "dob",
-  },
+  // {
+  //   Header: "Date of Birth",
+  //   accessor: "dob",
+  // },
   // {
   //   Header: "Role",
   //   accessor: "role",
@@ -472,22 +472,22 @@ export const STUDENT_COLUMNS = [
   //   Header: "Student ID",
   //   accessor: "studentId",
   // },
-  {
-    Header: "Facebook URL",
-    accessor: "facebookUrl",
-  },
+  // {
+  //   Header: "Facebook URL",
+  //   accessor: "facebookUrl",
+  // },
   // {
   //   Header: "Permanent Address",
   //   accessor: "permanentAddress",
   // },
-  {
-    Header: "Residence Address",
-    accessor: "residenceAddress.address",
-  },
-  {
-    Header: "Location or Dorm",
-    accessor: "residenceAddress.location",
-  },
+  // {
+  //   Header: "Residence Address",
+  //   accessor: "residenceAddress.address",
+  // },
+  // {
+  //   Header: "Location or Dorm",
+  //   accessor: "residenceAddress.location",
+  // },
   // {
   //   Header: "Created Date",
   //   accessor: "createdDate",
@@ -520,10 +520,10 @@ export const STUDENT_COLUMNS = [
   //   Header: "Scholarship (Lao)",
   //   accessor: "scholarship.scholarshipLao",
   // },
-  {
-    Header: "Scholarship Type",
-    accessor: "scholarship.scholarshipType",
-  },
+  // {
+  //   Header: "Scholarship Type",
+  //   accessor: "scholarship.scholarshipType",
+  // },
   // {
   //   Header: "Duration From",
   //   accessor: "duration.from",
