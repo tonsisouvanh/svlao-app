@@ -30,8 +30,12 @@ import DocumentList from "./page/document/private/DocumentList";
 import AddDocument from "./page/document/private/AddDocument";
 import EditDocument from "./page/document/private/EditDocument";
 import FormalOrganizationPage from "./page/FormalOrganizationPage";
+import Spinner from "./components/ui/Spinner";
+import { useSelector } from "react-redux";
 
 function App() {
+  const { status } = useSelector((state) => state.auth);
+  if (status.signout === "loading") return <Spinner />;
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -115,7 +119,10 @@ function App() {
               path="/dashboard/student-list/student/:id"
               element={<EditStudent />}
             />
-            <Route path="/dashboard/student-list/add" element={<AddStudent />} />
+            <Route
+              path="/dashboard/student-list/add"
+              element={<AddStudent />}
+            />
             {/* ================================================================== */}
             {/* ======================= University ======================================== */}
             <Route

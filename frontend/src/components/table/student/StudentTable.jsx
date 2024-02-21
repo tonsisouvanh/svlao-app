@@ -12,11 +12,11 @@ import {
 } from "react-icons/ai";
 import altImage from "../../../assets/img/profile.png";
 import { BiSolidSortAlt } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import InfoModal from "../../modal/InfoModal";
 import consule from "../../../assets/img/consule.jpg";
 import { BsFacebook } from "react-icons/bs";
-import { STUDENT_COLUMNS } from "../../../data/data";
+import { STUDENT_COLUMNS, scholarshipTypes } from "../../../data/data";
 import Searchbox from "../../input/student/Searchbox";
 import { removeUser, userReset } from "../../../feature/user/UserSlice";
 import { formatDateDDMMYYYY, replaceImage } from "../../../utils/utils";
@@ -29,6 +29,7 @@ const UserTable = ({
   userStatus,
   columnHead = STUDENT_COLUMNS,
 }) => {
+  const { pathname } = useLocation();
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalMale, setTotalMale] = useState(0);
   const [totalFemale, setTotalFemale] = useState(0);
@@ -48,6 +49,7 @@ const UserTable = ({
   const data = useMemo(() => users, [users]);
   const columns = useMemo(() => columnHead, []);
   const { status } = useSelector((state) => state.user);
+  const { universities } = useSelector((state) => state.university);
   const {
     getTableProps,
     getTableBodyProps,
@@ -57,8 +59,8 @@ const UserTable = ({
     state,
     setGlobalFilter,
   } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
-
   const { globalFilter } = state;
+
   const handleOpenModal = (id) => {
     setDeletedUserId(id);
     setOpenModal(true);
@@ -159,46 +161,61 @@ const UserTable = ({
       </div>
       <div className="mb-5 flex flex-wrap items-center gap-2">
         <Searchbox filter={globalFilter} setFilter={setGlobalFilter} />
-        {/* <Filter
-                filter={globalFilter}
-                setFilter={setGlobalFilter}
-                options={scholarshipTypes}
-                title={"ປະເພດທຶນ"}
-                fieldName={"name"}
-              />
-              <Filter
-                filter={globalFilter}
-                setFilter={setGlobalFilter}
-                options={degreeList}
-                title={"ລະດັບການສຶກສາ"}
-                fieldName={"laoDegree"}
-              /> */}
-        {/* <Filter
-                filter={globalFilter}
-                setFilter={setGlobalFilter}
-                options={universities}
-                title={"ມະຫາໄລ"}
-                fieldName={"laoName"}
-              /> */}
-        {/* <Filter
-                filter={globalFilter}
-                setFilter={setGlobalFilter}
-                options={statusList}
-                title={"ສະຖານະ"}
-                fieldName={"status"}
-              /> */}
-        {/* <Filter
-                filter={globalFilter}
-                setFilter={setGlobalFilter}
-                options={majors}
-                title={"ສາຍຮຽນ"}
-                fieldName={"vietMajor"}
-              /> */}
+        <div className="flex items-center gap-2">
+          <div className="form-control w-fit max-w-xs">
+            <select
+              disabled={!pathname.includes("all") && true}
+              value={globalFilter || ""}
+              onChange={(e) => setGlobalFilter(e.target.value)}
+              className="select select-bordered select-sm font-notosanslao focus:outline-none"
+            >
+              <option disabled value="">
+                ປະເພດທຶນ
+              </option>
+              {scholarshipTypes &&
+                scholarshipTypes?.map((ele, index) => (
+                  <option key={index} value={ele.name}>
+                    {ele.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+          <div className="form-control w-fit max-w-xs">
+            <select
+              disabled={!pathname.includes("all") && true}
+              value={globalFilter || ""}
+              onChange={(e) => setGlobalFilter(e.target.value)}
+              className="select select-bordered select-sm font-notosanslao focus:outline-none"
+            >
+              <option disabled value="">
+                ມະຫາໄລ
+              </option>
+              {universities &&
+                universities?.map((ele, index) => (
+                  <option key={index} value={ele.shortcut}>
+                    {ele.laoName}
+                  </option>
+                ))}
+            </select>
+          </div>
+        </div>
         <Link to="/dashboard/student-list/search/all">
-          <button className="btn btn-outline btn-sm">ເບິ່ງທັງໝົດ</button>
+          <button
+            className={`btn btn-outline ${
+              pathname.includes("all") && "btn-active"
+            } btn-sm`}
+          >
+            ເບິ່ງທັງໝົດ
+          </button>
         </Link>
         <Link to="/dashboard/student-list/page/1">
-          <button className="btn btn-outline btn-sm">ເບິ່ງເປັນໜ້າ</button>
+          <button
+            className={`btn btn-outline btn-sm ${
+              pathname.includes("page") && "btn-active"
+            }`}
+          >
+            ເບິ່ງເປັນໜ້າ
+          </button>
         </Link>
       </div>
       <div className="overflow-x-auto">

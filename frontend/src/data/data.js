@@ -351,6 +351,7 @@ export const provinceList = [
     laoName: "ໄຊສົມບູນ",
   },
 ];
+//TODO: store this in databse instead
 export const scholarshipTypes = [
   {
     id: "government",
@@ -521,9 +522,8 @@ export const STUDENT_COLUMNS = [
   // },
   {
     Header: "Scholarship Type",
-    accessor: "scholarship.type",
+    accessor: "scholarship.scholarshipType",
   },
-
   // {
   //   Header: "Duration From",
   //   accessor: "duration.from",
@@ -540,10 +540,10 @@ export const STUDENT_COLUMNS = [
   //   Header: "Relationship",
   //   accessor: "phone.relationship",
   // },
-  {
-    Header: "Phone Number",
-    accessor: "phone.phoneNumber",
-  },
+  // {
+  //   Header: "Phone Number",
+  //   accessor: "phone.phoneNumber",
+  // },
   // {
   //   Header: "University (English Name)",
   //   accessor: "university.englishName",
@@ -552,18 +552,18 @@ export const STUDENT_COLUMNS = [
   //   Header: "University (Lao Name)",
   //   accessor: "university.laoName",
   // },
-  {
-    Header: "University (Viet Name)",
-    accessor: "university.universityId.vietName",
-  },
-  {
-    Header: "University (Lao Name)",
-    accessor: "university.universityId.laoName",
-  },
   // {
-  //   Header: "University Shortcut",
-  //   accessor: "university.shortcut",
+  //   Header: "University (Viet Name)",
+  //   accessor: "university.universityId.vietName",
   // },
+  // {
+  //   Header: "University (Lao Name)",
+  //   accessor: "university.universityId.laoName",
+  // },
+  {
+    Header: "University Shortcut",
+    accessor: "university.shortcut",
+  },
   {
     Header: "Status",
     accessor: "userStatus",

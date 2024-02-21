@@ -12,7 +12,6 @@ const Filter = ({ filter, setFilter, options, title, fieldName }) => {
   useEffect(() => {
     sortArray();
   }, []);
-
   return (
     <div className="form-control w-fit max-w-xs">
       <select
