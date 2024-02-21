@@ -17,7 +17,7 @@ ChartJS.register(
   Legend,
 );
 
-const VerticalBarChart = ({ users }) => {
+const VerticalBarChart = ({ data }) => {
   // ==================== Chart section =================== //
   const options = {
     responsive: true,
@@ -27,37 +27,37 @@ const VerticalBarChart = ({ users }) => {
       },
     },
   };
-  const labels = ["Bachelor", "Master", "Doctor"];
-  const bachelorCounts = users.filter(
-    (user) => user?.degree?.vietDegree?.toLowerCase() === "cử nhân",
-  ).length;
-  const masterCounts = users.filter(
-    (user) => user?.degree?.vietDegree?.toLowerCase() === "thạc sĩ",
-  ).length;
-  const doctorCounts = users.filter(
-    (user) => user?.degree?.vietDegree?.toLowerCase() === "tiến sĩ",
-  ).length;
+  // const labels = ["Bachelor", "Master", "Doctor"];
+  // const bachelorCounts = users.filter(
+  //   (user) => user?.degree?.vietDegree?.toLowerCase() === "cử nhân",
+  // ).length;
+  // const masterCounts = users.filter(
+  //   (user) => user?.degree?.vietDegree?.toLowerCase() === "thạc sĩ",
+  // ).length;
+  // const doctorCounts = users.filter(
+  //   (user) => user?.degree?.vietDegree?.toLowerCase() === "tiến sĩ",
+  // ).length;
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Bachelor",
-        data: [bachelorCounts],
-        backgroundColor: "rgba(255, 99, 132)",
-      },
-      {
-        label: "Master",
-        data: [masterCounts],
-        backgroundColor: "rgba(53, 162, 235)",
-      },
-      {
-        label: "Doctor",
-        data: [doctorCounts],
-        backgroundColor: "rgba(255, 199, 132)",
-      },
-    ],
-  };
+  // const data = {
+  //   labels,
+  //   datasets: [
+  //     {
+  //       label: "Bachelor",
+  //       data: [bachelorCounts],
+  //       backgroundColor: "rgba(255, 99, 132)",
+  //     },
+  //     {
+  //       label: "Master",
+  //       data: [masterCounts],
+  //       backgroundColor: "rgba(53, 162, 235)",
+  //     },
+  //     {
+  //       label: "Doctor",
+  //       data: [doctorCounts],
+  //       backgroundColor: "rgba(255, 199, 132)",
+  //     },
+  //   ],
+  // };
   // ====================================================== //
 
   return (

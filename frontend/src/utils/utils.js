@@ -99,4 +99,21 @@ export const replaceImage = (error, image) => {
   error.target.src = image;
 };
 
+export const extractFirstLetter = (inputString) => {
+  // Check if the input string is not empty
+  if (inputString && typeof inputString === "string") {
+    // Split the input string into words
+    const words = inputString.split(" ");
 
+    // Extract the first letter of each word and convert them to uppercase
+    const initials = words.map((word) => word.charAt(0).toUpperCase());
+
+    // Concatenate the initials to create the final string
+    const resultString = initials.join("");
+
+    return resultString;
+  } else {
+    // Handle the case when the input is invalid or empty
+    return "";
+  }
+};

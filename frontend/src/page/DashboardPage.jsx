@@ -4,10 +4,11 @@ import Unauthorized from "./public/Unauthorized";
 import { getFilteredUsers } from "../feature/user/UserSlice";
 import StatUsers from "../components/stat/StatUsers";
 import { listAnnouncements } from "../feature/announcement/AnnouncementSlice";
-import { formatDateDDMMYYYY } from "../utils/utils";
+import {  formatDateDDMMYYYY } from "../utils/utils";
 import { Link } from "react-router-dom";
 import VerticalBarChart from "../components/chart/Dashboard/VerticalBarChart";
 import PieChart from "../components/chart/Dashboard/PieChart";
+import { scholarshipTypes } from "../data/data";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,75 @@ const Dashboard = () => {
   const [selectedUniversity, setSelectedUniversity] = useState("");
   const [selectedResidenceAddress, setSelectedResidenceAddress] = useState("");
   const [filterChoice, setFilterChoice] = useState("all");
+
+  // ===================== Chart data ======================== //
+  const labelsDegree = ["Bachelor", "Master", "Doctor"];
+  const bachelorCounts = users.filter(
+    (user) => user?.degree?.vietDegree?.toLowerCase() === "cử nhân",
+  ).length;
+  const masterCounts = users.filter(
+    (user) => user?.degree?.vietDegree?.toLowerCase() === "thạc sĩ",
+  ).length;
+  const doctorCounts = users.filter(
+    (user) => user?.degree?.vietDegree?.toLowerCase() === "tiến sĩ",
+  ).length;
+
+  const dataDegree = {
+    labels: labelsDegree,
+    datasets: [
+      {
+        label: "Degree Distribution",
+        data: [bachelorCounts, masterCounts, doctorCounts],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.7)",
+          "rgba(53, 162, 235)",
+          "rgba(255, 199, 132)",
+        ],
+      },
+    ],
+  };
+
+  const labelsScholarship = scholarshipTypes.map((ele) => ele.name);
+  const governmentCount = users.filter(
+    (user) => user?.scholarship?.scholarshipType.trim() === "ລັດຖະບານ",
+  ).length;
+  const coperationalCount = users.filter(
+    (user) => user?.scholarship?.scholarshipType.trim() === "ຮ່ວມມື",
+  ).length;
+  const exchangeCount = users.filter(
+    (user) => user?.scholarship?.scholarshipType.trim() === "ແລກປ່ຽນ",
+  ).length;
+  const companyCount = users.filter(
+    (user) => user?.scholarship?.scholarshipType.trim() === "ບໍລິສັດ",
+  ).length;
+  const privateCount = users.filter(
+    (user) => user?.scholarship?.scholarshipType.trim() === "ສ່ວນໂຕ",
+  ).length;
+
+  const dataScholarship = {
+    labels: labelsScholarship,
+    datasets: [
+      {
+        label: "Scholarship Types",
+        data: [
+          governmentCount,
+          coperationalCount,
+          exchangeCount,
+          companyCount,
+          privateCount,
+        ],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.7)",
+          "rgba(53, 162, 235, 0.7)",
+          "rgba(255, 199, 132, 0.7)",
+          "rgba(55, 199, 132, 0.7)",
+          "rgba(255, 19,132, 0.7)",
+        ],
+      },
+    ],
+  };
+
+  // ====================================================== //
 
   useEffect(() => {
     let filters = {};
@@ -124,7 +194,7 @@ const Dashboard = () => {
           </div>
           <div className="mb-10 flex flex-col items-start gap-4 md:flex-row md:justify-between">
             <StatUsers status={userStatus} users={users} total={total} />
-            <ul className="menu rounded-box max-w-sm border bg-base-200 shadow-sm">
+            <ul className="menu rounded-box max-w-sm border border-base-300 shadow-lg">
               <div className="flex w-full flex-row items-start justify-between p-2">
                 <span className="font-bold">Announcement</span>
               </div>
@@ -151,60 +221,17 @@ const Dashboard = () => {
               </Link>
             </ul>
           </div>
-          {/* <label className="form-control w-full max-w-fit">
-            <div className="label">
-              <span className="label-text text-xs">Showing</span>
-            </div>
-            <select
-              onChange={(e) => setItemsPerPage(e.target.value)}
-              className="select select-bordered select-xs max-w-fit"
-              value={itemsPerPage}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-            </select>
-          </label>
-          <UserTable
-            users={users}
-            userStatus={userStatus}
-            columnHead={[
-              {
-                Header: "Pic",
-                accessor: "profileImg",
-              },
-              {
-                Header: "First Name",
-                accessor: "fullname.englishFirstname",
-              },
-              {
-                Header: "Last Name",
-                accessor: "fullname.englishLastname",
-              },
-              {
-                Header: "Status",
-                accessor: "userStatus",
-              },
-            ]}
-          />
-          <div className="mt-6 flex justify-center">
-            <PaginateNoPath
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage
-              total={total}
-              itemsPerPage={itemsPerPage}
-            />
-          </div> */}
+
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="card max-w-full border bg-base-200 p-4 shadow-sm">
-              <h2 className="text-md mb-4 font-semibold">
+            <div className="card max-w-full border border-base-300 p-6 shadow-lg">
+              <h2 className="mb-4 text-xl font-semibold">
                 Students count / Degree
               </h2>
-              <VerticalBarChart users={users} />
+              <VerticalBarChart data={dataDegree} />
+              <VerticalBarChart data={dataScholarship} />
             </div>
-            <div className="card max-w-full border bg-base-200 p-4 shadow-sm">
-              <h2 className="text-md mb-4 font-semibold">
+            <div className="card max-w-full border border-base-300 p-6 shadow-lg">
+              <h2 className="mb-4 text-xl font-semibold">
                 Student count / Univeristy
               </h2>
               <PieChart />
