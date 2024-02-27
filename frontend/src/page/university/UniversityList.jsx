@@ -1,18 +1,23 @@
 import { Link, useLocation } from "react-router-dom";
-import {  useSelector } from "react-redux";
-import {  useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import Spinner from "../../components/ui/Spinner";
 import Unauthorized from "../public/Unauthorized";
 import { AiFillPlusCircle } from "react-icons/ai";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import UniversityTable from "../../components/table/university/UniversityTable";
+import { listUniversity } from "../../feature/globalData/UniversitySlice";
 
 const UniversityList = () => {
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { auth } = useSelector((state) => state.auth);
   const { status } = useSelector((state) => state.university);
   const [editToggle, setEditToggle] = useState(false);
 
+  useEffect(() => {
+    dispatch(listUniversity());
+  }, [dispatch]);
 
   if (status.fetchAll === "loading") {
     return <Spinner />;

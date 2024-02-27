@@ -75,7 +75,7 @@ const UniversityTable = ({ editToggle, setEditToggle }) => {
                       key={headerGroup.id}
                       {...headerGroup.getHeaderGroupProps()}
                     >
-                      <th></th>
+                      <th className=""></th>
                       {headerGroup &&
                         headerGroup?.headers?.map((column, index) => (
                           <th
@@ -108,7 +108,7 @@ const UniversityTable = ({ editToggle, setEditToggle }) => {
                     return (
                       <tr key={row.id} {...row.getRowProps()}>
                         <td>
-                          <div className="dropdown dropdown-right">
+                          {/* <div className="dropdown dropdown-right">
                             <label
                               tabIndex={0}
                               className="btn btn-xs px-1 py-0"
@@ -137,6 +137,21 @@ const UniversityTable = ({ editToggle, setEditToggle }) => {
                                 </a>
                               </li>
                             </ul>
+                          </div> */}
+                          <div className="flex flex-wrap gap-2 whitespace-nowrap">
+                            <Link
+                              to={`/manage-others-data/university-list/${row.original._id}`}
+                              className="btn btn-primary btn-outline btn-xs sm:btn-sm"
+                            >
+                              <AiFillEdit size={15} />
+                            </Link>
+                            <button
+                              type="button"
+                              onClick={() => handleOpenModal(row.original._id)}
+                              className="btn btn-error btn-outline btn-xs sm:btn-sm"
+                            >
+                              <AiFillDelete size={15} />
+                            </button>
                           </div>
                         </td>
                         {universities &&

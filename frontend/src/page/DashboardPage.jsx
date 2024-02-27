@@ -195,24 +195,24 @@ const Dashboard = () => {
           <div className="mb-10 flex w-full justify-center">
             <StatUsers status={userStatus} users={users} total={total} />
           </div>
-          <div className="mb-12 grid grid-cols-1 gap-9 md:grid-cols-2 md:grid-rows-2">
-            <div className="card max-w-full border border-base-300 bg-base-200 p-6 shadow-lg">
+          <div className="mb-12 grid grid-cols-1 gap-3 md:grid-cols-2 md:grid-rows-2">
+            <div className="card max-w-full rounded-md border border-base-300 bg-base-200 p-6 shadow-lg">
               <h2 className="mb-4 text-xl font-semibold">Degree count</h2>
               <VerticalBarChart data={dataDegree} />
             </div>
-            <div className="card row-start-2 max-w-full border border-base-300 bg-base-200 p-6 shadow-lg md:col-start-1">
+            <div className="card row-start-2 max-w-full rounded-md border border-base-300 bg-base-200 p-6 shadow-lg md:col-start-1">
               <h2 className="mb-4 text-xl font-semibold">Scholarship count</h2>
               <VerticalBarChart data={dataScholarship} />
             </div>
-            <div className="card max-w-full border border-base-300 bg-base-200 p-6 shadow-lg md:col-start-2 md:row-span-2 md:row-start-1">
+            <div className="card max-w-full rounded-md border border-base-300 bg-base-200 p-6 shadow-lg md:col-start-2 md:row-span-2 md:row-start-1">
               <h2 className="mb-4 text-xl font-semibold">
                 Student count / Univeristy
               </h2>
               <PieChart />
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
-            <ul className="menu rounded-box bg-base-200 shadow-lg">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            <ul className="menu rounded-md bg-base-200 shadow-lg">
               <div className="flex w-full flex-row items-start justify-between p-2">
                 <span className="font-bold">Announcement</span>
               </div>
@@ -238,7 +238,7 @@ const Dashboard = () => {
                 </button>
               </Link>
             </ul>
-            <div className="overflow-x-auto rounded-xl bg-base-200 shadow-lg">
+            <div className="overflow-x-auto rounded-md bg-base-200 shadow-lg">
               <div className="flex w-full flex-row items-start justify-between p-4">
                 <span className="text-sm font-bold">Student list</span>
               </div>

@@ -16,9 +16,7 @@ const AnnouncementList = () => {
   const { auth } = useSelector((state) => state.auth);
   const [editToggle, setEditToggle] = useState(false);
 
-  const { status, page, pages } = useSelector(
-    (state) => state.announcement,
-  );
+  const { status, page, pages } = useSelector((state) => state.announcement);
   useEffect(() => {
     dispatch(listAnnouncements({ pageNumber, keyword }));
   }, [dispatch, pageNumber, keyword]);
