@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../feature/auth/AuthSlice";
 import userReducer from "../feature/user/UserSlice";
-import studentsReducer from "../feature/student/StudentSlice";
 import universitiesReducer, {
   listUniversity,
 } from "../feature/globalData/UniversitySlice";
@@ -17,7 +16,6 @@ export const store = configureStore({
     auth: authReducer,
     user: userReducer,
     singleUser: singleUserReducer,
-    students: studentsReducer,
     university: universitiesReducer,
     major: majorsReducer,
     residenceAddress: residenceAddressReducer,
