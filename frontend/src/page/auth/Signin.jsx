@@ -7,12 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { authReset, signIn } from "../../feature/auth/AuthSlice";
 import toast from "react-hot-toast";
 import Spinner from "../../components/ui/Spinner";
+import { useTranslation } from "react-i18next";
 const initialState = {
   emailAddress: "",
   password: "",
 };
 
 const Signin = () => {
+  const [t, i18n] = useTranslation("global");
+
   const { auth, status, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -49,7 +52,7 @@ const Signin = () => {
     <div className="flex min-h-screen items-center justify-center bg-login-background bg-cover bg-no-repeat">
       <div className="absolute h-full w-full bg-gradient-to-b from-black via-black/70 to-transparent"></div>
       <div className="absolute w-96 rounded bg-base-200 p-8 shadow-md">
-        <h1 className="mb-4 text-2xl font-bold">Student Login</h1>
+        <h1 className="mb-4 text-2xl font-bold">{t("Login.headline") || 'Student Login'}</h1>
         <form onSubmit={handleSubmit(handleLogin)}>
           <div className="mb-4">
             <div className="form-control w-full max-w-xs">

@@ -1,0 +1,13 @@
+{
+  "Login": {
+    "headline": "Future Solution Team, ສະບາຍດີ!",
+    "subline": "ເຂົ້າ​ສູ່​ລະ​ບົບ​ເພື່ອ​ເຂົ້າ​ເຖິງ​ບັນ​ຊີ​ຂອງ​ທ່ານ ​ແລະ ​ເລີ່ມ​ຕົ້ນ​ການ​ໃຊ້ງານແອັບ​ຂອງ​ພວກ​ເຮົາ​!",
+    "txtLogin": "ລ໋ອກອິນ",
+    "labelEmail": "ອີເມວ",
+    "labelPassword": "ລະ​ຫັດ​ຜ່ານ"
+  },
+  "AnnouncePage": {
+    "announceHeader": "ແຈ້ງການຕ່າງໆ",
+    "announceLeftNoti": "ປະກາດ"
+  }
+}

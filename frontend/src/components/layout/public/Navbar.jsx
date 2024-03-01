@@ -9,6 +9,7 @@ import { themes } from "../../../data/data";
 import { signOut } from "../../../feature/auth/AuthSlice";
 import altImage from "../../../assets/img/profile.png";
 import { replaceImage } from "../../../utils/utils";
+import LanguageSelect from "../../LanguageSelect";
 
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const dispatch = useDispatch();
@@ -128,6 +129,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
               </button>
             </ul>
           </div>
+          <LanguageSelect />
         </div>
       </div>
     </header>

@@ -1,0 +1,14 @@
+{
+  "Login": {
+    "headline": "Login To Your Account!",
+    "subline": "Login to access your account and start exploring our amazing features!",
+    "txtLogin": "Login",
+    "labelEmail": "Email",
+    "labelPassword": "Password"
+  },
+  "AnnouncePage": {
+    "announceHeader": "Announcement",
+    "announceLeftNoti": "Announce"
+
+  }
+}

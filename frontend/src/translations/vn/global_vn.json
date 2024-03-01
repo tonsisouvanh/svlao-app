@@ -1,0 +1,13 @@
+{
+  "Login": {
+    "headline": "Chào mừng đến với Đội Future Solution!",
+    "subline": "Đăng nhập để truy cập tài khoản và khám phá các tính năng tuyệt vời của chúng tôi!",
+    "txtLogin": "Đăng nhập",
+    "labelEmail": "Email",
+    "labelPassword": "Mật khẩu"
+  },
+  "AnnouncePage": {
+    "announceHeader": "Thông báo / Tin tức",
+    "announceLeftNoti": "Thông báo"
+  }
+}
