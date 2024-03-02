@@ -9,5 +9,12 @@
   "AnnouncePage": {
     "announceHeader": "ແຈ້ງການຕ່າງໆ",
     "announceLeftNoti": "ປະກາດ"
+  },
+  "Sidebar": {
+    "menu": {
+      "headline": "ຈັດການນັກຮຽນ",
+      "sublineOne": "ສັງລວມນັກຮຽນ",
+      "sublineTwo": "ລາຍຊື່ນັກຮຽນ"
+    }
   }
 }

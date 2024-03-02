@@ -12,12 +12,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "../../feature/auth/AuthSlice";
 import SidebarLinkGroup from "./SidebarLinkGroup";
+import { useTranslation } from "react-i18next";
 
 const dropdownLiStyle = "hover:opacity-60 hover:bg-white/10 rounded-md";
 const dropdownNavlinkStyle =
   "group relative flex items-center gap-2 px-4 py-2 font-semibold duration-300 ease-in-out";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
+  const [t, i18n] = useTranslation("global");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -56,6 +59,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
   // close if the esc key is pressed
   useEffect(() => {
+    console.log(t("Sidebar.menu.headline"));
     const keyHandler = ({ keyCode }) => {
       if (!sidebarOpen || keyCode !== 27) return;
       setSidebarOpen(false);
@@ -135,7 +139,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           >
                             {/* <AiOutlineDashboard size={23} /> */}
                             <img src={speedometer} className="w-6" alt="" />
-                            ຈັດການນັກຮຽນ
+                            {t("Sidebar.menu.headline").includes(".")
+                              ? "ຈັດການນັກຮຽນ"
+                              : t("Sidebar.menu.headline")}
                             <BsFillCaretDownFill
                               className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current transition-all duration-300 ${
                                 open && "rotate-180"
@@ -158,7 +164,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                       "rounded-md border-r-2 bg-white/10 text-white")
                                   }
                                 >
-                                  <p className="font-normal">ສັງລວມນັກຮຽນ</p>
+                                  <p className="font-normal">
+                                    {t("Sidebar.menu.sublineOne").includes(".")
+                                      ? "ສັງລວມນັກຮຽນ"
+                                      : t("Sidebar.menu.sublineOne")}
+                                  </p>
                                 </NavLink>
                               </li>
                               <li className={dropdownLiStyle}>
@@ -170,6 +180,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                       "rounded-md border-r-2 bg-white/10 text-white")
                                   }
                                 >
+                                  {/* TODO: Continue adding language */}
                                   <p className="font-normal">ລາຍຊື່ນັກຮຽນ</p>
                                 </NavLink>
                               </li>

@@ -108,36 +108,6 @@ const UniversityTable = ({ editToggle, setEditToggle }) => {
                     return (
                       <tr key={row.id} {...row.getRowProps()}>
                         <td>
-                          {/* <div className="dropdown dropdown-right">
-                            <label
-                              tabIndex={0}
-                              className="btn btn-xs px-1 py-0"
-                            >
-                              <AiOutlineMore />
-                            </label>
-                            <ul
-                              tabIndex={0}
-                              className="dropdown-content rounded-box absolute !-top-2 !right-0 z-[1] !flex w-fit gap-4 border bg-base-100 p-2 shadow"
-                            >
-                              <Link
-                                to={`/manage-others-data/university-list/${row.original._id}`}
-                              >
-                                <li className="btn btn-ghost btn-xs">
-                                  <AiFillEdit size={15} />
-                                </li>
-                              </Link>
-                              <li
-                                onClick={() =>
-                                  handleOpenModal(row.original._id)
-                                }
-                                className="btn btn-ghost btn-xs"
-                              >
-                                <a>
-                                  <AiFillDelete size={15} />
-                                </a>
-                              </li>
-                            </ul>
-                          </div> */}
                           <div className="flex flex-wrap gap-2 whitespace-nowrap">
                             <Link
                               to={`/manage-others-data/university-list/${row.original._id}`}

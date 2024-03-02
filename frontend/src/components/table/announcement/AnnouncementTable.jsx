@@ -138,35 +138,22 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
                     return (
                       <tr key={row?.id} {...row?.getRowProps()}>
                         <td>
-                          <div className="dropdown-right dropdown">
-                            <label
-                              tabIndex={0}
-                              className="btn btn-xs px-1 py-0"
+                          <div className="flex items-center gap-2">
+                            <Link
+                              to={`/manage-others-data/announcement-list/${row?.original?._id}`}
+                              className="btn btn-primary btn-outline btn-xs sm:btn-sm"
                             >
-                              <AiOutlineMore />
-                            </label>
-                            <ul
-                              tabIndex={0}
-                              className="dropdown-content rounded-box absolute !-top-2 !right-0 z-[1] !flex w-fit gap-4 border bg-base-100 p-2 shadow"
+                              <AiFillEdit size={15} />
+                            </Link>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handleOpenModal(row?.original?._id)
+                              }
+                              className="btn btn-error btn-outline btn-xs sm:btn-sm"
                             >
-                              <Link
-                                to={`/manage-others-data/announcement-list/${row?.original?._id}`}
-                              >
-                                <li className="btn btn-ghost btn-xs">
-                                  <AiFillEdit size={15} />
-                                </li>
-                              </Link>
-                              <li
-                                onClick={() =>
-                                  handleOpenModal(row?.original?._id)
-                                }
-                                className="btn btn-ghost btn-xs"
-                              >
-                                <a>
-                                  <AiFillDelete size={15} />
-                                </a>
-                              </li>
-                            </ul>
+                              <AiFillDelete size={15} />
+                            </button>
                           </div>
                         </td>
                         {announcements &&
@@ -180,7 +167,9 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
                                 <>{formatDateDDMMYYYY(cell?.value)}</>
                               ) : cell?.column?.id === "content" ? (
                                 <>
-                                  <span className="truncate">{cell?.value}</span>
+                                  <span className="truncate">
+                                    {cell?.value}
+                                  </span>
                                 </>
                               ) : (
                                 cell?.render("Cell")

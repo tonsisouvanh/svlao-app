@@ -7,12 +7,10 @@ import {
   AiFillCaretUp,
   AiFillDelete,
   AiFillEdit,
-  AiOutlineMore,
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import InfoModal from "../../modal/InfoModal";
 import { RESIDENCEADDRESS_COLUMNS } from "../../../data/data";
-// import Searchbox from "../../input/student/Searchbox";
 import altImage from "../../../assets/img/profile.png";
 import { removeResidenceAddress } from "../../../feature/globalData/ResidenceAddressSlice";
 const cellStyle = "whitespace-nowrap truncate font-light";
@@ -27,17 +25,9 @@ const ResidenceAddressTable = ({ editToggle, setEditToggle }) => {
     useState("");
   const data = useMemo(() => residenceAddresses, [residenceAddresses]);
   const columns = useMemo(() => RESIDENCEADDRESS_COLUMNS, []);
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    state,
-    setGlobalFilter,
-  } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
 
-  const { globalFilter } = state;
   const handleOpenModal = (id) => {
     setDeletedResidenceAddressId(id);
     setOpenModal(true);
@@ -124,34 +114,23 @@ const ResidenceAddressTable = ({ editToggle, setEditToggle }) => {
                       <tr key={row.id} {...row.getRowProps()}>
                         <td>
                           <div className="dropdown dropdown-right">
-                            <label
-                              tabIndex={0}
-                              className="btn btn-xs px-1 py-0"
-                            >
-                              <AiOutlineMore />
-                            </label>
-                            <ul
-                              tabIndex={0}
-                              className="dropdown-content rounded-box absolute !-top-2 !right-0 z-[1] !flex w-fit gap-4 border bg-base-100 p-2 shadow"
-                            >
+                            <div className="flex flex-wrap gap-2 whitespace-nowrap">
                               <Link
                                 to={`/manage-others-data/residence-address-list/${row.original._id}`}
+                                className="btn btn-primary btn-outline btn-xs sm:btn-sm"
                               >
-                                <li className="btn btn-success btn-xs">
-                                  <AiFillEdit size={15} />
-                                </li>
+                                <AiFillEdit size={15} />
                               </Link>
-                              <li
+                              <button
+                                type="button"
                                 onClick={() =>
                                   handleOpenModal(row.original._id)
                                 }
-                                className="btn btn-error btn-xs"
+                                className="btn btn-error btn-outline btn-xs sm:btn-sm"
                               >
-                                <a>
-                                  <AiFillDelete size={15} />
-                                </a>
-                              </li>
-                            </ul>
+                                <AiFillDelete size={15} />
+                              </button>
+                            </div>
                           </div>
                         </td>
                         {residenceAddresses &&

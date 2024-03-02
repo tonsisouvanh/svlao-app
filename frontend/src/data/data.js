@@ -586,10 +586,10 @@ export const RESIDENCEADDRESS_COLUMNS = [
 ];
 export const ANNOUNCEMENT_COLUMNS = [
   { Header: "Title", accessor: "title" },
-  { Header: "Timestamp", accessor: "timestamp" },
+  { Header: "Date", accessor: "timestamp" },
   { Header: "Category", accessor: "category" },
   // { Header: "Content", accessor: "content" },
-  { Header: "Image", accessor: "image" },
+  // { Header: "Image", accessor: "image" },
 ];
 export const DOCUMENT_COLUMNS = [
   { Header: "Title", accessor: "title" },

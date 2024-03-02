@@ -117,3 +117,8 @@ export const extractFirstLetter = (inputString) => {
     return "";
   }
 };
+
+
+export const getTranslateText = () => {
+  
+}

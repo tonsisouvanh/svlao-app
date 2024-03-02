@@ -9,6 +9,12 @@
   "AnnouncePage": {
     "announceHeader": "Announcement",
     "announceLeftNoti": "Announce"
-
+  },
+  "Sidebar": {
+    "menu": {
+      "headline": "Students",
+      "sublineOne": "Summary",
+      "sublineTwo": "ລາຍຊື່ນັກຮຽນ"
+    }
   }
 }

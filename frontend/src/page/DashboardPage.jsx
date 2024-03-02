@@ -126,7 +126,7 @@ const Dashboard = () => {
   return (
     <>
       <section className="body-font">
-        <div className="container mx-auto rounded-xl border bg-base-300 px-14 py-14">
+        <div className="container mx-auto rounded-xl bg-transparent px-14 py-14">
           <div className="mb-20 text-center">
             <h1 className="title-font mb-4 text-center font-notosanslao text-2xl font-bold text-base-content sm:text-4xl">
               ສັງລວມນັກຮຽນທີ່ຢູ່ຕາມໂຮງຮຽນຕ່າງໆ

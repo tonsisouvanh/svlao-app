@@ -58,7 +58,7 @@ const DocumentTable = ({ editToggle, setEditToggle }) => {
       toast.error("Failed to delete");
       dispatch(documentReset());
     }
-  }, [status.remove,dispatch]);
+  }, [status.remove, dispatch]);
 
   if (status.fetchAll === "loading") {
     return <Spinner />;
@@ -138,35 +138,24 @@ const DocumentTable = ({ editToggle, setEditToggle }) => {
                     return (
                       <tr key={row.id} {...row.getRowProps()}>
                         <td>
-                          <div className="dropdown dropdown-right">
-                            <label
-                              tabIndex={0}
-                              className="btn btn-xs px-1 py-0"
-                            >
-                              <AiOutlineMore />
-                            </label>
-                            <ul
-                              tabIndex={0}
-                              className="dropdown-content rounded-box absolute !-top-2 !right-0 z-[1] !flex w-fit gap-4 border bg-base-100 p-2 shadow"
-                            >
+                          <div className="dropdown-right dropdown">
+                            <div className="flex items-center gap-2">
                               <Link
                                 to={`/manage-others-data/document-form-list/${row.original._id}`}
+                                className="btn btn-primary btn-outline btn-xs sm:btn-sm"
                               >
-                                <li className="btn btn-ghost btn-xs">
-                                  <AiFillEdit size={15} />
-                                </li>
+                                <AiFillEdit size={15} />
                               </Link>
-                              <li
+                              <button
+                                type="button"
                                 onClick={() =>
                                   handleOpenModal(row.original._id)
                                 }
-                                className="btn btn-ghost btn-xs"
+                                className="btn btn-error btn-outline btn-xs sm:btn-sm"
                               >
-                                <a>
-                                  <AiFillDelete size={15} />
-                                </a>
-                              </li>
-                            </ul>
+                                <AiFillDelete size={15} />
+                              </button>
+                            </div>
                           </div>
                         </td>
                         {documents &&
