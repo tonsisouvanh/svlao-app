@@ -196,15 +196,15 @@ const Dashboard = () => {
             <StatUsers status={userStatus} users={users} total={total} />
           </div>
           <div className="mb-12 grid grid-cols-1 gap-3 md:grid-cols-2 md:grid-rows-2">
-            <div className="card max-w-full rounded-md border border-base-300 bg-base-200 p-6 shadow-lg">
+            <div className="card max-w-full rounded-md border border-base-300  p-6 shadow-lg">
               <h2 className="mb-4 text-xl font-semibold">Degree count</h2>
               <VerticalBarChart data={dataDegree} />
             </div>
-            <div className="card row-start-2 max-w-full rounded-md border border-base-300 bg-base-200 p-6 shadow-lg md:col-start-1">
+            <div className="card row-start-2 max-w-full rounded-md border border-base-300  p-6 shadow-lg md:col-start-1">
               <h2 className="mb-4 text-xl font-semibold">Scholarship count</h2>
               <VerticalBarChart data={dataScholarship} />
             </div>
-            <div className="card max-w-full rounded-md border border-base-300 bg-base-200 p-6 shadow-lg md:col-start-2 md:row-span-2 md:row-start-1">
+            <div className="card max-w-full rounded-md border border-base-300  p-6 shadow-lg md:col-start-2 md:row-span-2 md:row-start-1">
               <h2 className="mb-4 text-xl font-semibold">
                 Student count / Univeristy
               </h2>
@@ -212,7 +212,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-            <ul className="menu rounded-md bg-base-200 shadow-lg">
+            <ul className="menu rounded-md  shadow-lg">
               <div className="flex w-full flex-row items-start justify-between p-2">
                 <span className="font-bold">Announcement</span>
               </div>
@@ -238,44 +238,216 @@ const Dashboard = () => {
                 </button>
               </Link>
             </ul>
-            <div className="overflow-x-auto rounded-md bg-base-200 shadow-lg">
-              <div className="flex w-full flex-row items-start justify-between p-4">
-                <span className="text-sm font-bold">Student list</span>
+
+            <div className="flex flex-col items-center justify-center">
+              <div className=" relative flex h-[430px] w-full max-w-[500px] flex-col rounded-[10px]    bg-clip-border shadow-md    ">
+                <div className=" flex h-fit w-full items-center justify-between rounded-t-2xl px-4 pb-[20px] pt-4  ">
+                  <h4 className="text-navy-700 text-lg font-bold ">
+                    Top Creators
+                  </h4>
+                  <button className="linear bg-lightPrimary text-brand-500 rounded-[20px] px-4 py-2 text-base font-medium transition duration-200 hover:bg-gray-100 active:bg-gray-200    dark:active:bg-white/20">
+                    See all
+                  </button>
+                </div>
+                <div className="w-full overflow-x-scroll px-4 md:overflow-x-hidden">
+                  <table
+                    role="table"
+                    className="w-full min-w-[500px] overflow-x-scroll"
+                  >
+                    <thead>
+                      <tr role="row">
+                        <th
+                          colSpan={1}
+                          role="columnheader"
+                          title="Toggle SortBy"
+                          style={{ cursor: "pointer" }}
+                        >
+                          <div className="flex items-center justify-between pb-2 pt-4 text-start uppercase tracking-wide text-gray-600 sm:text-xs lg:text-xs">
+                            Name
+                          </div>
+                        </th>
+                        <th
+                          colSpan={1}
+                          role="columnheader"
+                          title="Toggle SortBy"
+                          style={{ cursor: "pointer" }}
+                        >
+                          <div className="flex items-center justify-between pb-2 pt-4 text-start uppercase tracking-wide text-gray-600 sm:text-xs lg:text-xs">
+                            Artworks
+                          </div>
+                        </th>
+                        <th
+                          colSpan={1}
+                          role="columnheader"
+                          title="Toggle SortBy"
+                          style={{ cursor: "pointer" }}
+                        >
+                          <div className="flex items-center justify-between pb-2 pt-4 text-start uppercase tracking-wide text-gray-600 sm:text-xs lg:text-xs">
+                            Rating
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody role="rowgroup" className="px-4">
+                      <tr role="row">
+                        <td className="py-3 text-sm" role="cell">
+                          <div className="flex items-center gap-2">
+                            <div className="h-[30px] w-[30px] rounded-full">
+                              <img
+                                src="https://images.unsplash.com/photo-1506863530036-1efeddceb993?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2244&q=80"
+                                className="h-full w-full rounded-full"
+                                alt=""
+                              />
+                            </div>
+                            <p className="text-navy-700 text-sm font-medium ">
+                              @maddison_c21
+                            </p>
+                          </div>
+                        </td>
+                        <td className="py-3 text-sm" role="cell">
+                          <p className="text-md font-medium text-gray-600 ">
+                            9821
+                          </p>
+                        </td>
+                        <td className="py-3 text-sm" role="cell">
+                          <div className="mx-2 flex font-bold">
+                            <div className="dark:bg-navy-700 h-2 w-16 rounded-full bg-gray-200">
+                              <div
+                                className="bg-brand-500 dark:bg-brand-400 flex h-full items-center justify-center rounded-md"
+                                style={{ width: "30%" }}
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr role="row">
+                        <td className="py-3 text-sm" role="cell">
+                          <div className="flex items-center gap-2">
+                            <div className="h-[30px] w-[30px] rounded-full">
+                              <img
+                                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1780&q=80"
+                                className="h-full w-full rounded-full"
+                                alt=""
+                              />
+                            </div>
+                            <p className="text-navy-700 text-sm font-medium ">
+                              @karl.will02
+                            </p>
+                          </div>
+                        </td>
+                        <td className="py-3 text-sm" role="cell">
+                          <p className="text-md font-medium text-gray-600 ">
+                            7032
+                          </p>
+                        </td>
+                        <td className="py-3 text-sm" role="cell">
+                          <div className="mx-2 flex font-bold">
+                            <div className="dark:bg-navy-700 h-2 w-16 rounded-full bg-gray-200">
+                              <div
+                                className="bg-brand-500 dark:bg-brand-400 flex h-full items-center justify-center rounded-md"
+                                style={{ width: "30%" }}
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr role="row">
+                        <td className="py-3 text-sm" role="cell">
+                          <div className="flex items-center gap-2">
+                            <div className="h-[30px] w-[30px] rounded-full">
+                              <img
+                                src="https://images.unsplash.com/photo-1573766064535-6d5d4e62bf9d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1315&q=80"
+                                className="h-full w-full rounded-full"
+                                alt=""
+                              />
+                            </div>
+                            <p className="text-navy-700 text-sm font-medium ">
+                              @andreea.1z
+                            </p>
+                          </div>
+                        </td>
+                        <td className="py-3 text-sm" role="cell">
+                          <p className="text-md font-medium text-gray-600 ">
+                            5204
+                          </p>
+                        </td>
+                        <td className="py-3 text-sm" role="cell">
+                          <div className="mx-2 flex font-bold">
+                            <div className="dark:bg-navy-700 h-2 w-16 rounded-full bg-gray-200">
+                              <div
+                                className="bg-brand-500 dark:bg-brand-400 flex h-full items-center justify-center rounded-md"
+                                style={{ width: "30%" }}
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr role="row">
+                        <td className="py-3 text-sm" role="cell">
+                          <div className="flex items-center gap-2">
+                            <div className="h-[30px] w-[30px] rounded-full">
+                              <img
+                                src="https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1780&q=80"
+                                className="h-full w-full rounded-full"
+                                alt=""
+                              />
+                            </div>
+                            <p className="text-navy-700 text-sm font-medium ">
+                              @abraham47.y
+                            </p>
+                          </div>
+                        </td>
+                        <td className="py-3 text-sm" role="cell">
+                          <p className="text-md font-medium text-gray-600 ">
+                            4309
+                          </p>
+                        </td>
+                        <td className="py-3 text-sm" role="cell">
+                          <div className="mx-2 flex font-bold">
+                            <div className="dark:bg-navy-700 h-2 w-16 rounded-full bg-gray-200">
+                              <div
+                                className="bg-brand-500 dark:bg-brand-400 flex h-full items-center justify-center rounded-md"
+                                style={{ width: "30%" }}
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr role="row">
+                        <td className="py-3 text-sm" role="cell">
+                          <div className="flex items-center gap-2">
+                            <div className="h-[30px] w-[30px] rounded-full">
+                              <img
+                                src="https://i.ibb.co/7p0d1Cd/Frame-24.png"
+                                className="h-full w-full rounded-full"
+                                alt=""
+                              />
+                            </div>
+                            <p className="text-navy-700 text-sm font-medium ">
+                              @simmmple.web
+                            </p>
+                          </div>
+                        </td>
+                        <td className="py-3 text-sm" role="cell">
+                          <p className="text-md font-medium text-gray-600 ">
+                            3871
+                          </p>
+                        </td>
+                        <td className="py-3 text-sm" role="cell">
+                          <div className="mx-2 flex font-bold">
+                            <div className="dark:bg-navy-700 h-2 w-16 rounded-full bg-gray-200">
+                              <div
+                                className="bg-brand-500 dark:bg-brand-400 flex h-full items-center justify-center rounded-md"
+                                style={{ width: "30%" }}
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-              <table className="table">
-                {/* head */}
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Job</th>
-                    <th>Favorite Color</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* row 1 */}
-                  <tr>
-                    <th>1</th>
-                    <td>Cy Ganderton</td>
-                    <td>Quality Control Specialist</td>
-                    <td>Blue</td>
-                  </tr>
-                  {/* row 2 */}
-                  <tr className="hover">
-                    <th>2</th>
-                    <td>Hart Hagerty</td>
-                    <td>Desktop Support Technician</td>
-                    <td>Purple</td>
-                  </tr>
-                  {/* row 3 */}
-                  <tr>
-                    <th>3</th>
-                    <td>Brice Swyre</td>
-                    <td>Tax Accountant</td>
-                    <td>Red</td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
         </div>

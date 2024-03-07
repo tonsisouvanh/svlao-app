@@ -10,7 +10,7 @@ const ErrorMessage = ({ styling, error }) => {
   if (typeof error === "string") {
     return (
       <p
-        className={"label-text text-xs italic text-error " + styling}
+        className={"label-text text-xs italic text-red-500 " + styling}
         role="alert"
       >
         {error}
@@ -19,7 +19,7 @@ const ErrorMessage = ({ styling, error }) => {
   } else if ("message" in error) {
     return (
       <p
-        className={"label-text text-xs italic text-error " + styling}
+        className={"label-text text-xs italic text-red-500 " + styling}
         role="alert"
       >
         {error.message}

@@ -31,7 +31,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
     document.querySelector("html").setAttribute("data-theme", localTheme);
   }, [theme]);
   return (
-    <header className="bg-active sticky top-0 z-[999] flex w-full bg-base-100">
+    <header className="bg-active sticky top-0 z-[999] flex w-full bg-white">
       <div className="flex w-full items-center justify-between px-4 py-4 shadow-md md:px-6 2xl:px-11">
         <button
           className="group btn btn-sm flex flex-col items-center justify-center rounded border p-1 lg:invisible"
@@ -44,7 +44,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
         </button>
 
         <div className="flex items-center gap-2">
-          <div>
+          {/* <div>
             <div className="dropdown dropdown-end">
               <label
                 tabIndex={0}
@@ -80,8 +80,8 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                 ))}
               </ul>
             </div>
-          </div>
-          <div className="dropdown-end dropdown">
+          </div> */}
+          <div className="dropdown dropdown-end">
             <div className="indicator">
               {auth?.userStatus === "pending" && (
                 <span className="badge indicator-item badge-secondary badge-xs animate-bounce">

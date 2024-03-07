@@ -56,12 +56,12 @@ const StatUsers = ({ users, total, status }) => {
 
   //   calculateDegreeTotals();
   // }, [users]);
-  
+
   if (status?.fetchAll === "loading")
     return <span className="loading loading-spinner loading-md"></span>;
   return (
     <>
-      <div className="stats bg-base-200 shadow-lg">
+      {/* <div className="stats shadow-lg">
         <div className="state stat space-y-2">
           <div className="stat-figure">
             <img src={student} className="w-16" alt="icon" />
@@ -95,6 +95,54 @@ const StatUsers = ({ users, total, status }) => {
           <div className="stat-title font-bold">Active User</div>
           <div className="stat-value">{totalActive() | 0}</div>
           <div className="badge stat-desc badge-info">ຄົນ</div>
+        </div>
+      </div> */}
+      <div className="bg-neutral-transparent w-full px-4 py-16 font-[sans-serif]">
+        <div className="mx-auto grid max-w-7xl gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-md border-b-4 border-primary bg-base-200 p-4 text-center font-notosanslao">
+            <img
+              className="inline-block w-12 fill-primary"
+              src={student}
+              alt="icon"
+            />
+            <h3 className="mt-5 text-4xl font-extrabold text-base-content">
+              {total | 0}
+            </h3>
+            <p className="mt-3 font-semibold text-base-content">ນັກຮຽນທັງໝົດ</p>
+          </div>
+          <div className="rounded-md border-b-4 border-primary bg-base-200 p-4 text-center font-notosanslao">
+            <img
+              className="inline-block w-12 fill-primary"
+              src={male}
+              alt="icon"
+            />
+            <h3 className="mt-5 text-4xl font-extrabold text-base-content">
+              {totalMale() | 0}
+            </h3>
+            <p className="mt-3 font-semibold text-base-content">Male</p>
+          </div>
+          <div className="rounded-md border-b-4 border-primary bg-base-200 p-4 text-center font-notosanslao">
+            <img
+              className="inline-block w-12 fill-primary"
+              src={female}
+              alt="icon"
+            />
+            <h3 className="mt-5 text-4xl font-extrabold text-base-content">
+              {totalFemale() | 0}
+            </h3>
+            <p className="mt-3 font-semibold text-base-content">Female</p>
+          </div>
+          <div className="rounded-md border-b-4 border-primary bg-base-200 p-4 text-center font-notosanslao">
+            <img
+              className="inline-block w-12 fill-primary"
+              src={activeuser}
+              alt="icon"
+            />
+            <h3 className="mt-5 text-4xl font-extrabold text-base-content">
+              {totalActive() | 0}
+            </h3>
+            <p className="mt-3 font-semibold text-base-content">User</p>
+          </div>
         </div>
       </div>
     </>

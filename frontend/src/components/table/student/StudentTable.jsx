@@ -29,16 +29,6 @@ const UserTable = ({
   columnHead = STUDENT_COLUMNS,
 }) => {
   const { pathname } = useLocation();
-  const [totalUsers, setTotalUsers] = useState(0);
-  const [totalMale, setTotalMale] = useState(0);
-  const [totalFemale, setTotalFemale] = useState(0);
-  const [totalDegree, setTotalDegree] = useState({
-    associate: 0,
-    bachelor: 0,
-    master: 0,
-    dotoral: 0,
-  });
-
   const isRenderField = (renderFields, passedField) => {
     return renderFields.includes(passedField.toString());
   };
@@ -71,26 +61,6 @@ const UserTable = ({
   };
 
   useEffect(() => {
-    setTotalUsers(rows.length);
-    const maleCount = rows.filter(
-      (user) => user.original.gender === "male",
-    ).length;
-    const femaleCount = rows.filter(
-      (user) => user.original.gender === "female",
-    ).length;
-    setTotalMale(maleCount);
-    setTotalFemale(femaleCount);
-    setTotalDegree({
-      bachelor: rows.filter(
-        (user) => user.original.degree?.vietDegree?.toLowerCase() === "cử nhân",
-      ).length,
-      master: rows.filter(
-        (user) => user.original.degree?.vietDegree?.toLowerCase() === "thạc sĩ",
-      ).length,
-    });
-  }, [rows]);
-
-  useEffect(() => {
     if (status.remove === "succeeded") {
       toast.success("Deleted announcement");
       dispatch(userReset());
@@ -116,48 +86,7 @@ const UserTable = ({
           handleClick={handleDeletUser}
         />
       )}
-      <div className="stats my-4 w-full font-notosanslao shadow">
-        <div className="stat place-items-center bg-base-200">
-          <div className="stat-title text-lg">ນຮ ທັງໝົດ</div>
-          <div className="stat-value">
-            {totalUsers}
-            <span className="ml-4 text-sm font-normal">ຄົນ</span>
-          </div>
-          {/* <div className="stat-desc">Jan 1st - Feb 1st</div> */}
-        </div>
-        <div className="stat place-items-center bg-base-200">
-          <div className="stat-title text-lg">ຍິງ</div>
-          <div className="stat-value">
-            {totalFemale}
-            <span className="ml-4 text-sm font-normal">ຄົນ</span>
-          </div>
-          {/* <div className="stat-desc">↗︎ 400 (22%)</div> */}
-        </div>
-        <div className="stat place-items-center bg-base-200">
-          <div className="stat-title text-lg">ຊາຍ</div>
-          <div className="stat-value">
-            {totalMale}
-            <span className="ml-4 text-sm font-normal">ຄົນ</span>
-          </div>
-          {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
-        </div>
-        <div className="stat place-items-center bg-base-200">
-          <div className="stat-title text-lg">ປ ຕີ</div>
-          <div className="stat-value">
-            {totalDegree.bachelor}
-            <span className="ml-4 text-sm font-normal">ຄົນ</span>
-          </div>
-          {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
-        </div>
-        <div className="stat place-items-center bg-base-200">
-          <div className="stat-title text-lg">ປ ໂທ</div>
-          <div className="stat-value">
-            {totalDegree.master}
-            <span className="ml-4 text-sm font-normal">ຄົນ</span>
-          </div>
-          {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
-        </div>
-      </div>
+
       <div className="mb-5 flex flex-wrap items-center gap-2">
         <Searchbox filter={globalFilter} setFilter={setGlobalFilter} />
         <div className="flex items-center gap-2">
@@ -431,11 +360,9 @@ const UserTable = ({
                             to={`/dashboard/student-list/student/${row.original._id}`}
                             className="btn btn-primary btn-outline btn-xs sm:btn-sm"
                           >
-                            ແກ້ໄຂ
                             <AiFillEdit size={15} />
                           </Link>
                           <button className="btn btn-error btn-outline btn-xs sm:btn-sm">
-                            ລົບ
                             <AiFillDelete size={15} />
                           </button>
                         </div>

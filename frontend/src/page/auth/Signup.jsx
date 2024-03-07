@@ -54,7 +54,7 @@ const Signup = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-login-background bg-cover bg-no-repeat">
       <div className="absolute h-full w-full bg-gradient-to-b from-black via-black/70 to-transparent"></div>
-      <div className="absolute w-96 rounded bg-base-200 p-8 shadow-md">
+      <div className="z-[1] mx-auto w-96 rounded bg-white p-8 shadow-md">
         <h1 className="mb-4 text-2xl font-bold">Student Signup</h1>
         <form onSubmit={handleSubmit(handleSignup)}>
           <div className="mb-4">
@@ -153,7 +153,7 @@ const Signup = () => {
               </button>
             ) : (
               <button type="submit" className={`btn btn-primary flex-grow`}>
-                sign up
+                Sign Up
               </button>
             )}
           </div>

@@ -114,22 +114,7 @@ const StudentList = () => {
             userStatus={userStatus}
             userError={userStatus}
           />
-          {/* {users.map((user) => (
-            <div key={user._id} className="">
-              <div className="avatar">
-                <div className="w-24 rounded-xl">
-                  <img src={user.profileImg} />
-                </div>
-              </div>
-              <span>{user.fullname.laoName}</span>
-            </div>
-          ))} */}
           <Paginate
-            // setCurrentPage={setCurrentPage}
-            // currentPage={currentPage}
-            // total={total}
-            // itemsPerPage={itemsPerPage}
-
             path="/dashboard/student-list/page/"
             style="mt-10"
             page={page}
