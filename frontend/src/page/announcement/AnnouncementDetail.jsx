@@ -14,8 +14,10 @@ const AnnouncementDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { announcements, status } = useSelector((state) => state.announcement);
-  const announcement = announcements[0];
+  const { singleAnnouncement, status } = useSelector(
+    (state) => state.announcement,
+  );
+  const announcement = singleAnnouncement;
   const onCloseModal = () => {
     navigate(-1);
   };
@@ -54,14 +56,16 @@ const AnnouncementDetail = () => {
                 className="mt-6 flex flex-wrap justify-center gap-2"
                 aria-label="Tags"
               >
-                {announcement.category.map((item, index) => (
-                  <button
-                    key={index}
-                    className="rounded-lg bg-gray-100 px-2 py-1 font-medium text-gray-600 hover:bg-gray-200"
-                  >
-                    {item}
-                  </button>
-                ))}
+                {announcement &&
+                  announcement.lenght > 0 &&
+                  announcement.category.map((item, index) => (
+                    <button
+                      key={index}
+                      className="rounded-lg bg-gray-100 px-2 py-1 font-medium text-gray-600 hover:bg-gray-200"
+                    >
+                      {item}
+                    </button>
+                  ))}
               </div>
               <img
                 className="mt-10 w-full object-contain sm:h-[34rem]"
@@ -71,9 +75,6 @@ const AnnouncementDetail = () => {
               />
             </header>
             <div className="mx-auto mt-10 max-w-screen-md space-y-12 px-4 py-10 text-lg tracking-wide text-gray-700">
-              {/* <strong className="text-2xl font-medium">
-                {announcement.content}
-              </strong> */}
               <p>{announcement.content}</p>
             </div>
           </article>
@@ -86,7 +87,7 @@ const AnnouncementDetail = () => {
             aria-label="Related Articles"
             className="mx-auto mt-10 max-w-screen-xl py-20"
           >
-            {/* <AnnouncementRelated /> */}
+            <AnnouncementRelated />
           </aside>
         </section>
       )}

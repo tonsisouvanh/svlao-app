@@ -4,6 +4,7 @@ axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
 
 const initialState = {
   announcements: [],
+  singleAnnouncement: {},
   status: {
     fetchAll: "idle" | "loading" | "succeeded" | "failed",
     fetchOne: "idle" | "loading" | "succeeded" | "failed",
@@ -204,7 +205,7 @@ const announcementSlice = createSlice({
       })
       .addCase(getAnnouncementById.fulfilled, (state, action) => {
         state.status.fetchOne = "succeeded";
-        state.announcements = [{ ...action.payload }];
+        state.singleAnnouncement = { ...action.payload };
       })
       .addCase(getAnnouncementById.rejected, (state, action) => {
         state.status.fetchOne = "failed";

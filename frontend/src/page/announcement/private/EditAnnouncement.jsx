@@ -27,7 +27,7 @@ const EditAnnouncement = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const { status, error, announcements } = useSelector(
+  const { status, error, singleAnnouncement } = useSelector(
     (state) => state.announcement,
   );
 
@@ -40,10 +40,10 @@ const EditAnnouncement = () => {
     control,
   } = useForm({
     defaultValues: {
-      id: announcements[0]?._id,
-      title: announcements[0]?.title,
-      content: announcements[0]?.content,
-      image: announcements[0]?.image,
+      id: singleAnnouncement?._id,
+      title: singleAnnouncement?.title,
+      content: singleAnnouncement?.content,
+      image: singleAnnouncement?.image,
     },
   });
 
@@ -65,18 +65,18 @@ const EditAnnouncement = () => {
       const addImage = base64 ? [base64] : null;
       const formattedData = {
         ...data,
-        image: addImage ? addImage : announcements[0].image,
+        image: addImage ? addImage : singleAnnouncement.image,
         category: data.category.map((item) => item.value),
       };
       dispatch(
-        updateAnnouncement({ ...formattedData, _id: announcements[0]?._id }),
+        updateAnnouncement({ ...formattedData, _id: singleAnnouncement?._id }),
       );
       setToggleEdit(false);
     } else toast.warning("Input data not valid");
   };
 
   const handleDelete = () => {
-    dispatch(removeAnnouncement(announcements[0]?._id));
+    dispatch(removeAnnouncement(singleAnnouncement?._id));
   };
 
   useEffect(() => {
@@ -98,21 +98,21 @@ const EditAnnouncement = () => {
   useEffect(() => {
     if (status.fetchOne === "succeeded") {
       reset({
-        id: announcements[0]?._id,
-        title: announcements[0]?.title,
-        content: announcements[0]?.content,
-        image: announcements[0]?.image,
+        id: singleAnnouncement?._id,
+        title: singleAnnouncement?.title,
+        content: singleAnnouncement?.content,
+        image: singleAnnouncement?.image,
       });
     } else if (status.fetchOne === "failed") {
       toast.error(error);
     }
-  }, [status.fetchOne, reset, announcements, error]);
+  }, [status.fetchOne, reset, singleAnnouncement, error]);
   useEffect(() => {
     setValue(
       "category",
-      announcements[0]?.category?.map((c) => ({ value: c, label: c })),
+      singleAnnouncement?.category?.map((c) => ({ value: c, label: c })),
     );
-  }, [announcements, setValue]);
+  }, [singleAnnouncement, setValue]);
   if (status.update === "loading") {
     return <Spinner />;
   }
@@ -122,8 +122,8 @@ const EditAnnouncement = () => {
   return (
     <>
       <section className="relative">
-        {announcements[0] &&
-        announcements.length > 0 &&
+        {singleAnnouncement &&
+        singleAnnouncement &&
         status.fetchAll !== "loading" ? (
           <div className="container mx-auto px-5 py-24">
             <div className="mb-12 flex w-full flex-col text-center">
@@ -132,7 +132,7 @@ const EditAnnouncement = () => {
                 Edit announcement
               </h1>
               <div>
-                <p className="text-xs">{announcements[0]?._id}</p>
+                <p className="text-xs">{singleAnnouncement?._id}</p>
               </div>
             </div>
             <div className="mx-auto">
@@ -222,7 +222,7 @@ const EditAnnouncement = () => {
                           </button>
                           <img
                             src={base64}
-                            alt={announcements[0]?.title || "image"}
+                            alt={singleAnnouncement?.title || "image"}
                           />
                         </div>
                       </div>
@@ -230,8 +230,8 @@ const EditAnnouncement = () => {
                       <div className="avatar">
                         <div className="w-64 rounded">
                           <img
-                            src={announcements[0]?.image}
-                            alt={announcements[0]?.title || "image"}
+                            src={singleAnnouncement?.image}
+                            alt={singleAnnouncement?.title || "image"}
                           />
                         </div>
                       </div>

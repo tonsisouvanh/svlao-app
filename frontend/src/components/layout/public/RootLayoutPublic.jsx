@@ -3,6 +3,8 @@ import Sidebar from "../Sidebar";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
+import ScrollToTop from "../../ScrollToTop";
+import ScrollToTopButton from "../../ScrollToTopButton";
 
 function RootLayoutPublic() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -32,7 +34,6 @@ function RootLayoutPublic() {
                 <Outlet />
               </div>
             </main>
-
             <Footer />
             {/* <!-- ===== Main Content End ===== --> */}
           </div>

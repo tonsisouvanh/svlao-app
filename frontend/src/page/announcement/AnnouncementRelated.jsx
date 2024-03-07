@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listAnnouncements } from "../../feature/announcement/AnnouncementSlice";
 import Spinner from "../../components/ui/Spinner";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const AnnouncementRelated = () => {
   const { id } = useParams();
@@ -10,6 +10,7 @@ const AnnouncementRelated = () => {
   const { announcements, status } = useSelector((state) => state.announcement);
   const announcementData = announcements
     .filter((announcement) => announcement._id !== id)
+    .sort(() => Math.random() - Math.random())
     .slice(0, 3);
   useEffect(() => {
     dispatch(listAnnouncements({}));
@@ -29,7 +30,7 @@ const AnnouncementRelated = () => {
             key={announcement._id}
             className="mx-auto my-4 flex flex-col overflow-hidden rounded-lg border border-gray-300 bg-white text-gray-900 transition hover:translate-y-2 hover:shadow-lg"
           >
-            <a href="#">
+            <Link to={`/announcement-list/announcement/${announcement._id}`}>
               <img
                 src={announcement.image}
                 className="h-56 w-full object-cover"
@@ -59,9 +60,9 @@ const AnnouncementRelated = () => {
                 <p className="mb-4 line-clamp-3 text-base font-light">
                   {announcement.content}
                 </p>
-                <span className="btn btn-neutral btn-md btn-wide">ອ່ານ</span>
+                <span className="btn btn-neutral btn-md">ອ່ານ</span>
               </div>
-            </a>
+            </Link>
           </article>
         ))}
       </div>
