@@ -59,7 +59,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
   // close if the esc key is pressed
   useEffect(() => {
-    console.log(t("Sidebar.menu.headline"));
     const keyHandler = ({ keyCode }) => {
       if (!sidebarOpen || keyCode !== 27) return;
       setSidebarOpen(false);
@@ -126,7 +125,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         <React.Fragment>
                           <NavLink
                             to="#"
-                            className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao font-semibold duration-300 ease-in-out ${
+                            className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-notosanslao font-semibold duration-300 ease-in-out ${
                               pathname.includes("dashboard") &&
                               "rounded-md bg-primary-focus text-white"
                             }`}
@@ -201,7 +200,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         <React.Fragment>
                           <NavLink
                             to="#"
-                            className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-notosanslao font-semibold duration-300 ease-in-out ${
+                            className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-notosanslao font-semibold duration-300 ease-in-out ${
                               pathname.includes("manage-others-data") &&
                               "rounded-md bg-primary-focus text-white"
                             }`}
@@ -304,9 +303,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <li>
                 <NavLink
                   to="/formal-organization"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60 ${
-                    pathname.includes("settings") &&
-                    "bg-graydark dark:bg-meta-4"
+                  className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60 ${
+                    pathname === "/formal-organization" &&
+                    "rounded-md bg-primary-focus text-white"
                   }`}
                 >
                   {/* <AiOutlineAudit size={23} /> */}
@@ -328,8 +327,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <li>
                 <NavLink
                   to="/document-form-list"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60 ${
-                    pathname.includes("/") && "bg-graydark dark:bg-meta-4"
+                  className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60 ${
+                    pathname === "/document-form-list" &&
+                    "rounded-md bg-primary-focus text-white"
                   }`}
                 >
                   {/* <AiFillBook size={23} /> */}
@@ -340,7 +340,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <li>
                 <NavLink
                   to="/"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60 ${
+                  className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60 ${
                     pathname === "/" && "rounded-md bg-primary-focus text-white"
                   }`}
                 >

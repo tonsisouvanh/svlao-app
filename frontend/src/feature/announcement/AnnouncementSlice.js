@@ -117,10 +117,6 @@ export const listAnnouncements = createAsyncThunk(
           Authorization: `Bearer ${auth.token}`,
         },
       };
-      // const url =
-      //   pageNumber === 0
-      //     ? `/api/announcements`
-      //     : `/api/announcements?keyword=${keyword}&pageNumber=${pageNumber}`;
       const url = `/api/announcements?keyword=${keyword}&pageNumber=${pageNumber}`;
       const { data } = await axios.get(url, config);
       return data;
