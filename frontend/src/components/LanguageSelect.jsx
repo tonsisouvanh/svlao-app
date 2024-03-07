@@ -3,14 +3,14 @@ import { useTranslation } from "react-i18next";
 import images from "../assets/img/index";
 const options = [
   {
-    value: "en",
-    text: "ENG",
-    img: images.english,
-  },
-  {
     value: "la",
     text: "LA",
     img: images.laos,
+  },
+  {
+    value: "en",
+    text: "ENG",
+    img: images.english,
   },
   {
     value: "vn",

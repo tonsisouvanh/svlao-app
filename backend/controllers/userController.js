@@ -319,7 +319,7 @@ const deleteUser = asyncHandler(async (req, res) => {
   if (user) {
     await User.deleteOne({ _id: req.params.id });
     const imageId = extractImageId(user.profileImg);
-    await deleteImage(imageId, opts);
+    if (imageId) await deleteImage(imageId, opts);
     res.json({ _id: req.params.id });
   } else {
     res.status(404);

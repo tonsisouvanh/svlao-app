@@ -9,7 +9,8 @@ import Paginate from "../../components/paginate/Paginate";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 import ScrollToTop from "../../components/ScrollToTop";
-
+import { replaceImage } from "../../utils/utils";
+import images from "../../assets/img/index";
 const AnnouncementPage = () => {
   const [t, i18n] = useTranslation("global");
   const { pageNumber, keyword } = useParams();
@@ -41,9 +42,6 @@ const AnnouncementPage = () => {
         <section className="body-font overflow-hidden">
           <div className="container mx-auto p-3">
             <div className="">
-              <h1 className="title-font mb-10 text-center font-notosanslao text-base font-bold sm:text-3xl">
-                {t("AnnouncePage.announceHeader") || "ແຈ້ງການຕ່າງໆ"}
-              </h1>
               <ActivitySlider
                 slides={[
                   "https://www.udn.vn/Portals/1/EasyDNNnews/11102/img-20.4.21.jpg",
@@ -52,58 +50,68 @@ const AnnouncementPage = () => {
                 ]}
               />
               <div className="mt-10">
+                <h2 className="mb-12 text-center text-3xl font-bold">
+                  {t("AnnouncePage.announceHeader") || "ແຈ້ງການຕ່າງໆ"}
+                </h2>
                 {status.fetchAll === "succeeded" && (
                   <>
                     {announcements.map((announcement) => (
                       <div
                         key={announcement._id}
-                        className="flex flex-wrap py-8 md:flex-nowrap"
+                        className="mb-6 flex flex-wrap"
                       >
-                        <div className="mb-6 flex flex-shrink-0 flex-col md:mb-0 md:w-64">
-                          <span className="title-font text-base-600 font-semibold">
-                            {t("AnnouncePage.announceLeftNoti") || "Announce"}
-                            <div className="indicator">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                                />
-                              </svg>
-                              <span className="badge indicator-item badge-primary badge-xs"></span>
-                            </div>
-                          </span>
-                          <span className="mt-1 text-sm text-gray-500">
-                            {new Date(
-                              announcement.timestamp,
-                            ).toLocaleDateString("en-US", {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            })}
-                          </span>
+                        <div className="mb-6 ml-auto w-full shrink-0 grow-0 basis-auto px-3 md:mb-0 md:w-3/12">
+                          <div
+                            className="relative mb-6 overflow-hidden rounded-lg bg-cover bg-no-repeat shadow-lg dark:shadow-black/20"
+                            data-te-ripple-init=""
+                            data-te-ripple-color="light"
+                          >
+                            <img
+                              className="w-full"
+                              src={announcement.image}
+                              alt={announcement.title}
+                              onError={(error) =>
+                                replaceImage(error, images.defaultImage)
+                              }
+                            />
+                            <Link
+                              to={`/announcement-list/announcement/${announcement._id}`}
+                            >
+                              <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98.4%,.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
+                            </Link>
+                          </div>
                         </div>
-                        <div className="md:flex-grow">
-                          <h2 className="title-font mb-2 text-2xl font-bold">
+                        <div className="mb-6 mr-auto w-full shrink-0 grow-0 basis-auto px-3 md:mb-0 md:w-9/12 xl:w-7/12">
+                          <h5 className="mb-3 text-lg font-bold">
                             {announcement.title}
-                          </h2>
-                          <p className="truncate leading-relaxed">
+                          </h5>
+                          <div className="flex items-center gap-4">
+                            {announcement.category.map((item) => (
+                              <div
+                                key={item}
+                                className="text-sm font-medium text-primary"
+                              >
+                                {item}
+                              </div>
+                            ))}
+                          </div>
+                          <p className="mb-6 text-neutral-500">
+                            <small>
+                              Published{" "}
+                              <u>
+                                {new Date(
+                                  announcement.timestamp,
+                                ).toLocaleDateString("en-US", {
+                                  year: "numeric",
+                                  month: "short",
+                                  day: "numeric",
+                                })}
+                              </u>{" "}
+                            </small>
+                          </p>
+                          <p className="line-clamp-2 text-neutral-500">
                             {announcement.content}
                           </p>
-                          <Link
-                            to={`/announcement-list/announcement/${announcement._id}`}
-                            className="btn-link mt-4 inline-flex items-center text-primary-focus"
-                          >
-                            See more
-                            <AiOutlineArrowRight className="ml-2" />
-                          </Link>
                         </div>
                       </div>
                     ))}

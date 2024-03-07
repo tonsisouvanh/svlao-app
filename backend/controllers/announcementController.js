@@ -166,7 +166,9 @@ const deleteAnnouncement = asyncHandler(async (req, res) => {
   if (announcement) {
     await Announcement.deleteOne({ _id: req.params.id });
     const imageId = extractImageId(announcement.image);
-    await deleteImage(imageId, opts);
+    if (imageId) {
+      await deleteImage(imageId, opts);
+    }
     res.json({ _id: req.params.id });
   } else {
     res.status(404);

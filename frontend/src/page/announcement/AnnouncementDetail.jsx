@@ -5,12 +5,9 @@ import { getAnnouncementById } from "../../feature/announcement/AnnouncementSlic
 import Spinner from "../../components/ui/Spinner";
 import FetchErrorModal from "../../components/modal/FetchErrorModal";
 import consule from "../../assets/img/consule.jpg";
-import { FaArrowCircleLeft } from "react-icons/fa";
 import { formatDateDDMMYYYY, replaceImage } from "../../utils/utils";
 import AnnouncementRelated from "./AnnouncementRelated";
 const AnnouncementDetail = () => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const { pathname } = useLocation();
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -47,7 +44,11 @@ const AnnouncementDetail = () => {
           <article>
             <header className="mx-auto max-w-screen-xl pt-28 text-center">
               <p className="text-gray-500">
-                {formatDateDDMMYYYY(announcement.timestamp)}
+                {new Date(announcement.timestamp).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
               </p>
               <h1 className="mt-2 text-3xl font-bold text-gray-900 sm:text-5xl">
                 {announcement.title}

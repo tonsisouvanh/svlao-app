@@ -28,7 +28,7 @@ const AnnouncementRelated = () => {
         {announcementData.map((announcement) => (
           <article
             key={announcement._id}
-            className="mx-auto my-4 flex flex-col overflow-hidden rounded-lg border border-gray-300 bg-white text-gray-900 transition hover:translate-y-2 hover:shadow-lg"
+            className="mx-auto my-4 flex w-full flex-col overflow-hidden rounded-lg border border-gray-300 bg-white text-gray-900 transition hover:translate-y-2 hover:shadow-lg"
           >
             <Link to={`/announcement-list/announcement/${announcement._id}`}>
               <img
@@ -54,7 +54,7 @@ const AnnouncementRelated = () => {
                   </svg>
                   {announcement.category[0]}
                 </span>
-                <h3 className="mb-3 mt-4 text-xl font-semibold xl:text-2xl">
+                <h3 className="mb-3 mt-4 line-clamp-2 text-xl font-semibold xl:text-2xl">
                   {announcement.title}
                 </h3>
                 <p className="mb-4 line-clamp-3 text-base font-light">

@@ -25,8 +25,6 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
   const { announcements, status } = useSelector((state) => state.announcement);
 
   const dispatch = useDispatch();
-  const [openModal, setOpenModal] = useState(false);
-  const [deletedAnnouncementId, setDeletedAnnouncementId] = useState("");
   const data = useMemo(() => announcements, [announcements]);
   const columns = useMemo(() => ANNOUNCEMENT_COLUMNS, []);
   const {
@@ -40,14 +38,15 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
   } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
 
   const { globalFilter } = state;
-  const handleOpenModal = (id) => {
-    setDeletedAnnouncementId(id);
-    setOpenModal(true);
-  };
-  const handleDeletAnnouncement = () => {
-    dispatch(removeAnnouncement(deletedAnnouncementId));
-    setDeletedAnnouncementId("");
-    setOpenModal(false);
+
+  const handleDeleteAnnouncement = (id) => {
+    const confirmed = window.confirm("Are you sure you want to delete");
+
+    if (confirmed) {
+      dispatch(removeAnnouncement(id));
+    } else {
+      console.log("Reset canceled");
+    }
   };
 
   useEffect(() => {
@@ -71,19 +70,6 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
         <Spinner />
       ) : (
         <>
-          {openModal && (
-            <InfoModal
-              title={"Delete announcement"}
-              modaltype={"question"}
-              desc={
-                "This announcement data will be perminently delete, are you sure?"
-              }
-              initialValue={true}
-              isOnclickEvent={true}
-              confirmLabel={"Delete"}
-              handleClick={handleDeletAnnouncement}
-            />
-          )}
           <div className="mb-5 flex flex-wrap items-center gap-2">
             <Searchbox filter={globalFilter} setFilter={setGlobalFilter} />
             <Link to="/manage-others-data/announcement-list/search/all">
@@ -148,7 +134,7 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
                             <button
                               type="button"
                               onClick={() =>
-                                handleOpenModal(row?.original?._id)
+                                handleDeleteAnnouncement(row?.original?._id)
                               }
                               className="btn btn-error btn-outline btn-xs sm:btn-sm"
                             >
