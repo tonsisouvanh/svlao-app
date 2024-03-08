@@ -7,10 +7,8 @@ import {
   AiFillCaretUp,
   AiFillDelete,
   AiFillEdit,
-  AiOutlineMore,
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import InfoModal from "../../modal/InfoModal";
 import Searchbox from "../../input/student/Searchbox";
 import {
   announcementReset,
