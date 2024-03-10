@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getAnnouncementById } from "../../feature/announcement/AnnouncementSlice";
 import Spinner from "../../components/ui/Spinner";
 import FetchErrorModal from "../../components/modal/FetchErrorModal";
 import consule from "../../assets/img/consule.jpg";
-import { formatDateDDMMYYYY, replaceImage } from "../../utils/utils";
+import { replaceImage } from "../../utils/utils";
 import AnnouncementRelated from "./AnnouncementRelated";
 const AnnouncementDetail = () => {
   const { id } = useParams();
@@ -18,7 +18,6 @@ const AnnouncementDetail = () => {
   const onCloseModal = () => {
     navigate(-1);
   };
-
   useEffect(() => {
     dispatch(getAnnouncementById(id));
   }, [dispatch, id]);
@@ -44,17 +43,25 @@ const AnnouncementDetail = () => {
           <article>
             <header className="mx-auto max-w-screen-xl pt-28 text-center">
               <p className="text-gray-500">
+                Published on{" "}
                 {new Date(announcement.timestamp).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "short",
                   day: "numeric",
                 })}
               </p>
+              <div className="mx-auto mt-2 flex items-center justify-center gap-10">
+                {announcement.category.map((item) => (
+                  <div key={item} className="text-sm font-medium text-primary">
+                    {item}
+                  </div>
+                ))}
+              </div>
               <h1 className="mt-2 text-3xl font-bold text-gray-900 sm:text-5xl">
                 {announcement.title}
               </h1>
               <div
-                className="mt-6 flex flex-wrap justify-center gap-2"
+                className="flex flex-wrap justify-center gap-2"
                 aria-label="Tags"
               >
                 {announcement &&
@@ -76,7 +83,11 @@ const AnnouncementDetail = () => {
               />
             </header>
             <div className="mx-auto mt-10 max-w-screen-md space-y-12 px-4 py-10 text-lg tracking-wide text-gray-700">
-              <p>{announcement.content}</p>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: announcement.content,
+                }}
+              />
             </div>
           </article>
           <div className="mx-auto mt-10 flex w-fit space-x-2">

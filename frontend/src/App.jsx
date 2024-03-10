@@ -32,6 +32,7 @@ import EditDocument from "./page/document/private/EditDocument";
 import FormalOrganizationPage from "./page/FormalOrganizationPage";
 import Spinner from "./components/ui/Spinner";
 import { useSelector } from "react-redux";
+import "react-quill/dist/quill.snow.css";
 
 function App() {
   const { status } = useSelector((state) => state.auth);

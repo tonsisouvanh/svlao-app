@@ -13,6 +13,9 @@ import Spinner from "../../../components/ui/Spinner";
 import Select from "react-select";
 import { announcementCategoryList } from "../../../data/data";
 import ImageUpload from "../../../components/input/ImageUpload";
+
+import QuillEditor from "./QuillEditor";
+
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const AddAnnouncement = () => {
@@ -20,7 +23,6 @@ const AddAnnouncement = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-
   const { status, error } = useSelector((state) => state.announcement);
 
   const {
@@ -53,6 +55,7 @@ const AddAnnouncement = () => {
 
       const formattedData = {
         ...data,
+        content: data.quillContent,
         image: addImage ? addImage : [],
         category: data?.category?.map((item) => item.value) || [],
       };
@@ -69,6 +72,7 @@ const AddAnnouncement = () => {
       toast.warning("Input data not valid");
     }
   };
+
   return (
     <>
       <section className="relative">
@@ -118,11 +122,18 @@ const AddAnnouncement = () => {
                         error={errors?.content}
                       />
                     </div>
-                    <textarea
-                      {...register("content", {
-                        required: "Field required",
-                      })}
-                      className={`textarea textarea-bordered h-48 w-full max-w-full`}
+                    <Controller
+                      name="quillContent"
+                      control={control}
+                      defaultValue=""
+                      render={({ field, fieldState }) => (
+                        <QuillEditor
+                          field={field}
+                          fieldState={fieldState}
+                          label="Content"
+                          placeholder="Type your content here..."
+                        />
+                      )}
                     />
                   </label>
                 </div>

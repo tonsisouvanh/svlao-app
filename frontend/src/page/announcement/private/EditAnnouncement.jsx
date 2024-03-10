@@ -16,6 +16,7 @@ import Spinner from "../../../components/ui/Spinner";
 import { announcementCategoryList } from "../../../data/data";
 import ImageUpload from "../../../components/input/ImageUpload";
 import { AiFillEye, AiFillFileImage } from "react-icons/ai";
+import QuillEditor from "./QuillEditor";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const EditAnnouncement = () => {
@@ -65,6 +66,7 @@ const EditAnnouncement = () => {
       const addImage = base64 ? [base64] : null;
       const formattedData = {
         ...data,
+        content: data.quillContent,
         image: addImage ? addImage : singleAnnouncement.image,
         category: data.category.map((item) => item.value),
       };
@@ -173,11 +175,24 @@ const EditAnnouncement = () => {
                         error={errors?.content}
                       />
                     </div>
-                    <textarea
+                    {/* <textarea
                       {...register("content", {
                         required: "Field required",
                       })}
                       className={`textarea textarea-bordered h-48 w-full max-w-full`}
+                    /> */}
+                    <Controller
+                      name="quillContent"
+                      control={control}
+                      defaultValue={singleAnnouncement?.content}
+                      render={({ field, fieldState }) => (
+                        <QuillEditor
+                          field={field}
+                          fieldState={fieldState}
+                          label="Content"
+                          placeholder="Type your content here..."
+                        />
+                      )}
                     />
                   </label>
                 </div>
