@@ -7,6 +7,7 @@ import {
   updateAnnouncement,
   createAnnouncement,
   insertManyAnnouncements,
+  countViews,
 } from "../controllers/announcementController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 
@@ -19,6 +20,7 @@ router
   .route("/:id")
   .delete(protect, admin, deleteAnnouncement)
   .get(getAnnouncementById)
-  .put(protect, admin, updateAnnouncement);
+  .put(protect, admin, updateAnnouncement)
+  .post(countViews);
 
 export default router;

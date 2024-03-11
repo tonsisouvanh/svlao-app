@@ -160,6 +160,32 @@ export const getAnnouncementById = createAsyncThunk(
   },
 );
 
+export const countViews = createAsyncThunk(
+  "announcements/countVies",
+  async (announcementId, thunkAPI) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        `/api/announcements/${announcementId}`,
+        config,
+      );
+      return data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  },
+);
+
 const resetStatus = (state) => {
   state.status = {
     fetchAll: "idle",
@@ -211,6 +237,22 @@ const announcementSlice = createSlice({
         state.status.fetchOne = "failed";
         setError(state, action);
       })
+
+      // Count views
+      // .addCase(countViews.pending, (state) => {
+      //   state.status.create = "loading";
+      // })
+      .addCase(countViews.fulfilled, (state, action) => {
+        // state.status.create = "succeeded";
+        state.singleAnnouncement = {
+          ...state.singleAnnouncement,
+          views: action.payload.views,
+        };
+      })
+      // .addCase(countViews.rejected, (state, action) => {
+      //   state.status.create = "failed";
+      //   setError(state, action);
+      // })
 
       // ADD
       .addCase(createAnnouncement.pending, (state) => {

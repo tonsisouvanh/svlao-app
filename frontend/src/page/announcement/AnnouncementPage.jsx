@@ -1,7 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import InfoModal from "../../components/modal/InfoModal";
 import ActivitySlider from "../../components/slider/ActivitySlider";
-import { listAnnouncements } from "../../feature/announcement/AnnouncementSlice";
+import {
+  countViews,
+  listAnnouncements,
+} from "../../feature/announcement/AnnouncementSlice";
 import { useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import Spinner from "../../components/ui/Spinner";
@@ -11,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import ScrollToTop from "../../components/ScrollToTop";
 import { replaceImage } from "../../utils/utils";
 import images from "../../assets/img/index";
+import { FaEye } from "react-icons/fa";
 const AnnouncementPage = () => {
   const [t, i18n] = useTranslation("global");
   const { pageNumber, keyword } = useParams();
@@ -75,6 +79,9 @@ const AnnouncementPage = () => {
                               }
                             />
                             <Link
+                              onClick={() =>
+                                dispatch(countViews(announcement._id))
+                              }
                               to={`/announcement-list/announcement/${announcement._id}`}
                             >
                               <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98.4%,.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100"></div>
@@ -95,7 +102,7 @@ const AnnouncementPage = () => {
                               </div>
                             ))}
                           </div>
-                          <p className="mb-6 text-neutral-500">
+                          <div className="mb-6 flex items-center gap-10 text-neutral-500">
                             <small>
                               Published{" "}
                               <u>
@@ -108,10 +115,19 @@ const AnnouncementPage = () => {
                                 })}
                               </u>{" "}
                             </small>
-                          </p>
-                          <p className="line-clamp-2 text-neutral-500">
-                            {announcement.content}
-                          </p>
+                            <p className="flex items-center justify-center gap-2">
+                              <FaEye size={10} className="text-gray-500" />{" "}
+                              <span className="text-sm">
+                                {announcement.views}
+                              </span>
+                            </p>
+                          </div>
+                          <p
+                            className="line-clamp-2 text-neutral-500"
+                            dangerouslySetInnerHTML={{
+                              __html: announcement.content,
+                            }}
+                          />
                         </div>
                       </div>
                     ))}

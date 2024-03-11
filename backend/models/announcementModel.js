@@ -17,6 +17,10 @@ const announcementSchema = new mongoose.Schema({
     type: String,
     default: "http://#",
   },
+  views: {
+    type: Number,
+    default: 0,
+  },
   timestamp: {
     type: Date,
     default: Date.now,

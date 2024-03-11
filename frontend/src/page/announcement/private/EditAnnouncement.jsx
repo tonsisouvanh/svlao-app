@@ -22,6 +22,7 @@ const inputStyle = "input input-bordered w-full text-base-content/80";
 const EditAnnouncement = () => {
   const [base64, setBase64] = useState(null);
   const [uploadImageToggle, setuploadImageToggle] = useState(false);
+  const [toggleEdit, setToggleEdit] = useState(false);
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -48,7 +49,6 @@ const EditAnnouncement = () => {
     },
   });
 
-  const [toggleEdit, setToggleEdit] = useState(false);
 
   useEffect(() => {
     if (status.update === "succeeded") {
@@ -102,13 +102,15 @@ const EditAnnouncement = () => {
       reset({
         id: singleAnnouncement?._id,
         title: singleAnnouncement?.title,
-        content: singleAnnouncement?.content,
+        quillContent: singleAnnouncement?.content,
         image: singleAnnouncement?.image,
       });
     } else if (status.fetchOne === "failed") {
       toast.error(error);
     }
   }, [status.fetchOne, reset, singleAnnouncement, error]);
+
+
   useEffect(() => {
     setValue(
       "category",

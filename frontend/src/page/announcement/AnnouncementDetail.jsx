@@ -7,6 +7,8 @@ import FetchErrorModal from "../../components/modal/FetchErrorModal";
 import consule from "../../assets/img/consule.jpg";
 import { replaceImage } from "../../utils/utils";
 import AnnouncementRelated from "./AnnouncementRelated";
+import { FaEye } from "react-icons/fa";
+import ReactQuill from "react-quill";
 const AnnouncementDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -38,20 +40,30 @@ const AnnouncementDetail = () => {
 
   return (
     <>
-      {announcement && (
+      {announcement ? (
         <section className="body-font text-primary-600">
           <article>
             <header className="mx-auto max-w-screen-xl pt-28 text-center">
-              <p className="text-gray-500">
-                Published on{" "}
-                {new Date(announcement.timestamp).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
-              </p>
-              <div className="mx-auto mt-2 flex items-center justify-center gap-10">
-                {announcement.category.map((item) => (
+              <div className="flex items-center justify-center gap-5">
+                <p className="text-gray-500">
+                  Published on{" "}
+                  {new Date(announcement.timestamp).toLocaleDateString(
+                    "en-US",
+                    {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    },
+                  )}
+                </p>
+                <div className="flex items-center justify-center gap-2">
+                  <FaEye className="text-gray-500" />{" "}
+                  <span>{announcement.views}</span>
+                </div>
+              </div>
+
+              <div className="mx-auto mb-10 mt-2 flex items-center justify-center gap-10">
+                {announcement?.category?.map((item) => (
                   <div key={item} className="text-sm font-medium text-primary">
                     {item}
                   </div>
@@ -60,21 +72,6 @@ const AnnouncementDetail = () => {
               <h1 className="mt-2 text-3xl font-bold text-gray-900 sm:text-5xl">
                 {announcement.title}
               </h1>
-              <div
-                className="flex flex-wrap justify-center gap-2"
-                aria-label="Tags"
-              >
-                {announcement &&
-                  announcement.lenght > 0 &&
-                  announcement.category.map((item, index) => (
-                    <button
-                      key={index}
-                      className="rounded-lg bg-gray-100 px-2 py-1 font-medium text-gray-600 hover:bg-gray-200"
-                    >
-                      {item}
-                    </button>
-                  ))}
-              </div>
               <img
                 className="mt-10 w-full object-contain sm:h-[34rem]"
                 alt={announcement.title}
@@ -83,10 +80,10 @@ const AnnouncementDetail = () => {
               />
             </header>
             <div className="mx-auto mt-10 max-w-screen-md space-y-12 px-4 py-10 text-lg tracking-wide text-gray-700">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: announcement.content,
-                }}
+              <ReactQuill
+                theme="bubble"
+                value={announcement.content}
+                readOnly={true}
               />
             </div>
           </article>
@@ -102,6 +99,8 @@ const AnnouncementDetail = () => {
             <AnnouncementRelated />
           </aside>
         </section>
+      ) : (
+        <p>Error laading data</p>
       )}
     </>
   );

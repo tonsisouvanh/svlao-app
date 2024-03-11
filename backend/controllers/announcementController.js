@@ -189,6 +189,18 @@ const getAnnouncementById = asyncHandler(async (req, res) => {
   }
 });
 
+const countViews = asyncHandler(async (req, res) => {
+  const announcement = await Announcement.findById(req.params.id);
+  if (announcement) {
+    announcement.views += 1;
+    await announcement.save();
+    res.json({ views: announcement.views, announcementId: announcement._id });
+  } else {
+    res.status(404);
+    throw new Error("Announcement not found");
+  }
+});
+
 export {
   getAnnouncements,
   deleteAnnouncement,
@@ -196,4 +208,5 @@ export {
   updateAnnouncement,
   createAnnouncement,
   insertManyAnnouncements,
+  countViews,
 };

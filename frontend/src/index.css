@@ -11,6 +11,8 @@ body {
 
 .ql-container {
   @apply min-h-[10em];
+  font-size: 18px;
+  font-family: "notosanslao", sans-serif;
 }
 
 .btn {
