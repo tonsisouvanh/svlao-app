@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
+import axios from "../../../../backend/utils/axiosConfig";
 
 const initialState = {
   majors: [],
@@ -26,7 +25,7 @@ export const createMajor = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.post("/api/majors", inputData, config);
+      const { data } = await axios.post("/majors", inputData, config);
       return { data };
     } catch (error) {
       const message =
@@ -53,7 +52,7 @@ export const updateMajor = createAsyncThunk(
       };
 
       const { data } = await axios.put(
-        `/api/majors/${inputData._id}`,
+        `/majors/${inputData._id}`,
         {
           ...inputData,
         },
@@ -83,7 +82,7 @@ export const removeMajor = createAsyncThunk(
           Authorization: `Bearer ${auth.token}`,
         },
       };
-      const res = await axios.delete(`/api/majors/${majorId}`, config);
+      const res = await axios.delete(`/majors/${majorId}`, config);
       const _id = res.data._id;
       return _id;
     } catch (error) {
@@ -102,7 +101,7 @@ export const listMajor = createAsyncThunk(
   "majors/listMajor",
   async (thunkAPI) => {
     try {
-      const { data } = await axios.get(`/api/majors`);
+      const { data } = await axios.get(`/majors`);
       return data;
     } catch (error) {
       const message =
@@ -126,7 +125,7 @@ export const getMajorById = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(`/api/majors/${majorId}`, config);
+      const { data } = await axios.get(`/majors/${majorId}`, config);
       return data;
     } catch (error) {
       const message =

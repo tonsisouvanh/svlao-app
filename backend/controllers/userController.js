@@ -114,13 +114,7 @@ const registerUser = asyncHandler(async (req, res) => {
   });
   if (user) {
     const { password, ...userWithoutPassword } = user._doc;
-    // const token = generateToken(user._id);
-
-    // await Token.create({
-    //   userId: user._id,
-    //   token: token,
-    // });
-
+    
     res.status(201).json({
       _id: user._id,
       ...userWithoutPassword,

@@ -13,16 +13,18 @@ import global_vn from "./translations/vn/global_vn.json";
 import global_la from "./translations/la/global_la.json";
 i18next.init({
   interpolation: { escapeValue: false },
-  lng: "en",
+  lng: localStorage.getItem("language")
+    ? localStorage.getItem("language")
+    : "la",
   resources: {
+    la: {
+      global: global_la,
+    },
     en: {
       global: global_en,
     },
     vn: {
       global: global_vn,
-    },
-    la: {
-      global: global_la,
     },
   },
 });

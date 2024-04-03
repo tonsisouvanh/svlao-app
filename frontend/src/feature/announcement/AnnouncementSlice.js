@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
+import axios from "../../../../backend/utils/axiosConfig";
 
 const initialState = {
   announcements: [],
@@ -29,7 +28,7 @@ export const createAnnouncement = createAsyncThunk(
         },
       };
       const { data } = await axios.post(
-        "/api/announcements",
+        "/announcements",
         inputData,
         config,
       );
@@ -59,7 +58,7 @@ export const updateAnnouncement = createAsyncThunk(
       };
 
       const { data } = await axios.put(
-        `/api/announcements/${inputData._id}`,
+        `/announcements/${inputData._id}`,
         {
           ...inputData,
         },
@@ -90,7 +89,7 @@ export const removeAnnouncement = createAsyncThunk(
         },
       };
       const res = await axios.delete(
-        `/api/announcements/${announcementId}`,
+        `/announcements/${announcementId}`,
         config,
       );
       const _id = res.data._id;
@@ -118,7 +117,7 @@ export const listAnnouncements = createAsyncThunk(
           Authorization: `Bearer ${auth.token}`,
         },
       };
-      const url = `/api/announcements?keyword=${keyword}&pageNumber=${pageNumber}`;
+      const url = `/announcements?keyword=${keyword}&pageNumber=${pageNumber}`;
       const { data } = await axios.get(url, config);
       return data;
     } catch (error) {
@@ -144,7 +143,7 @@ export const getAnnouncementById = createAsyncThunk(
       };
 
       const { data } = await axios.get(
-        `/api/announcements/${announcementId}`,
+        `/announcements/${announcementId}`,
         config,
       );
       return data;
@@ -170,7 +169,7 @@ export const countViews = createAsyncThunk(
         },
       };
       const { data } = await axios.post(
-        `/api/announcements/${announcementId}`,
+        `/announcements/${announcementId}`,
         config,
       );
       return data;

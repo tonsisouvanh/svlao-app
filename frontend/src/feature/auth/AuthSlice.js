@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { formatDate } from "../../utils/utils";
-axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
+import axios from "../../../../backend/utils/axiosConfig";
 
 const initialState = {
   auth: sessionStorage.getItem("authInfo")
@@ -29,7 +28,7 @@ export const signUp = createAsyncThunk(
       };
 
       await axios.post(
-        "/api/users",
+        "/users",
         { emailAddress, password, fullname },
         config,
       );
@@ -59,7 +58,7 @@ export const signIn = createAsyncThunk(
       };
 
       const { data } = await axios.post(
-        "/api/users/login",
+        "/users/login",
         { emailAddress, password },
         config,
       );
@@ -133,7 +132,7 @@ export const updateUserProfile = createAsyncThunk(
         // },
       };
       const { data } = await axios.put(
-        "/api/users/profile",
+        "/users/profile",
         {
           ...formattedData,
         },

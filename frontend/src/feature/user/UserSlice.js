@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
+import axios from "../../../../backend/utils/axiosConfig";
 
 const initialState = {
   users: [],
@@ -30,7 +29,7 @@ export const resetPassword = createAsyncThunk(
       };
 
       await axios.post(
-        `/api/users/resetPassword`,
+        `/users/resetPassword`,
         {
           userId: userData.userId,
           password: userData.newPassword,
@@ -64,12 +63,12 @@ export const listUsers = createAsyncThunk(
       };
       // const { data } = await axios.get(
       //   keyword || keyword === ""
-      //     ? `/api/users?keyword=${keyword}&pageNumber=${pageNumber}`
-      //     : `/api/users?keyword=${keyword}&pageNumber=${pageNumber}`,
+      //     ? `/users?keyword=${keyword}&pageNumber=${pageNumber}`
+      //     : `/users?keyword=${keyword}&pageNumber=${pageNumber}`,
       //   config,
       // );
       const { data } = await axios.get(
-        `/api/users?keyword=${keyword}&pageNumber=${pageNumber}`,
+        `/users?keyword=${keyword}&pageNumber=${pageNumber}`,
         config,
       );
       return data;
@@ -102,7 +101,7 @@ export const getFilteredUsers = createAsyncThunk(
         .map((key) => `${key}=${filter[key]}`)
         .join("&");
       const { data } = await axios.get(
-        `/api/users/filter?${queryString}`,
+        `/users/filter?${queryString}`,
         config,
       );
       return data;
@@ -137,7 +136,7 @@ export const updateUser = createAsyncThunk(
         },
       };
       const { data } = await axios.put(
-        `/api/users/${userData._id}`,
+        `/users/${userData._id}`,
         {
           ...formattedData,
         },
@@ -170,7 +169,7 @@ export const removeUser = createAsyncThunk(
           Authorization: `Bearer ${auth.token}`,
         },
       };
-      const res = await axios.delete(`/api/users/${id}`, config);
+      const res = await axios.delete(`/users/${id}`, config);
       const _id = res.data._id;
       return _id;
     } catch (error) {
@@ -199,7 +198,7 @@ export const createStudent = createAsyncThunk(
       };
 
       const { data } = await axios.post(
-        "/api/users/create",
+        "/users/create",
         studentData,
         config,
       );

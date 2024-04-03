@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
+import axios from "../../../../backend/utils/axiosConfig";
 
 const initialState = {
   residenceAddresses: [],
@@ -26,7 +25,7 @@ export const createResidenceAddress = createAsyncThunk(
       };
 
       const { data } = await axios.post(
-        "/api/residenceAddresses",
+        "/residenceAddresses",
         inputData,
         config,
       );
@@ -56,7 +55,7 @@ export const updateResidenceAddress = createAsyncThunk(
       };
 
       const { data } = await axios.put(
-        `/api/residenceAddresses/${inputData._id}`,
+        `/residenceAddresses/${inputData._id}`,
         {
           ...inputData,
         },
@@ -87,7 +86,7 @@ export const removeResidenceAddress = createAsyncThunk(
         },
       };
       const res = await axios.delete(
-        `/api/residenceAddresses/${residenceAddressId}`,
+        `/residenceAddresses/${residenceAddressId}`,
         config,
       );
       const _id = res.data._id;
@@ -108,7 +107,7 @@ export const listResidenceAddress = createAsyncThunk(
   "residenceAddresses/listResidenceAddress",
   async (thunkAPI) => {
     try {
-      const { data } = await axios.get(`/api/residenceAddresses`);
+      const { data } = await axios.get(`/residenceAddresses`);
       return data;
     } catch (error) {
       const message =
@@ -133,7 +132,7 @@ export const getResidenceAddressById = createAsyncThunk(
       };
 
       const { data } = await axios.get(
-        `/api/residenceAddresses/${residenceAddressId}`,
+        `/residenceAddresses/${residenceAddressId}`,
         config,
       );
       return data;

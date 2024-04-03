@@ -31,6 +31,7 @@ const LanguageSelect = () => {
   const handleLanguageChange = (value) => {
     i18n.changeLanguage(value);
     setSelectedValue(value);
+    localStorage.setItem("language", value);
     setIsOpen(false);
   };
 
@@ -49,7 +50,6 @@ const LanguageSelect = () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
-
   return (
     <div ref={divRef} className="relative min-w-fit">
       <div

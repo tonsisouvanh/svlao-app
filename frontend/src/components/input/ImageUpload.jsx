@@ -1,7 +1,5 @@
-import axios from "axios";
 import { useState } from "react";
 import assets from "../../assets/assets.gif";
-axios.defaults.baseURL = "http://localhost:5000";
 
 const ImageUpload = ({ setBase64 }) => {
   const [loading, setLoading] = useState(false);

@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
+import axios from "../../../../backend/utils/axiosConfig";
 
 const initialState = {
   documents: [],
@@ -28,7 +27,7 @@ export const createDocument = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.post("/api/documents", inputData, config);
+      const { data } = await axios.post("/documents", inputData, config);
       return { data };
     } catch (error) {
       const message =
@@ -55,7 +54,7 @@ export const updateDocument = createAsyncThunk(
       };
 
       const { data } = await axios.put(
-        `/api/documents/${inputData.id}`,
+        `/documents/${inputData.id}`,
         {
           ...inputData,
         },
@@ -85,7 +84,7 @@ export const removeDocument = createAsyncThunk(
           Authorization: `Bearer ${auth.token}`,
         },
       };
-      const res = await axios.delete(`/api/documents/${documentId}`, config);
+      const res = await axios.delete(`/documents/${documentId}`, config);
       const _id = res.data._id;
       return _id;
     } catch (error) {
@@ -112,7 +111,7 @@ export const listDocuments = createAsyncThunk(
         },
       };
       const { data } = await axios.get(
-        `/api/documents?keyword=${keyword}&pageNumber=${pageNumber}`,
+        `/documents?keyword=${keyword}&pageNumber=${pageNumber}`,
         config,
       );
       return data;
@@ -138,7 +137,7 @@ export const getDocumentById = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(`/api/documents/${documentId}`, config);
+      const { data } = await axios.get(`/documents/${documentId}`, config);
       return data;
     } catch (error) {
       const message =

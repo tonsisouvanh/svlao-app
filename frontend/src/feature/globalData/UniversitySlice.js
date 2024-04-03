@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
+import axios from "../../../../backend/utils/axiosConfig";
 
 const initialState = {
   universities: [],
@@ -26,7 +25,7 @@ export const createUniversity = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.post("/api/universities", inputData, config);
+      const { data } = await axios.post("/universities", inputData, config);
       return { data };
     } catch (error) {
       const message =
@@ -53,7 +52,7 @@ export const updateUniversity = createAsyncThunk(
       };
 
       const { data } = await axios.put(
-        `/api/universities/${inputData._id}`,
+        `/universities/${inputData._id}`,
         {
           ...inputData,
         },
@@ -84,7 +83,7 @@ export const removeUniversity = createAsyncThunk(
         },
       };
       const res = await axios.delete(
-        `/api/universities/${universityId}`,
+        `/universities/${universityId}`,
         config,
       );
       const _id = res.data._id;
@@ -105,7 +104,7 @@ export const listUniversity = createAsyncThunk(
   "universities/listUniversity",
   async (thunkAPI) => {
     try {
-      const { data } = await axios.get(`/api/universities`);
+      const { data } = await axios.get(`/universities`);
       return data;
     } catch (error) {
       const message =
@@ -130,7 +129,7 @@ export const getUniversityById = createAsyncThunk(
       };
 
       const { data } = await axios.get(
-        `/api/universities/${universityId}`,
+        `/universities/${universityId}`,
         config,
       );
       return data;

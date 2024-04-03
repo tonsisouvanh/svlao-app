@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { formatDate } from "../../utils/utils";
-axios.defaults.baseURL = `http://localhost:${import.meta.env.VITE_API_PORT}`;
+import axios from "../../../../backend/utils/axiosConfig";
 
 const initialState = {
   singleUser: localStorage.getItem("singleUserInfo")
@@ -30,7 +29,7 @@ export const getUserById = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(`/api/users/${userId}`, config);
+      const { data } = await axios.get(`/users/${userId}`, config);
       const formattedData = {
         ...data,
         visa: {
