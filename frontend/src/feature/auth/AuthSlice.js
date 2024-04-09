@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { formatDate } from "../../utils/utils";
-import axios from "../../../../backend/utils/axiosConfig";
+import axios from "../../utils/axiosConfig";
 
 const initialState = {
   auth: sessionStorage.getItem("authInfo")
@@ -27,11 +27,7 @@ export const signUp = createAsyncThunk(
         },
       };
 
-      await axios.post(
-        "/users",
-        { emailAddress, password, fullname },
-        config,
-      );
+      await axios.post("/users", { emailAddress, password, fullname }, config);
       return null;
     } catch (error) {
       const message =
@@ -44,7 +40,7 @@ export const signUp = createAsyncThunk(
     }
   },
 );
-
+// TODO: do not store all user data in session storage, change response in backend to just return token, name,image
 export const signIn = createAsyncThunk(
   "auth/signin",
   async (userData, thunkAPI) => {
@@ -121,15 +117,7 @@ export const updateUserProfile = createAsyncThunk(
           universityId: userData?.university?.universityId,
           shortcut: userData.university.shortcut,
         },
-        // visa: {
-        //   from: formatDate(data.visa.from),
-        //   to: formatDate(data.visa.to),
-        // },
-        // dob: formatDate(data.dob),
-        // passport: {
-        //   ...data.passport,
-        //   expired: formatDate(data.passport.expired),
-        // },
+        
       };
       const { data } = await axios.put(
         "/users/profile",

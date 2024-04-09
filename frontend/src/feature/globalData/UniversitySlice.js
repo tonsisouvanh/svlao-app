@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "../../../../backend/utils/axiosConfig";
+import axios from "../../utils/axiosConfig";
 
 const initialState = {
   universities: [],
@@ -82,10 +82,7 @@ export const removeUniversity = createAsyncThunk(
           Authorization: `Bearer ${auth.token}`,
         },
       };
-      const res = await axios.delete(
-        `/universities/${universityId}`,
-        config,
-      );
+      const res = await axios.delete(`/universities/${universityId}`, config);
       const _id = res.data._id;
       return _id;
     } catch (error) {
@@ -128,10 +125,7 @@ export const getUniversityById = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(
-        `/universities/${universityId}`,
-        config,
-      );
+      const { data } = await axios.get(`/universities/${universityId}`, config);
       return data;
     } catch (error) {
       const message =

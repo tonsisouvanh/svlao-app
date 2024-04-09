@@ -79,7 +79,6 @@ const updateAnnouncement = asyncHandler(async (req, res) => {
       content,
       category,
       image: addImage,
-      // image: Array.isArray(image) && image.length > 0 ? addImage : image,
     },
     {
       new: true,

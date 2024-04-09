@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "../../../../backend/utils/axiosConfig";
+import axios from "../../utils/axiosConfig";
 
 const initialState = {
   users: [],
@@ -100,10 +100,7 @@ export const getFilteredUsers = createAsyncThunk(
       const queryString = Object.keys(filter)
         .map((key) => `${key}=${filter[key]}`)
         .join("&");
-      const { data } = await axios.get(
-        `/users/filter?${queryString}`,
-        config,
-      );
+      const { data } = await axios.get(`/users/filter?${queryString}`, config);
       return data;
     } catch (error) {
       const message =
@@ -197,11 +194,7 @@ export const createStudent = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.post(
-        "/users/create",
-        studentData,
-        config,
-      );
+      const { data } = await axios.post("/users/create", studentData, config);
       return data;
     } catch (error) {
       const message =

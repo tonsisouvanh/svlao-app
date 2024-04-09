@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { formatDate } from "../../utils/utils";
-import axios from "../../../../backend/utils/axiosConfig";
+import axios from "../../utils/axiosConfig";
 
 const initialState = {
   singleUser: localStorage.getItem("singleUserInfo")

@@ -212,29 +212,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 });
-// const updateUserProfile = asyncHandler(async (req, res) => {
-//   const userId = req.user._id;
-//   const { role, ...updatedUserData } = req.body;
-//   const existingUser = await User.findById(userId);
-//   if (!existingUser) {
-//     res.status(404);
-//     throw new Error("User not found");
-//   }
 
-//   const updatedUser = await User.findByIdAndUpdate(
-//     userId,
-//     { ...updatedUserData },
-//     {
-//       new: true,
-//     }
-//   );
-//   if (updatedUser) {
-//     res.json({ ...updatedUser._doc, token: generateToken(updatedUser._id) });
-//   } else {
-//     res.status(404);
-//     throw new Error("User not found");
-//   }
-// });
 
 const getUsers = asyncHandler(async (req, res) => {
   const pageSize = 10;
