@@ -11,7 +11,7 @@ import Breadcrumbs from "../../components/Breadcrumbs";
 import ErrorMessage from "../../components/typography/ErrorMessage";
 import altImage from "../../assets/img/profile.png";
 import ImageUpload from "../../components/input/ImageUpload";
-import GobackButton from "../../components/button/GobackButton";
+import userTestData from "../../data/userTestData";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const AddStudent = () => {
@@ -37,20 +37,24 @@ const AddStudent = () => {
     const vietDegree = degreeList.find((d) => d.laoDegree === value);
     setValue("degree.vietDegree", vietDegree.vietDegree);
   };
+
   const handleSelectMajor = (value) => {
     const major = majors.find((d) => d.laoMajor === value);
     setValue("major.vietMajor", major.vietMajor);
   };
+
   const handleSelectUniversity = (value) => {
     const university = universities.find((d) => d.shortcut === value);
     setValue("university", university);
   };
+
   const handleSelectResidenceAddress = (value) => {
     const residenceAddress = residenceAddresses.find(
       (d) => d.location === value,
     );
     setValue("residenceAddress.address", residenceAddress.address);
   };
+
   const clearImage = () => {
     setBase64(null);
   };
@@ -86,16 +90,12 @@ const AddStudent = () => {
       toast.warning("Input data not valid");
     }
   };
-
   return (
     <>
       <section className="relative">
         {status.create !== "loading" ? (
           <div className="container mx-auto px-5 py-8">
-            <GobackButton />
             <div className="mb-12 flex w-full flex-col text-center">
-              <Breadcrumbs pathname={pathname} />
-
               <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium">
                 ຂໍ້ມູນນັກຮຽນ
               </h1>
@@ -113,7 +113,7 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label flex items-center">
-                      <span className="label-text text-lg">
+                      <span className="label-text text-lg font-semibold">
                         Email Address
                         <span className="ml-2 text-error">*</span>
                       </span>
@@ -134,7 +134,7 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label flex items-center">
-                      <span className="label-text text-lg">
+                      <span className="label-text text-lg font-semibold">
                         Password
                         <span className="ml-2 text-error">*</span>
                       </span>
@@ -155,7 +155,9 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className={`label-text text-lg`}>Status</span>
+                      <span className={`label-text text-lg font-semibold`}>
+                        Status
+                      </span>
                     </div>
                     <select
                       {...register("userStatus", {})}
@@ -172,7 +174,7 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">
+                      <span className="label-text text-lg font-semibold">
                         Firstname
                         <span className="ml-2 text-error">*</span>
                       </span>
@@ -193,7 +195,7 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">
+                      <span className="label-text text-lg font-semibold">
                         Lastname<span className="ml-2 text-error">*</span>
                       </span>
                       <ErrorMessage
@@ -213,7 +215,7 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">
+                      <span className="label-text text-lg font-semibold">
                         Lao Name<span className="ml-2 text-error">*</span>
                       </span>
                       <ErrorMessage
@@ -233,7 +235,9 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">Nickname</span>
+                      <span className="label-text text-lg font-semibold">
+                        Nickname
+                      </span>
                     </div>
                     <input
                       {...register("fullname.nickName", {})}
@@ -246,7 +250,7 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">
+                      <span className="label-text text-lg font-semibold">
                         University Shortcut
                       </span>
                     </div>
@@ -268,7 +272,7 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">
+                      <span className="label-text text-lg font-semibold">
                         Duration (From)
                       </span>
                     </div>
@@ -289,7 +293,9 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">Duration (To)</span>
+                      <span className="label-text text-lg font-semibold">
+                        Duration (To)
+                      </span>
                     </div>
                     <select
                       {...register("duration.to", {})}
@@ -308,7 +314,9 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">Phone Number</span>
+                      <span className="label-text text-lg font-semibold">
+                        Phone Number
+                      </span>
                     </div>
                     <input
                       {...register("phone.phoneNumber", {})}
@@ -320,7 +328,9 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">Emergency</span>
+                      <span className="label-text text-lg font-semibold">
+                        Emergency
+                      </span>
                     </div>
                     <input
                       {...register("phone.emergency", {})}
@@ -332,7 +342,9 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">Relationship</span>
+                      <span className="label-text text-lg font-semibold">
+                        Relationship
+                      </span>
                     </div>
                     <input
                       {...register("phone.relationship", {})}
@@ -345,7 +357,9 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">Lao Degree</span>
+                      <span className="label-text text-lg font-semibold">
+                        Lao Degree
+                      </span>
                     </div>
                     <select
                       {...register("degree.laoDegree", {})}
@@ -365,7 +379,9 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">Visa From</span>
+                      <span className="label-text text-lg font-semibold">
+                        Visa From
+                      </span>
                     </div>
                     <input
                       {...register("visa.from", {})}
@@ -377,7 +393,9 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">Visa To</span>
+                      <span className="label-text text-lg font-semibold">
+                        Visa To
+                      </span>
                     </div>
                     <input
                       {...register("visa.to", {})}
@@ -389,7 +407,7 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">
+                      <span className="label-text text-lg font-semibold">
                         Residence Address
                       </span>
                     </div>
@@ -413,7 +431,9 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">Passport No</span>
+                      <span className="label-text text-lg font-semibold">
+                        Passport No
+                      </span>
                     </div>
                     <input
                       {...register("passport.passportNo", {})}
@@ -426,7 +446,7 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">
+                      <span className="label-text text-lg font-semibold">
                         Passport Expired
                       </span>
                     </div>
@@ -440,7 +460,9 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">Lao Major</span>
+                      <span className="label-text text-lg font-semibold">
+                        Lao Major
+                      </span>
                     </div>
                     <select
                       {...register("major.laoMajor", {})}
@@ -460,7 +482,9 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">Student ID</span>
+                      <span className="label-text text-lg font-semibold">
+                        Student ID
+                      </span>
                     </div>
                     <input
                       {...register("studentId", {})}
@@ -472,7 +496,9 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">Date of Birth</span>
+                      <span className="label-text text-lg font-semibold">
+                        Date of Birth
+                      </span>
                     </div>
                     <input
                       {...register("dob", {})}
@@ -484,7 +510,9 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">Gender</span>
+                      <span className="label-text text-lg font-semibold">
+                        Gender
+                      </span>
                     </div>
                     <select
                       {...register("gender", {})}
@@ -501,7 +529,9 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">Facebook URL</span>
+                      <span className="label-text text-lg font-semibold">
+                        Facebook URL
+                      </span>
                     </div>
                     <input
                       {...register("facebookUrl", {})}
@@ -513,7 +543,7 @@ const AddStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg">
+                      <span className="label-text text-lg font-semibold">
                         Permanent Address
                       </span>
                     </div>
@@ -534,7 +564,9 @@ const AddStudent = () => {
                 <div className="w-full p-2">
                   <label className="form-control w-full">
                     <div className="label flex items-center">
-                      <span className="label-text text-lg">Upload Image</span>
+                      <span className="label-text text-lg font-semibold">
+                        Upload Image
+                      </span>
                     </div>
                     {base64 ? (
                       <img src={base64} alt="Base64 Image" />

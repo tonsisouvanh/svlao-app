@@ -51,6 +51,7 @@ const UserTable = ({
   const { globalFilter } = state;
 
   const handleOpenModal = (id) => {
+    console.log("🚀 ~ handleOpenModal ~ id:", id);
     setDeletedUserId(id);
     setOpenModal(true);
   };
@@ -362,7 +363,10 @@ const UserTable = ({
                           >
                             <AiFillEdit size={15} />
                           </Link>
-                          <button className="btn btn-error btn-outline btn-xs sm:btn-sm">
+                          <button
+                            onClick={() => handleOpenModal(row.original._id)}
+                            className="btn btn-error btn-outline btn-xs sm:btn-sm"
+                          >
                             <AiFillDelete size={15} />
                           </button>
                         </div>

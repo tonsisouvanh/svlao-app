@@ -114,7 +114,7 @@ const registerUser = asyncHandler(async (req, res) => {
   });
   if (user) {
     const { password, ...userWithoutPassword } = user._doc;
-    
+
     res.status(201).json({
       _id: user._id,
       ...userWithoutPassword,
@@ -131,17 +131,21 @@ const registerUser = asyncHandler(async (req, res) => {
 // @access  private
 const createUser = asyncHandler(async (req, res) => {
   const { emailAddress, profileImg } = req.body;
+
   const userExists = await User.findOne({ emailAddress });
+
   if (userExists) {
     res.status(400);
     throw new Error("User already exists");
   }
+
   let addImage = await handleSingleImageUpload(profileImg);
   const user = await User.create({
     ...req.body,
     profileImg:
       Array.isArray(profileImg) && profileImg.length > 0 ? addImage : "",
   });
+
   if (user) {
     res.status(201).json({
       _id: user._id,
@@ -212,7 +216,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 });
-
 
 const getUsers = asyncHandler(async (req, res) => {
   const pageSize = 10;

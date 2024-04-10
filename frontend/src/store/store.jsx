@@ -23,7 +23,7 @@ export const store = configureStore({
     document: documentReducer,
   },
 });
-// store.dispatch(listResidenceAddress());
-// store.dispatch(listUniversity());
-// store.dispatch(listMajor());
+store.dispatch(listResidenceAddress());
+store.dispatch(listUniversity());
+store.dispatch(listMajor());
 export default store;

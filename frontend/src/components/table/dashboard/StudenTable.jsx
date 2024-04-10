@@ -49,6 +49,7 @@ const UserTable = ({ users, userStatus, columnHead }) => {
 
   const { globalFilter } = state;
   const handleOpenModal = (id) => {
+    console.log("🚀 ~ handleOpenModal ~ id:", id)
     setDeletedUserId(id);
     setOpenModal(true);
   };
