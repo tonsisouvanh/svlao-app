@@ -157,6 +157,30 @@ const getAnnouncements = asyncHandler(async (req, res) => {
   res.json({ announcements, page, pages: Math.ceil(count / pageSize) });
 });
 
+// @desc    Get all announcements
+// @route   GET /api/announcements
+// @access  Private/Admin
+// get announcement with limit number and latest with only id,image field
+const getAnnouncementImages = asyncHandler(async (req, res) => {
+  console.log("heyyy");
+  const limit = parseInt(req.query.limit) || 5; // Default limit of 10
+  console.log("🚀 ~ getAnnouncementImages ~ limit:", limit);
+  const fields = req.query.fields?.split(",") || ["_id", "image"]; // Default fields
+  console.log("🚀 ~ getAnnouncementImages ~ fields:", fields);
+
+  try {
+    const announcements = await Announcement.find({})
+      .sort({ createdAt: -1 }) // Sort by latest first
+      .limit(limit)
+      .select({ image: 1, _id: 1 });
+
+    res.json(announcements);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error retrieving announcements" });
+  }
+});
+
 // @desc    Delete announcement
 // @route   DELETE /api/announcements/:id
 // @access  Private/Admin
@@ -208,4 +232,5 @@ export {
   createAnnouncement,
   insertManyAnnouncements,
   countViews,
+  getAnnouncementImages,
 };

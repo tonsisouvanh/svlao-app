@@ -8,6 +8,7 @@ import {
   createAnnouncement,
   insertManyAnnouncements,
   countViews,
+  getAnnouncementImages,
 } from "../controllers/announcementController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 
@@ -16,6 +17,7 @@ router
   .post(protect, admin, createAnnouncement)
   .get(getAnnouncements);
 router.route("/createMany").post(protect, admin, insertManyAnnouncements);
+router.route("/images").get(getAnnouncementImages);
 router
   .route("/:id")
   .delete(protect, admin, deleteAnnouncement)

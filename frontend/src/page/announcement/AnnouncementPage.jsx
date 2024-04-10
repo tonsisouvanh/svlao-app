@@ -6,17 +6,16 @@ import {
   listAnnouncements,
 } from "../../feature/announcement/AnnouncementSlice";
 import { useEffect } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Spinner from "../../components/ui/Spinner";
 import Paginate from "../../components/paginate/Paginate";
-import { AiOutlineArrowRight } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
-import ScrollToTop from "../../components/ScrollToTop";
 import { replaceImage } from "../../utils/utils";
 import images from "../../assets/img/index";
 import { FaEye } from "react-icons/fa";
 const AnnouncementPage = () => {
-  const [t, i18n] = useTranslation("global");
+  // const [t, i18n] = useTranslation("global");
+  const [t] = useTranslation("global");
   const { pageNumber, keyword } = useParams();
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.auth);

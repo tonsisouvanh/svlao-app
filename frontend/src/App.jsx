@@ -33,6 +33,7 @@ import FormalOrganizationPage from "./page/FormalOrganizationPage";
 import Spinner from "./components/ui/Spinner";
 import { useSelector } from "react-redux";
 import "react-quill/dist/quill.snow.css";
+import ComingSoon from "./page/ComingSoon";
 
 function App() {
   const { status } = useSelector((state) => state.auth);
@@ -212,10 +213,7 @@ function App() {
               element={<DocumentPage />}
             />
             {/* ================================================================== */}
-            <Route
-              path="/formal-organization"
-              element={<FormalOrganizationPage />}
-            />
+            <Route path="/formal-organization" element={<ComingSoon />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />

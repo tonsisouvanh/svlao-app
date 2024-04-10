@@ -13,12 +13,13 @@ import documentRoutes from "./routes/documentRoutes.js";
 
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import morgan from "morgan";
+import limiter from "./utils/limiter.js";
 dotenv.config();
 
 connectDB();
 
 const app = express();
-
+app.use(limiter)
 app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 

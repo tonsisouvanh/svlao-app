@@ -196,15 +196,15 @@ const Dashboard = () => {
             <StatUsers status={userStatus} users={users} total={total} />
           </div>
           <div className="mb-12 grid grid-cols-1 gap-3 md:grid-cols-2 md:grid-rows-2">
-            <div className="card max-w-full rounded-md border border-base-300  p-6 shadow-lg">
+            <div className="card max-w-full rounded-md border border-base-300  p-6 shadow">
               <h2 className="mb-4 text-xl font-semibold">Degree count</h2>
               <VerticalBarChart data={dataDegree} />
             </div>
-            <div className="card row-start-2 max-w-full rounded-md border border-base-300  p-6 shadow-lg md:col-start-1">
+            <div className="card row-start-2 max-w-full rounded-md border border-base-300  p-6 shadow md:col-start-1">
               <h2 className="mb-4 text-xl font-semibold">Scholarship count</h2>
               <VerticalBarChart data={dataScholarship} />
             </div>
-            <div className="card max-w-full rounded-md border border-base-300  p-6 shadow-lg md:col-start-2 md:row-span-2 md:row-start-1">
+            <div className="card max-w-full rounded-md border border-base-300  p-6 shadow md:col-start-2 md:row-span-2 md:row-start-1">
               <h2 className="mb-4 text-xl font-semibold">
                 Student count / Univeristy
               </h2>
@@ -212,7 +212,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2d">
-            <ul className="menu rounded-md  shadow-lg">
+            <ul className="menu rounded-md border shadow">
               <div className="flex w-full flex-row items-start justify-between p-2">
                 <span className="font-bold">Announcement</span>
               </div>
