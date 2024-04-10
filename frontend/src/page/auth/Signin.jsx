@@ -152,7 +152,7 @@ const Signin = () => {
                   type="submit"
                   className="w-full rounded-lg bg-blue-700 px-4 py-2 text-center text-base font-semibold text-white shadow-md transition ease-in hover:bg-blue-600 focus:outline-none focus:ring-2"
                 >
-                  <span className="w-full"> Submit </span>
+                  <span className="w-full"> LOGIN </span>
                 </button>
               )}
             </form>

@@ -153,7 +153,7 @@ const Signup = () => {
               </button>
             ) : (
               <button type="submit" className={`btn btn-primary flex-grow`}>
-                Sign Up
+                Sign up
               </button>
             )}
           </div>
