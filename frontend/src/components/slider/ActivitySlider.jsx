@@ -5,8 +5,8 @@ import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "./SliderStyle.css";
 import { useEffect, useState } from "react";
-import axios from "../../utils/axiosConfig";
 import { FaImage } from "react-icons/fa";
+import apiRequest from "../../utils/axiosConfig";
 
 const ActivitySlider = () => {
   const [slideData, setslideData] = useState([]);
@@ -15,7 +15,7 @@ const ActivitySlider = () => {
   useEffect(() => {
     const fetchAnnouncementImages = async () => {
       try {
-        const response = await axios.get(`/announcements/images?limit=4`, {
+        const response = await apiRequest.get(`/announcements/images?limit=4`, {
           headers: {
             "Content-Type": "application/json",
           },

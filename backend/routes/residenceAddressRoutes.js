@@ -7,16 +7,16 @@ import {
   createResidenceAddress,
   getResidenceAddresses,
 } from "../controllers/residenceAddressController.js";
-import { protect, admin } from "../middleware/authMiddleware.js";
-
+import { protect, authorizeUserAdmin } from "../middleware/authMiddleware.js";
+import role from "../utils/role.js";
 router
   .route("/")
-  .post(protect, admin, createResidenceAddress)
+  .post(protect, authorizeUserAdmin(role.Admin), createResidenceAddress)
   .get(getResidenceAddresses);
 router
   .route("/:id")
-  .delete(protect, admin, deleteResidenceAddress)
+  .delete(protect, authorizeUserAdmin(role.Admin), deleteResidenceAddress)
   .get(getResidenceAddressById)
-  .put(protect, admin, updateResidenceAddress);
+  .put(protect, authorizeUserAdmin(role.Admin), updateResidenceAddress);
 
 export default router;

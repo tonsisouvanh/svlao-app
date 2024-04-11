@@ -116,8 +116,16 @@ const Dashboard = () => {
       filters = {};
     }
 
-    dispatch(getFilteredUsers({ ...filters }));
-  }, [dispatch, filterChoice, selectedResidenceAddress, selectedUniversity]);
+    if (auth.role === "admin") {
+      dispatch(getFilteredUsers({ ...filters }));
+    }
+  }, [
+    dispatch,
+    filterChoice,
+    selectedResidenceAddress,
+    selectedUniversity,
+    auth.role,
+  ]);
 
   useEffect(() => {
     dispatch(listAnnouncements({}));
@@ -211,7 +219,7 @@ const Dashboard = () => {
               <PieChart />
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2d">
+          <div className="md:grid-cols-2d grid grid-cols-1 gap-3">
             <ul className="menu rounded-md border shadow">
               <div className="flex w-full flex-row items-start justify-between p-2">
                 <span className="font-bold">Announcement</span>

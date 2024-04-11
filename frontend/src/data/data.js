@@ -520,10 +520,10 @@ export const STUDENT_COLUMNS = [
   //   Header: "Scholarship (Lao)",
   //   accessor: "scholarship.scholarshipLao",
   // },
-  // {
-  //   Header: "Scholarship Type",
-  //   accessor: "scholarship.scholarshipType",
-  // },
+  {
+    Header: "Scholarship Type",
+    accessor: "scholarship.scholarshipType",
+  },
   // {
   //   Header: "Duration From",
   //   accessor: "duration.from",

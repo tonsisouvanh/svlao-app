@@ -162,12 +162,8 @@ const getAnnouncements = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 // get announcement with limit number and latest with only id,image field
 const getAnnouncementImages = asyncHandler(async (req, res) => {
-  console.log("heyyy");
   const limit = parseInt(req.query.limit) || 5; // Default limit of 10
-  console.log("🚀 ~ getAnnouncementImages ~ limit:", limit);
   const fields = req.query.fields?.split(",") || ["_id", "image"]; // Default fields
-  console.log("🚀 ~ getAnnouncementImages ~ fields:", fields);
-
   try {
     const announcements = await Announcement.find({})
       .sort({ createdAt: -1 }) // Sort by latest first

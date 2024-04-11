@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { formatDate } from "../../utils/utils";
-import axios from "../../utils/axiosConfig";
+import apiRequest from "../../utils/axiosConfig";
 
 const initialState = {
   singleUser: localStorage.getItem("singleUserInfo")
@@ -21,15 +21,13 @@ export const getUserById = createAsyncThunk(
   "user/getUserById",
   async (userId, thunkAPI) => {
     try {
-      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
 
-      const { data } = await axios.get(`/users/${userId}`, config);
+      const { data } = await apiRequest.get(`/users/${userId}`, config);
       const formattedData = {
         ...data,
         visa: {

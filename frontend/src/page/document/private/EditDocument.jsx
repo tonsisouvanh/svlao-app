@@ -27,7 +27,6 @@ const EditDocument = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    setValue,
   } = useForm({
     defaultValues: {
       id: documents[0]?._id,
@@ -52,7 +51,6 @@ const EditDocument = () => {
 
   const handleEditSubmit = (data) => {
     if (data) {
-      console.log("🚀 ~ handleEditSubmit ~ data:", data);
       dispatch(updateDocument({ ...data}));
       setToggleEdit(false);
     } else toast.warning("Input data not valid");

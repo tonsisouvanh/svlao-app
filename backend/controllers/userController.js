@@ -1,5 +1,4 @@
 import asyncHandler from "express-async-handler";
-import generateToken from "../utils/generateToken.js";
 import User from "../models/userModel.js";
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
@@ -9,6 +8,7 @@ import {
   extractImageId,
   uploadSingleImage,
 } from "../utils/imageUpload.js";
+import generateToken from "../utils/generateToken.js";
 const opts = {
   overwrite: true,
   invalidate: true,
@@ -33,6 +33,8 @@ const handleSingleImageUpload = async (image) => {
 // @desc    Auth user & get token
 // @route   POST /api/users/resetPassword
 // @access  Private
+
+//TODO: Check up on this reset token
 const resetPassword = asyncHandler(async (req, res) => {
   const { userId, password, emailAddress } = req.body;
   // reset token
@@ -82,18 +84,33 @@ const resetPassword = asyncHandler(async (req, res) => {
 const authUser = asyncHandler(async (req, res) => {
   const { emailAddress, password } = req.body;
   const user = await User.findOne({ emailAddress });
-  if (user && (await user.matchPassword(password))) {
-    const { password, ...userWithoutPassword } = user._doc;
 
+  if (user && (await user.matchPassword(password))) {
+    // generate token and set it to cookies
+    generateToken(res, {
+      userId: user._id,
+      emailAddress: user.emailAddress,
+      role: user.role,
+    });
     res.json({
-      ...userWithoutPassword,
-      token: generateToken(user._id),
+      _id: user._id,
+      laoName: user.fullname.laoName,
+      emailAddress: user.emailAddress,
+      profileImg: user.profileImg,
+      role: user.role,
     });
   } else {
     res.status(401);
     throw new Error("Invalid email or password");
   }
 });
+
+// @desc    Logout user / clear cookie
+// @route   POST /api/users/logout
+// @access  Public
+const logoutUser = (req, res) => {
+  res.clearCookie("token").status(200).json({ message: "Logout Successful" });
+};
 
 // @desc    Register a new user
 // @route   POST /api/users
@@ -114,11 +131,9 @@ const registerUser = asyncHandler(async (req, res) => {
   });
   if (user) {
     const { password, ...userWithoutPassword } = user._doc;
-
     res.status(201).json({
       _id: user._id,
       ...userWithoutPassword,
-      token: generateToken(user._id),
     });
   } else {
     res.status(400);
@@ -150,7 +165,6 @@ const createUser = asyncHandler(async (req, res) => {
     res.status(201).json({
       _id: user._id,
       ...user._doc,
-      token: generateToken(user._id),
     });
   } else {
     res.status(400);
@@ -210,7 +224,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     }
   );
   if (updatedUser) {
-    res.json({ ...updatedUser._doc, token: generateToken(updatedUser._id) });
+    res.json({ ...updatedUser._doc });
   } else {
     res.status(404);
     throw new Error("User not found");
@@ -220,7 +234,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 const getUsers = asyncHandler(async (req, res) => {
   const pageSize = 10;
   const page = Number(req.query.pageNumber) || 1;
-
   const searchFields = [
     "studentId",
     "emailAddress",
@@ -370,4 +383,5 @@ export {
   updateUser,
   createUser,
   resetPassword,
+  logoutUser,
 };

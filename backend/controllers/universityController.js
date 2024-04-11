@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import generateToken from "../utils/generateToken.js";
+
 import University from "../models/universityModel.js";
 
 // @desc    Create a new university

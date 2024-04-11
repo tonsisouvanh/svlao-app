@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "../../utils/axiosConfig";
+import apiRequest from "../../utils/axiosConfig";
 
 const initialState = {
   documents: [],
@@ -19,15 +19,13 @@ export const createDocument = createAsyncThunk(
   "documents/addDocument",
   async (inputData, thunkAPI) => {
     try {
-      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
 
-      const { data } = await axios.post("/documents", inputData, config);
+      const { data } = await apiRequest.post("/documents", inputData, config);
       return { data };
     } catch (error) {
       const message =
@@ -45,15 +43,13 @@ export const updateDocument = createAsyncThunk(
   "documents/updateDocument",
   async (inputData, thunkAPI) => {
     try {
-      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
 
-      const { data } = await axios.put(
+      const { data } = await apiRequest.put(
         `/documents/${inputData.id}`,
         {
           ...inputData,
@@ -76,15 +72,13 @@ export const updateDocument = createAsyncThunk(
 export const removeDocument = createAsyncThunk(
   "documents/removeDocument",
   async (documentId, thunkAPI) => {
-    const { auth } = thunkAPI.getState().auth;
     try {
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
-      const res = await axios.delete(`/documents/${documentId}`, config);
+      const res = await apiRequest.delete(`/documents/${documentId}`, config);
       const _id = res.data._id;
       return _id;
     } catch (error) {
@@ -103,14 +97,12 @@ export const listDocuments = createAsyncThunk(
   "document/listDocuments",
   async ({ pageNumber, keyword = "" }, thunkAPI) => {
     try {
-      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
-      const { data } = await axios.get(
+      const { data } = await apiRequest.get(
         `/documents?keyword=${keyword}&pageNumber=${pageNumber}`,
         config,
       );
@@ -137,7 +129,7 @@ export const getDocumentById = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(`/documents/${documentId}`, config);
+      const { data } = await apiRequest.get(`/documents/${documentId}`, config);
       return data;
     } catch (error) {
       const message =

@@ -18,19 +18,6 @@ import toast from "react-hot-toast";
 const cellStyle = "whitespace-nowrap truncate font-light";
 
 const UserTable = ({ users, userStatus, columnHead }) => {
-  const [totalUsers, setTotalUsers] = useState(0);
-  const [totalMale, setTotalMale] = useState(0);
-  const [totalFemale, setTotalFemale] = useState(0);
-  const [totalDegree, setTotalDegree] = useState({
-    associate: 0,
-    bachelor: 0,
-    master: 0,
-    dotoral: 0,
-  });
-
-  const isRenderField = (renderFields, passedField) => {
-    return renderFields.includes(passedField.toString());
-  };
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const [deletedUserId, setDeletedUserId] = useState("");
@@ -43,13 +30,9 @@ const UserTable = ({ users, userStatus, columnHead }) => {
     headerGroups,
     rows,
     prepareRow,
-    state,
-    setGlobalFilter,
   } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
 
-  const { globalFilter } = state;
   const handleOpenModal = (id) => {
-    console.log("🚀 ~ handleOpenModal ~ id:", id)
     setDeletedUserId(id);
     setOpenModal(true);
   };
@@ -58,26 +41,6 @@ const UserTable = ({ users, userStatus, columnHead }) => {
     setDeletedUserId("");
     setOpenModal(false);
   };
-
-  useEffect(() => {
-    setTotalUsers(rows.length);
-    const maleCount = rows.filter(
-      (user) => user.original.gender === "male",
-    ).length;
-    const femaleCount = rows.filter(
-      (user) => user.original.gender === "female",
-    ).length;
-    setTotalMale(maleCount);
-    setTotalFemale(femaleCount);
-    setTotalDegree({
-      bachelor: rows.filter(
-        (user) => user.original.degree?.vietDegree?.toLowerCase() === "cử nhân",
-      ).length,
-      master: rows.filter(
-        (user) => user.original.degree?.vietDegree?.toLowerCase() === "thạc sĩ",
-      ).length,
-    });
-  }, [rows]);
 
   useEffect(() => {
     if (status.remove === "succeeded") {

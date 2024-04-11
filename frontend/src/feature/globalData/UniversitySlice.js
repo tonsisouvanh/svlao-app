@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "../../utils/axiosConfig";
+import apiRequest from "../../utils/axiosConfig";
 
 const initialState = {
   universities: [],
@@ -17,15 +17,17 @@ export const createUniversity = createAsyncThunk(
   "universities/addUniversity",
   async (inputData, thunkAPI) => {
     try {
-      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
 
-      const { data } = await axios.post("/universities", inputData, config);
+      const { data } = await apiRequest.post(
+        "/universities",
+        inputData,
+        config,
+      );
       return { data };
     } catch (error) {
       const message =
@@ -43,15 +45,13 @@ export const updateUniversity = createAsyncThunk(
   "universities/updateUniversity",
   async (inputData, thunkAPI) => {
     try {
-      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
 
-      const { data } = await axios.put(
+      const { data } = await apiRequest.put(
         `/universities/${inputData._id}`,
         {
           ...inputData,
@@ -74,15 +74,16 @@ export const updateUniversity = createAsyncThunk(
 export const removeUniversity = createAsyncThunk(
   "universities/removeUniversity",
   async (universityId, thunkAPI) => {
-    const { auth } = thunkAPI.getState().auth;
     try {
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
-      const res = await axios.delete(`/universities/${universityId}`, config);
+      const res = await apiRequest.delete(
+        `/universities/${universityId}`,
+        config,
+      );
       const _id = res.data._id;
       return _id;
     } catch (error) {
@@ -101,7 +102,7 @@ export const listUniversity = createAsyncThunk(
   "universities/listUniversity",
   async (thunkAPI) => {
     try {
-      const { data } = await axios.get(`/universities`);
+      const { data } = await apiRequest.get(`/universities`);
       return data;
     } catch (error) {
       const message =
@@ -125,7 +126,10 @@ export const getUniversityById = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(`/universities/${universityId}`, config);
+      const { data } = await apiRequest.get(
+        `/universities/${universityId}`,
+        config,
+      );
       return data;
     } catch (error) {
       const message =

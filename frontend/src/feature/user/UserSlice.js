@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "../../utils/axiosConfig";
-
+import apiRequest from "../../utils/axiosConfig";
 const initialState = {
   users: [],
   status: {
@@ -20,15 +19,13 @@ export const resetPassword = createAsyncThunk(
   "user/resetPassword",
   async (userData, thunkAPI) => {
     try {
-      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
 
-      await axios.post(
+      await apiRequest.post(
         `/users/resetPassword`,
         {
           userId: userData.userId,
@@ -54,20 +51,12 @@ export const listUsers = createAsyncThunk(
   "user/listUsers",
   async ({ pageNumber, keyword = "" }, thunkAPI) => {
     try {
-      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
-      // const { data } = await axios.get(
-      //   keyword || keyword === ""
-      //     ? `/users?keyword=${keyword}&pageNumber=${pageNumber}`
-      //     : `/users?keyword=${keyword}&pageNumber=${pageNumber}`,
-      //   config,
-      // );
-      const { data } = await axios.get(
+      const { data } = await apiRequest.get(
         `/users?keyword=${keyword}&pageNumber=${pageNumber}`,
         config,
       );
@@ -88,11 +77,9 @@ export const getFilteredUsers = createAsyncThunk(
   "user/listFilteredUsers",
   async (filter, thunkAPI) => {
     try {
-      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
 
@@ -100,7 +87,10 @@ export const getFilteredUsers = createAsyncThunk(
       const queryString = Object.keys(filter)
         .map((key) => `${key}=${filter[key]}`)
         .join("&");
-      const { data } = await axios.get(`/users/filter?${queryString}`, config);
+      const { data } = await apiRequest.get(
+        `/users/filter?${queryString}`,
+        config,
+      );
       return data;
     } catch (error) {
       const message =
@@ -118,11 +108,9 @@ export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (userData, thunkAPI) => {
     try {
-      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
       const formattedData = {
@@ -132,7 +120,7 @@ export const updateUser = createAsyncThunk(
           shortcut: userData.university.shortcut,
         },
       };
-      const { data } = await axios.put(
+      const { data } = await apiRequest.put(
         `/users/${userData._id}`,
         {
           ...formattedData,
@@ -156,17 +144,16 @@ export const updateUser = createAsyncThunk(
 export const removeUser = createAsyncThunk(
   "user/removeUser",
   async (id, thunkAPI) => {
-    const auth = sessionStorage.getItem("authInfo")
-      ? JSON.parse(sessionStorage.getItem("authInfo") || "")
+    const auth = localStorage.getItem("authInfo")
+      ? JSON.parse(localStorage.getItem("authInfo") || "")
       : null;
     try {
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
-      const res = await axios.delete(`/users/${id}`, config);
+      const res = await apiRequest.delete(`/users/${id}`, config);
       const _id = res.data._id;
       return _id;
     } catch (error) {
@@ -186,15 +173,17 @@ export const createStudent = createAsyncThunk(
   "student/createStudent",
   async (studentData, thunkAPI) => {
     try {
-      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
 
-      const { data } = await axios.post("/users/create", studentData, config);
+      const { data } = await apiRequest.post(
+        "/users/create",
+        studentData,
+        config,
+      );
       return data;
     } catch (error) {
       const message =

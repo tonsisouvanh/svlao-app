@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "../../utils/axiosConfig";
+import apiRequest from "../../utils/axiosConfig";
 
 const initialState = {
   residenceAddresses: [],
@@ -16,15 +16,13 @@ export const createResidenceAddress = createAsyncThunk(
   "residenceAddresses/addResidenceAddress",
   async (inputData, thunkAPI) => {
     try {
-      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
 
-      const { data } = await axios.post(
+      const { data } = await apiRequest.post(
         "/residenceAddresses",
         inputData,
         config,
@@ -46,15 +44,13 @@ export const updateResidenceAddress = createAsyncThunk(
   "residenceAddresses/updateResidenceAddress",
   async (inputData, thunkAPI) => {
     try {
-      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
 
-      const { data } = await axios.put(
+      const { data } = await apiRequest.put(
         `/residenceAddresses/${inputData._id}`,
         {
           ...inputData,
@@ -77,15 +73,13 @@ export const updateResidenceAddress = createAsyncThunk(
 export const removeResidenceAddress = createAsyncThunk(
   "residenceAddresses/removeResidenceAddress",
   async (residenceAddressId, thunkAPI) => {
-    const { auth } = thunkAPI.getState().auth;
     try {
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
-      const res = await axios.delete(
+      const res = await apiRequest.delete(
         `/residenceAddresses/${residenceAddressId}`,
         config,
       );
@@ -107,7 +101,7 @@ export const listResidenceAddress = createAsyncThunk(
   "residenceAddresses/listResidenceAddress",
   async (thunkAPI) => {
     try {
-      const { data } = await axios.get(`/residenceAddresses`);
+      const { data } = await apiRequest.get(`/residenceAddresses`);
       return data;
     } catch (error) {
       const message =
@@ -131,7 +125,7 @@ export const getResidenceAddressById = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.get(
+      const { data } = await apiRequest.get(
         `/residenceAddresses/${residenceAddressId}`,
         config,
       );

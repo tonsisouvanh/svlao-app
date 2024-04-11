@@ -1,5 +1,10 @@
 import axios from "axios";
 
-axios.defaults.baseURL = `${import.meta.env.VITE_API_DOMAIN}`;
+// axios.defaults.baseURL = `${import.meta.env.VITE_API_DOMAIN}`;
 
-export default axios;
+const apiRequest = axios.create({
+  baseURL: import.meta.env.VITE_API_DOMAIN,
+  withCredentials: true,
+});
+
+export default apiRequest;

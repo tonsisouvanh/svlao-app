@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import cors from "cors";
 import colors from "colors";
+import cookieParser from "cookie-parser";
 // Routes
 import userRoutes from "./routes/userRoutes.js";
 import universityRoutes from "./routes/universityRoutes.js";
@@ -19,9 +20,10 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use(limiter)
-app.use(cors());
+app.use(limiter);
+app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(express.json({ limit: "10mb" }));
+app.use(cookieParser());
 
 if (process.env.NODE_ENV !== "development") app.use(morgan("dev"));
 

@@ -8,17 +8,19 @@ import {
   createDocument,
   insertManyDocuments,
 } from "../controllers/documentController.js";
-import { protect, admin } from "../middleware/authMiddleware.js";
-
+import { protect, authorizeUserAdmin } from "../middleware/authMiddleware.js";
+import role from "../utils/role.js";
 router
   .route("/")
-  .post(protect, admin, createDocument)
+  .post(protect, authorizeUserAdmin(role.Admin), createDocument)
   .get(getDocuments);
-router.route("/createMany").post(protect, admin, insertManyDocuments);
+router
+  .route("/createMany")
+  .post(protect, authorizeUserAdmin(role.Admin), insertManyDocuments);
 router
   .route("/:id")
-  .delete(protect, admin, deleteDocument)
+  .delete(protect, authorizeUserAdmin(role.Admin), deleteDocument)
   .get(getDocumentById)
-  .put(protect, admin, updateDocument);
+  .put(protect, authorizeUserAdmin(role.Admin), updateDocument);
 
 export default router;

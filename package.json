@@ -18,6 +18,7 @@
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.0.1",
     "colors": "^1.4.0",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dompurify": "^3.0.9",
     "dotenv": "^16.3.1",

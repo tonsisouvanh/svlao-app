@@ -7,13 +7,14 @@ import {
   updateMajor,
   createMajor,
 } from "../controllers/majorController.js";
-import { protect, admin } from "../middleware/authMiddleware.js";
+import { protect, authorizeUserAdmin } from "../middleware/authMiddleware.js";
+import role from "../utils/role.js";
 
-router.route("/").post(protect, admin, createMajor).get(getMajors);
+router.route("/").post(protect, authorizeUserAdmin(role.Admin), createMajor).get(getMajors);
 router
   .route("/:id")
-  .delete(protect, admin, deleteMajor)
+  .delete(protect, authorizeUserAdmin(role.Admin), deleteMajor)
   .get(getMajorById)
-  .put(protect, admin, updateMajor);
+  .put(protect, authorizeUserAdmin(role.Admin), updateMajor);
 
 export default router;

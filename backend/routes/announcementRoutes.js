@@ -10,19 +10,21 @@ import {
   countViews,
   getAnnouncementImages,
 } from "../controllers/announcementController.js";
-import { protect, admin } from "../middleware/authMiddleware.js";
-
+import { protect, authorizeUserAdmin } from "../middleware/authMiddleware.js";
+import role from "../utils/role.js";
 router
   .route("/")
-  .post(protect, admin, createAnnouncement)
+  .post(protect, authorizeUserAdmin(role.Admin), createAnnouncement)
   .get(getAnnouncements);
-router.route("/createMany").post(protect, admin, insertManyAnnouncements);
+router
+  .route("/createMany")
+  .post(protect, authorizeUserAdmin(role.Admin), insertManyAnnouncements);
 router.route("/images").get(getAnnouncementImages);
 router
   .route("/:id")
-  .delete(protect, admin, deleteAnnouncement)
+  .delete(protect, authorizeUserAdmin(role.Admin), deleteAnnouncement)
   .get(getAnnouncementById)
-  .put(protect, admin, updateAnnouncement)
+  .put(protect, authorizeUserAdmin(role.Admin), updateAnnouncement)
   .post(countViews);
 
 export default router;

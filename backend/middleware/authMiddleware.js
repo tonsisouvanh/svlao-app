@@ -3,33 +3,24 @@ import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 
 const protect = asyncHandler(async (req, res, next) => {
-  let token;
-
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
+  const accesstoken = req.cookies?.accesstoken;
+  if (accesstoken) {
     try {
-      token = req.headers.authorization.split(" ")[1];
-
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-      req.user = await User.findById(decoded.id).select("-password");
-
+      const decoded = jwt.verify(accesstoken, process.env.JWT_SECRET);
+      req.user = await User.findById(decoded.userId).select("-password");
       next();
     } catch (error) {
       console.error(error);
       res.status(401);
-      throw new Error("Not authorized, token failed");
+      throw new Error("Not authorized, access token failed");
     }
   }
 
-  if (!token) {
+  if (!accesstoken) {
     res.status(401);
     throw new Error("Not authorized, no token");
   }
 });
-
 const activeUserCheck = asyncHandler(async (req, res, next) => {
   const { emailAddress } = req.body;
   const user = await User.findOne({ emailAddress });
@@ -40,13 +31,26 @@ const activeUserCheck = asyncHandler(async (req, res, next) => {
   }
 });
 
-const admin = (req, res, next) => {
-  if (req.user && req.user.role === "admin") {
-    next();
-  } else {
-    res.status(401);
-    throw new Error("Not authorized as an admin");
-  }
-};
+const authorizeUserAdmin = (roles = []) =>
+  asyncHandler(async (req, res, next) => {
+    const accesstoken = req.cookies.accesstoken;
+    if (accesstoken) {
+      try {
+        const decoded = jwt.verify(accesstoken, process.env.JWT_SECRET);
+        req.user = await User.findById(decoded?.userId).select("-password");
+        // if (req.user && req.user.role === "admin") {
+        if (req.user && roles.includes(req.user.role)) {
+          next();
+        } else {
+          res.status(401);
+          throw new Error("Not authorized as an admin");
+        }
+      } catch (error) {
+        console.error(error);
+        res.status(400);
+        throw new Error("Error authorizing user");
+      }
+    }
+  });
 
-export { protect, admin, activeUserCheck };
+export { protect, authorizeUserAdmin, activeUserCheck };

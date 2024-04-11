@@ -1,10 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { formatDate } from "../../utils/utils";
-import axios from "../../utils/axiosConfig";
+import apiRequest from "../../utils/axiosConfig";
 
 const initialState = {
-  auth: sessionStorage.getItem("authInfo")
-    ? JSON.parse(sessionStorage.getItem("authInfo") || "")
+  auth: localStorage.getItem("authInfo")
+    ? JSON.parse(localStorage.getItem("authInfo") || "")
     : null,
   status: {
     setInfo: "idle" | "loading" | "succeeded" | "failed",
@@ -12,6 +11,7 @@ const initialState = {
     signin: "idle" | "loading" | "succeeded" | "failed",
     signout: "idle" | "loading" | "succeeded" | "failed",
   },
+  role: null,
   error: "",
 };
 
@@ -27,7 +27,11 @@ export const signUp = createAsyncThunk(
         },
       };
 
-      await axios.post("/users", { emailAddress, password, fullname }, config);
+      await apiRequest.post(
+        "/users",
+        { emailAddress, password, fullname },
+        config,
+      );
       return null;
     } catch (error) {
       const message =
@@ -40,7 +44,6 @@ export const signUp = createAsyncThunk(
     }
   },
 );
-// TODO: do not store all user data in session storage, change response in backend to just return token, name,image
 export const signIn = createAsyncThunk(
   "auth/signin",
   async (userData, thunkAPI) => {
@@ -53,27 +56,13 @@ export const signIn = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.post(
+      const { data } = await apiRequest.post(
         "/users/login",
         { emailAddress, password },
         config,
       );
-
-      const formattedData = {
-        ...data,
-        visa: {
-          from: formatDate(data.visa.from),
-          to: formatDate(data.visa.to),
-        },
-        dob: formatDate(data.dob),
-        passport: {
-          ...data.passport,
-          expired: formatDate(data.passport.expired),
-        },
-      };
-
-      sessionStorage.setItem("authInfo", JSON.stringify(formattedData));
-      return formattedData;
+      localStorage.setItem("authInfo", JSON.stringify(data));
+      return data;
     } catch (error) {
       const message =
         (error.response &&
@@ -90,7 +79,8 @@ export const signOut = createAsyncThunk(
   "auth/signout",
   async (_, { rejectWithValue }) => {
     try {
-      sessionStorage.clear();
+      localStorage.clear();
+      const data = await apiRequest.post("/users/logout");
       return null;
     } catch (error) {
       const errorMessage = error.message;
@@ -103,11 +93,9 @@ export const updateUserProfile = createAsyncThunk(
   "user/updateUserProfile",
   async (userData, thunkAPI) => {
     try {
-      const { auth } = thunkAPI.getState().auth;
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
         },
       };
 
@@ -117,16 +105,15 @@ export const updateUserProfile = createAsyncThunk(
           universityId: userData?.university?.universityId,
           shortcut: userData.university.shortcut,
         },
-        
       };
-      const { data } = await axios.put(
+      const { data } = await apiRequest.put(
         "/users/profile",
         {
           ...formattedData,
         },
         config,
       );
-      sessionStorage.setItem("authInfo", JSON.stringify(data));
+      localStorage.setItem("authInfo", JSON.stringify(data));
       return data;
     } catch (error) {
       const message =
@@ -143,6 +130,7 @@ export const updateUserProfile = createAsyncThunk(
 const setAuthInfo = (state, action) => {
   state.auth = action.payload;
 };
+
 const statusReset = (state) => {
   state.status = {
     setInfo: "idle",
@@ -210,5 +198,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { reset: authReset, setAuth } = authSlice.actions;
+export const { reset: authReset, setAuth, setRole } = authSlice.actions;
 export default authSlice.reducer;
