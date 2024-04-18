@@ -29,7 +29,7 @@ const StudentList = () => {
   const toggleView = () => {
     setView((prevView) => (prevView === "table" ? "grid" : "table"));
   };
-
+  
   useEffect(() => {
     const savedView = localStorage.getItem("viewPreference");
     if (savedView) {
@@ -54,7 +54,6 @@ const StudentList = () => {
     <>
       <section className="relative">
         <div className="container mx-auto p-4">
-        <GobackButton />
           <div>
             <Breadcrumbs pathname={pathname} />
           </div>

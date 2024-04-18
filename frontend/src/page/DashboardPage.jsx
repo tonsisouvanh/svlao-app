@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import VerticalBarChart from "../components/chart/Dashboard/VerticalBarChart";
 import PieChart from "../components/chart/Dashboard/PieChart";
 import { scholarshipTypes } from "../data/data";
-
+//TODO: fix error filter when token is fail or expire and cannot fetch data from server
 const Dashboard = () => {
   const dispatch = useDispatch();
   // ======================== Redux state ======================= //
@@ -113,11 +113,12 @@ const Dashboard = () => {
     } else if (filterChoice === "residence") {
       filters = { "residenceAddress.location": selectedResidenceAddress };
     } else if (filterChoice === "all") {
-      filters = {};
+      filters = '';
     }
-
     if (auth.role === "admin") {
-      dispatch(getFilteredUsers({ ...filters }));
+      if (filters) {
+        dispatch(getFilteredUsers({ ...filters }));
+      }
     }
   }, [
     dispatch,

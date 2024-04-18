@@ -76,6 +76,7 @@ export const listUsers = createAsyncThunk(
 export const getFilteredUsers = createAsyncThunk(
   "user/listFilteredUsers",
   async (filter, thunkAPI) => {
+    console.log("🚀 ~ filter:", filter);
     try {
       const config = {
         headers: {
@@ -91,6 +92,7 @@ export const getFilteredUsers = createAsyncThunk(
         `/users/filter?${queryString}`,
         config,
       );
+      console.log(data);
       return data;
     } catch (error) {
       const message =
@@ -144,9 +146,6 @@ export const updateUser = createAsyncThunk(
 export const removeUser = createAsyncThunk(
   "user/removeUser",
   async (id, thunkAPI) => {
-    const auth = localStorage.getItem("authInfo")
-      ? JSON.parse(localStorage.getItem("authInfo") || "")
-      : null;
     try {
       const config = {
         headers: {

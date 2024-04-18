@@ -7,16 +7,16 @@ import {
   getUniversityById,
   updateUniversity,
 } from "../controllers/universityController.js";
-import { protect, authorizeUserAdmin } from "../middleware/authMiddleware.js";
+import { verifyJWT, authorizeUserAdmin } from "../middleware/authMiddleware.js";
 import role from "../utils/role.js";
 router
   .route("/")
-  .post(protect, authorizeUserAdmin(role.Admin), createUniversity)
+  .post(verifyJWT, authorizeUserAdmin(role.Admin), createUniversity)
   .get(getUniversities);
 router
   .route("/:id")
-  .delete(protect, authorizeUserAdmin(role.Admin), deleteUniversity)
+  .delete(verifyJWT, authorizeUserAdmin(role.Admin), deleteUniversity)
   .get(getUniversityById)
-  .put(protect, authorizeUserAdmin(role.Admin), updateUniversity);
+  .put(verifyJWT, authorizeUserAdmin(role.Admin), updateUniversity);
 
 export default router;

@@ -24,13 +24,8 @@ const UserTable = ({ users, userStatus, columnHead }) => {
   const data = useMemo(() => users, [users]);
   const columns = useMemo(() => columnHead, []);
   const { status } = useSelector((state) => state.user);
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
 
   const handleOpenModal = (id) => {
     setDeletedUserId(id);
@@ -107,7 +102,7 @@ const UserTable = ({ users, userStatus, columnHead }) => {
                 return (
                   <tr key={row.id} {...row.getRowProps()}>
                     <td>
-                      <div className="dropdown-right dropdown">
+                      <div className="dropdown dropdown-right">
                         <label
                           tabIndex={0}
                           className="btn btn-primary btn-xs px-1 py-0"

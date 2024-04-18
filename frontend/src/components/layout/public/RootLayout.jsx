@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
 
-function RootLayoutPublic() {
+function RootLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -43,4 +43,4 @@ function RootLayoutPublic() {
   );
 }
 
-export default RootLayoutPublic;
+export default RootLayout;

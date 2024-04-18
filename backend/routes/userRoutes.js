@@ -13,42 +13,43 @@ import {
   resetPassword,
   getFilteredUsers,
   logoutUser,
+  refreshToken,
 } from "../controllers/userController.js";
 import {
-  protect,
+  verifyJWT,
   activeUserCheck,
   authorizeUserAdmin,
 } from "../middleware/authMiddleware.js";
 import role from "../utils/role.js";
 
-
-router.post("/logout", logoutUser);
-router.post("/create", protect, authorizeUserAdmin(role.Admin), createUser);
+router.post("/refresh-token", refreshToken);
+router.post("/logout", verifyJWT, logoutUser);
+router.post("/create", verifyJWT, authorizeUserAdmin(role.Admin), createUser);
 router.get(
   "/filter",
-  protect,
+  verifyJWT,
   authorizeUserAdmin(role.Admin),
   getFilteredUsers
 );
 router.post(
   "/resetPassword",
-  protect,
+  verifyJWT,
   authorizeUserAdmin(role.Admin),
   resetPassword
 );
 router
   .route("/")
   .post(registerUser)
-  .get(protect, authorizeUserAdmin(role.Admin), getUsers);
+  .get(verifyJWT, authorizeUserAdmin(role.Admin), getUsers);
 router.route("/login").post(activeUserCheck, authUser);
 router
   .route("/profile")
-  .get(protect, getUserProfile)
-  .put(protect, updateUserProfile);
+  .get(verifyJWT, getUserProfile)
+  .put(verifyJWT, updateUserProfile);
 router
   .route("/:id")
-  .delete(protect, authorizeUserAdmin(role.Admin), deleteUser)
-  .get(protect, authorizeUserAdmin(role.Admin), getUserById)
-  .put(protect, authorizeUserAdmin(role.Admin), updateUser);
+  .delete(verifyJWT, authorizeUserAdmin(role.Admin), deleteUser)
+  .get(verifyJWT, authorizeUserAdmin(role.Admin), getUserById)
+  .put(verifyJWT, authorizeUserAdmin(role.Admin), updateUser);
 
 export default router;

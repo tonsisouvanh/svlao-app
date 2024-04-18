@@ -7,14 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { authReset, signIn } from "../../feature/auth/AuthSlice";
 import toast from "react-hot-toast";
 import Spinner from "../../components/ui/Spinner";
-import { useTranslation } from "react-i18next";
 const initialState = {
   emailAddress: "",
   password: "",
 };
 
 const Signin = () => {
-  const [t, i18n] = useTranslation("global");
+  // const [t, i18n] = useTranslation("global");
 
   const { auth, status, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();

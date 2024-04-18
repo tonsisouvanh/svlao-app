@@ -3,6 +3,7 @@ import User from "../models/userModel.js";
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import Token from "../models/tokenModel.js";
+import jwt from "jsonwebtoken";
 import {
   deleteImage,
   extractImageId,
@@ -30,10 +31,47 @@ const handleSingleImageUpload = async (image) => {
   }
 };
 
+// @desc    Refresh access token
+// @route   POST /api/users/refresh-token
+// @access  Private
+const refreshToken = asyncHandler(async (req, res) => {
+  const incomingRefreshToken = req.cookies.refreshtoken;
+  if (!incomingRefreshToken) {
+    return res.status(401).json({ message: "Missing refresh token" });
+  }
+
+  try {
+    const decoded = jwt.verify(incomingRefreshToken, process.env.JWT_SECRET);
+
+    if (!decoded)
+      return res.status(400).json({ message: "Invalid refresh token" });
+
+    const user = await User.findById(decoded?.userId);
+
+    if (!user) return res.status(401).json({ message: "User not found" });
+
+    if (user?.refreshToken !== incomingRefreshToken)
+      return res.status(401).json({ message: "Incorrect refresh token" });
+
+    const { refreshToken: newRefreshToken } = generateToken(res, {
+      userId: user._id,
+      emailAddress: user.emailAddress,
+      role: user.role,
+    });
+
+    user.refreshToken = newRefreshToken;
+    await user.save();
+
+    return res.status(200).json({ message: "Token refreshed" });
+  } catch (error) {
+    console.error("Refresh token error:", error.message);
+    return res.status(400).json({ message: "Refresh token failed" });
+  }
+});
+
 // @desc    Auth user & get token
 // @route   POST /api/users/resetPassword
 // @access  Private
-
 //TODO: Check up on this reset token
 const resetPassword = asyncHandler(async (req, res) => {
   const { userId, password, emailAddress } = req.body;
@@ -83,15 +121,23 @@ const resetPassword = asyncHandler(async (req, res) => {
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
   const { emailAddress, password } = req.body;
+
+  if (!emailAddress || !password)
+    return res.status(400).json({ message: "Email and password are required" });
+
   const user = await User.findOne({ emailAddress });
 
   if (user && (await user.matchPassword(password))) {
     // generate token and set it to cookies
-    generateToken(res, {
+    const { refreshToken } = generateToken(res, {
       userId: user._id,
       emailAddress: user.emailAddress,
       role: user.role,
     });
+
+    user.refreshToken = refreshToken;
+    await user.save({ validateBeforeSave: false });
+
     res.json({
       _id: user._id,
       laoName: user.fullname.laoName,
@@ -108,8 +154,21 @@ const authUser = asyncHandler(async (req, res) => {
 // @desc    Logout user / clear cookie
 // @route   POST /api/users/logout
 // @access  Public
-const logoutUser = (req, res) => {
-  res.clearCookie("token").status(200).json({ message: "Logout Successful" });
+// TODO: logout casue client error when token is expire
+const logoutUser = async (req, res) => {
+  await User.findByIdAndUpdate(
+    req.user?._id,
+    {
+      $set: { refreshToken: undefined },
+    },
+    { new: true }
+  );
+
+  return res
+    .clearCookie("accesstoken")
+    .clearCookie("refreshtoken")
+    .status(200)
+    .json({ message: "Logout Successful" });
 };
 
 // @desc    Register a new user
@@ -131,7 +190,7 @@ const registerUser = asyncHandler(async (req, res) => {
   });
   if (user) {
     const { password, ...userWithoutPassword } = user._doc;
-    res.status(201).json({
+    return res.status(201).json({
       _id: user._id,
       ...userWithoutPassword,
     });
@@ -196,12 +255,16 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // * @access  Private
 const updateUserProfile = asyncHandler(async (req, res) => {
   const userId = req.user._id;
+
   const { profileImg, role, ...updatedUserData } = req.body;
+
   const existingUser = await User.findById(userId);
+
   if (!existingUser) {
     res.status(404);
     throw new Error("User not found");
   }
+
   // delete existing image
   if (profileImg[0].startsWith("data:")) {
     const imageId = extractImageId(existingUser.profileImg);
@@ -384,4 +447,5 @@ export {
   createUser,
   resetPassword,
   logoutUser,
+  refreshToken,
 };

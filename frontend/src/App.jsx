@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import RootLayoutPublic from "./components/layout/public/rootLayoutPublic";
+import RootLayout from "./components/layout/public/RootLayout";
 import { Toaster } from "react-hot-toast";
 import PrivateRoute from "./route/PrivateRoute";
 import Signin from "./page/auth/Signin";
@@ -29,7 +29,6 @@ import AnnouncementPage from "./page/announcement/AnnouncementPage";
 import DocumentList from "./page/document/private/DocumentList";
 import AddDocument from "./page/document/private/AddDocument";
 import EditDocument from "./page/document/private/EditDocument";
-import FormalOrganizationPage from "./page/FormalOrganizationPage";
 import Spinner from "./components/ui/Spinner";
 import { useSelector } from "react-redux";
 import "react-quill/dist/quill.snow.css";
@@ -45,7 +44,7 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
 
-        <Route path="/" element={<RootLayoutPublic />}>
+        <Route path="/" element={<RootLayout />}>
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
 

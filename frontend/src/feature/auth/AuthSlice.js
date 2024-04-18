@@ -61,6 +61,7 @@ export const signIn = createAsyncThunk(
         { emailAddress, password },
         config,
       );
+      console.log("🚀 ~ data:", data);
       localStorage.setItem("authInfo", JSON.stringify(data));
       return data;
     } catch (error) {
@@ -79,10 +80,11 @@ export const signOut = createAsyncThunk(
   "auth/signout",
   async (_, { rejectWithValue }) => {
     try {
-      localStorage.clear();
-      const data = await apiRequest.post("/users/logout");
-      return null;
+      localStorage.clear("authInfo");
+      await apiRequest.post("/users/logout");
+      return;
     } catch (error) {
+      console.log("🚀 ~ error:", error)
       const errorMessage = error.message;
       return rejectWithValue(errorMessage);
     }
@@ -176,6 +178,7 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(signOut.pending, (state) => {
+        state.auth = null;
         state.status.signout = "loading";
       })
       .addCase(signOut.fulfilled, (state) => {

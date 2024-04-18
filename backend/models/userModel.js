@@ -104,6 +104,9 @@ const userSchema = mongoose.Schema(
     studentId: {
       type: String,
     },
+    refreshToken: {
+      type: String,
+    }
   },
   {
     timestamps: true,
