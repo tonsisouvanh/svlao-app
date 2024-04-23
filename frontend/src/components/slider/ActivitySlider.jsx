@@ -6,7 +6,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "./SliderStyle.css";
 import { useEffect, useState } from "react";
 import { FaImage } from "react-icons/fa";
-import apiRequest from "../../utils/axiosConfig";
+import { apiRequest } from "../../utils/axiosConfig";
 
 const ActivitySlider = () => {
   const [slideData, setslideData] = useState([]);

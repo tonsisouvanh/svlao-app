@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import apiRequest from "../../utils/axiosConfig";
+import { apiRequest, apiRequestPrivate } from "../../utils/axiosConfig";
 
 const initialState = {
   auth: localStorage.getItem("authInfo")
@@ -12,6 +12,7 @@ const initialState = {
     signout: "idle" | "loading" | "succeeded" | "failed",
   },
   role: null,
+  isResignIn: false,
   error: "",
 };
 
@@ -44,6 +45,7 @@ export const signUp = createAsyncThunk(
     }
   },
 );
+
 export const signIn = createAsyncThunk(
   "auth/signin",
   async (userData, thunkAPI) => {
@@ -56,12 +58,11 @@ export const signIn = createAsyncThunk(
         },
       };
 
-      const { data } = await apiRequest.post(
+      const { data } = await apiRequestPrivate.post(
         "/users/login",
         { emailAddress, password },
         config,
       );
-      console.log("🚀 ~ data:", data);
       localStorage.setItem("authInfo", JSON.stringify(data));
       return data;
     } catch (error) {
@@ -76,20 +77,19 @@ export const signIn = createAsyncThunk(
   },
 );
 
-export const signOut = createAsyncThunk(
-  "auth/signout",
-  async (_, { rejectWithValue }) => {
-    try {
-      localStorage.clear("authInfo");
-      await apiRequest.post("/users/logout");
-      return;
-    } catch (error) {
-      console.log("🚀 ~ error:", error)
-      const errorMessage = error.message;
-      return rejectWithValue(errorMessage);
-    }
-  },
-);
+export const signOut = createAsyncThunk("auth/signout", async (_, thunkAPI) => {
+  try {
+    localStorage.clear("authInfo");
+    await apiRequestPrivate.post("/users/logout");
+    return;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
 
 export const updateUserProfile = createAsyncThunk(
   "user/updateUserProfile",
@@ -108,7 +108,7 @@ export const updateUserProfile = createAsyncThunk(
           shortcut: userData.university.shortcut,
         },
       };
-      const { data } = await apiRequest.put(
+      const { data } = await apiRequestPrivate.put(
         "/users/profile",
         {
           ...formattedData,
@@ -149,6 +149,9 @@ const authSlice = createSlice({
   reducers: {
     reset: statusReset,
     setAuth: setAuthInfo,
+    popupResignIn: (state) => {
+      state.isResignIn = true;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -178,12 +181,16 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(signOut.pending, (state) => {
-        state.auth = null;
         state.status.signout = "loading";
       })
       .addCase(signOut.fulfilled, (state) => {
         state.status.signout = "idle";
         state.auth = null;
+      })
+      .addCase(signOut.rejected, (state, action) => {
+        state.status.signout = "failed";
+        state.auth = null;
+        state.error = action.payload;
       })
       .addCase(updateUserProfile.pending, (state) => {
         state.status.setInfo = "loading";
@@ -201,5 +208,10 @@ const authSlice = createSlice({
   },
 });
 
-export const { reset: authReset, setAuth, setRole } = authSlice.actions;
+export const {
+  reset: authReset,
+  setAuth,
+  setRole,
+  popupResignIn,
+} = authSlice.actions;
 export default authSlice.reducer;

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../ui/Spinner";
 import { useGlobalFilter, useSortBy, useTable, useFilters } from "react-table";
@@ -17,9 +17,10 @@ import {
 import { formatDateDDMMYYYY } from "../../../utils/utils";
 import { ANNOUNCEMENT_COLUMNS } from "../../../data/data";
 import toast from "react-hot-toast";
+import EmptyState from "../../EmptyState";
 const cellStyle = "whitespace-nowrap truncate font-light";
 
-const AnnounceTable = ({ editToggle, setEditToggle }) => {
+const AnnounceTable = ({ editToggle }) => {
   const { announcements, status } = useSelector((state) => state.announcement);
 
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
   if (status.fetchAll === "loading") {
     return <Spinner />;
   }
+
   return (
     <>
       {editToggle ? (
@@ -77,95 +79,99 @@ const AnnounceTable = ({ editToggle, setEditToggle }) => {
               <button className="btn btn-outline btn-sm">ເບິ່ງເປັນໜ້າ</button>
             </Link>
           </div>
-          <div className="overflow-x-auto">
-            <table
-              {...getTableProps()}
-              className="table table-md font-notosanslao"
-            >
-              <thead>
-                {announcements &&
-                  headerGroups?.map((headerGroup) => (
-                    <tr
-                      key={headerGroup.id}
-                      {...headerGroup.getHeaderGroupProps()}
-                    >
-                      <th></th>
-                      {headerGroup &&
-                        headerGroup?.headers?.map((column, index) => (
-                          <th
-                            key={index}
-                            {...column.getHeaderProps(
-                              column.getSortByToggleProps(),
-                            )}
-                          >
-                            <div className="flex items-center">
-                              {column.render("Header")}
-                              <span>
-                                {column.isSorted ? (
-                                  column.isSortedDesc ? (
-                                    <AiFillCaretUp />
-                                  ) : (
-                                    <AiFillCaretDown />
-                                  )
-                                ) : null}
-                              </span>
-                            </div>
-                          </th>
-                        ))}
-                    </tr>
-                  ))}
-              </thead>
-              <tbody {...getTableBodyProps()}>
-                {announcements &&
-                  rows?.map((row) => {
-                    prepareRow(row);
-                    return (
-                      <tr key={row?.id} {...row?.getRowProps()}>
-                        <td>
-                          <div className="flex items-center gap-2">
-                            <Link
-                              to={`/manage-others-data/announcement-list/${row?.original?._id}`}
-                              className="btn btn-primary btn-outline btn-xs sm:btn-sm"
-                            >
-                              <AiFillEdit size={15} />
-                            </Link>
-                            <button
-                              type="button"
-                              onClick={() =>
-                                handleDeleteAnnouncement(row?.original?._id)
-                              }
-                              className="btn btn-error btn-outline btn-xs sm:btn-sm"
-                            >
-                              <AiFillDelete size={15} />
-                            </button>
-                          </div>
-                        </td>
-                        {announcements &&
-                          row?.cells?.map((cell, index) => (
-                            <td
-                              className={cellStyle}
+          {announcements && announcements.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table
+                {...getTableProps()}
+                className="table table-md font-notosanslao"
+              >
+                <thead>
+                  {announcements &&
+                    headerGroups?.map((headerGroup) => (
+                      <tr
+                        key={headerGroup.id}
+                        {...headerGroup.getHeaderGroupProps()}
+                      >
+                        <th></th>
+                        {headerGroup &&
+                          headerGroup?.headers?.map((column, index) => (
+                            <th
                               key={index}
-                              {...cell?.getCellProps()}
-                            >
-                              {cell?.column?.id === "timestamp" ? (
-                                <>{formatDateDDMMYYYY(cell?.value)}</>
-                              ) : cell?.column?.id === "content" ? (
-                                <>
-                                  <span className="truncate">
-                                    {cell?.value}
-                                  </span>
-                                </>
-                              ) : (
-                                cell?.render("Cell")
+                              {...column.getHeaderProps(
+                                column.getSortByToggleProps(),
                               )}
-                            </td>
+                            >
+                              <div className="flex items-center">
+                                {column.render("Header")}
+                                <span>
+                                  {column.isSorted ? (
+                                    column.isSortedDesc ? (
+                                      <AiFillCaretUp />
+                                    ) : (
+                                      <AiFillCaretDown />
+                                    )
+                                  ) : null}
+                                </span>
+                              </div>
+                            </th>
                           ))}
                       </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
-          </div>
+                    ))}
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                  {announcements &&
+                    rows?.map((row) => {
+                      prepareRow(row);
+                      return (
+                        <tr key={row?.id} {...row?.getRowProps()}>
+                          <td>
+                            <div className="flex items-center gap-2">
+                              <Link
+                                to={`/manage-others-data/announcement-list/${row?.original?._id}`}
+                                className="btn btn-primary btn-outline btn-xs sm:btn-sm"
+                              >
+                                <AiFillEdit size={15} />
+                              </Link>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleDeleteAnnouncement(row?.original?._id)
+                                }
+                                className="btn btn-error btn-outline btn-xs sm:btn-sm"
+                              >
+                                <AiFillDelete size={15} />
+                              </button>
+                            </div>
+                          </td>
+                          {announcements &&
+                            row?.cells?.map((cell, index) => (
+                              <td
+                                className={cellStyle}
+                                key={index}
+                                {...cell?.getCellProps()}
+                              >
+                                {cell?.column?.id === "timestamp" ? (
+                                  <>{formatDateDDMMYYYY(cell?.value)}</>
+                                ) : cell?.column?.id === "content" ? (
+                                  <>
+                                    <span className="truncate">
+                                      {cell?.value}
+                                    </span>
+                                  </>
+                                ) : (
+                                  cell?.render("Cell")
+                                )}
+                              </td>
+                            ))}
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <EmptyState />
+          )}
         </>
       )}
     </>

@@ -27,7 +27,7 @@ const verifyJWT = asyncHandler(async (req, res, next) => {
   }
 
   if (!accesstoken) {
-    res.status(401).json({ message: "Not authorized: Missing access token" });
+    res.status(401).json({ message: "Not authorized: Missing access token", isReSigin: true });
   }
 });
 

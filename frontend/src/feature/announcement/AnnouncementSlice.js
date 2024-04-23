@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import apiRequest from "../../utils/axiosConfig";
+import { apiRequest } from "../../utils/axiosConfig";
 
 const initialState = {
   announcements: [],

@@ -32,10 +32,10 @@ const UniversityList = () => {
           <div>
             <Breadcrumbs pathname={pathname} />
           </div>
-          <div className="mb-14">
+          <div className="mb-14 mt-10">
             {editToggle ? null : (
-              <label className="flex justify-center font-notosanslao text-4xl font-bold text-primary">
-                Unviersity list
+              <label className="flex justify-center font-notosanslao text-4xl font-bold text-base-content">
+                ຂໍ້ມູນມະຫາວິທະຍາໄລ
               </label>
             )}
           </div>

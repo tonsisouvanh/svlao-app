@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import VerticalBarChart from "../components/chart/Dashboard/VerticalBarChart";
 import PieChart from "../components/chart/Dashboard/PieChart";
 import { scholarshipTypes } from "../data/data";
-//TODO: fix error filter when token is fail or expire and cannot fetch data from server
+//TODO: fix error filter when token is fail or expire and cannot fetch data from server && refactor this page
 const Dashboard = () => {
   const dispatch = useDispatch();
   // ======================== Redux state ======================= //
@@ -32,46 +32,46 @@ const Dashboard = () => {
   const [filterChoice, setFilterChoice] = useState("all");
 
   // ===================== Chart data ======================== //
-  const labelsDegree = ["Bachelor", "Master", "Doctor"];
-  const bachelorCounts = users.filter(
-    (user) => user?.degree?.vietDegree?.toLowerCase() === "cử nhân",
-  ).length;
-  const masterCounts = users.filter(
-    (user) => user?.degree?.vietDegree?.toLowerCase() === "thạc sĩ",
-  ).length;
-  const doctorCounts = users.filter(
-    (user) => user?.degree?.vietDegree?.toLowerCase() === "tiến sĩ",
-  ).length;
+  // const labelsDegree = ["Bachelor", "Master", "Doctor"];
+  // const bachelorCounts = users.filter(
+  //   (user) => user?.degree?.vietDegree?.toLowerCase() === "cử nhân",
+  // ).length;
+  // const masterCounts = users.filter(
+  //   (user) => user?.degree?.vietDegree?.toLowerCase() === "thạc sĩ",
+  // ).length;
+  // const doctorCounts = users.filter(
+  //   (user) => user?.degree?.vietDegree?.toLowerCase() === "tiến sĩ",
+  // ).length;
 
-  const dataDegree = {
-    labels: labelsDegree,
-    datasets: [
-      {
-        label: "Degree Distribution",
-        data: [bachelorCounts, masterCounts, doctorCounts],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.7)",
-          "rgba(53, 162, 235)",
-          "rgba(255, 199, 132)",
-        ],
-      },
-    ],
-  };
+  // const dataDegree = {
+  //   labels: labelsDegree,
+  //   datasets: [
+  //     {
+  //       label: "Degree Distribution",
+  //       data: [bachelorCounts, masterCounts, doctorCounts],
+  //       backgroundColor: [
+  //         "rgba(255, 99, 132, 0.7)",
+  //         "rgba(53, 162, 235)",
+  //         "rgba(255, 199, 132)",
+  //       ],
+  //     },
+  //   ],
+  // };
 
   const labelsScholarship = scholarshipTypes.map((ele) => ele.name);
-  const governmentCount = users.filter(
+  const governmentCount = users?.filter(
     (user) => user?.scholarship?.scholarshipType.trim() === "ລັດຖະບານ",
   ).length;
-  const coperationalCount = users.filter(
+  const coperationalCount = users?.filter(
     (user) => user?.scholarship?.scholarshipType.trim() === "ຮ່ວມມື",
   ).length;
-  const exchangeCount = users.filter(
+  const exchangeCount = users?.filter(
     (user) => user?.scholarship?.scholarshipType.trim() === "ແລກປ່ຽນ",
   ).length;
-  const companyCount = users.filter(
+  const companyCount = users?.filter(
     (user) => user?.scholarship?.scholarshipType.trim() === "ບໍລິສັດ",
   ).length;
-  const privateCount = users.filter(
+  const privateCount = users?.filter(
     (user) => user?.scholarship?.scholarshipType.trim() === "ສ່ວນໂຕ",
   ).length;
 
@@ -100,37 +100,37 @@ const Dashboard = () => {
 
   // ====================================================== //
 
-  useEffect(() => {
-    let filters = {};
+  // useEffect(() => {
+  //   let filters = {};
 
-    if (filterChoice === "combine") {
-      filters = {
-        "university.shortcut": selectedUniversity,
-        "residenceAddress.location": selectedResidenceAddress,
-      };
-    } else if (filterChoice === "university") {
-      filters = { "university.shortcut": selectedUniversity };
-    } else if (filterChoice === "residence") {
-      filters = { "residenceAddress.location": selectedResidenceAddress };
-    } else if (filterChoice === "all") {
-      filters = '';
-    }
-    if (auth.role === "admin") {
-      if (filters) {
-        dispatch(getFilteredUsers({ ...filters }));
-      }
-    }
-  }, [
-    dispatch,
-    filterChoice,
-    selectedResidenceAddress,
-    selectedUniversity,
-    auth.role,
-  ]);
+  //   if (filterChoice === "combine") {
+  //     filters = {
+  //       "university.shortcut": selectedUniversity,
+  //       "residenceAddress.location": selectedResidenceAddress,
+  //     };
+  //   } else if (filterChoice === "university") {
+  //     filters = { "university.shortcut": selectedUniversity };
+  //   } else if (filterChoice === "residence") {
+  //     filters = { "residenceAddress.location": selectedResidenceAddress };
+  //   } else if (filterChoice === "all") {
+  //     filters = "";
+  //   }
+  //   if (auth.role === "admin") {
+  //     if (filters) {
+  //       dispatch(getFilteredUsers({ ...filters }));
+  //     }
+  //   }
+  // }, [
+  //   dispatch,
+  //   filterChoice,
+  //   selectedResidenceAddress,
+  //   selectedUniversity,
+  //   auth.role,
+  // ]);
 
-  useEffect(() => {
-    dispatch(listAnnouncements({}));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(listAnnouncements({}));
+  // }, [dispatch]);
   if (auth.role !== "admin") return <Unauthorized />;
   return (
     <>
@@ -204,7 +204,7 @@ const Dashboard = () => {
           <div className="mb-10 flex w-full justify-center">
             <StatUsers status={userStatus} users={users} total={total} />
           </div>
-          <div className="mb-12 grid grid-cols-1 gap-3 md:grid-cols-2 md:grid-rows-2">
+          {/* <div className="mb-12 grid grid-cols-1 gap-3 md:grid-cols-2 md:grid-rows-2">
             <div className="card max-w-full rounded-md border border-base-300  p-6 shadow">
               <h2 className="mb-4 text-xl font-semibold">Degree count</h2>
               <VerticalBarChart data={dataDegree} />
@@ -219,7 +219,7 @@ const Dashboard = () => {
               </h2>
               <PieChart />
             </div>
-          </div>
+          </div> */}
           <div className="md:grid-cols-2d grid grid-cols-1 gap-3">
             <ul className="menu rounded-md border shadow">
               <div className="flex w-full flex-row items-start justify-between p-2">

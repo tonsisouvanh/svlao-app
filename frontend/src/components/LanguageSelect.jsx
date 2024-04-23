@@ -60,7 +60,7 @@ const LanguageSelect = () => {
         {selectedValue ? (
           <div className="flex items-center justify-between gap-4 text-gray-700">
             <img
-              className="h-6 w-6"
+              className="h-[30px] w-[30px]"
               src={getImgByValue(selectedValue)}
               alt=""
             />
@@ -68,7 +68,7 @@ const LanguageSelect = () => {
         ) : (
           <div className="flex items-center justify-between gap-4 text-gray-700">
             <img
-              className="h-6 w-6"
+              className="h-[30px] w-[30px]"
               src={getImgByValue(i18n.language)}
               alt=""
             />

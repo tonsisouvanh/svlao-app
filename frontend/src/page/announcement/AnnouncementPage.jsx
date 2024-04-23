@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { replaceImage } from "../../utils/utils";
 import images from "../../assets/img/index";
 import { FaEye } from "react-icons/fa";
+import EmptyState from "../../components/EmptyState";
 const AnnouncementPage = () => {
   // const [t, i18n] = useTranslation("global");
   const [t] = useTranslation("global");
@@ -56,7 +57,9 @@ const AnnouncementPage = () => {
                 <h2 className="mb-12 text-center text-3xl font-bold">
                   {t("AnnouncePage.announceHeader") || "ແຈ້ງການຕ່າງໆ"}
                 </h2>
-                {status.fetchAll === "succeeded" && (
+                {status.fetchAll === "succeeded" &&
+                announcements &&
+                announcements.length > 0 ? (
                   <>
                     {announcements.map((announcement) => (
                       <div
@@ -137,6 +140,8 @@ const AnnouncementPage = () => {
                       pages={pages}
                     />
                   </>
+                ) : (
+                  <EmptyState message="ບໍ່ມີຂໍ້ມູນແຈ້ງການ" />
                 )}
               </div>
             </div>

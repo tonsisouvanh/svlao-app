@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import apiRequest from "../../utils/axiosConfig";
+import { apiRequest, apiRequestPrivate } from "../../utils/axiosConfig";
 const initialState = {
   users: [],
   status: {
@@ -14,7 +14,7 @@ const initialState = {
   pages: 0,
   total: 0,
 };
-
+// TODO: fix reset password after added refresh token
 export const resetPassword = createAsyncThunk(
   "user/resetPassword",
   async (userData, thunkAPI) => {
@@ -25,7 +25,7 @@ export const resetPassword = createAsyncThunk(
         },
       };
 
-      await apiRequest.post(
+      await apiRequestPrivate.post(
         `/users/resetPassword`,
         {
           userId: userData.userId,
@@ -56,7 +56,7 @@ export const listUsers = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await apiRequest.get(
+      const { data } = await apiRequestPrivate.get(
         `/users?keyword=${keyword}&pageNumber=${pageNumber}`,
         config,
       );
@@ -88,7 +88,7 @@ export const getFilteredUsers = createAsyncThunk(
       const queryString = Object.keys(filter)
         .map((key) => `${key}=${filter[key]}`)
         .join("&");
-      const { data } = await apiRequest.get(
+      const { data } = await apiRequestPrivate.get(
         `/users/filter?${queryString}`,
         config,
       );
@@ -122,7 +122,7 @@ export const updateUser = createAsyncThunk(
           shortcut: userData.university.shortcut,
         },
       };
-      const { data } = await apiRequest.put(
+      const { data } = await apiRequestPrivate.put(
         `/users/${userData._id}`,
         {
           ...formattedData,
@@ -152,7 +152,7 @@ export const removeUser = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const res = await apiRequest.delete(`/users/${id}`, config);
+      const res = await apiRequestPrivate.delete(`/users/${id}`, config);
       const _id = res.data._id;
       return _id;
     } catch (error) {
@@ -178,7 +178,7 @@ export const createStudent = createAsyncThunk(
         },
       };
 
-      const { data } = await apiRequest.post(
+      const { data } = await apiRequestPrivate.post(
         "/users/create",
         studentData,
         config,

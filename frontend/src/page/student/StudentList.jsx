@@ -59,7 +59,7 @@ const StudentList = () => {
           </div>
           <div className="mb-14">
             {editToggle ? null : (
-              <label className="flex justify-center font-notosanslao text-4xl font-bold text-base-content">
+              <label className="flex mt-10 justify-center font-notosanslao text-4xl font-bold text-base-content">
                 ລາຍຊື່ນັກຮຽນ
               </label>
             )}

@@ -7,16 +7,16 @@ import {
   AiFillCaretUp,
   AiFillDelete,
   AiFillEdit,
-  AiOutlineMore,
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import InfoModal from "../../modal/InfoModal";
 import { UNIVERSITY_COLUMNS } from "../../../data/data";
 import altImage from "../../../assets/img/profile.png";
 import { removeUniversity } from "../../../feature/globalData/UniversitySlice";
+import EmptyState from "../../EmptyState";
 const cellStyle = "whitespace-nowrap truncate font-light";
 
-const UniversityTable = ({ editToggle, setEditToggle }) => {
+const UniversityTable = ({ editToggle }) => {
   const { universities, status } = useSelector((state) => state.university);
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
@@ -63,109 +63,115 @@ const UniversityTable = ({ editToggle, setEditToggle }) => {
               handleClick={handleDeleteUniversity}
             />
           )}
-          <div className="overflow-x-auto">
-            <table
-              {...getTableProps()}
-              className="table table-md font-notosanslao"
-            >
-              <thead>
-                {universities &&
-                  headerGroups?.map((headerGroup) => (
-                    <tr
-                      key={headerGroup.id}
-                      {...headerGroup.getHeaderGroupProps()}
-                    >
-                      <th className=""></th>
-                      {headerGroup &&
-                        headerGroup?.headers?.map((column, index) => (
-                          <th
-                            key={index}
-                            {...column.getHeaderProps(
-                              column.getSortByToggleProps(),
-                            )}
-                          >
-                            <div className="flex items-center">
-                              {column.render("Header")}
-                              <span>
-                                {column.isSorted ? (
-                                  column.isSortedDesc ? (
-                                    <AiFillCaretUp />
-                                  ) : (
-                                    <AiFillCaretDown />
-                                  )
-                                ) : null}
-                              </span>
-                            </div>
-                          </th>
-                        ))}
-                    </tr>
-                  ))}
-              </thead>
-              <tbody {...getTableBodyProps()}>
-                {universities &&
-                  rows?.map((row) => {
-                    prepareRow(row);
-                    return (
-                      <tr key={row.id} {...row.getRowProps()}>
-                        <td>
-                          <div className="flex flex-wrap gap-2 whitespace-nowrap">
-                            <Link
-                              to={`/manage-others-data/university-list/${row.original._id}`}
-                              className="btn btn-primary btn-outline btn-xs sm:btn-sm"
-                            >
-                              <AiFillEdit size={15} />
-                            </Link>
-                            <button
-                              type="button"
-                              onClick={() => handleOpenModal(row.original._id)}
-                              className="btn btn-error btn-outline btn-xs sm:btn-sm"
-                            >
-                              <AiFillDelete size={15} />
-                            </button>
-                          </div>
-                        </td>
-                        {universities &&
-                          row?.cells?.map((cell, index) => (
-                            <td
-                              className={cellStyle}
+          {universities && universities.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table
+                {...getTableProps()}
+                className="table table-md font-notosanslao"
+              >
+                <thead>
+                  {universities &&
+                    headerGroups?.map((headerGroup) => (
+                      <tr
+                        key={headerGroup.id}
+                        {...headerGroup.getHeaderGroupProps()}
+                      >
+                        <th className=""></th>
+                        {headerGroup &&
+                          headerGroup?.headers?.map((column, index) => (
+                            <th
                               key={index}
-                              {...cell.getCellProps()}
-                            >
-                              {cell.column.id === "status.fetchAll" ? (
-                                <span
-                                  className={`badge ${
-                                    cell.value === "active"
-                                      ? " badge-success text-white"
-                                      : "badge-warning"
-                                  }`}
-                                >
-                                  {cell.render("Cell")}
-                                </span>
-                              ) : cell.column.id === "gender" ? (
-                                <>{cell.value === "male" ? "ຊາຍ" : "ຍິງ"}</>
-                              ) : cell.column.id === "profileImg" ? (
-                                <div className="avatar">
-                                  <div className="w-10 rounded-full">
-                                    <img
-                                      src={cell.value}
-                                      alt={cell.value}
-                                      onError={(error) =>
-                                        replaceImage(error, altImage)
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                              ) : (
-                                cell.render("Cell")
+                              {...column.getHeaderProps(
+                                column.getSortByToggleProps(),
                               )}
-                            </td>
+                            >
+                              <div className="flex items-center">
+                                {column.render("Header")}
+                                <span>
+                                  {column.isSorted ? (
+                                    column.isSortedDesc ? (
+                                      <AiFillCaretUp />
+                                    ) : (
+                                      <AiFillCaretDown />
+                                    )
+                                  ) : null}
+                                </span>
+                              </div>
+                            </th>
                           ))}
                       </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
-          </div>
+                    ))}
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                  {universities &&
+                    rows?.map((row) => {
+                      prepareRow(row);
+                      return (
+                        <tr key={row.id} {...row.getRowProps()}>
+                          <td>
+                            <div className="flex flex-wrap gap-2 whitespace-nowrap">
+                              <Link
+                                to={`/manage-others-data/university-list/${row.original._id}`}
+                                className="btn btn-primary btn-outline btn-xs sm:btn-sm"
+                              >
+                                <AiFillEdit size={15} />
+                              </Link>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleOpenModal(row.original._id)
+                                }
+                                className="btn btn-error btn-outline btn-xs sm:btn-sm"
+                              >
+                                <AiFillDelete size={15} />
+                              </button>
+                            </div>
+                          </td>
+                          {universities &&
+                            row?.cells?.map((cell, index) => (
+                              <td
+                                className={cellStyle}
+                                key={index}
+                                {...cell.getCellProps()}
+                              >
+                                {cell.column.id === "status.fetchAll" ? (
+                                  <span
+                                    className={`badge ${
+                                      cell.value === "active"
+                                        ? " badge-success text-white"
+                                        : "badge-warning"
+                                    }`}
+                                  >
+                                    {cell.render("Cell")}
+                                  </span>
+                                ) : cell.column.id === "gender" ? (
+                                  <>{cell.value === "male" ? "ຊາຍ" : "ຍິງ"}</>
+                                ) : cell.column.id === "profileImg" ? (
+                                  <div className="avatar">
+                                    <div className="w-10 rounded-full">
+                                      <img
+                                        src={cell.value}
+                                        alt={cell.value}
+                                        onError={(error) =>
+                                          replaceImage(error, altImage)
+                                        }
+                                      />
+                                    </div>
+                                  </div>
+                                ) : (
+                                  cell.render("Cell")
+                                )}
+                              </td>
+                            ))}
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <EmptyState />
+          )}
         </>
       )}
     </>

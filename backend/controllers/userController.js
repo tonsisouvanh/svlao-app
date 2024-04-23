@@ -43,9 +43,6 @@ const refreshToken = asyncHandler(async (req, res) => {
   try {
     const decoded = jwt.verify(incomingRefreshToken, process.env.JWT_SECRET);
 
-    if (!decoded)
-      return res.status(400).json({ message: "Invalid refresh token" });
-
     const user = await User.findById(decoded?.userId);
 
     if (!user) return res.status(401).json({ message: "User not found" });
@@ -65,7 +62,9 @@ const refreshToken = asyncHandler(async (req, res) => {
     return res.status(200).json({ message: "Token refreshed" });
   } catch (error) {
     console.error("Refresh token error:", error.message);
-    return res.status(400).json({ message: "Refresh token failed" });
+    return res
+      .status(400)
+      .json({ message: "Refresh token failed", isRefreshTokenExpired: true });
   }
 });
 
@@ -154,23 +153,27 @@ const authUser = asyncHandler(async (req, res) => {
 // @desc    Logout user / clear cookie
 // @route   POST /api/users/logout
 // @access  Public
-// TODO: logout casue client error when token is expire
 const logoutUser = async (req, res) => {
-  await User.findByIdAndUpdate(
-    req.user?._id,
-    {
-      $set: { refreshToken: undefined },
-    },
-    { new: true }
-  );
+  try {
+    // Update user to invalidate refresh token (optional)
+    if (req.user) {
+      await User.findByIdAndUpdate(
+        req.user._id,
+        { $set: { refreshToken: undefined } },
+        { new: true }
+      );
+    }
 
-  return res
-    .clearCookie("accesstoken")
-    .clearCookie("refreshtoken")
-    .status(200)
-    .json({ message: "Logout Successful" });
+    // Clear access and refresh tokens cookies
+    res.clearCookie("accesstoken");
+    res.clearCookie("refreshtoken");
+
+    return res.status(200).json({ message: "Logout Successful" });
+  } catch (error) {
+    console.error("Logout error:", error.message);
+    return res.status(500).json({ message: "Error: Logout failed" });
+  }
 };
-
 // @desc    Register a new user
 // @route   POST /api/users
 // @access  Public

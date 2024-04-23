@@ -33,8 +33,8 @@ const ResidenceAddressList = () => {
           </div>
           <div className="mb-14">
             {editToggle ? null : (
-              <label className="flex justify-center font-notosanslao text-4xl font-bold text-primary">
-                Residence address list
+              <label className="flex mt-10 justify-center font-notosanslao text-4xl font-bold text-base-content">
+               ຂໍ້ມູນທີ່ຢູ່ປັດຈຸບັນ
               </label>
             )}
           </div>

@@ -9,14 +9,11 @@ function RootLayout() {
 
   return (
     <>
-      <div
-      // className={`${theme === "winter" ? "bg-[#F1F5F9]" : null}`}
-      >
+      <div>
         {/* <!-- ===== Page Wrapper Start ===== --> */}
         <div className="flex h-screen overflow-hidden">
           {/* <!-- ===== Sidebar Start ===== --> */}
           <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-          {/* <h1>Sidebar</h1> */}
           {/* <!-- ===== Sidebar End ===== --> */}
 
           {/* <!-- ===== Content Area Start ===== --> */}

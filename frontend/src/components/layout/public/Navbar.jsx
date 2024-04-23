@@ -116,7 +116,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                 className={`btn btn-ghost btn-sm relative whitespace-nowrap`}
                 to={`/profile`}
               >
-                <span className="mr-auto">Profile</span>
+                <span className="mr-auto">ຂໍ້ມູນສ່ວນໂຕ</span>
                 {auth?.userStatus === "pending" && (
                   <AiFillInfoCircle className="absolute right-0 top-0 text-secondary" />
                 )}
@@ -125,7 +125,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                 onClick={handleSignOut}
                 className="btn btn-ghost btn-sm whitespace-nowrap"
               >
-                <span className="mr-auto">Log out</span>
+                <span className="mr-auto">ອອກຈາກລະບົບ</span>
               </button>
             </ul>
           </div>

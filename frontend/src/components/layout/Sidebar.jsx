@@ -88,7 +88,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         <div className="mt-5 flex w-full items-center gap-16">
           <div className=" p-2">
             <a className="mb-16 whitespace-nowrap text-center font-sans text-sm font-bold normal-case text-base-200">
-              <p>LAOS-HCM STUDENT.</p>
+              <p className="text-lg">LAOS-HCM STUDENT.</p>
             </a>
           </div>
           <button

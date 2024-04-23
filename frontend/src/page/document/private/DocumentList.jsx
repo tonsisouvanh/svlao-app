@@ -8,6 +8,7 @@ import Unauthorized from "../../public/Unauthorized";
 import { listDocuments } from "../../../feature/document/DocumentSlice";
 import Paginate from "../../../components/paginate/Paginate";
 import DocumentTable from "../../../components/table/document/DocumentTable";
+import EmptyState from "../../../components/EmptyState";
 
 const DocumentList = () => {
   const { pageNumber, keyword } = useParams();
@@ -16,7 +17,9 @@ const DocumentList = () => {
   const { auth } = useSelector((state) => state.auth);
   const [editToggle, setEditToggle] = useState(false);
 
-  const { status, page, pages } = useSelector((state) => state.document);
+  const { status, page, pages, documents } = useSelector(
+    (state) => state.document,
+  );
   useEffect(() => {
     dispatch(listDocuments({ pageNumber, keyword }));
   }, [dispatch, pageNumber, keyword]);
@@ -36,8 +39,8 @@ const DocumentList = () => {
           </div>
           <div className="mb-14">
             {editToggle ? null : (
-              <label className="flex justify-center font-notosanslao text-4xl font-bold text-primary">
-                Document list
+              <label className="mt-10 flex justify-center font-notosanslao text-4xl font-bold text-base-content">
+                ຂໍ້ມູນແບບຟອມ / ເອກະສານ
               </label>
             )}
           </div>
@@ -69,16 +72,23 @@ const DocumentList = () => {
               </>
             )}
           </div>
-          <DocumentTable
-            editToggle={editToggle}
-            setEditToggle={setEditToggle}
-          />
-          <Paginate
-            path="/manage-others-data/document-form-list/page/"
-            style="mt-10"
-            page={page}
-            pages={pages}
-          />
+
+          {documents && documents.length > 0 ? (
+            <>
+              <DocumentTable
+                editToggle={editToggle}
+                setEditToggle={setEditToggle}
+              />
+              <Paginate
+                path="/manage-others-data/document-form-list/page/"
+                style="mt-10"
+                page={page}
+                pages={pages}
+              />
+            </>
+          ) : (
+            <EmptyState />
+          )}
         </div>
       </section>
     </>

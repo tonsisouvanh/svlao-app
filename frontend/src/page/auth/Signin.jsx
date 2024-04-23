@@ -25,16 +25,10 @@ const Signin = () => {
   } = useForm({ defaultValues: initialState });
   const [showPass, setShowPass] = useState(false);
 
-  const handleLogin = async (data) => {
-    const userInput = { ...data };
-    dispatch(signIn(userInput));
-  };
-
   useEffect(() => {
     if (status.signin === "succeeded") {
       toast.success("Login successful");
       dispatch(authReset());
-      navigate("/admin/restaurantlist");
     } else if (status.signin === "failed") {
       toast.error(error);
       dispatch(authReset());
@@ -46,7 +40,11 @@ const Signin = () => {
       navigate("/");
     }
   }, [navigate, auth]);
-  if (status.signin === "loading") return <Spinner />;
+
+  const handleLogin = async (data) => {
+    const userInput = { ...data };
+    dispatch(signIn(userInput));
+  };
   return (
     <>
       <div className="flex w-full flex-wrap">
@@ -140,11 +138,12 @@ const Signin = () => {
               </div>
               {status.signin === "loading" ? (
                 <button
-                  type="submit"
+                  disabled
+                  type="button"
                   className="flex w-full items-center justify-center rounded-lg bg-blue-700 px-4 py-2 text-center text-base font-semibold text-white shadow-md transition ease-in hover:bg-blue-600 focus:outline-none focus:ring-2"
                 >
                   <span className="loading loading-spinner"></span>
-                  loading
+                  Loading
                 </button>
               ) : (
                 <button

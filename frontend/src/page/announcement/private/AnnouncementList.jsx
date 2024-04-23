@@ -8,6 +8,7 @@ import Unauthorized from "../../public/Unauthorized";
 import { listAnnouncements } from "../../../feature/announcement/AnnouncementSlice";
 import AnnounceTable from "../../../components/table/announcement/AnnouncementTable";
 import Paginate from "../../../components/paginate/Paginate";
+import EmptyState from "../../../components/EmptyState";
 
 const AnnouncementList = () => {
   const { pageNumber, keyword } = useParams();
@@ -16,7 +17,9 @@ const AnnouncementList = () => {
   const { auth } = useSelector((state) => state.auth);
   const [editToggle, setEditToggle] = useState(false);
 
-  const { status, page, pages } = useSelector((state) => state.announcement);
+  const { status, page, pages, announcements } = useSelector(
+    (state) => state.announcement,
+  );
   useEffect(() => {
     dispatch(listAnnouncements({ pageNumber, keyword }));
   }, [dispatch, pageNumber, keyword]);
@@ -36,8 +39,8 @@ const AnnouncementList = () => {
           </div>
           <div className="mb-14">
             {editToggle ? null : (
-              <label className="flex justify-center font-notosanslao text-4xl font-bold text-primary">
-                Announcement list
+              <label className="mt-10 flex justify-center font-notosanslao text-4xl font-bold text-base-content">
+                ຂໍ້ມູນຂ່າວສານ
               </label>
             )}
           </div>
@@ -69,16 +72,22 @@ const AnnouncementList = () => {
               </>
             )}
           </div>
-          <AnnounceTable
-            editToggle={editToggle}
-            setEditToggle={setEditToggle}
-          />
-          <Paginate
-            path="/manage-others-data/announcement-list/page/"
-            style="mt-10"
-            page={page}
-            pages={pages}
-          />
+          {announcements && announcements.length > 0 ? (
+            <>
+              <AnnounceTable
+                editToggle={editToggle}
+                setEditToggle={setEditToggle}
+              />
+              <Paginate
+                path="/manage-others-data/announcement-list/page/"
+                style="mt-10"
+                page={page}
+                pages={pages}
+              />
+            </>
+          ) : (
+            <EmptyState />
+          )}
         </div>
       </section>
     </>
