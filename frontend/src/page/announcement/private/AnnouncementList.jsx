@@ -9,6 +9,7 @@ import { listAnnouncements } from "../../../feature/announcement/AnnouncementSli
 import AnnounceTable from "../../../components/table/announcement/AnnouncementTable";
 import Paginate from "../../../components/paginate/Paginate";
 import EmptyState from "../../../components/EmptyState";
+import PageHeading from "../../../components/PageHeading";
 
 const AnnouncementList = () => {
   const { pageNumber, keyword } = useParams();
@@ -37,13 +38,9 @@ const AnnouncementList = () => {
           <div>
             <Breadcrumbs pathname={pathname} />
           </div>
-          <div className="mb-14">
-            {editToggle ? null : (
-              <label className="mt-10 flex justify-center font-notosanslao text-4xl font-bold text-base-content">
-                ຂໍ້ມູນຂ່າວສານ
-              </label>
-            )}
-          </div>
+
+          {editToggle ? null : <PageHeading title="ຂໍ້ມູນຂ່າວສານ" />}
+
           <div className="">
             {editToggle ? null : (
               <>

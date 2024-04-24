@@ -5,10 +5,12 @@ const capitalizeFirstLetter = (str) => {
 };
 
 const Breadcrumbs = ({ pathname }) => {
-  const pathParts = pathname.split("/").filter((part) => part !== "");
-
+  const pathParts = pathname
+    .split("/")
+    .filter((part) => part !== "")
+    .slice(0, 2);
   return (
-    <div className="breadcrumbs text-sm">
+    <div className="breadcrumbs text-sm mb-4">
       <ul>
         {pathParts.map((part, index) => {
           const formattedPart = capitalizeFirstLetter(part.replace(/-/g, " "));

@@ -6,7 +6,6 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { authReset, signIn } from "../../feature/auth/AuthSlice";
 import toast from "react-hot-toast";
-import Spinner from "../../components/ui/Spinner";
 const initialState = {
   emailAddress: "",
   password: "",

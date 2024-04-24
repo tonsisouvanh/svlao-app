@@ -9,6 +9,7 @@ import { listDocuments } from "../../../feature/document/DocumentSlice";
 import Paginate from "../../../components/paginate/Paginate";
 import DocumentTable from "../../../components/table/document/DocumentTable";
 import EmptyState from "../../../components/EmptyState";
+import PageHeading from "../../../components/PageHeading";
 
 const DocumentList = () => {
   const { pageNumber, keyword } = useParams();
@@ -37,13 +38,9 @@ const DocumentList = () => {
           <div>
             <Breadcrumbs pathname={pathname} />
           </div>
-          <div className="mb-14">
-            {editToggle ? null : (
-              <label className="mt-10 flex justify-center font-notosanslao text-4xl font-bold text-base-content">
-                ຂໍ້ມູນແບບຟອມ / ເອກະສານ
-              </label>
-            )}
-          </div>
+
+          {editToggle ? null : <PageHeading title="ຂໍ້ມູນແບບຟອມ / ເອກະສານ" />}
+
           <div className="">
             {editToggle ? null : (
               <>

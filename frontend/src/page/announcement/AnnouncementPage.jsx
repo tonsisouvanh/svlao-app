@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import InfoModal from "../../components/modal/InfoModal";
-import ActivitySlider from "../../components/slider/ActivitySlider";
+import AnnouncementCarousel from "../../components/slider/AnnouncementCarousel";
 import {
   countViews,
   listAnnouncements,
@@ -14,6 +14,7 @@ import { replaceImage } from "../../utils/utils";
 import images from "../../assets/img/index";
 import { FaEye } from "react-icons/fa";
 import EmptyState from "../../components/EmptyState";
+import PageHeading from "../../components/PageHeading";
 const AnnouncementPage = () => {
   // const [t, i18n] = useTranslation("global");
   const [t] = useTranslation("global");
@@ -46,7 +47,14 @@ const AnnouncementPage = () => {
         <section className="body-font overflow-hidden">
           <div className="container mx-auto p-3">
             <div className="">
-              <ActivitySlider
+              {/* <h2 className="text-center text-3xl font-bold">
+                  {t("AnnouncePage.announceHeader") || "ແຈ້ງການຕ່າງໆ"}
+                </h2> */}
+              <PageHeading
+                title={t("AnnouncePage.announceHeader") || "ແຈ້ງການຕ່າງໆ"}
+                classname="bg-transparent text-slate-700"
+              />
+              <AnnouncementCarousel
                 slides={[
                   "https://www.udn.vn/Portals/1/EasyDNNnews/11102/img-20.4.21.jpg",
                   "https://imagevietnam.vnanet.vn//MediaUpload/Org/2022/06/23/vna-potal-thanh-pho-ho-chi-minh-tao-moi-truong-huu-nghi-gan-ket-tinh-cam-cho-sinh-vien-lao-va-campuchia-618259923-12-9-58.jpeg",
@@ -54,9 +62,6 @@ const AnnouncementPage = () => {
                 ]}
               />
               <div className="mt-10">
-                <h2 className="mb-12 text-center text-3xl font-bold">
-                  {t("AnnouncePage.announceHeader") || "ແຈ້ງການຕ່າງໆ"}
-                </h2>
                 {status.fetchAll === "succeeded" &&
                 announcements &&
                 announcements.length > 0 ? (

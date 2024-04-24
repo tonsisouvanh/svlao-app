@@ -7,6 +7,7 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import UniversityTable from "../../components/table/university/UniversityTable";
 import { listUniversity } from "../../feature/globalData/UniversitySlice";
+import PageHeading from "../../components/PageHeading";
 
 const UniversityList = () => {
   const dispatch = useDispatch();
@@ -32,13 +33,7 @@ const UniversityList = () => {
           <div>
             <Breadcrumbs pathname={pathname} />
           </div>
-          <div className="mb-14 mt-10">
-            {editToggle ? null : (
-              <label className="flex justify-center font-notosanslao text-4xl font-bold text-base-content">
-                ຂໍ້ມູນມະຫາວິທະຍາໄລ
-              </label>
-            )}
-          </div>
+          {editToggle ? null : <PageHeading title="ຂໍ້ມູນມະຫາວິທະຍາໄລ" />}
           <div className="">
             {editToggle ? null : (
               <>

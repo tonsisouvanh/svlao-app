@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { FaImage } from "react-icons/fa";
 import { apiRequest } from "../../utils/axiosConfig";
 
-const ActivitySlider = () => {
+const AnnouncementCarousel = () => {
   const [slideData, setslideData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -52,13 +52,13 @@ const ActivitySlider = () => {
       >
         {slideData?.map((i, index) => {
           return (
-            <SwiperSlide key={index} className="h-[22rem] w-full lg:h-[37rem]">
+            <SwiperSlide key={index} className="">
               {isLoading ? (
                 <div className="relative h-full w-full animate-pulse rounded-md bg-gray-300">
                   <FaImage className="h-full w-full object-cover text-gray-500" />
                 </div>
               ) : (
-                <div className="relative h-full w-full">
+                <div className="relative h-[22rem] lg:h-[34rem] w-full">
                   <img
                     src={i.image}
                     alt=""
@@ -74,4 +74,4 @@ const ActivitySlider = () => {
   );
 };
 
-export default ActivitySlider;
+export default AnnouncementCarousel;

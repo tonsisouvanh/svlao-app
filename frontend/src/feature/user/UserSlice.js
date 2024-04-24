@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { apiRequest, apiRequestPrivate } from "../../utils/axiosConfig";
+import { apiRequestPrivate } from "../../utils/axiosConfig";
 const initialState = {
   users: [],
   status: {
@@ -74,9 +74,8 @@ export const listUsers = createAsyncThunk(
 );
 
 export const getFilteredUsers = createAsyncThunk(
-  "user/listFilteredUsers",
+  "user/getFilteredUsers",
   async (filter, thunkAPI) => {
-    console.log("🚀 ~ filter:", filter);
     try {
       const config = {
         headers: {
@@ -92,7 +91,6 @@ export const getFilteredUsers = createAsyncThunk(
         `/users/filter?${queryString}`,
         config,
       );
-      console.log(data);
       return data;
     } catch (error) {
       const message =

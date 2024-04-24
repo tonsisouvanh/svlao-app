@@ -211,7 +211,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                 : setSidebarExpanded(true);
                             }}
                           >
-                            {/* <AiOutlineDashboard size={23} /> */}
                             <img
                               src={foldermanagement}
                               className="w-6"

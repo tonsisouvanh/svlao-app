@@ -7,6 +7,7 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import ResidenceAddressTable from "../../components/table/residenceAddress/ResidenceAddressTable";
 import { listResidenceAddress } from "../../feature/globalData/ResidenceAddressSlice";
+import PageHeading from "../../components/PageHeading";
 
 const ResidenceAddressList = () => {
   const { pathname } = useLocation();
@@ -31,13 +32,7 @@ const ResidenceAddressList = () => {
           <div>
             <Breadcrumbs pathname={pathname} />
           </div>
-          <div className="mb-14">
-            {editToggle ? null : (
-              <label className="flex mt-10 justify-center font-notosanslao text-4xl font-bold text-base-content">
-               ຂໍ້ມູນທີ່ຢູ່ປັດຈຸບັນ
-              </label>
-            )}
-          </div>
+          {editToggle ? null : <PageHeading title="ຂໍ້ມູນທີ່ຢູ່ປັດຈຸບັນ" />}
           <div className="">
             {editToggle ? null : (
               <>

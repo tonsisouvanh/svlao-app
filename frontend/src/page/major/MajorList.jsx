@@ -7,6 +7,7 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import MajorTable from "../../components/table/major/MajorTable";
 import { listMajor } from "../../feature/globalData/MajorSlice";
+import PageHeading from "../../components/PageHeading";
 
 const MajorList = () => {
   const dispatch = useDispatch();
@@ -30,13 +31,7 @@ const MajorList = () => {
           <div>
             <Breadcrumbs pathname={pathname} />
           </div>
-          <div className="mb-14">
-            {editToggle ? null : (
-              <label className="flex mt-10 justify-center font-notosanslao text-4xl font-bold text-base-content">
-                ຂໍ້ມູນຂະແໜງຮຽນ
-              </label>
-            )}
-          </div>
+          {editToggle ? null : <PageHeading title="ຂໍ້ມູນຂະແໜງຮຽນ" />}
           <div className="">
             {editToggle ? null : (
               <>

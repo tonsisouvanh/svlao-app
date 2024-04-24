@@ -9,26 +9,9 @@ const PieChart = () => {
   const { universities } = useSelector((state) => state.university);
   const universityCounts = universities.map(
     (university) =>
-      users.filter((user) => user.university.universityId === university._id)
+      users?.filter((user) => user.university.universityId === university._id)
         .length,
   );
-  // const generateColors = (count) => {
-  //   const dynamicColors = [];
-  //   const getRandomColor = () => {
-  //     const hue = Math.floor(Math.random() * 360);
-  //     const saturation = Math.floor(Math.random() * 50) + 55;
-  //     const lightness = Math.floor(Math.random() * 30) + 60;
-  //     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-  //   };
-
-  //   for (let i = 0; i < count; i++) {
-  //     dynamicColors.push(getRandomColor());
-  //   }
-
-  //   return dynamicColors;
-  // };
-
-  // const backgroundColors = generateColors(universityCounts.length);
   const backgroundColors = [
     "rgba(53, 162, 235)",
     "rgba(255, 99, 132)",

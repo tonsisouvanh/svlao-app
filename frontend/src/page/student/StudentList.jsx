@@ -9,7 +9,7 @@ import { listUsers } from "../../feature/user/UserSlice";
 import Paginate from "../../components/paginate/Paginate";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import Spinner from "../../components/ui/Spinner";
-import GobackButton from "../../components/button/GoBackButton";
+import PageHeading from "../../components/PageHeading";
 
 const StudentList = () => {
   const { pathname } = useLocation();
@@ -29,7 +29,7 @@ const StudentList = () => {
   const toggleView = () => {
     setView((prevView) => (prevView === "table" ? "grid" : "table"));
   };
-  
+
   useEffect(() => {
     const savedView = localStorage.getItem("viewPreference");
     if (savedView) {
@@ -54,16 +54,12 @@ const StudentList = () => {
     <>
       <section className="relative">
         <div className="container mx-auto p-4">
-          <div>
+          <div className="mb-4">
             <Breadcrumbs pathname={pathname} />
           </div>
-          <div className="mb-14">
-            {editToggle ? null : (
-              <label className="flex mt-10 justify-center font-notosanslao text-4xl font-bold text-base-content">
-                ລາຍຊື່ນັກຮຽນ
-              </label>
-            )}
-          </div>
+          {editToggle ? null : (
+            <PageHeading title="ລາຍຊື່ນັກຮຽນ" />
+          )}
           <div className="">
             {editToggle ? null : (
               <>
