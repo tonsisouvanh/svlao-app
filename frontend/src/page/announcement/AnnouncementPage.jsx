@@ -52,7 +52,7 @@ const AnnouncementPage = () => {
                 </h2> */}
               <PageHeading
                 title={t("AnnouncePage.announceHeader") || "ແຈ້ງການຕ່າງໆ"}
-                classname="bg-transparent text-slate-700"
+                className="bg-transparent !text-slate-700"
               />
               <AnnouncementCarousel
                 slides={[

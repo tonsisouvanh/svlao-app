@@ -12,6 +12,7 @@ import ErrorMessage from "../../components/typography/ErrorMessage";
 import altImage from "../../assets/img/profile.png";
 import ImageUpload from "../../components/input/ImageUpload";
 import userTestData from "../../data/userTestData";
+import PageHeading from "../../components/PageHeading";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const AddStudent = () => {
@@ -96,9 +97,7 @@ const AddStudent = () => {
         {status.create !== "loading" ? (
           <div className="container mx-auto px-5 py-8">
             <div className="mb-12 flex w-full flex-col text-center">
-              <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium">
-                ຂໍ້ມູນນັກຮຽນ
-              </h1>
+              <PageHeading title="ຂໍ້ມູນນັກຮຽນ"/>
               <div>
                 <div className="avatar">
                   <img src={altImage} alt="" />

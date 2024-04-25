@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { apiRequest } from "../../utils/axiosConfig";
+import { apiRequest, apiRequestPrivate } from "../../utils/axiosConfig";
 
 const initialState = {
   announcements: [],
@@ -25,7 +25,7 @@ export const createAnnouncement = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const { data } = await apiRequest.post(
+      const { data } = await apiRequestPrivate.post(
         "/announcements",
         inputData,
         config,
@@ -53,7 +53,7 @@ export const updateAnnouncement = createAsyncThunk(
         },
       };
 
-      const { data } = await apiRequest.put(
+      const { data } = await apiRequestPrivate.put(
         `/announcements/${inputData._id}`,
         {
           ...inputData,
@@ -82,7 +82,7 @@ export const removeAnnouncement = createAsyncThunk(
           "Content-Type": "application/json",
         },
       };
-      const res = await apiRequest.delete(
+      const res = await apiRequestPrivate.delete(
         `/announcements/${announcementId}`,
         config,
       );

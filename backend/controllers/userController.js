@@ -347,7 +347,6 @@ const getFilteredUsers = asyncHandler(async (req, res) => {
   });
   // Fetch users based on the filters and pagination
   const users = await User.find(filterObject);
-  console.log("🚀 ~ getFilteredUsers ~ users:", users)
 
   res.json({
     users,

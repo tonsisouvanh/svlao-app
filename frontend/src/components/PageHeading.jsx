@@ -1,8 +1,10 @@
 import { FaArrowLeft } from "react-icons/fa";
 
-const PageHeading = ({ title = "Page title", classname = '' }) => {
+const PageHeading = ({ title = "Page title", className }) => {
   return (
-    <div className={`bg-base-200d relative mb-16 flex items-center justify-center rounded-md bg-slate-700 py-4 text-white ${classname}`}>
+    <div
+      className={`bg-base-200d relative mb-16 flex items-center justify-center rounded-md border py-4 text-slate-700 ${className}`}
+    >
       <div className="absolute left-2">
         <button className="btn btn-ghost">
           <FaArrowLeft />

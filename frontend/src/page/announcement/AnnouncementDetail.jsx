@@ -43,7 +43,7 @@ const AnnouncementDetail = () => {
       {announcement ? (
         <section className="body-font text-primary-600">
           <article>
-            <header className="mx-auto max-w-screen-xl pt-28 text-center">
+            <header className="mx-auto max-w-screen-xl pt-12 text-center">
               <div className="flex items-center justify-center gap-5">
                 <p className="text-gray-500">
                   Published on{" "}
@@ -69,9 +69,12 @@ const AnnouncementDetail = () => {
                   </div>
                 ))}
               </div>
-              <h1 className="mt-2 text-3xl font-bold text-gray-900 sm:text-5xl">
+              <p className="mt-2 text-3xl leading-10 font-bold text-gray-900 lg:text-4xl">
                 {announcement.title}
-              </h1>
+              </p>
+              {/* <h1 className="mt-2 text-3xl font-bold text-gray-900 sm:text-5xl">
+                {announcement.title}
+              </h1> */}
               <img
                 className="mt-10 w-full object-contain sm:h-[34rem]"
                 alt={announcement.title}
