@@ -8,7 +8,7 @@ const QuillEditor = ({ field, fieldState, ...props }) => {
           toolbar: [
             [{ header: [1, 2, false] }],
             ["bold", "italic", "underline"],
-            ["link"],
+            ["link","image"],
           ],
         }}
         {...field}

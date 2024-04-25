@@ -8,6 +8,7 @@ import PageHeading from "../../components/PageHeading";
 import UserList from "./UserList";
 const Dashboard = () => {
   const { auth } = useSelector((state) => state.auth);
+
   if (auth.role !== "admin") return <Unauthorized />;
   return (
     <>

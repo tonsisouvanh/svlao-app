@@ -10,6 +10,7 @@ import {
 } from "../../feature/globalData/UniversitySlice";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import ErrorMessage from "../../components/typography/ErrorMessage";
+import PageHeading from "../../components/PageHeading";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const AddUniversity = () => {
@@ -66,11 +67,7 @@ const AddUniversity = () => {
         {status.create !== "loading" ? (
           <div className="container mx-auto px-5 py-24">
             <div className="mb-12 flex w-full flex-col text-center">
-              <Breadcrumbs pathname={pathname} />
-
-              <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium">
-                Universities
-              </h1>
+              <PageHeading title="ເພີ່ມຂໍ້ມູນມະຫາວິທະຍາໄລ"/>
             </div>
             <div className="mx-auto">
               <form

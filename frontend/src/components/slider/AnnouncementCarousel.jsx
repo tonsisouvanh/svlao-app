@@ -7,11 +7,12 @@ import "./SliderStyle.css";
 import { useEffect, useState } from "react";
 import { FaImage } from "react-icons/fa";
 import { apiRequest } from "../../utils/axiosConfig";
+import { useNavigate } from "react-router-dom";
 
 const AnnouncementCarousel = () => {
   const [slideData, setslideData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchAnnouncementImages = async () => {
       try {
@@ -58,12 +59,22 @@ const AnnouncementCarousel = () => {
                   <FaImage className="h-full w-full object-cover text-gray-500" />
                 </div>
               ) : (
-                <div className="relative h-[22rem] lg:h-[34rem] w-full">
+                <div className="relative h-[22rem] w-full lg:h-[34rem]">
                   <img
                     src={i.image}
                     alt=""
                     className="h-full w-full object-cover"
                   />
+                  <div className="sm absolute bottom-4 right-4 mt-8 flex flex-col items-center justify-center sm:flex-row sm:space-x-4 sm:px-0 lg:mt-12">
+                    <button
+                      onClick={() =>
+                        navigate(`/announcement-list/announcement/${i._id}`)
+                      }
+                      className="mt-4 rounded-lg border-2 border-primary bg-primary px-6 py-2 font-medium text-white transition hover:translate-y-1"
+                    >
+                      ອ່ານຕື່ມ
+                    </button>
+                  </div>
                 </div>
               )}
             </SwiperSlide>

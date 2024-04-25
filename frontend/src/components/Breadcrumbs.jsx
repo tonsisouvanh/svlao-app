@@ -4,15 +4,18 @@ const capitalizeFirstLetter = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-const Breadcrumbs = ({ pathname }) => {
+const Breadcrumbs = ({ pathname,classname }) => {
   const pathParts = pathname
-    .split("/")
-    .filter((part) => part !== "")
-    .slice(0, 2);
+    ? pathname
+        .split("/")
+        .filter((part) => part !== "")
+        .slice(0, 2)
+    : "";
+  if (!pathname || pathParts.length === 0) return null;
   return (
-    <div className="breadcrumbs text-sm mb-4">
+    <div className={`breadcrumbs text-sm ${classname}`}>
       <ul>
-        {pathParts.map((part, index) => {
+        {pathParts?.map((part, index) => {
           const formattedPart = capitalizeFirstLetter(part.replace(/-/g, " "));
           return (
             <li key={index}>

@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getAnnouncementById } from "../../feature/announcement/AnnouncementSlice";
 import Spinner from "../../components/ui/Spinner";
 import FetchErrorModal from "../../components/modal/FetchErrorModal";
-import consule from "../../assets/img/consule.jpg";
 import { replaceImage } from "../../utils/utils";
 import AnnouncementRelated from "./AnnouncementRelated";
 import { FaEye } from "react-icons/fa";
@@ -69,7 +68,7 @@ const AnnouncementDetail = () => {
                   </div>
                 ))}
               </div>
-              <p className="mt-2 text-3xl leading-10 font-bold text-gray-900 lg:text-4xl">
+              <p className="mt-2 text-3xl font-bold leading-10 text-gray-900 lg:text-4xl">
                 {announcement.title}
               </p>
               {/* <h1 className="mt-2 text-3xl font-bold text-gray-900 sm:text-5xl">
@@ -79,7 +78,7 @@ const AnnouncementDetail = () => {
                 className="mt-10 w-full object-contain sm:h-[34rem]"
                 alt={announcement.title}
                 src={announcement.image}
-                onError={(error) => replaceImage(error, consule)}
+                onError={(error) => replaceImage(error, "/consule.jpg")}
               />
             </header>
             <div className="mx-auto mt-10 max-w-screen-md space-y-12 px-4 py-10 text-lg tracking-wide text-gray-700">

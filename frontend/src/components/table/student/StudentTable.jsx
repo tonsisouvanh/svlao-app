@@ -13,7 +13,6 @@ import altImage from "../../../assets/img/profile.png";
 import { BiSolidSortAlt } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
 import InfoModal from "../../modal/InfoModal";
-import consule from "../../../assets/img/consule.jpg";
 import { BsFacebook } from "react-icons/bs";
 import { STUDENT_COLUMNS, scholarshipTypes } from "../../../data/data";
 import Searchbox from "../../input/student/Searchbox";
@@ -201,7 +200,7 @@ const UserTable = ({
                       <div className="relative -mb-16 overflow-hidden rounded-t-lg">
                         <div className="absolute bottom-0 left-0 right-0 top-0 bg-black/30 backdrop-invert backdrop-opacity-10"></div>
                         <img
-                          src={consule}
+                          src={`/consule.jpg`}
                           alt=""
                           className="h-[10rem] w-full object-cover object-top"
                         />

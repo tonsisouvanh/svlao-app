@@ -7,6 +7,7 @@ import Spinner from "../../components/ui/Spinner";
 import { formatDateDDMMYYYY } from "../../utils/utils";
 import Paginate from "../../components/paginate/Paginate";
 import EmptyState from "../../components/EmptyState";
+import PageHeading from "../../components/PageHeading";
 const DocumentPage = () => {
   const { pageNumber, keyword } = useParams();
   const dispatch = useDispatch();
@@ -22,10 +23,8 @@ const DocumentPage = () => {
   }
   return (
     <section className="body-font text-primary-600 overflow-hidden">
-      <div className="container mx-auto px-5 py-20">
-        <h2 className="title-font text-primary-900 mb-10 text-2xl font-bold">
-          ແບບຟອມ ແລະ ເອກະສານຕ່າງໆ
-        </h2>
+      <div className="container mx-auto px-5 py-4">
+        <PageHeading title="ແບບຟອມ ແລະ ເອກະສານຕ່າງໆ" />
         {documents && documents.length > 0 ? (
           <>
             <div className="-my-8 divide-y-2 divide-gray-100">

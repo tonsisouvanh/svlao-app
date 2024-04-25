@@ -7,7 +7,6 @@ import {
   AiFillCaretUp,
   AiFillDelete,
   AiFillEdit,
-  AiOutlineMore,
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import InfoModal from "../../modal/InfoModal";
@@ -18,7 +17,7 @@ import { removeMajor } from "../../../feature/globalData/MajorSlice";
 import EmptyState from "../../EmptyState";
 const cellStyle = "whitespace-nowrap truncate font-light";
 
-const MajorTable = ({ editToggle, setEditToggle }) => {
+const MajorTable = ({ editToggle }) => {
   const { majors, status } = useSelector((state) => state.major);
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);

@@ -17,7 +17,7 @@ import { removeResidenceAddress } from "../../../feature/globalData/ResidenceAdd
 import EmptyState from "../../EmptyState";
 const cellStyle = "whitespace-nowrap truncate font-light";
 
-const ResidenceAddressTable = ({ editToggle, setEditToggle }) => {
+const ResidenceAddressTable = ({ editToggle }) => {
   const { residenceAddresses, status } = useSelector(
     (state) => state.residenceAddress,
   );

@@ -5,20 +5,22 @@ import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../components/ui/Spinner";
 import { degreeList, provinceList, statusList } from "../../data/data";
 import { getYearOptions } from "../../utils/utils";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { createStudent, userReset } from "../../feature/user/UserSlice";
-import Breadcrumbs from "../../components/Breadcrumbs";
 import ErrorMessage from "../../components/typography/ErrorMessage";
-import altImage from "../../assets/img/profile.png";
 import ImageUpload from "../../components/input/ImageUpload";
-import userTestData from "../../data/userTestData";
 import PageHeading from "../../components/PageHeading";
-const inputStyle = "input input-bordered w-full text-base-content/80";
+import { FaSave } from "react-icons/fa";
+
+const inputStyle =
+  "input input-bordered w-full text-base-content/80 focus:outline-2 focus:outline-blue-500 bg-primary/5";
+
+const selectStyle =
+  "select select-bordered w-full text-base-content/80 bg-primary/5";
 
 const AddStudent = () => {
   const [base64, setBase64] = useState(null);
   const navigate = useNavigate();
-  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const yearOptions = getYearOptions();
 
@@ -56,20 +58,17 @@ const AddStudent = () => {
     setValue("residenceAddress.address", residenceAddress.address);
   };
 
-  const clearImage = () => {
-    setBase64(null);
-  };
-
   useEffect(() => {
     if (status.create === "succeeded") {
       toast.success("Update Successfully");
-      dispatch(userReset());
       reset({});
       navigate(-1);
     } else if (status.create === "failed") {
       toast.error(userError);
-      dispatch(userReset());
     }
+    return () => {
+      dispatch(userReset());
+    };
   }, [status.create, dispatch, userError, navigate, reset]);
 
   const handleEditSubmit = (data) => {
@@ -97,11 +96,15 @@ const AddStudent = () => {
         {status.create !== "loading" ? (
           <div className="container mx-auto px-5 py-8">
             <div className="mb-12 flex w-full flex-col text-center">
-              <PageHeading title="ຂໍ້ມູນນັກຮຽນ"/>
-              <div>
-                <div className="avatar">
-                  <img src={altImage} alt="" />
-                </div>
+              <PageHeading title="ເພີ່ມຂໍ້ມູນ" />
+              <div className="flex items-center justify-center gap-4">
+                <ImageUpload setBase64={setBase64} />
+                {base64 && (
+                  <img
+                    className="h-36 w-36 rounded-md object-cover"
+                    src={base64}
+                  ></img>
+                )}
               </div>
             </div>
             <div className="mx-auto">
@@ -160,7 +163,7 @@ const AddStudent = () => {
                     </div>
                     <select
                       {...register("userStatus", {})}
-                      className={`select select-bordered w-full`}
+                      className={selectStyle}
                     >
                       {statusList.map((item, index) => (
                         <option key={index} value={item.status}>
@@ -187,7 +190,7 @@ const AddStudent = () => {
                         required: "Field required",
                       })}
                       type="text"
-                      className={inputStyle + "input-bordered"}
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -256,9 +259,7 @@ const AddStudent = () => {
                     <select
                       {...register("university.shortcut", {})}
                       onChange={(e) => handleSelectUniversity(e.target.value)}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
+                      className={selectStyle}
                     >
                       {universities.map((item, index) => (
                         <option key={index} value={item.shortcut}>
@@ -277,9 +278,7 @@ const AddStudent = () => {
                     </div>
                     <select
                       {...register("duration.from", {})}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
+                      className={selectStyle}
                     >
                       {yearOptions.map((year) => (
                         <option key={year} value={year}>
@@ -298,9 +297,7 @@ const AddStudent = () => {
                     </div>
                     <select
                       {...register("duration.to", {})}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
+                      className={selectStyle}
                     >
                       {yearOptions.map((year) => (
                         <option key={year} value={year}>
@@ -363,9 +360,7 @@ const AddStudent = () => {
                     <select
                       {...register("degree.laoDegree", {})}
                       onChange={(e) => handleSelectDegree(e.target.value)}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
+                      className={selectStyle}
                     >
                       {degreeList.map((item, index) => (
                         <option key={index} value={item.laoDegree}>
@@ -415,9 +410,7 @@ const AddStudent = () => {
                       onChange={(e) =>
                         handleSelectResidenceAddress(e.target.value)
                       }
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
+                      className={selectStyle}
                     >
                       {residenceAddresses.map((item, index) => (
                         <option key={index} value={item.location}>
@@ -466,9 +459,7 @@ const AddStudent = () => {
                     <select
                       {...register("major.laoMajor", {})}
                       onChange={(e) => handleSelectMajor(e.target.value)}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
+                      className={selectStyle}
                     >
                       {majors.map((item, index) => (
                         <option key={index} value={item.laoMajor}>
@@ -513,12 +504,7 @@ const AddStudent = () => {
                         Gender
                       </span>
                     </div>
-                    <select
-                      {...register("gender", {})}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
-                    >
+                    <select {...register("gender", {})} className={selectStyle}>
                       <option value={"male"}>Male</option>
                       <option value={"female"}>Female</option>
                       <option value={"other"}>Other</option>
@@ -548,9 +534,7 @@ const AddStudent = () => {
                     </div>
                     <select
                       {...register("province", {})}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
+                      className={selectStyle}
                     >
                       {provinceList.map((item, index) => (
                         <option key={index} value={item.laoName}>
@@ -560,37 +544,17 @@ const AddStudent = () => {
                     </select>
                   </label>
                 </div>
-                <div className="w-full p-2">
-                  <label className="form-control w-full">
-                    <div className="label flex items-center">
-                      <span className="label-text text-lg font-semibold">
-                        Upload Image
-                      </span>
-                    </div>
-                    {base64 ? (
-                      <img src={base64} alt="Base64 Image" />
-                    ) : (
-                      <ImageUpload setBase64={setBase64} />
-                    )}
-                  </label>
-                </div>
-                <button
-                  type="button"
-                  onClick={clearImage}
-                  className="btn btn-error btn-outline btn-sm ml-10"
-                >
-                  Clear
-                </button>
-                <div className="w-full space-x-4 p-2">
+                <div className="flex w-full justify-center space-x-4 p-2">
                   <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-primary btn-wide"
                     disabled={status.create === "loading" ? true : false}
                   >
+                    <FaSave />
                     {status.create === "loading" ? (
                       <span className="loading loading-spinner loading-xs"></span>
                     ) : (
-                      "Submit"
+                      "ບັນທຶກ"
                     )}
                   </button>
                 </div>

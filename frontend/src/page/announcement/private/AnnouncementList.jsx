@@ -35,9 +35,7 @@ const AnnouncementList = () => {
     <>
       <section className="">
         <div className="container mx-auto p-4">
-          <div>
-            <Breadcrumbs pathname={pathname} />
-          </div>
+     
 
           {editToggle ? null : <PageHeading title="ຂໍ້ມູນຂ່າວສານ" />}
 

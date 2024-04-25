@@ -2,7 +2,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const PrivateRoute = () => {
-  const { auth, error } = useSelector((state) => state.auth);
+  const { auth } = useSelector((state) => state.auth);
   const location = useLocation();
 
   return auth ? (

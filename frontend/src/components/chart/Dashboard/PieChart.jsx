@@ -9,7 +9,7 @@ const PieChart = () => {
   const { universities } = useSelector((state) => state.university);
   const universityCounts = universities.map(
     (university) =>
-      users?.filter((user) => user.university.universityId === university._id)
+      users?.filter((user) => user.university?.universityId === university._id)
         .length,
   );
   const backgroundColors = [

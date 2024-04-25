@@ -11,6 +11,7 @@ import i18next from "i18next";
 import global_en from "./translations/en/global_en.json";
 import global_vn from "./translations/vn/global_vn.json";
 import global_la from "./translations/la/global_la.json";
+
 i18next.init({
   interpolation: { escapeValue: false },
   lng: localStorage.getItem("language")

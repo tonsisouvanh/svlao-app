@@ -8,7 +8,7 @@ const images = {
   vietnam,
   english,
   defaultImage,
-  profile
+  profile,
 };
 
 export default images;

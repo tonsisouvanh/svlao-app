@@ -41,7 +41,7 @@ const UserList = () => {
           <tr className="">
             <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-3"></td>
             <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-3">
-              Users
+              User
             </td>
             <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-3">
               Status
@@ -82,7 +82,7 @@ const UserList = () => {
               ))}
             </>
           ) : (
-            <p className="m-4"></p>
+            <tr className="m-4"></tr>
           )}
         </tbody>
       </table>

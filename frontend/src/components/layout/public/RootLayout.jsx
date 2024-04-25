@@ -6,37 +6,34 @@ import Footer from "./Footer";
 
 function RootLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
-    <>
-      <div>
-        {/* <!-- ===== Page Wrapper Start ===== --> */}
-        <div className="flex h-screen overflow-hidden">
-          {/* <!-- ===== Sidebar Start ===== --> */}
-          <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-          {/* <!-- ===== Sidebar End ===== --> */}
+    <div className="">
+      {/* <!-- ===== Page Wrapper Start ===== --> */}
+      <div className="h-screen flex border overflow-hidden">
+        {/* <!-- ===== Sidebar Start ===== --> */}
+        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        {/* <!-- ===== Sidebar End ===== --> */}
 
-          {/* <!-- ===== Content Area Start ===== --> */}
-          <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-            {/* <!-- ===== Header Start ===== --> */}
-            <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        {/* <!-- ===== Content Area Start ===== --> */}
+        <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+          {/* <!-- ===== Header Start ===== --> */}
+          <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-            {/* <!-- ===== Header End ===== --> */}
+          {/* <!-- ===== Header End ===== --> */}
 
-            {/* <!-- ===== Main Content Start ===== --> */}
-            <main>
-              <div className="mx-auto min-h-screen max-w-screen-2xl font-notosanslao md:p-6 2xl:p-10">
-                <Outlet />
-              </div>
-            </main>
-            <Footer />
-            {/* <!-- ===== Main Content End ===== --> */}
-          </div>
-          {/* <!-- ===== Content Area End ===== --> */}
+          {/* <!-- ===== Main Content Start ===== --> */}
+          <main className="">
+            <div className="mx-auto min-h-screen max-w-screen-2xl font-notosanslao md:p-6 2xl:p-10">
+              <Outlet />
+            </div>
+          </main>
+          <Footer />
+          {/* <!-- ===== Main Content End ===== --> */}
         </div>
-        {/* <!-- ===== Page Wrapper End ===== --> */}
+        {/* <!-- ===== Content Area End ===== --> */}
       </div>
-    </>
+      {/* <!-- ===== Page Wrapper End ===== --> */}
+    </div>
   );
 }
 

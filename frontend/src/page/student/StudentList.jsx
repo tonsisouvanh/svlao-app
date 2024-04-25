@@ -54,9 +54,6 @@ const StudentList = () => {
     <>
       <section className="relative">
         <div className="container mx-auto p-4">
-          <div className="mb-4">
-            <Breadcrumbs pathname={pathname} />
-          </div>
           {editToggle ? null : (
             <PageHeading title="ລາຍຊື່ນັກຮຽນ" />
           )}

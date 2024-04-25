@@ -17,11 +17,20 @@ import { announcementCategoryList } from "../../../data/data";
 import ImageUpload from "../../../components/input/ImageUpload";
 import { AiFillEye, AiFillFileImage } from "react-icons/ai";
 import QuillEditor from "./QuillEditor";
+import PageHeading from "../../../components/PageHeading";
+import { replaceImage } from "../../../utils/utils";
+import images from "../../../assets/img";
+import { BiUserCircle } from "react-icons/bi";
+import { BsPencilSquare } from "react-icons/bs";
+import { FaEye } from "react-icons/fa";
+import ViewImageModal from "../../../components/ViewImageModal";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
 const EditAnnouncement = () => {
   const [base64, setBase64] = useState(null);
+  const [currentViewImage, setCurrentViewImage] = useState(null);
   const [uploadImageToggle, setuploadImageToggle] = useState(false);
+  const [viewImageToggle, setViewImageToggle] = useState(false);
   const [toggleEdit, setToggleEdit] = useState(false);
 
   const { pathname } = useLocation();
@@ -48,7 +57,6 @@ const EditAnnouncement = () => {
       image: singleAnnouncement?.image,
     },
   });
-
 
   useEffect(() => {
     if (status.update === "succeeded") {
@@ -110,7 +118,6 @@ const EditAnnouncement = () => {
     }
   }, [status.fetchOne, reset, singleAnnouncement, error]);
 
-
   useEffect(() => {
     setValue(
       "category",
@@ -125,18 +132,63 @@ const EditAnnouncement = () => {
   }
   return (
     <>
+      <ViewImageModal
+        viewImageToggle={viewImageToggle}
+        setViewImageToggle={setViewImageToggle}
+        image={currentViewImage}
+      />
       <section className="relative">
         {singleAnnouncement &&
         singleAnnouncement &&
         status.fetchAll !== "loading" ? (
-          <div className="container mx-auto px-5 py-24">
-            <div className="mb-12 flex w-full flex-col text-center">
-              <Breadcrumbs pathname={pathname} />
-              <h1 className="title-font m:text-3xl mb-4 mt-10 text-2xl font-medium">
-                Edit announcement
-              </h1>
-              <div>
-                <p className="text-xs">{singleAnnouncement?._id}</p>
+          <div className="container mx-auto px-5 py-14">
+            <div className="mb-ູ flex w-full flex-col text-center">
+              <PageHeading title="ແກ້ໄຂຂ່າວສານ" />
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              {uploadImageToggle && <ImageUpload setBase64={setBase64} />}
+              <div className="relative border">
+                {base64 ? (
+                  <div className="w-36 h-36">
+                    <img
+                      src={base64}
+                      alt={"avatar"}
+                      onError={(error) => replaceImage(error, images.altImage)}
+                    />
+                  </div>
+                ) : (
+                  <div className="w-36 h-36">
+                    {singleAnnouncement?.image ? (
+                      <img
+                        src={singleAnnouncement?.image}
+                        alt={singleAnnouncement?.image}
+                        className="h-full w-full object-cover"
+                        onError={(error) =>
+                          replaceImage(error, images.altImage)
+                        }
+                      />
+                    ) : (
+                      <BiUserCircle className="h-full w-full text-primary" />
+                    )}
+                  </div>
+                )}
+                <div className="absolute bottom-2 right-2 flex gap-1">
+                  <button
+                    onClick={() => setuploadImageToggle(!uploadImageToggle)}
+                    className="btn btn-xs "
+                  >
+                    <BsPencilSquare className="" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setViewImageToggle(!viewImageToggle);
+                      setCurrentViewImage(singleAnnouncement?.image);
+                    }}
+                    className="btn btn-xs"
+                  >
+                    <FaEye className="" />
+                  </button>
+                </div>
               </div>
             </div>
             <div className="mx-auto">
@@ -177,12 +229,6 @@ const EditAnnouncement = () => {
                         error={errors?.content}
                       />
                     </div>
-                    {/* <textarea
-                      {...register("content", {
-                        required: "Field required",
-                      })}
-                      className={`textarea textarea-bordered h-48 w-full max-w-full`}
-                    /> */}
                     <Controller
                       name="quillContent"
                       control={control}
@@ -220,49 +266,6 @@ const EditAnnouncement = () => {
                       )}
                     />
                   </label>
-                </div>
-                <div className="w-full p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Upload your image:
-                      </span>
-                    </div>
-                    {base64 ? (
-                      <div className="avatar">
-                        <div className="w-64 rounded">
-                          <button
-                            type="button"
-                            className="btn btn-neutral btn-xs absolute left-2 top-2"
-                          >
-                            <AiFillEye />
-                          </button>
-                          <img
-                            src={base64}
-                            alt={singleAnnouncement?.title || "image"}
-                          />
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="avatar">
-                        <div className="w-64 rounded">
-                          <img
-                            src={singleAnnouncement?.image}
-                            alt={singleAnnouncement?.title || "image"}
-                          />
-                        </div>
-                      </div>
-                    )}
-                    {uploadImageToggle && <ImageUpload setBase64={setBase64} />}
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => setuploadImageToggle(!uploadImageToggle)}
-                    className="btn btn-outline btn-sm mt-4"
-                  >
-                    <AiFillFileImage />
-                    {uploadImageToggle ? "Close" : "Upload"}
-                  </button>
                 </div>
                 <div className="w-full space-x-4 p-2">
                   {!toggleEdit && (

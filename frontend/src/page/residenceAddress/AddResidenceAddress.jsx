@@ -60,8 +60,6 @@ const AddResidenceAddress = () => {
         {status.create !== "loading" ? (
           <div className="container mx-auto px-5 py-24">
             <div className="mb-12 flex w-full flex-col text-center">
-              <Breadcrumbs pathname={pathname} />
-
               <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium text-primary">
                 Add Residence Address
               </h1>

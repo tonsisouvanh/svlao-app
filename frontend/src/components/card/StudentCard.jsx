@@ -2,10 +2,8 @@ import PropTypes from "prop-types";
 
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import consule from "../../assets/img/consule.jpg";
 const StudentCard = ({
   student,
-  editToggle,
   setEditToggle,
   setEditingStudent,
 }) => {
@@ -19,7 +17,7 @@ const StudentCard = ({
         <div className="relative overflow-hidden rounded-t-lg">
           <div className="absolute bottom-0 left-0 right-0 top-0 bg-black/30 backdrop-invert backdrop-opacity-10"></div>
           <img
-            src={consule}
+            src={`/consule.jpg`}
             alt=""
             className="h-[10rem] w-full object-cover object-top"
           />

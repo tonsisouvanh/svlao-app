@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { BiUserCircle } from "react-icons/bi";
+import { BsPencilSquare } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import {
   degreeList,
@@ -16,7 +17,8 @@ import { updateUser, userReset } from "../../feature/user/UserSlice";
 import altImage from "../../assets/img/profile.png";
 import ResetPasswordModal from "../../components/modal/ResetPasswordModal";
 import Spinner from "../../components/ui/Spinner";
-import { AiFillEye, AiFillFileImage } from "react-icons/ai";
+import { FaPencilAlt, FaSave } from "react-icons/fa";
+import PageHeading from "../../components/PageHeading";
 import ImageUpload from "../../components/input/ImageUpload";
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
@@ -87,6 +89,7 @@ const EditStudent = () => {
       };
       dispatch(updateUser({ ...formattedData }));
       setToggleEdit(false);
+      setuploadImageToggle(false);
     } else toast.warning("Input data not valid");
   };
 
@@ -116,6 +119,7 @@ const EditStudent = () => {
       toast.error(error);
     }
   }, [singleUserStatus.fetchOne, reset, singleUser, error]);
+
   return (
     <>
       {isModalOpen && (
@@ -133,22 +137,38 @@ const EditStudent = () => {
         {singleUser && userStatus.update !== "loading" ? (
           <div className="container mx-auto px-5 py-14">
             <div className="mb-12 flex w-full flex-col text-center">
-              <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium text-base-content">
-                ຂໍ້ມູນນັກຮຽນ
-              </h1>
-              <div>
-                <div className="avatar">
-                  <div className=" w-48 rounded-full">
-                    {singleUser?.profileImg ? (
+              <PageHeading title="ຂໍ້ມູນນັກຮຽນ" />
+              {/* Upload picture */}
+              <div className="flex items-center justify-center gap-2">
+                {uploadImageToggle && <ImageUpload setBase64={setBase64} />}
+                <div className="avatar relative">
+                  {base64 ? (
+                    <div className=" w-48 rounded-full">
                       <img
-                        src={singleUser?.profileImg}
-                        alt={singleUser.profileImg}
+                        src={base64}
+                        alt={"avatar"}
                         onError={(error) => replaceImage(error, altImage)}
                       />
-                    ) : (
-                      <BiUserCircle className="h-full w-full text-primary" />
-                    )}
-                  </div>
+                    </div>
+                  ) : (
+                    <div className=" w-48 rounded-full">
+                      {singleUser?.profileImg ? (
+                        <img
+                          src={singleUser?.profileImg}
+                          alt={singleUser?.profileImg}
+                          onError={(error) => replaceImage(error, altImage)}
+                        />
+                      ) : (
+                        <BiUserCircle className="h-full w-full text-primary" />
+                      )}
+                    </div>
+                  )}
+                  <button
+                    onClick={() => setuploadImageToggle(!uploadImageToggle)}
+                    className="btn btn-ghost btn-xs absolute bottom-0 right-0"
+                  >
+                    <BsPencilSquare className="" />
+                  </button>
                 </div>
               </div>
             </div>
@@ -600,7 +620,7 @@ const EditStudent = () => {
                     />
                   </label>
                 </div>
-                <div className="w-full p-2">
+                {/* <div className="w-full p-2">
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text text-lg font-semibold">
@@ -646,15 +666,16 @@ const EditStudent = () => {
                     <AiFillFileImage />
                     {uploadImageToggle ? "Close" : "Upload"}
                   </button>
-                </div>
-                <div className="w-full space-x-4 p-2">
+                </div> */}
+                <div className="flex w-full items-center justify-center space-x-4 p-2">
                   {!toggleEdit && (
                     <button
                       type="button"
                       onClick={() => setToggleEdit(true)}
-                      className="btn btn-primary"
+                      className="btn btn-primary btn-wide"
                     >
-                      Update
+                      <FaPencilAlt />
+                      ແກ້ໄຂ
                     </button>
                   )}
                   {toggleEdit && (
@@ -666,10 +687,11 @@ const EditStudent = () => {
                           userStatus.update === "loading" ? true : false
                         }
                       >
+                        <FaSave />
                         {userStatus.update === "loading" ? (
                           <span className="loading loading-spinner loading-xs"></span>
                         ) : (
-                          "Submit"
+                          "ບັນທຶກ"
                         )}
                       </button>
                       <button
@@ -677,7 +699,7 @@ const EditStudent = () => {
                         type="button"
                         className="btn btn-error btn-outline"
                       >
-                        Cancel
+                        ຍົກເລີກ
                       </button>
                     </>
                   )}

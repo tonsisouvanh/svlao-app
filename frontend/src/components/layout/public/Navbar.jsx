@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { AiFillBell, AiFillInfoCircle } from "react-icons/ai";
-import { BiSolidMoon, BiSolidSun, BiUserCircle } from "react-icons/bi";
-import { GiCupcake } from "react-icons/gi";
+import { BiUserCircle } from "react-icons/bi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { themes } from "../../../data/data";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "../../../feature/auth/AuthSlice";
 import altImage from "../../../assets/img/profile.png";
 import { replaceImage } from "../../../utils/utils";
 import LanguageSelect from "../../LanguageSelect";
+import Breadcrumbs from "../../Breadcrumbs";
 
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
-  const [theme, setTheme] = useState(
+  const [theme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light",
   );
   const { auth } = useSelector((state) => state.auth);
@@ -33,54 +33,20 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <header className="bg-active sticky top-0 z-[999] flex w-full bg-white">
       <div className="flex w-full items-center justify-between px-4 py-4 shadow-md md:px-6 2xl:px-11">
-        <button
-          className="group btn btn-sm flex flex-col items-center justify-center rounded border p-1 lg:invisible"
-          onClick={(e) => {
-            e.stopPropagation();
-            setSidebarOpen(!sidebarOpen);
-          }}
-        >
-          <RxHamburgerMenu className="text-2xl" />
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            className="group btn btn-sm flex flex-col items-center justify-center rounded border p-1 lg:invisible"
+            onClick={(e) => {
+              e.stopPropagation();
+              setSidebarOpen(!sidebarOpen);
+            }}
+          >
+            <RxHamburgerMenu className="text-2xl" />
+          </button>
+          <Breadcrumbs pathname={pathname} classname={"!mb-0"} />
+        </div>
 
         <div className="flex items-center gap-2">
-          {/* <div>
-            <div className="dropdown dropdown-end">
-              <label
-                tabIndex={0}
-                className="btn rounded-btn btn-sm m-1 font-notosanslao"
-              >
-                {theme === "cupcake" ? (
-                  <GiCupcake size={16} />
-                ) : theme === "night" ? (
-                  <BiSolidMoon size={16} />
-                ) : (
-                  <BiSolidSun size={16} />
-                )}
-              </label>
-
-              <ul
-                tabIndex={0}
-                className="menu dropdown-content rounded-box z-[1] w-fit space-y-2 bg-base-100 p-2 shadow"
-              >
-                {themes.map((theme) => (
-                  <div
-                    className="btn btn-xs w-fit"
-                    onClick={() => setTheme(theme)}
-                    key={theme}
-                  >
-                    {theme === "cupcake" ? (
-                      <GiCupcake size={16} />
-                    ) : theme === "night" ? (
-                      <BiSolidMoon size={16} />
-                    ) : (
-                      <BiSolidSun size={16} />
-                    )}
-                  </div>
-                ))}
-              </ul>
-            </div>
-          </div> */}
           <div className="dropdown dropdown-end">
             <div className="indicator">
               {auth?.userStatus === "pending" && (

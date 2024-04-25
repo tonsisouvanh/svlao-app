@@ -15,6 +15,7 @@ import { announcementCategoryList } from "../../../data/data";
 import ImageUpload from "../../../components/input/ImageUpload";
 
 import QuillEditor from "./QuillEditor";
+import PageHeading from "../../../components/PageHeading";
 
 const inputStyle = "input input-bordered w-full text-base-content/80";
 
@@ -79,16 +80,22 @@ const AddAnnouncement = () => {
         {status.create !== "loading" ? (
           <div className="container mx-auto px-5 py-24">
             <div className="mb-12 flex w-full flex-col text-center">
-              <Breadcrumbs pathname={pathname} />
-              <h1 className="title-font m:text-3xl mb-4 mt-10 text-2xl font-medium">
-                Add Announcement
-              </h1>
+              <PageHeading title="ເພີ່ມຂໍ້ມູນຂ່າວສານ"/>
             </div>
             <div className="mx-auto">
               <form
                 onSubmit={handleSubmit(handleCreateSubmit)}
                 className="flex flex-col items-center justify-center"
               >
+                <div className="flex items-center justify-center gap-4">
+                  <ImageUpload setBase64={setBase64} />
+                  {base64 && (
+                    <img
+                      className="h-36 w-36 rounded-md object-cover"
+                      src={base64}
+                    ></img>
+                  )}
+                </div>
                 <div className="w-full p-2">
                   <label className="form-control w-full">
                     <div className="label flex items-center">
@@ -161,27 +168,7 @@ const AddAnnouncement = () => {
                     />
                   </label>
                 </div>
-                <div className="w-full p-2">
-                  <label className="form-control w-full">
-                    <div className="label flex items-center">
-                      <span className="label-text font-semibold">
-                        Upload Image
-                      </span>
-                    </div>
-                    {base64 ? (
-                      <img src={base64} alt="Base64 Image" />
-                    ) : (
-                      <ImageUpload setBase64={setBase64} />
-                    )}
-                  </label>
-                </div>
-                <button
-                  type="button"
-                  onClick={clearImage}
-                  className="btn btn-error btn-outline btn-sm ml-10"
-                >
-                  Clear
-                </button>
+
                 <div className="w-full space-x-4 p-2">
                   <button
                     type="submit"
