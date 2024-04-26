@@ -1,8 +1,9 @@
 {
+  "AddButton": "Add",
   "Login": {
-    "headline": "Login To Your Account!",
+    "headline": "Welcome!",
     "subline": "Login to access your account and start exploring our amazing features!",
-    "txtLogin": "Login",
+    "btnLogin": "Login",
     "labelEmail": "Email",
     "labelPassword": "Password"
   },

@@ -6,7 +6,7 @@ const PageHeading = ({ title = "Page title", className }) => {
 
   return (
     <div
-      className={`bg-base-200d relative mb-16 flex items-center justify-center rounded-md border py-4 text-slate-700 ${className}`}
+      className={`bg-base-200d relative mb-16 flex items-center justify-center rounded-md py-4 text-slate-700 ${className}`}
     >
       <div className="absolute left-2">
         <button onClick={() => navigate(-1)} className="btn btn-ghost">

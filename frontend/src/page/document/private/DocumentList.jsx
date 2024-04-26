@@ -1,19 +1,19 @@
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { AiFillPlusCircle } from "react-icons/ai";
 import Spinner from "../../../components/ui/Spinner";
-import Breadcrumbs from "../../../components/Breadcrumbs";
 import Unauthorized from "../../public/Unauthorized";
 import { listDocuments } from "../../../feature/document/DocumentSlice";
 import Paginate from "../../../components/paginate/Paginate";
 import DocumentTable from "../../../components/table/document/DocumentTable";
 import EmptyState from "../../../components/EmptyState";
 import PageHeading from "../../../components/PageHeading";
+import { useTranslation } from "react-i18next";
 
 const DocumentList = () => {
+  const [t] = useTranslation("global");
   const { pageNumber, keyword } = useParams();
-  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.auth);
   const [editToggle, setEditToggle] = useState(false);
@@ -55,7 +55,7 @@ const DocumentList = () => {
                             auth.role !== "admin" && "btn-disabled"
                           }`}
                         >
-                          Add
+                          {t("AddButton")}
                           <AiFillPlusCircle size={20} />
                         </button>
                       </Link>

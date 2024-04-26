@@ -8,6 +8,7 @@ import { replaceImage } from "../../utils/utils";
 import AnnouncementRelated from "./AnnouncementRelated";
 import { FaEye } from "react-icons/fa";
 import ReactQuill from "react-quill";
+import Image from "../../components/Image";
 const AnnouncementDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -68,17 +69,12 @@ const AnnouncementDetail = () => {
                   </div>
                 ))}
               </div>
-              <p className="mt-2 text-3xl font-bold leading-10 text-gray-900 lg:text-4xl">
+              <h1 className="mt-2 text-3xl font-bold leading-10 text-gray-900 lg:text-4xl">
                 {announcement.title}
-              </p>
-              {/* <h1 className="mt-2 text-3xl font-bold text-gray-900 sm:text-5xl">
-                {announcement.title}
-              </h1> */}
-              <img
-                className="mt-10 w-full object-contain sm:h-[34rem]"
-                alt={announcement.title}
-                src={announcement.image}
-                onError={(error) => replaceImage(error, "/consule.jpg")}
+              </h1>
+              <Image
+                classname="mt-10 w-full object-contain sm:h-[34rem]"
+                image={announcement.image}
               />
             </header>
             <div className="mx-auto mt-10 max-w-screen-md space-y-12 px-4 py-10 text-lg tracking-wide text-gray-700">

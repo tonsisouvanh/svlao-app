@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { apiRequestPrivate } from "../../utils/axiosConfig";
+import { formatDate } from "../../utils/utils";
 const initialState = {
   users: [],
   status: {
@@ -194,6 +195,42 @@ export const createStudent = createAsyncThunk(
   },
 );
 
+export const getUserProfile = createAsyncThunk(
+  "user/getUserProfile",
+  async (thunkAPI) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const { data } = await apiRequestPrivate.get(`/users/profile`, config);
+      const formattedData = {
+        ...data,
+        visa: {
+          from: formatDate(data.visa.from),
+          to: formatDate(data.visa.to),
+        },
+        dob: formatDate(data.dob),
+        passport: {
+          ...data.passport,
+          expired: formatDate(data.passport.expired),
+        },
+      };
+      return formattedData;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  },
+);
+
 const resetStatus = (state) => {
   state.status = {
     fetchAll: "idle",
@@ -224,6 +261,19 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(listUsers.rejected, (state, action) => {
+        state.status.fetchAll = "failed";
+        state.users = null;
+        state.error = action.payload;
+      })
+      .addCase(getUserProfile.pending, (state) => {
+        state.status.fetchAll = "loading";
+      })
+      .addCase(getUserProfile.fulfilled, (state, action) => {
+        state.status.fetchAll = "succeeded";
+        state.users = [{ ...action.payload }];
+        state.error = null;
+      })
+      .addCase(getUserProfile.rejected, (state, action) => {
         state.status.fetchAll = "failed";
         state.users = null;
         state.error = action.payload;

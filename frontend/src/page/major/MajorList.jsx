@@ -1,17 +1,17 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Spinner from "../../components/ui/Spinner";
 import Unauthorized from "../public/Unauthorized";
 import { AiFillPlusCircle } from "react-icons/ai";
-import Breadcrumbs from "../../components/Breadcrumbs";
 import MajorTable from "../../components/table/major/MajorTable";
 import { listMajor } from "../../feature/globalData/MajorSlice";
 import PageHeading from "../../components/PageHeading";
+import { useTranslation } from "react-i18next";
 
 const MajorList = () => {
+  const [t] = useTranslation("global");
   const dispatch = useDispatch();
-  const { pathname } = useLocation();
   const { auth } = useSelector((state) => state.auth);
   const { status } = useSelector((state) => state.major);
   const [editToggle, setEditToggle] = useState(false);
@@ -47,7 +47,7 @@ const MajorList = () => {
                             auth.role !== "admin" && "btn-disabled"
                           }`}
                         >
-                          Add
+                          {t("AddButton")}
                           <AiFillPlusCircle size={20} />
                         </button>
                       </Link>

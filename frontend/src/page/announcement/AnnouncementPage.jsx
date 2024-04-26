@@ -16,7 +16,6 @@ import { FaEye } from "react-icons/fa";
 import EmptyState from "../../components/EmptyState";
 import PageHeading from "../../components/PageHeading";
 const AnnouncementPage = () => {
-  // const [t, i18n] = useTranslation("global");
   const [t] = useTranslation("global");
   const { pageNumber, keyword } = useParams();
   const dispatch = useDispatch();
@@ -43,13 +42,9 @@ const AnnouncementPage = () => {
             initialValue={true}
           />
         ) : null}
-
         <section className="body-font overflow-hidden">
           <div className="container mx-auto p-3">
             <div className="">
-              {/* <h2 className="text-center text-3xl font-bold">
-                  {t("AnnouncePage.announceHeader") || "ແຈ້ງການຕ່າງໆ"}
-                </h2> */}
               <PageHeading
                 title={t("AnnouncePage.announceHeader") || "ແຈ້ງການຕ່າງໆ"}
                 className="bg-transparent !text-slate-700"

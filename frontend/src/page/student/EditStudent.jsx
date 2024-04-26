@@ -20,7 +20,7 @@ import Spinner from "../../components/ui/Spinner";
 import { FaPencilAlt, FaSave } from "react-icons/fa";
 import PageHeading from "../../components/PageHeading";
 import ImageUpload from "../../components/input/ImageUpload";
-const inputStyle = "input input-bordered w-full text-base-content/80";
+import { inputStyle, selectStyle } from "../../style/global.value";
 
 const EditStudent = () => {
   const [base64, setBase64] = useState(null);
@@ -173,14 +173,6 @@ const EditStudent = () => {
               </div>
             </div>
             <div className="mx-auto">
-              <p className="label-text mb-2 font-semibold">{singleUser._id}</p>
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="btn btn-neutral btn-outline btn-sm"
-              >
-                Reset password
-              </button>
-
               <form
                 onSubmit={handleSubmit(handleEditSubmit)}
                 className="flex flex-wrap items-center justify-center gap-6"
@@ -194,7 +186,7 @@ const EditStudent = () => {
                     </div>
                     <select
                       {...register("userStatus", {})}
-                      className={`select select-bordered w-full`}
+                      className={selectStyle}
                     >
                       {statusList.map((item, index) => (
                         <option key={index} value={item.status}>
@@ -211,7 +203,7 @@ const EditStudent = () => {
                     </div>
                     <select
                       {...register("role", {})}
-                      className={`select select-bordered w-full`}
+                      className={selectStyle}
                     >
                       {roleList.map((item, index) => (
                         <option key={index} value={item}>
@@ -232,7 +224,7 @@ const EditStudent = () => {
                       {...register("fullname.englishFirstname", {})}
                       type="text"
                       // placeholder="Enter English Firstname"
-                      className={inputStyle + "input-bordered"}
+                      className={inputStyle}
                     />
                   </label>
                 </div>
@@ -291,9 +283,7 @@ const EditStudent = () => {
                     <select
                       {...register("university.shortcut", {})}
                       onChange={(e) => handleSelectUniversity(e.target.value)}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
+                      className={selectStyle}
                     >
                       {universities.map((item, index) => (
                         <option key={index} value={item.shortcut}>
@@ -312,9 +302,7 @@ const EditStudent = () => {
                     </div>
                     <select
                       {...register("duration.from", {})}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
+                      className={selectStyle}
                     >
                       {yearOptions.map((year) => (
                         <option key={year} value={year}>
@@ -333,9 +321,7 @@ const EditStudent = () => {
                     </div>
                     <select
                       {...register("duration.to", {})}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
+                      className={selectStyle}
                     >
                       {yearOptions.map((year) => (
                         <option key={year} value={year}>
@@ -401,9 +387,7 @@ const EditStudent = () => {
                     <select
                       {...register("degree.laoDegree", {})}
                       onChange={(e) => handleSelectDegree(e.target.value)}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
+                      className={selectStyle}
                     >
                       {degreeList.map((item, index) => (
                         <option key={index} value={item.laoDegree}>
@@ -455,9 +439,7 @@ const EditStudent = () => {
                       onChange={(e) =>
                         handleSelectResidenceAddress(e.target.value)
                       }
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
+                      className={selectStyle}
                     >
                       {residenceAddresses.map((item, index) => (
                         <option key={index} value={item.location}>
@@ -508,9 +490,7 @@ const EditStudent = () => {
                     <select
                       {...register("major.laoMajor", {})}
                       onChange={(e) => handleSelectMajor(e.target.value)}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
+                      className={selectStyle}
                     >
                       {majors.map((item, index) => (
                         <option key={index} value={item.laoMajor}>
@@ -557,12 +537,7 @@ const EditStudent = () => {
                         Gender
                       </span>
                     </div>
-                    <select
-                      {...register("gender", {})}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
-                    >
+                    <select {...register("gender", {})} className={selectStyle}>
                       <option value={"male"}>Male</option>
                       <option value={"female"}>Female</option>
                       <option value={"other"}>Other</option>
@@ -593,9 +568,7 @@ const EditStudent = () => {
                     </div>
                     <select
                       {...register("province", {})}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
+                      className={selectStyle}
                     >
                       {provinceList.map((item, index) => (
                         <option key={index} value={item.laoName}>
@@ -620,53 +593,6 @@ const EditStudent = () => {
                     />
                   </label>
                 </div>
-                {/* <div className="w-full p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Upload your image:
-                      </span>
-                    </div>
-                    {base64 ? (
-                      <div className="avatar">
-                        <div className="w-64 rounded">
-                          <button
-                            type="button"
-                            className="btn btn-neutral btn-xs absolute left-2 top-2"
-                          >
-                            <AiFillEye />
-                          </button>
-                          <img
-                            src={base64}
-                            alt={singleUser?.englishFirstname || "image"}
-                          />
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        {!uploadImageToggle && (
-                          <div className="avatar">
-                            <div className="w-64 rounded">
-                              <img
-                                src={singleUser?.profileImg}
-                                alt={singleUser?.englishFirstname || "image"}
-                              />
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    )}
-                    {uploadImageToggle && <ImageUpload setBase64={setBase64} />}
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => setuploadImageToggle(!uploadImageToggle)}
-                    className="btn btn-outline btn-sm mt-4"
-                  >
-                    <AiFillFileImage />
-                    {uploadImageToggle ? "Close" : "Upload"}
-                  </button>
-                </div> */}
                 <div className="flex w-full items-center justify-center space-x-4 p-2">
                   {!toggleEdit && (
                     <button
@@ -703,6 +629,13 @@ const EditStudent = () => {
                       </button>
                     </>
                   )}
+                  <button
+                    type="button"
+                    onClick={() => setIsModalOpen(true)}
+                    className="btn btn-neutral btn-outline"
+                  >
+                    Reset password
+                  </button>
                 </div>
               </form>
             </div>

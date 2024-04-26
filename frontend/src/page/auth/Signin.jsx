@@ -6,13 +6,14 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { authReset, signIn } from "../../feature/auth/AuthSlice";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 const initialState = {
   emailAddress: "",
   password: "",
 };
 
 const Signin = () => {
-  // const [t, i18n] = useTranslation("global");
+  const [t] = useTranslation("global");
 
   const { auth, status, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const Signin = () => {
   return (
     <>
       <div className="flex w-full flex-wrap">
-        <div className="flex w-full flex-col md:w-1/2 lg:w-1/3">
+        <div className="flex w-full flex-col font-notosanslao md:w-1/2 lg:w-1/3">
           <div className="flex justify-center pt-12 md:-mb-24 md:justify-start md:pl-12">
             <a
               href="#"
@@ -59,8 +60,10 @@ const Signin = () => {
             </a>
           </div>
           <div className="my-auto flex flex-col justify-center px-6 pt-8 sm:px-24 md:justify-start md:px-8 md:pt-0 lg:px-12">
-            <p className="text-center text-3xl font-bold">Welcome</p>
-            <p className="mt-2 text-center">Login to access your account.</p>
+            <p className="text-center text-3xl font-bold">
+              {t("LoginPage.headline")}
+            </p>
+            <p className="mt-2 text-center">{t("LoginPage.subline")}</p>
             <form
               onSubmit={handleSubmit(handleLogin)}
               className="flex flex-col pt-3 md:pt-8"
@@ -150,7 +153,10 @@ const Signin = () => {
                   type="submit"
                   className="w-full rounded-lg bg-blue-700 px-4 py-2 text-center text-base font-semibold text-white shadow-md transition ease-in hover:bg-blue-600 focus:outline-none focus:ring-2"
                 >
-                  <span className="w-full"> LOGIN </span>
+                  <span className="w-full">
+                    {" "}
+                    {t("LoginPage.btnLogin") || "Login"}{" "}
+                  </span>
                 </button>
               )}
             </form>

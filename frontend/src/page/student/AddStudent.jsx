@@ -11,12 +11,8 @@ import ErrorMessage from "../../components/typography/ErrorMessage";
 import ImageUpload from "../../components/input/ImageUpload";
 import PageHeading from "../../components/PageHeading";
 import { FaSave } from "react-icons/fa";
+import { inputStyle, selectStyle } from "../../style/global.value";
 
-const inputStyle =
-  "input input-bordered w-full text-base-content/80 focus:outline-2 focus:outline-blue-500 bg-primary/5";
-
-const selectStyle =
-  "select select-bordered w-full text-base-content/80 bg-primary/5";
 
 const AddStudent = () => {
   const [base64, setBase64] = useState(null);
@@ -96,7 +92,7 @@ const AddStudent = () => {
         {status.create !== "loading" ? (
           <div className="container mx-auto px-5 py-8">
             <div className="mb-12 flex w-full flex-col text-center">
-              <PageHeading title="ເພີ່ມຂໍ້ມູນ" />
+              <PageHeading title="ເພີ່ມຂໍ້ມູນນັກຮຽນ" />
               <div className="flex items-center justify-center gap-4">
                 <ImageUpload setBase64={setBase64} />
                 {base64 && (

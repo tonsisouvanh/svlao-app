@@ -19,7 +19,6 @@ apiRequestPrivate.interceptors.response.use(
   (response) => response, // Pass through successful responses
   async (error) => {
     const originalRequest = error.config;
-
     if (error.response?.status === 403 && !originalRequest._retry) {
       // Check if it's a 401 error and not a retry attempt
       try {

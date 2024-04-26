@@ -7,31 +7,32 @@ import { authReset, updateUserProfile } from "../../feature/auth/AuthSlice";
 import { getYearOptions, replaceImage } from "../../utils/utils";
 import Spinner from "../../components/ui/Spinner";
 import altImage from "../../assets/img/profile.png";
-import { AiFillEye, AiFillFileImage } from "react-icons/ai";
 import ImageUpload from "../../components/input/ImageUpload";
-const inputStyle = "input input-bordered w-full text-base-content/80";
+import { inputStyle, selectStyle } from "../../style/global.value";
+import { FaPencilAlt, FaSave } from "react-icons/fa";
+import { BiUserCircle } from "react-icons/bi";
+import { BsPencilSquare } from "react-icons/bs";
+import PageHeading from "../../components/PageHeading";
+import { getUserProfile } from "../../feature/user/UserSlice";
+import Image from "../../components/Image";
 
 const UserProfile = () => {
   const [base64, setBase64] = useState(null);
   const [uploadImageToggle, setuploadImageToggle] = useState(false);
   const yearOptions = getYearOptions();
-  const {
-    auth: studentData,
-    status,
-    error,
-  } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const [toggleEdit, setToggleEdit] = useState(false);
+
+  const { users, status, error } = useSelector((state) => state.user);
   const { universities } = useSelector((state) => state.university);
   const { majors: majorList } = useSelector((state) => state.major);
   const { residenceAddresses: residenceAddressList } = useSelector(
     (state) => state.residenceAddress,
   );
-  const dispatch = useDispatch();
 
   const { register, handleSubmit, setValue, reset } = useForm({
-    defaultValues: studentData,
+    defaultValues: users[0],
   });
-
-  const [toggleEdit, setToggleEdit] = useState(false);
 
   const handleSelectDegree = (value) => {
     const vietDegree = degreeList.find((d) => d.laoDegree === value);
@@ -54,8 +55,8 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    reset(studentData);
-  }, [studentData, reset]);
+    reset(users[0]);
+  }, [users, reset]);
 
   useEffect(() => {
     if (status.setInfo === "succeeded") {
@@ -67,550 +68,505 @@ const UserProfile = () => {
     }
   }, [status.setInfo, dispatch, error]);
 
+  useEffect(() => {
+    dispatch(getUserProfile());
+  }, [dispatch]);
+
   const handleEditSubmit = (data) => {
     if (data) {
       const addImage = base64 ? [base64] : null;
       const formattedData = {
         ...data,
-        profileImg: addImage ? addImage : studentData.profileImg,
+        profileImg: addImage ? addImage : users[0].profileImg,
       };
       dispatch(updateUserProfile({ ...formattedData }));
       setToggleEdit(false);
     } else toast.warning("Input data not valid");
   };
+
   if (status.setInfo === "loading") return <Spinner />;
   return (
-    <>
-      <section className="relative">
-        {studentData && status.setInfo !== "loading" ? (
-          <div className="container mx-auto px-5 py-12">
-            <div className="mb-12 flex w-full flex-col text-center">
-              <h1 className="title-font m:text-3xl mb-4 text-2xl font-bold">
-                Profile
-              </h1>
-              <div>
-                <div className="avatar">
-                  <div className="w-48 rounded">
+    <section className="relative">
+      {users[0] && status.setInfo !== "loading" ? (
+        <div className="container mx-auto px-5 py-12">
+          <div className="mb-12 flex w-full flex-col text-center">
+            <PageHeading title="ຂໍ້ມູນສ່ວນໂຕ" />
+            {/* Upload picture */}
+            <div className="flex items-center justify-center gap-2">
+              {uploadImageToggle && <ImageUpload setBase64={setBase64} />}
+              <div className="avatar relative">
+                {base64 ? (
+                  <div className=" w-48 rounded-full">
                     <img
+                      src={base64}
+                      alt={"avatar"}
                       onError={(error) => replaceImage(error, altImage)}
-                      src={studentData?.profileImg}
                     />
                   </div>
-                </div>
+                ) : (
+                  <div className=" w-48 rounded-full">
+                    {users[0]?.profileImg ? (
+                      <Image image={users[0]?.profileImg} />
+                    ) : (
+                      <BiUserCircle className="h-full w-full text-primary" />
+                    )}
+                  </div>
+                )}
+                <button
+                  onClick={() => setuploadImageToggle(!uploadImageToggle)}
+                  className="btn btn-ghost btn-xs absolute bottom-0 right-0"
+                >
+                  <BsPencilSquare className="" />
+                </button>
               </div>
             </div>
-            <div className="mx-auto">
-              <form
-                onSubmit={handleSubmit(handleEditSubmit)}
-                className="flex flex-wrap items-center justify-center"
-              >
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        English Firstname
-                      </span>
-                    </div>
-                    <input
-                      {...register("fullname.englishFirstname", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">Nickname</span>
-                    </div>
-                    <input
-                      {...register("fullname.nickName", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">Lao Name</span>
-                    </div>
-                    <input
-                      {...register("fullname.laoName", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        English Lastname
-                      </span>
-                    </div>
-                    <input
-                      {...register("fullname.englishLastname", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        University Shortcut
-                      </span>
-                    </div>
-                    <select
-                      {...register("university.shortcut", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      onChange={(e) => handleSelectUniversity(e.target.value)}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
-                    >
-                      {universities.map((item, index) => (
-                        <option key={index} value={item.shortcut}>
-                          {item.laoName}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Duration (From)
-                      </span>
-                    </div>
-                    <select
-                      {...register("duration.from", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
-                    >
-                      {yearOptions.map((year) => (
-                        <option key={year} value={year}>
-                          {year}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Duration (To)
-                      </span>
-                    </div>
-                    <select
-                      {...register("duration.to", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
-                    >
-                      {yearOptions.map((year) => (
-                        <option key={year} value={year}>
-                          {year}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Phone Number
-                      </span>
-                    </div>
-                    <input
-                      {...register("phone.phoneNumber", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Emergency
-                      </span>
-                    </div>
-                    <input
-                      {...register("phone.emergency", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Relationship
-                      </span>
-                    </div>
-                    <input
-                      {...register("phone.relationship", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
+          </div>
+          <div className="mx-auto">
+            <form
+              onSubmit={handleSubmit(handleEditSubmit)}
+              className="flex flex-wrap items-center justify-center"
+            >
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">
+                      English Firstname
+                    </span>
+                  </div>
+                  <input
+                    {...register("fullname.englishFirstname", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    type="text"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">
+                      English Lastname
+                    </span>
+                  </div>
+                  <input
+                    {...register("fullname.englishLastname", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    type="text"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">Nickname</span>
+                  </div>
+                  <input
+                    {...register("fullname.nickName", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    type="text"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">Lao Name</span>
+                  </div>
+                  <input
+                    {...register("fullname.laoName", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    type="text"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
 
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Lao Degree
-                      </span>
-                    </div>
-                    <select
-                      {...register("degree.laoDegree", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      onChange={(e) => handleSelectDegree(e.target.value)}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
-                    >
-                      {degreeList.map((item, index) => (
-                        <option key={index} value={item.laoDegree}>
-                          {item.laoDegree}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Visa From
-                      </span>
-                    </div>
-                    <input
-                      {...register("visa.from", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      type="date"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">Visa To</span>
-                    </div>
-                    <input
-                      {...register("visa.to", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      type="date"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Residence Address
-                      </span>
-                    </div>
-                    <select
-                      {...register("residenceAddress.location", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      onChange={(e) =>
-                        handleSelectResidenceAddress(e.target.value)
-                      }
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
-                    >
-                      {residenceAddressList.map((item, index) => (
-                        <option key={index} value={item.location}>
-                          {item.location}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Passport No
-                      </span>
-                    </div>
-                    <input
-                      {...register("passport.passportNo", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">
+                      University Shortcut
+                    </span>
+                  </div>
+                  <select
+                    {...register("university.shortcut", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    onChange={(e) => handleSelectUniversity(e.target.value)}
+                    className={selectStyle}
+                  >
+                    {universities.map((item, index) => (
+                      <option key={index} value={item.shortcut}>
+                        {item.laoName}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">
+                      Duration (From)
+                    </span>
+                  </div>
+                  <select
+                    {...register("duration.from", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    className={selectStyle}
+                  >
+                    {yearOptions.map((year) => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">
+                      Duration (To)
+                    </span>
+                  </div>
+                  <select
+                    {...register("duration.to", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    className={selectStyle}
+                  >
+                    {yearOptions.map((year) => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">
+                      Phone Number
+                    </span>
+                  </div>
+                  <input
+                    {...register("phone.phoneNumber", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    type="text"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">Emergency</span>
+                  </div>
+                  <input
+                    {...register("phone.emergency", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    type="text"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">
+                      Relationship
+                    </span>
+                  </div>
+                  <input
+                    {...register("phone.relationship", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    type="text"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
 
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Passport Expired
-                      </span>
-                    </div>
-                    <input
-                      {...register("passport.expired", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      type="date"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Lao Major
-                      </span>
-                    </div>
-                    <select
-                      {...register("major.laoMajor", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      onChange={(e) => handleSelectMajor(e.target.value)}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
-                    >
-                      {majorList.map((item, index) => (
-                        <option key={index} value={item.laoMajor}>
-                          {item.laoMajor}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Student ID
-                      </span>
-                    </div>
-                    <input
-                      {...register("studentId", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Date of Birth
-                      </span>
-                    </div>
-                    <input
-                      {...register("dob", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      type="date"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">Gender</span>
-                    </div>
-                    <select
-                      {...register("gender", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
-                    >
-                      <option value={"male"}>Male</option>
-                      <option value={"female"}>Female</option>
-                      <option value={"other"}>Other</option>
-                    </select>
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Facebook URL
-                      </span>
-                    </div>
-                    <input
-                      {...register("facebookUrl", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Permanent Address
-                      </span>
-                    </div>
-                    <select
-                      {...register("province", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      className={
-                        "select select-bordered w-full text-base-content/80"
-                      }
-                    >
-                      {provinceList.map((item, index) => (
-                        <option key={index} value={item.laoName}>
-                          {item.laoName}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">Lao Degree</span>
+                  </div>
+                  <select
+                    {...register("degree.laoDegree", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    onChange={(e) => handleSelectDegree(e.target.value)}
+                    className={selectStyle}
+                  >
+                    {degreeList.map((item, index) => (
+                      <option key={index} value={item.laoDegree}>
+                        {item.laoDegree}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">Visa From</span>
+                  </div>
+                  <input
+                    {...register("visa.from", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    type="date"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">Visa To</span>
+                  </div>
+                  <input
+                    {...register("visa.to", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    type="date"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">
+                      Residence Address
+                    </span>
+                  </div>
+                  <select
+                    {...register("residenceAddress.location", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    onChange={(e) =>
+                      handleSelectResidenceAddress(e.target.value)
+                    }
+                    className={selectStyle}
+                  >
+                    {residenceAddressList.map((item, index) => (
+                      <option key={index} value={item.location}>
+                        {item.location}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">
+                      Passport No
+                    </span>
+                  </div>
+                  <input
+                    {...register("passport.passportNo", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    type="text"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
 
-                <div className="w-1/2 p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text font-semibold">
-                        Email Address
-                      </span>
-                    </div>
-                    <input
-                      {...register("emailAddress", {
-                        disabled: toggleEdit ? false : true,
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-full p-2">
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text text-lg">
-                        Upload your image
-                      </span>
-                    </div>
-                    {base64 ? (
-                      <div className="avatar">
-                        <div className="w-64 rounded">
-                          <button
-                            type="button"
-                            className="btn btn-neutral btn-xs absolute left-2 top-2"
-                          >
-                            <AiFillEye />
-                          </button>
-                          <img
-                            src={base64}
-                            alt={studentData?.englishFirstname || "image"}
-                          />
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="avatar">
-                        <div className="w-64 rounded">
-                          <img
-                            src={studentData?.profileImg}
-                            alt={studentData?.englishFirstname || "image"}
-                          />
-                        </div>
-                      </div>
-                    )}
-                    {uploadImageToggle && <ImageUpload setBase64={setBase64} />}
-                  </label>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">
+                      Passport Expired
+                    </span>
+                  </div>
+                  <input
+                    {...register("passport.expired", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    type="date"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">Lao Major</span>
+                  </div>
+                  <select
+                    {...register("major.laoMajor", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    onChange={(e) => handleSelectMajor(e.target.value)}
+                    className={selectStyle}
+                  >
+                    {majorList.map((item, index) => (
+                      <option key={index} value={item.laoMajor}>
+                        {item.laoMajor}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">Student ID</span>
+                  </div>
+                  <input
+                    {...register("studentId", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    type="text"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">
+                      Date of Birth
+                    </span>
+                  </div>
+                  <input
+                    {...register("dob", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    type="date"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">Gender</span>
+                  </div>
+                  <select
+                    {...register("gender", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    className={selectStyle}
+                  >
+                    <option value={"male"}>Male</option>
+                    <option value={"female"}>Female</option>
+                    <option value={"other"}>Other</option>
+                  </select>
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">
+                      Facebook URL
+                    </span>
+                  </div>
+                  <input
+                    {...register("facebookUrl", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    type="text"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">
+                      Permanent Address
+                    </span>
+                  </div>
+                  <select
+                    {...register("province", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    className={selectStyle}
+                  >
+                    {provinceList.map((item, index) => (
+                      <option key={index} value={item.laoName}>
+                        {item.laoName}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">
+                      Email Address
+                    </span>
+                  </div>
+                  <input
+                    {...register("emailAddress", {
+                      disabled: toggleEdit ? false : true,
+                    })}
+                    type="text"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
+              {/* Submit buttons */}
+              <div className="flex w-full items-center justify-center space-x-4 p-2">
+                {!toggleEdit && (
                   <button
                     type="button"
-                    onClick={() => setuploadImageToggle(!uploadImageToggle)}
-                    className="btn btn-outline btn-sm mt-4"
+                    onClick={() => setToggleEdit(true)}
+                    className="btn btn-primary btn-wide"
                   >
-                    <AiFillFileImage />
-                    {uploadImageToggle ? "Close" : "Upload"}
+                    <FaPencilAlt />
+                    ແກ້ໄຂ
                   </button>
-                </div>
-                <div className="w-full space-x-4 p-2">
-                  {!toggleEdit && (
+                )}
+                {toggleEdit && (
+                  <>
                     <button
-                      type="button"
-                      onClick={() => setToggleEdit(true)}
+                      type="submit"
                       className="btn btn-primary"
+                      disabled={users[0].update === "loading" ? true : false}
                     >
-                      Update
+                      <FaSave />
+                      {users[0].update === "loading" ? (
+                        <span className="loading loading-spinner loading-xs"></span>
+                      ) : (
+                        "ບັນທຶກ"
+                      )}
                     </button>
-                  )}
-                  {toggleEdit && (
-                    <>
-                      <button
-                        type="submit"
-                        className="btn btn-primary"
-                        disabled={status.setInfo === "loading" ? true : false}
-                      >
-                        {status.setInfo === "loading" ? (
-                          <span className="loading loading-spinner loading-xs"></span>
-                        ) : (
-                          "Submit"
-                        )}
-                      </button>
-                      <button
-                        onClick={() => setToggleEdit(false)}
-                        type="button"
-                        className="btn btn-error btn-outline"
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  )}
-                </div>
-              </form>
-            </div>
+                    <button
+                      onClick={() => setToggleEdit(false)}
+                      type="button"
+                      className="btn btn-error btn-outline"
+                    >
+                      ຍົກເລີກ
+                    </button>
+                  </>
+                )}
+              </div>
+            </form>
           </div>
-        ) : (
-          <Spinner />
-        )}
-      </section>
-    </>
+        </div>
+      ) : (
+        <Spinner />
+      )}
+    </section>
   );
 };
 

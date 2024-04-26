@@ -1,16 +1,16 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Spinner from "../../components/ui/Spinner";
 import Unauthorized from "../public/Unauthorized";
 import { AiFillPlusCircle } from "react-icons/ai";
-import Breadcrumbs from "../../components/Breadcrumbs";
 import ResidenceAddressTable from "../../components/table/residenceAddress/ResidenceAddressTable";
 import { listResidenceAddress } from "../../feature/globalData/ResidenceAddressSlice";
 import PageHeading from "../../components/PageHeading";
+import { useTranslation } from "react-i18next";
 
 const ResidenceAddressList = () => {
-  const { pathname } = useLocation();
+  const [t] = useTranslation("global");
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.auth);
   const { status } = useSelector((state) => state.residenceAddress);
@@ -48,7 +48,7 @@ const ResidenceAddressList = () => {
                             auth.role !== "admin" && "btn-disabled"
                           }`}
                         >
-                          Add
+                          {t("AddButton")}
                           <AiFillPlusCircle size={20} />
                         </button>
                       </Link>

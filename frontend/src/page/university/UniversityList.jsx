@@ -1,17 +1,17 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Spinner from "../../components/ui/Spinner";
 import Unauthorized from "../public/Unauthorized";
 import { AiFillPlusCircle } from "react-icons/ai";
-import Breadcrumbs from "../../components/Breadcrumbs";
 import UniversityTable from "../../components/table/university/UniversityTable";
 import { listUniversity } from "../../feature/globalData/UniversitySlice";
 import PageHeading from "../../components/PageHeading";
+import { useTranslation } from "react-i18next";
 
 const UniversityList = () => {
+  const [t] = useTranslation("global");
   const dispatch = useDispatch();
-  const { pathname } = useLocation();
   const { auth } = useSelector((state) => state.auth);
   const { status } = useSelector((state) => state.university);
   const [editToggle, setEditToggle] = useState(false);
@@ -49,7 +49,7 @@ const UniversityList = () => {
                             auth.role !== "admin" && "btn-disabled"
                           }`}
                         >
-                          Add
+                          {t("AddButton")}
                           <AiFillPlusCircle size={20} />
                         </button>
                       </Link>

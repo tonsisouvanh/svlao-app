@@ -238,9 +238,9 @@ const createUser = asyncHandler(async (req, res) => {
 // @route   GET /api/users/profile
 // * @access  Private
 const getUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id).populate(
-    "university.universityId"
-  );
+  const user = await User.findById(req.user._id)
+    .populate("university.universityId")
+    .select("-password -refreshToken");
 
   if (user) {
     res.json({

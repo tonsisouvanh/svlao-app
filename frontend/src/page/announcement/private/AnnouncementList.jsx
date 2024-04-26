@@ -1,19 +1,19 @@
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { AiFillPlusCircle } from "react-icons/ai";
 import Spinner from "../../../components/ui/Spinner";
-import Breadcrumbs from "../../../components/Breadcrumbs";
 import Unauthorized from "../../public/Unauthorized";
 import { listAnnouncements } from "../../../feature/announcement/AnnouncementSlice";
 import AnnounceTable from "../../../components/table/announcement/AnnouncementTable";
 import Paginate from "../../../components/paginate/Paginate";
 import EmptyState from "../../../components/EmptyState";
 import PageHeading from "../../../components/PageHeading";
+import { useTranslation } from "react-i18next";
 
 const AnnouncementList = () => {
+  const [t] = useTranslation("global")();
   const { pageNumber, keyword } = useParams();
-  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.auth);
   const [editToggle, setEditToggle] = useState(false);
@@ -35,8 +35,6 @@ const AnnouncementList = () => {
     <>
       <section className="">
         <div className="container mx-auto p-4">
-     
-
           {editToggle ? null : <PageHeading title="ຂໍ້ມູນຂ່າວສານ" />}
 
           <div className="">
@@ -57,7 +55,7 @@ const AnnouncementList = () => {
                             auth.role !== "admin" && "btn-disabled"
                           }`}
                         >
-                          Add
+                          {t("AddButton")}
                           <AiFillPlusCircle size={20} />
                         </button>
                       </Link>

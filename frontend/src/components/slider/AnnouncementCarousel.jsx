@@ -5,9 +5,10 @@ import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "./SliderStyle.css";
 import { useEffect, useState } from "react";
-import { FaImage } from "react-icons/fa";
+import { FaArrowRight, FaImage } from "react-icons/fa";
 import { apiRequest } from "../../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
+import Image from "../Image";
 
 const AnnouncementCarousel = () => {
   const [slideData, setslideData] = useState([]);
@@ -60,19 +61,23 @@ const AnnouncementCarousel = () => {
                 </div>
               ) : (
                 <div className="relative h-[22rem] w-full lg:h-[34rem]">
-                  <img
-                    src={i.image}
-                    alt=""
+                  {/* <LazyLoadImage
                     className="h-full w-full object-cover"
-                  />
+                    alt={i.image}
+                    height={100}
+                    src={i.image}
+                    width={100}
+                  /> */}
+                  <Image classname={"h-full w-full object-cover"} image={i.image} />
                   <div className="sm absolute bottom-4 right-4 mt-8 flex flex-col items-center justify-center sm:flex-row sm:space-x-4 sm:px-0 lg:mt-12">
                     <button
                       onClick={() =>
                         navigate(`/announcement-list/announcement/${i._id}`)
                       }
-                      className="mt-4 rounded-lg border-2 border-primary bg-primary px-6 py-2 font-medium text-white transition hover:translate-y-1"
+                      className="btn btn-primary text-white"
                     >
                       ອ່ານຕື່ມ
+                      <FaArrowRight />
                     </button>
                   </div>
                 </div>

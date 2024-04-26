@@ -8,7 +8,9 @@ const UserList = () => {
 
   const sortedUsers =
     users && users.length > 0
-      ? [...users].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+      ? [...users]
+          .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+          .filter((user) => user.userStatus !== "active")
       : [];
   const getStatusColor = (status) => {
     switch (status) {

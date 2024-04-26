@@ -9,6 +9,8 @@ import altImage from "../../../assets/img/profile.png";
 import { replaceImage } from "../../../utils/utils";
 import LanguageSelect from "../../LanguageSelect";
 import Breadcrumbs from "../../Breadcrumbs";
+import { FaRegIdCard } from "react-icons/fa6";
+import { IoLogOutOutline } from "react-icons/io5";
 
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const dispatch = useDispatch();
@@ -82,6 +84,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                 className={`btn btn-ghost btn-sm relative whitespace-nowrap`}
                 to={`/profile`}
               >
+                <FaRegIdCard size={17} />
                 <span className="mr-auto">ຂໍ້ມູນສ່ວນໂຕ</span>
                 {auth?.userStatus === "pending" && (
                   <AiFillInfoCircle className="absolute right-0 top-0 text-secondary" />
@@ -91,6 +94,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                 onClick={handleSignOut}
                 className="btn btn-ghost btn-sm whitespace-nowrap"
               >
+                <IoLogOutOutline size={20} />
                 <span className="mr-auto">ອອກຈາກລະບົບ</span>
               </button>
             </ul>

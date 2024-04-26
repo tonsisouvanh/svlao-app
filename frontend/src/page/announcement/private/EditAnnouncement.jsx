@@ -3,19 +3,17 @@ import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   announcementReset,
   getAnnouncementById,
   removeAnnouncement,
   updateAnnouncement,
 } from "../../../feature/announcement/AnnouncementSlice";
-import Breadcrumbs from "../../../components/Breadcrumbs";
 import ErrorMessage from "../../../components/typography/ErrorMessage";
 import Spinner from "../../../components/ui/Spinner";
 import { announcementCategoryList } from "../../../data/data";
 import ImageUpload from "../../../components/input/ImageUpload";
-import { AiFillEye, AiFillFileImage } from "react-icons/ai";
 import QuillEditor from "./QuillEditor";
 import PageHeading from "../../../components/PageHeading";
 import { replaceImage } from "../../../utils/utils";
@@ -33,7 +31,6 @@ const EditAnnouncement = () => {
   const [viewImageToggle, setViewImageToggle] = useState(false);
   const [toggleEdit, setToggleEdit] = useState(false);
 
-  const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -149,7 +146,7 @@ const EditAnnouncement = () => {
               {uploadImageToggle && <ImageUpload setBase64={setBase64} />}
               <div className="relative border">
                 {base64 ? (
-                  <div className="w-36 h-36">
+                  <div className="h-36 w-36">
                     <img
                       src={base64}
                       alt={"avatar"}
@@ -157,7 +154,7 @@ const EditAnnouncement = () => {
                     />
                   </div>
                 ) : (
-                  <div className="w-36 h-36">
+                  <div className="h-36 w-36">
                     {singleAnnouncement?.image ? (
                       <img
                         src={singleAnnouncement?.image}
