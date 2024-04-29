@@ -69,50 +69,67 @@ const refreshToken = asyncHandler(async (req, res) => {
 });
 
 // @desc    Auth user & get token
-// @route   POST /api/users/resetPassword
+// @route   POST /api/users/reset-password
 // @access  Private
-//TODO: Check up on this reset token
 const resetPassword = asyncHandler(async (req, res) => {
-  const { userId, password, emailAddress } = req.body;
-  // reset token
-  const user = await User.findOne({ emailAddress });
-  if (!user) throw new Error("User does not exist");
-  let tokenObj = await Token.findOne({ userId: user._id });
-  if (tokenObj) await tokenObj.deleteOne();
+  try {
+    const { userId, password, emailAddress } = req.body;
 
-  let resetToken = crypto.randomBytes(32).toString("hex");
-  const hashToken = await bcrypt.hash(
-    resetToken,
-    Number(process.env.JWT_SECRET)
-  );
+    if (!userId || !password || !emailAddress) {
+      return res
+        .status(400)
+        .json({ message: "User id, password, or email is required" });
+    }
 
-  await new Token({
-    userId: user._id,
-    token: hashToken,
-    createdAt: Date.now(),
-  }).save();
+    const user = await User.findOne({ emailAddress });
+    if (!user) {
+      throw new Error("User does not exist");
+    }
 
-  // reset password
-  let passwordResetToken = await Token.findOne({ userId });
-  if (!passwordResetToken) {
-    throw new Error("Invalid or expired password reset token");
+    let tokenObj = await Token.findOne({ userId: user._id });
+    if (tokenObj) await tokenObj.deleteOne();
+
+    let resetToken = crypto.randomBytes(32).toString("hex");
+    const hashToken = await bcrypt.hash(
+      resetToken,
+      Number(process.env.JWT_SECRET)
+    );
+    await new Token({
+      userId: user._id,
+      refreshToken: hashToken,
+      createdAt: Date.now(),
+    }).save();
+
+    // reset password
+    let passwordResetToken = await Token.findOne({ userId });
+    if (!passwordResetToken) {
+      throw new Error("Invalid or expired password reset token");
+    }
+    const isValid = await bcrypt.compare(
+      resetToken,
+      passwordResetToken.refreshToken
+    );
+    if (!isValid) {
+      throw new Error("Invalid or expired password reset token");
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    await User.findByIdAndUpdate(
+      userId,
+      { $set: { password: hash } },
+      { new: true }
+    );
+    await passwordResetToken.deleteOne();
+
+    return res.status(200).json({
+      message: "Password reset successful",
+    });
+  } catch (error) {
+    console.error("Error resetting password:", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while resetting the password" });
   }
-  const isValid = await bcrypt.compare(resetToken, passwordResetToken.token);
-  if (!isValid) {
-    throw new Error("Invalid or expired password reset token");
-  }
-  const salt = await bcrypt.genSalt(10);
-  const hash = await bcrypt.hash(password, salt);
-  await User.findByIdAndUpdate(
-    userId,
-    { $set: { password: hash } },
-    { new: true }
-  );
-  await passwordResetToken.deleteOne();
-
-  res.json({
-    message: "Password reset successful",
-  });
 });
 
 // @desc    Auth user & get token

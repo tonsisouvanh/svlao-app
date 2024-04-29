@@ -17,7 +17,7 @@ import { updateUser, userReset } from "../../feature/user/UserSlice";
 import altImage from "../../assets/img/profile.png";
 import ResetPasswordModal from "../../components/modal/ResetPasswordModal";
 import Spinner from "../../components/ui/Spinner";
-import { FaPencilAlt, FaSave } from "react-icons/fa";
+import { FaCopy, FaPencilAlt, FaSave } from "react-icons/fa";
 import PageHeading from "../../components/PageHeading";
 import ImageUpload from "../../components/input/ImageUpload";
 import { inputStyle, selectStyle } from "../../style/global.value";
@@ -167,7 +167,15 @@ const EditStudent = () => {
                     onClick={() => setuploadImageToggle(!uploadImageToggle)}
                     className="btn btn-ghost btn-xs absolute bottom-0 right-0"
                   >
-                    <BsPencilSquare className="" />
+                    <BsPencilSquare size={18} className="" />
+                  </button>
+                  <button
+                    className="btn btn-ghost btn-xs absolute bottom-0 left-0"
+                    onClick={() => {
+                      navigator.clipboard.writeText(singleUser._id);
+                    }}
+                  >
+                    <FaCopy size={18} className="" />
                   </button>
                 </div>
               </div>
@@ -201,10 +209,7 @@ const EditStudent = () => {
                         Role
                       </span>
                     </div>
-                    <select
-                      {...register("role", {})}
-                      className={selectStyle}
-                    >
+                    <select {...register("role", {})} className={selectStyle}>
                       {roleList.map((item, index) => (
                         <option key={index} value={item}>
                           {item}

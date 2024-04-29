@@ -12,7 +12,7 @@ import PageHeading from "../../../components/PageHeading";
 import { useTranslation } from "react-i18next";
 
 const AnnouncementList = () => {
-  const [t] = useTranslation("global")();
+  const [t] = useTranslation("global");
   const { pageNumber, keyword } = useParams();
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.auth);

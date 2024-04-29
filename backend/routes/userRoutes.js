@@ -32,7 +32,7 @@ router.get(
   getFilteredUsers
 );
 router.post(
-  "/resetPassword",
+  "/reset-password",
   verifyJWT,
   authorizeUserAdmin(role.Admin),
   resetPassword

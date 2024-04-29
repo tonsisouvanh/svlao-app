@@ -48,7 +48,6 @@ const authorizeUserAdmin = (roles = []) =>
       try {
         const decoded = jwt.verify(accesstoken, process.env.JWT_SECRET);
         req.user = await User.findById(decoded?.userId).select("-password");
-        // if (req.user && req.user.role === "admin") {
         if (req.user && roles.includes(req.user.role)) {
           next();
         } else {

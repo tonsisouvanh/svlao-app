@@ -20,20 +20,13 @@ export const resetPassword = createAsyncThunk(
   "user/resetPassword",
   async (userData, thunkAPI) => {
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
       await apiRequestPrivate.post(
-        `/users/resetPassword`,
+        `/users/reset-password`,
         {
           userId: userData.userId,
           password: userData.newPassword,
           emailAddress: userData.emailAddress,
-        },
-        config,
+        }
       );
     } catch (error) {
       const message =

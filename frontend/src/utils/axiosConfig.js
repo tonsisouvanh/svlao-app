@@ -2,6 +2,9 @@ import axios from "axios";
 
 export const apiRequest = axios.create({
   baseURL: import.meta.env.VITE_API_DOMAIN,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 export const apiRequestPrivate = axios.create({
   baseURL: import.meta.env.VITE_API_DOMAIN,

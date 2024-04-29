@@ -116,7 +116,7 @@ const UserProfile = () => {
                   onClick={() => setuploadImageToggle(!uploadImageToggle)}
                   className="btn btn-ghost btn-xs absolute bottom-0 right-0"
                 >
-                  <BsPencilSquare className="" />
+                  <BsPencilSquare size={18} className="" />
                 </button>
               </div>
             </div>

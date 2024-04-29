@@ -13,7 +13,7 @@ const PageHeading = ({ title = "Page title", className }) => {
           <FaArrowLeft />
         </button>
       </div>
-      <h1 className="title-font text-base-contentd text-center font-notosanslao text-md md:text-3xl font-bold">
+      <h1 className="title-font underline text-base-contentd text-center font-notosanslao text-md md:text-3xl font-bold">
         {title}
       </h1>
     </div>
