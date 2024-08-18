@@ -1,20 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { apiRequestPrivate } from "../../utils/axiosConfig";
 import { formatDate } from "../../utils/utils";
-const initialState = {
-  users: [],
-  status: {
-    fetchAll: "idle" | "loading" | "succeeded" | "failed",
-    create: "idle" | "loading" | "succeeded" | "failed",
-    update: "idle" | "loading" | "succeeded" | "failed",
-    remove: "idle" | "loading" | "succeeded" | "failed",
-    reset: "idle" | "loading" | "succeeded" | "failed",
-  },
-  error: "",
-  page: 1,
-  pages: 0,
-  total: 0,
-};
+
 // TODO: fix reset password after added refresh token
 export const resetPassword = createAsyncThunk(
   "user/resetPassword",
@@ -233,6 +220,21 @@ const resetStatus = (state) => {
     reset: "idle",
   };
   state.error = "";
+};
+
+const initialState = {
+  users: [],
+  status: {
+    fetchAll: "idle" | "loading" | "succeeded" | "failed",
+    create: "idle" | "loading" | "succeeded" | "failed",
+    update: "idle" | "loading" | "succeeded" | "failed",
+    remove: "idle" | "loading" | "succeeded" | "failed",
+    reset: "idle" | "loading" | "succeeded" | "failed",
+  },
+  error: "",
+  page: 1,
+  pages: 0,
+  total: 0,
 };
 
 const userSlice = createSlice({

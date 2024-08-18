@@ -4,6 +4,9 @@ import connectDB from "./config/db.js";
 import cors from "cors";
 import colors from "colors";
 import cookieParser from "cookie-parser";
+import morgan from "morgan";
+import helmet from "helmet"; // Security middleware
+
 // Routes
 import userRoutes from "./routes/userRoutes.js";
 import universityRoutes from "./routes/universityRoutes.js";
@@ -12,21 +15,27 @@ import residenceAddressRoutes from "./routes/residenceAddressRoutes.js";
 import announcementRoutes from "./routes/announcementRoutes.js";
 import documentRoutes from "./routes/documentRoutes.js";
 
+// Middleware
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
-import morgan from "morgan";
 import limiter from "./utils/limiter.js";
+
+// Load environment variables
 dotenv.config();
 
 connectDB();
 
 const app = express();
+
+// Middleware configuration
+app.use(helmet()); // Add security headers
 app.use(limiter);
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
-if (process.env.NODE_ENV !== "development") app.use(morgan("dev"));
-
+if (process.env.NODE_ENV !== "development") {
+  app.use(morgan("dev"));
+}
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/universities", universityRoutes);
 app.use("/api/v1/majors", majorRoutes);
@@ -38,7 +47,6 @@ app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-
 app.listen(
   PORT,
   console.log(
