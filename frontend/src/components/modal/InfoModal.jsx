@@ -1,8 +1,7 @@
-import { useState } from "react";
-import { AiFillInfoCircle, AiFillQuestionCircle } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { AiFillInfoCircle, AiFillQuestionCircle } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
-const style = "text-2xl";
+const style = 'text-2xl';
 
 const InfoModal = ({
   title,
@@ -11,23 +10,23 @@ const InfoModal = ({
   initialValue = false,
   isOnclickEvent = false,
   confirmLabel,
-  cancelLabel = "Close!",
+  cancelLabel = 'Close!',
   handleClick,
+  openModal,
+  setOpenModal,
 }) => {
-  const [openModal, setOpenModal] = useState(initialValue);
-
   const handleConfirm = () => {
     handleClick();
-  }
+  };
 
   const getIcon = () => {
     let icon;
     switch (modaltype) {
-      case "info":
-        icon = <AiFillInfoCircle className={style + " text-primary"} />;
+      case 'info':
+        icon = <AiFillInfoCircle className={style + ' text-primary'} />;
         break;
-      case "question":
-        icon = <AiFillQuestionCircle className={style + " text-warning"} />;
+      case 'question':
+        icon = <AiFillQuestionCircle className={style + ' text-warning'} />;
         break;
 
       default:
@@ -36,7 +35,7 @@ const InfoModal = ({
     return icon;
   };
   return (
-    <div className={`modal ${!openModal ? null : "modal-open"}`}>
+    <div className={`modal ${!openModal ? null : 'modal-open'}`}>
       <div className="modal-box font-notosanslao">
         <div className="flex items-center gap-2">
           <div>{getIcon()}</div>
@@ -45,15 +44,11 @@ const InfoModal = ({
         <p className="py-4">{desc}</p>
         <div className="modal-action">
           {isOnclickEvent ? (
-            <button
-              onClick={handleConfirm}
-              type="button"
-              className="btn btn-error"
-            >
+            <button onClick={handleConfirm} type="button" className="btn btn-error">
               {confirmLabel}
             </button>
           ) : (
-            <Link className="btn btn-primary" to={`/profile/${"student"}`}>
+            <Link className="btn btn-primary" to={`/profile/${'student'}`}>
               ອັບເດດ
             </Link>
           )}

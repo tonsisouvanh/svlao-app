@@ -10,12 +10,13 @@ import Paginate from "../../../components/paginate/Paginate";
 import EmptyState from "../../../components/EmptyState";
 import PageHeading from "../../../components/PageHeading";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../context/AuthContext";
 
 const AnnouncementList = () => {
   const [t] = useTranslation("global");
   const { pageNumber, keyword } = useParams();
   const dispatch = useDispatch();
-  const { auth } = useSelector((state) => state.auth);
+  const { user: auth } = useAuth();
   const [editToggle, setEditToggle] = useState(false);
 
   const { status, page, pages, announcements } = useSelector(

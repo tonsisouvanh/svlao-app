@@ -15,11 +15,12 @@ import images from "../../assets/img/index";
 import { FaEye } from "react-icons/fa";
 import EmptyState from "../../components/EmptyState";
 import PageHeading from "../../components/PageHeading";
+import { useAuth } from "../../context/AuthContext";
 const AnnouncementPage = () => {
   const [t] = useTranslation("global");
   const { pageNumber, keyword } = useParams();
   const dispatch = useDispatch();
-  const { auth } = useSelector((state) => state.auth);
+  const { user: auth } = useAuth();
   const { announcements, status, page, pages } = useSelector(
     (state) => state.announcement,
   );

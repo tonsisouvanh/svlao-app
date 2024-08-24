@@ -1,7 +1,6 @@
 import express from "express";
 const router = express.Router();
 import {
-  authUser,
   registerUser,
   getUserProfile,
   updateUserProfile,
@@ -10,11 +9,8 @@ import {
   getUserById,
   updateUser,
   createUser,
-  resetPassword,
   getFilteredUsers,
-  logoutUser,
-  refreshToken,
-  requestResetPassword,
+  getUserSession,
 } from "../controllers/userController.js";
 import {
   verifyJWT,
@@ -22,6 +18,13 @@ import {
   authorizeUserAdmin,
 } from "../middleware/authMiddleware.js";
 import role from "../utils/role.js";
+import {
+  authUser,
+  logoutUser,
+  refreshToken,
+  requestResetPassword,
+  resetPassword,
+} from "../controllers/authController.js";
 
 // Public routes
 router.post("/refresh-token", refreshToken);
@@ -45,6 +48,7 @@ router.post(
   resetPassword
 );
 router.get("/profile", verifyJWT, getUserProfile);
+router.get("/session", verifyJWT, getUserSession);
 router.put("/profile", verifyJWT, updateUserProfile);
 
 // Admin routes

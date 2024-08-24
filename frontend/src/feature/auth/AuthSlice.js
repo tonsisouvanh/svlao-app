@@ -47,7 +47,7 @@ export const signUp = createAsyncThunk(
 );
 
 export const signIn = createAsyncThunk(
-  "auth/signin",
+  "auth/sign-in",
   async (userData, thunkAPI) => {
     try {
       const { emailAddress, password } = userData;

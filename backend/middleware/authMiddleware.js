@@ -2,32 +2,38 @@ import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 
-const verifyJWT = asyncHandler(async (req, res, next) => {
-  const accesstoken = req.cookies?.accesstoken;
-  if (accesstoken) {
-    try {
-      const decoded = jwt.verify(accesstoken, process.env.JWT_SECRET);
-      const user = await User.findById(decoded.userId).select(
-        "-password -refreshToken"
-      );
-      if (!user) return res.status(404).json({ message: "User not found" });
-      req.user = user;
-      next();
-    } catch (error) {
-      if (error.name === "TokenExpiredError") {
-        return res
-          .status(403)
-          .json({ message: "Forbidden: Access token expired" });
-      } else {
-        return res
-          .status(401)
-          .json({ message: "Not authorized: Invalid access token" });
-      }
-    }
-  }
+const verifyToken = (token) => {
+  return jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    return user;
+  });
+};
 
-  if (!accesstoken) {
-    res.status(401).json({ message: "Not authorized: Missing access token", isReSigin: true });
+const verifyJWT = asyncHandler(async (req, res, next) => {
+  const accesstoken = req.cookies.laostudent_accesstoken;
+
+  if (!accesstoken) return res.sendStatus(401);
+
+  try {
+    const decoded = verifyToken(accesstoken, req, res);
+    const user = await User.findById(decoded.userId).select(
+      "-password -refreshToken"
+    );
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    req.user = user;
+    next();
+  } catch (error) {
+    if (error.message === "Access token expired") {
+      return res
+        .status(403)
+        .json({ message: "Forbidden: Access token expired" });
+    } else {
+      return res
+        .status(401)
+        .json({ message: "Not authorized: Invalid access token" });
+    }
   }
 });
 
@@ -43,7 +49,7 @@ const activeUserCheck = asyncHandler(async (req, res, next) => {
 
 const authorizeUserAdmin = (roles = []) =>
   asyncHandler(async (req, res, next) => {
-    const accesstoken = req.cookies.accesstoken;
+    const accesstoken = req.cookies.laostudent_accesstoken;
     if (accesstoken) {
       try {
         const decoded = jwt.verify(accesstoken, process.env.JWT_SECRET);

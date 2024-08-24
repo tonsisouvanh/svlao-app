@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { authReset, signUp } from "../../feature/auth/AuthSlice";
 import ErrorMessage from "../../components/typography/ErrorMessage";
+import { useAuth } from "../../context/AuthContext";
 const initialState = {
   firstname: "",
   lastname: "",
@@ -14,7 +15,8 @@ const initialState = {
 };
 const Signup = () => {
   const navigate = useNavigate();
-  const { auth, status, error } = useSelector((state) => state.auth);
+  const { user: auth, isLoadingUser: status } = useAuth();
+
   const dispatch = useDispatch();
   const {
     register,
@@ -33,17 +35,17 @@ const Signup = () => {
     };
     dispatch(signUp(userInput));
   };
-
-  useEffect(() => {
-    if (status.signup === "succeeded") {
-      toast.success("Sign up successful");
-      dispatch(authReset());
-      navigate("/signin");
-    } else if (status.signup === "failed") {
-      toast.error(error);
-      dispatch(authReset());
-    }
-  }, [status, dispatch, navigate, error]);
+  // TODO: Implement the sign up page with react query
+  // useEffect(() => {
+  //   if (status.signup === "succeeded") {
+  //     toast.success("Sign up successful");
+  //     dispatch(authReset());
+  //     navigate("/sign-in");
+  //   } else if (status.signup === "failed") {
+  //     toast.error(error);
+  //     dispatch(authReset());
+  //   }
+  // }, [status, dispatch, navigate, error]);
 
   useEffect(() => {
     if (auth) {
@@ -160,7 +162,7 @@ const Signup = () => {
         </form>
         <div>
           <label className="label-text">Already have an account?</label>
-          <Link to="/signin" className="link-primary link">
+          <Link to="/sign-in" className="link-primary link">
             Sign in
           </Link>
         </div>

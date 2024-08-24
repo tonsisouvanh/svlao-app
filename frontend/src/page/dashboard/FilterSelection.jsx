@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFilteredUsers } from "../../feature/user/UserSlice";
+import { useAuth } from "../../context/AuthContext";
 
 const FilterSelection = () => {
-  const { auth } = useSelector((state) => state.auth);
+  const { user: auth } = useAuth();
   const { users } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 

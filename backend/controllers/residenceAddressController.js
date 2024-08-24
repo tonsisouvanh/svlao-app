@@ -1,20 +1,34 @@
 import asyncHandler from "express-async-handler";
 import ResidenceAddress from "../models/residenceAddressModel.js";
+import Joi from "joi";
 
-// @desc    Update residenceAddress profile
-// @route   PUT /api/residenceAddresss
-// * @access  Private
+const residenceAddressSchema = Joi.object({
+  address: Joi.string().required(),
+  location: Joi.string().required(),
+});
+
+// @desc    Update residence address profile
+// @route   PUT /api/residenceAddresses/:id
+// @access  Private
 const updateResidenceAddress = asyncHandler(async (req, res) => {
   const residenceAddressId = req.params.id;
   const { address, location } = req.body;
 
+  // Validate request body
+  const { error } = residenceAddressSchema.validate({ address, location });
+  if (error) {
+    res.status(400);
+    throw new Error(error.details[0].message);
+  }
+
+  // Check if the document with the given ID exists
   const existingResidenceAddress = await ResidenceAddress.findById(
     residenceAddressId
   );
 
   if (!existingResidenceAddress) {
     res.status(404);
-    throw new Error("ResidenceAddress not found");
+    throw new Error("Residence Address not found");
   }
 
   const updatedResidenceAddress = await ResidenceAddress.findByIdAndUpdate(
@@ -32,12 +46,20 @@ const updateResidenceAddress = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Create a new residenceAddress
-// @route   POST /api/universities
+// @desc    Create a new residence address
+// @route   POST /api/residenceAddresses
 // @access  Private
 const createResidenceAddress = asyncHandler(async (req, res) => {
   const { address, location } = req.body;
 
+  // Validate request body
+  const { error } = residenceAddressSchema.validate({ address, location });
+  if (error) {
+    res.status(400);
+    throw new Error(error.details[0].message);
+  }
+
+  // Check if the residence address with the given address already exists
   const residenceAddressExist = await ResidenceAddress.findOne({ address });
 
   if (residenceAddressExist) {
@@ -45,7 +67,7 @@ const createResidenceAddress = asyncHandler(async (req, res) => {
     throw new Error("Residence Address already exists");
   }
 
-  // Create a new residenceAddress
+  // Create a new residence address
   const residenceAddress = await ResidenceAddress.create({
     address,
     location,
@@ -59,20 +81,20 @@ const createResidenceAddress = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400);
-    throw new Error("Invalid residence Address data");
+    throw new Error("Invalid residence address data");
   }
 });
 
-// @desc    Get all residenceAddresss
-// @route   GET /api/residenceAddresss
+// @desc    Get all residence addresses
+// @route   GET /api/residenceAddresses
 // @access  Private/Admin
 const getResidenceAddresses = asyncHandler(async (req, res) => {
   const residenceAddresses = await ResidenceAddress.find({});
   res.json(residenceAddresses);
 });
 
-// @desc    Delete residenceAddress
-// @route   DELETE /api/residenceAddresss/:id
+// @desc    Delete residence address
+// @route   DELETE /api/residenceAddresses/:id
 // @access  Private/Admin
 const deleteResidenceAddress = asyncHandler(async (req, res) => {
   const residenceAddress = await ResidenceAddress.findById(req.params.id);
@@ -85,9 +107,9 @@ const deleteResidenceAddress = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Get residenceAddress by ID
-// @route   GET /api/residenceAddresss/:id
-//* @access  Private/Admin
+// @desc    Get residence address by ID
+// @route   GET /api/residenceAddresses/:id
+// @access  Private/Admin
 const getResidenceAddressById = asyncHandler(async (req, res) => {
   const residenceAddress = await ResidenceAddress.findById(req.params.id);
   if (residenceAddress) {

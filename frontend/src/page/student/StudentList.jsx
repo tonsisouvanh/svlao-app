@@ -7,12 +7,11 @@ import { BsGridFill, BsTable } from "react-icons/bs";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { listUsers } from "../../feature/user/UserSlice";
 import Paginate from "../../components/paginate/Paginate";
-import Breadcrumbs from "../../components/Breadcrumbs";
 import Spinner from "../../components/ui/Spinner";
 import PageHeading from "../../components/PageHeading";
+import { useAuth } from "../../context/AuthContext";
 
 const StudentList = () => {
-  const { pathname } = useLocation();
   const { pageNumber, keyword } = useParams();
   const dispatch = useDispatch();
   const {
@@ -20,9 +19,8 @@ const StudentList = () => {
     users,
     page,
     pages,
-    total,
   } = useSelector((state) => state.user);
-  const { auth } = useSelector((state) => state.auth);
+  const { user: auth } = useAuth();
   const [editToggle, setEditToggle] = useState(false);
 
   const [view, setView] = useState("table");
@@ -54,9 +52,7 @@ const StudentList = () => {
     <>
       <section className="relative">
         <div className="container mx-auto p-4">
-          {editToggle ? null : (
-            <PageHeading title="ລາຍຊື່ນັກຮຽນ" />
-          )}
+          {editToggle ? null : <PageHeading title="ລາຍຊື່ນັກຮຽນ" />}
           <div className="">
             {editToggle ? null : (
               <>

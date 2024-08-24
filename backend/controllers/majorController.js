@@ -1,12 +1,25 @@
 import asyncHandler from "express-async-handler";
 import Major from "../models/majorModel.js";
+import Joi from "joi";
+
+const majorSchema = Joi.object({
+  vietMajor: Joi.string().required(),
+  laoMajor: Joi.string().required(),
+});
 
 // @desc    Update major profile
-// @route   PUT /api/majors
-// * @access  Private
+// @route   PUT /api/majors/:id
+// @access  Private
 const updateMajor = asyncHandler(async (req, res) => {
   const majorId = req.params.id;
   const { laoMajor, vietMajor } = req.body;
+
+  // Validate request body
+  const { error } = majorSchema.validate({ laoMajor, vietMajor });
+  if (error) {
+    res.status(400);
+    throw new Error(error.details[0].message);
+  }
 
   // Check if the document with the given ID exists
   const existingMajor = await Major.findById(majorId);
@@ -30,12 +43,18 @@ const updateMajor = asyncHandler(async (req, res) => {
     throw new Error("Major not found");
   }
 });
-
 // @desc    Create a new major
-// @route   POST /api/universities
+// @route   POST /api/majors
 // @access  Private
 const createMajor = asyncHandler(async (req, res) => {
   const { vietMajor, laoMajor } = req.body;
+
+  // Validate request body
+  const { error } = majorSchema.validate({ vietMajor, laoMajor });
+  if (error) {
+    res.status(400);
+    throw new Error(error.details[0].message);
+  }
 
   // Check if the major with the given English name already exists
   const majorExist = await Major.findOne({ vietMajor });
@@ -62,7 +81,6 @@ const createMajor = asyncHandler(async (req, res) => {
     throw new Error("Invalid major data");
   }
 });
-
 // @desc    Get all majors
 // @route   GET /api/majors
 // @access  Private/Admin

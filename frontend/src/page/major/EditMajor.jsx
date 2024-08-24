@@ -1,26 +1,21 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
-import ErrorMessage from "../../components/typography/ErrorMessage";
-import Spinner from "../../components/ui/Spinner";
-import Breadcrumbs from "../../components/Breadcrumbs";
-import {
-  getMajorById,
-  majorReset,
-  updateMajor,
-} from "../../feature/globalData/MajorSlice";
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { useParams } from 'react-router-dom';
+import ErrorMessage from '../../components/typography/ErrorMessage';
+import Spinner from '../../components/ui/Spinner';
+import PageHeading from '../../components/PageHeading';
+import { useMajor } from '../../hooks/useMajor';
+import ErrorLoadingData from '../../components/ui/ErrorLoadingData';
 
-const inputStyle = "input input-bordered w-full text-base-content/80";
+const inputStyle = 'input input-bordered w-full text-base-content/80';
 
 const EditMajor = () => {
-  const { pathname } = useLocation();
-  const dispatch = useDispatch();
   const { id } = useParams();
 
-  const { status, error, majors } = useSelector((state) => state.major);
-
+  const { useGetMajor, useUpdateMajor } = useMajor();
+  const { data: major, isLoading, error } = useGetMajor(id);
+  const majorUpdateMutate = useUpdateMajor();
   const {
     register,
     handleSubmit,
@@ -28,146 +23,111 @@ const EditMajor = () => {
     reset,
   } = useForm({
     defaultValues: {
-      id: majors[0]?._id,
-      laoMajor: majors[0]?.laoMajor,
-      vietMajor: majors[0]?.vietMajor,
+      id: major?._id,
+      vietMajor: major?.vietMajor,
+      laoMajor: major?.laoMajor,
     },
   });
 
   const [toggleEdit, setToggleEdit] = useState(false);
 
-  useEffect(() => {
-    if (status.update === "succeeded") {
-      toast.success("Update Successfully");
-      dispatch(majorReset());
-    } else if (status.update === "failed") {
-      toast.error(error);
-      dispatch(majorReset());
-    }
-  }, [status.update, dispatch, error]);
-
   const handleEditSubmit = (data) => {
     if (data) {
-      dispatch(updateMajor({ ...data, _id: majors[0]?._id }));
+      majorUpdateMutate.mutateAsync(data);
       setToggleEdit(false);
-    } else toast.warning("Input data not valid");
+    } else toast.warning('Input data not valid');
   };
 
   useEffect(() => {
-    dispatch(getMajorById(id));
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    if (status.fetchOne === "succeeded") {
+    if (major) {
       reset({
-        id: majors[0]?._id,
-        laoMajor: majors[0]?.laoMajor,
-        vietMajor: majors[0]?.vietMajor,
+        id: major._id,
+        vietMajor: major.vietMajor,
+        laoMajor: major.laoMajor,
       });
-    } else if (status.fetchOne === "failed") {
-      toast.error(error);
     }
-  }, [status.fetchOne, reset, majors, error]);
+  }, [major, reset]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (error) {
+    return <ErrorLoadingData />;
+  }
 
   return (
     <>
       <section className="relative">
-        {majors[0] && majors.length > 0 && status.list !== "loading" ? (
-          <div className="container mx-auto px-5 py-24">
-            <div className="mb-12 flex w-full flex-col text-center">
-              <h1 className="title-font m:text-3xl mb-4 text-2xl font-medium">
-                Edit major
-              </h1>
-              <div>
-                <p>{majors[0]?._id}</p>
-              </div>
-            </div>
-            <div className="mx-auto">
-              <form
-                onSubmit={handleSubmit(handleEditSubmit)}
-                className="flex flex-col items-center justify-center"
-              >
-                <div className="w-full p-2">
-                  <label className="form-control w-full">
-                    <div className="label flex items-center">
-                      <span className="label-text font-semibold">
-                        Viet Name
-                        <span className="ml-2 text-error">*</span>
-                      </span>
-                      <ErrorMessage
-                        styling="sm:text-md"
-                        error={errors?.vietMajor}
-                      />
-                    </div>
-                    <input
-                      {...register("vietMajor", {
-                        required: "Field required",
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-full p-2">
-                  <label className="form-control w-full">
-                    <div className="label flex items-center">
-                      <span className="label-text font-semibold">
-                        Lao Name
-                        <span className="ml-2 text-error">*</span>
-                      </span>
-                      <ErrorMessage
-                        styling="sm:text-md"
-                        error={errors?.laoMajor}
-                      />
-                    </div>
-                    <input
-                      {...register("laoMajor", {
-                        required: "Field required",
-                      })}
-                      type="text"
-                      className={inputStyle}
-                    />
-                  </label>
-                </div>
-                <div className="w-full space-x-4 p-2">
-                  {!toggleEdit && (
-                    <button
-                      type="button"
-                      onClick={() => setToggleEdit(true)}
-                      className="btn btn-primary"
-                    >
-                      Update
-                    </button>
-                  )}
-                  {toggleEdit && (
-                    <>
-                      <button
-                        type="submit"
-                        className="btn btn-primary"
-                        disabled={status.update === "loading" ? true : false}
-                      >
-                        {status.update === "loading" ? (
-                          <span className="loading loading-spinner loading-xs"></span>
-                        ) : (
-                          "Submit"
-                        )}
-                      </button>
-                      <button
-                        onClick={() => setToggleEdit(false)}
-                        type="button"
-                        className="btn btn-error btn-outline"
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  )}
-                </div>
-              </form>
-            </div>
+        <div className="container mx-auto px-5 py-10">
+          <div className="mb-12 flex w-full flex-col text-center">
+            <PageHeading title="Edit Major" path="/manage-others-data/major-list" />
           </div>
-        ) : (
-          <Spinner />
-        )}
+          <div className="mx-auto">
+            <form onSubmit={handleSubmit(handleEditSubmit)} className="flex flex-wrap items-center justify-center">
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label flex items-center">
+                    <span className="label-text font-semibold">
+                      Viet Name
+                      <span className="ml-2 text-error">*</span>
+                    </span>
+                    <ErrorMessage styling="sm:text-md" error={errors?.vietMajor} />
+                  </div>
+                  <input
+                    {...register('vietMajor', {
+                      required: 'Field required',
+                    })}
+                    type="text"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
+              <div className="w-1/2 p-2">
+                <label className="form-control w-full">
+                  <div className="label flex items-center">
+                    <span className="label-text font-semibold">
+                      Lao Name
+                      <span className="ml-2 text-error">*</span>
+                    </span>
+                    <ErrorMessage styling="sm:text-md" error={errors?.laoMajor} />
+                  </div>
+                  <input
+                    {...register('laoMajor', {
+                      required: 'Field required',
+                    })}
+                    type="text"
+                    className={inputStyle}
+                  />
+                </label>
+              </div>
+              <div className="w-full space-x-4 p-2">
+                {!toggleEdit && (
+                  <button type="button" onClick={() => setToggleEdit(true)} className="btn btn-primary">
+                    Update
+                  </button>
+                )}
+                {toggleEdit && (
+                  <>
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      disabled={majorUpdateMutate.isPending ? true : false}
+                    >
+                      {majorUpdateMutate.isPending ? (
+                        <span className="loading loading-spinner loading-xs"></span>
+                      ) : (
+                        'Save'
+                      )}
+                    </button>
+                    <button onClick={() => setToggleEdit(false)} type="button" className="btn btn-error btn-outline">
+                      Cancel
+                    </button>
+                  </>
+                )}
+              </div>
+            </form>
+          </div>
+        </div>
       </section>
     </>
   );

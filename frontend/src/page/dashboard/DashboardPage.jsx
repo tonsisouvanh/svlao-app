@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import Unauthorized from "../public/Unauthorized";
 import StatUsers from "../../components/stat/StatUsers";
 import FilterSelection from "./FilterSelection";
@@ -6,8 +5,9 @@ import Charts from "./Charts";
 import AnnouncementList from "./AnnouncementList";
 import PageHeading from "../../components/PageHeading";
 import UserList from "./UserList";
+import { useAuth } from "../../context/AuthContext";
 const Dashboard = () => {
-  const { auth } = useSelector((state) => state.auth);
+  const { user: auth } = useAuth();
 
   if (auth.role !== "admin") return <Unauthorized />;
   return (

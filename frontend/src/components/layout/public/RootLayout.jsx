@@ -1,15 +1,15 @@
-import Navbar from "./Navbar";
-import Sidebar from "../Sidebar";
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
-import Footer from "./Footer";
+import Navbar from './Navbar';
+import Sidebar from '../Sidebar';
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import Footer from './Footer';
 
 function RootLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <div className="">
       {/* <!-- ===== Page Wrapper Start ===== --> */}
-      <div className="h-screen flex border overflow-hidden">
+      <div className="flex h-screen overflow-hidden">
         {/* <!-- ===== Sidebar Start ===== --> */}
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         {/* <!-- ===== Sidebar End ===== --> */}

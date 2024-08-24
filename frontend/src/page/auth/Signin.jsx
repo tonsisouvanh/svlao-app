@@ -1,22 +1,17 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import ErrorMessage from "../../components/typography/ErrorMessage";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import { authReset, signIn } from "../../feature/auth/AuthSlice";
-import toast from "react-hot-toast";
-import { useTranslation } from "react-i18next";
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import ErrorMessage from '../../components/typography/ErrorMessage';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../context/AuthContext';
 const initialState = {
-  emailAddress: "",
-  password: "",
+  emailAddress: '',
+  password: '',
 };
-
 const Signin = () => {
-  const [t] = useTranslation("global");
-
-  const { auth, status, error } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  const [t] = useTranslation('global');
+  const { login, user } = useAuth();
   const navigate = useNavigate();
   const {
     register,
@@ -25,49 +20,34 @@ const Signin = () => {
   } = useForm({ defaultValues: initialState });
   const [showPass, setShowPass] = useState(false);
 
-  useEffect(() => {
-    if (status.signin === "succeeded") {
-      toast.success("Login successful");
-      dispatch(authReset());
-    } else if (status.signin === "failed") {
-      toast.error(error);
-      dispatch(authReset());
+  const handleLogin = (values) => {
+    try {
+      login(values);
+    } catch (error) {
+      console.log(error?.message || 'Server Error');
     }
-  }, [status, dispatch, navigate, error]);
-
-  useEffect(() => {
-    if (auth) {
-      navigate("/");
-    }
-  }, [navigate, auth]);
-
-  const handleLogin = async (data) => {
-    const userInput = { ...data };
-    dispatch(signIn(userInput));
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   return (
     <>
       <div className="flex w-full flex-wrap">
         <div className="flex w-full flex-col font-notosanslao md:w-1/2 lg:w-1/3">
           <div className="flex justify-center pt-12 md:-mb-24 md:justify-start md:pl-12">
-            <a
-              href="#"
-              className="border-b-4 border-b-blue-700 pb-2 text-2xl font-bold text-gray-900"
-            >
-              {" "}
-              Lao Consulate - HCM.{" "}
+            <a href="#" className="border-b-4 border-b-blue-700 pb-2 text-2xl font-bold text-gray-900">
+              {' '}
+              Lao Consulate - HCM.{' '}
             </a>
           </div>
           <div className="my-auto flex flex-col justify-center px-6 pt-8 sm:px-24 md:justify-start md:px-8 md:pt-0 lg:px-12">
-            <p className="text-center text-3xl font-bold">
-              {t("LoginPage.headline")}
-            </p>
-            <p className="mt-2 text-center">{t("LoginPage.subline")}</p>
-            <form
-              onSubmit={handleSubmit(handleLogin)}
-              className="flex flex-col pt-3 md:pt-8"
-            >
+            <p className="text-center text-3xl font-bold">{t('LoginPage.headline')}</p>
+            <p className="mt-2 text-center">{t('LoginPage.subline')}</p>
+            <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col pt-3 md:pt-8">
               <div className="flex flex-col pt-4">
                 <div className="relative flex overflow-hidden rounded-lg border transition focus-within:border-transparent focus-within:ring-2 focus-within:ring-blue-600">
                   <span className="inline-flex items-center border-r border-gray-300 bg-white px-3 text-sm text-gray-500 shadow-sm">
@@ -82,11 +62,11 @@ const Signin = () => {
                     </svg>
                   </span>
                   <input
-                    {...register("emailAddress", {
-                      required: "Email is required",
+                    {...register('emailAddress', {
+                      required: 'Email is required',
                       pattern: {
                         value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-                        message: "Invalid emailAddress format",
+                        message: 'Invalid emailAddress format',
                       },
                     })}
                     type="text"
@@ -95,10 +75,7 @@ const Signin = () => {
                     placeholder="Email"
                   />
                 </div>
-                <ErrorMessage
-                  styling="mt-3 sm:text-md"
-                  error={errors?.emailAddress}
-                />
+                <ErrorMessage styling="mt-3 sm:text-md" error={errors?.emailAddress} />
               </div>
               <div className="mb-12 flex flex-col pt-4">
                 <div className="relative flex overflow-hidden rounded-lg border transition focus-within:border-transparent focus-within:ring-2 focus-within:ring-blue-600">
@@ -115,31 +92,25 @@ const Signin = () => {
                   </span>
 
                   <input
-                    {...register("password", {
-                      required: "Password is required",
+                    {...register('password', {
+                      required: 'Password is required',
                       minLength: {
                         value: 6,
-                        message: "Password must be at least 6 characters",
+                        message: 'Password must be at least 6 characters',
                       },
                     })}
-                    type={showPass ? "text" : "password"}
+                    type={showPass ? 'text' : 'password'}
                     id="login-password"
                     className="w-full flex-1 appearance-none border-gray-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400  focus:outline-none"
                     placeholder="Password"
                   />
-                  <span
-                    onClick={() => setShowPass(!showPass)}
-                    className="absolute right-3 top-3 cursor-pointer"
-                  >
+                  <span onClick={() => setShowPass(!showPass)} className="absolute right-3 top-3 cursor-pointer">
                     {showPass ? <AiFillEye /> : <AiFillEyeInvisible />}
                   </span>
                 </div>
-                <ErrorMessage
-                  styling="mt-3 sm:text-md"
-                  error={errors?.password}
-                />
+                <ErrorMessage styling="mt-3 sm:text-md" error={errors?.password} />
               </div>
-              {status.signin === "loading" ? (
+              {status.signin === 'loading' ? (
                 <button
                   disabled
                   type="button"
@@ -153,19 +124,16 @@ const Signin = () => {
                   type="submit"
                   className="w-full rounded-lg bg-blue-700 px-4 py-2 text-center text-base font-semibold text-white shadow-md transition ease-in hover:bg-blue-600 focus:outline-none focus:ring-2"
                 >
-                  <span className="w-full">
-                    {" "}
-                    {t("LoginPage.btnLogin") || "Login"}{" "}
-                  </span>
+                  <span className="w-full"> {t('LoginPage.btnLogin') || 'Login'} </span>
                 </button>
               )}
             </form>
             <div className="pb-12 pt-12 text-center">
               <p className="whitespace-nowrap">
-                Don't have an account?
-                <Link to="/signup" className="font-semibold underline">
-                  {" "}
-                  Register here.{" "}
+                Don&apos;t have an account?
+                <Link to="/sign-up" className="font-semibold underline">
+                  {' '}
+                  Register here.{' '}
                 </Link>
               </p>
             </div>

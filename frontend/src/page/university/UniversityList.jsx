@@ -8,11 +8,12 @@ import UniversityTable from "../../components/table/university/UniversityTable";
 import { listUniversity } from "../../feature/globalData/UniversitySlice";
 import PageHeading from "../../components/PageHeading";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../context/AuthContext";
 
 const UniversityList = () => {
   const [t] = useTranslation("global");
   const dispatch = useDispatch();
-  const { auth } = useSelector((state) => state.auth);
+  const { user: auth } = useAuth();
   const { status } = useSelector((state) => state.university);
   const [editToggle, setEditToggle] = useState(false);
 
