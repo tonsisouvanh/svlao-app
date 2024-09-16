@@ -131,7 +131,6 @@ const createAnnouncement = asyncHandler(async (req, res) => {
 const getAnnouncements = asyncHandler(async (req, res) => {
   const pageSize = 5;
   const page = Number(req.query.pageNumber) || 1;
-
   const searchFields = ["title", "content", "category"];
   const keyword = req.query.keyword
     ? req.query.keyword !== "all"
@@ -153,7 +152,6 @@ const getAnnouncements = asyncHandler(async (req, res) => {
       : await Announcement.find({ ...keyword })
           .limit(pageSize)
           .skip(pageSize * (page - 1));
-
   res.json({ announcements, page, pages: Math.ceil(count / pageSize) });
 });
 

@@ -1,4 +1,3 @@
-import crypto from "crypto";
 import User from "../models/userModel.js";
 import asyncHandler from "express-async-handler";
 import Token from "../models/tokenModel.js";
@@ -6,8 +5,8 @@ import jwt from "jsonwebtoken";
 import { validateLoginInput } from "../validators/userValidators.js";
 import logger from "../utils/logger.js";
 import generateToken from "../utils/generateToken.js";
-import bcrypt from "bcryptjs";
-
+import bcrypt from "bcrypt";
+import { v1 as uuidv1 } from "uuid";
 // @desc    Auth user & get token
 // @route   POST /api/users/login
 // @access  Public
@@ -31,6 +30,7 @@ export const authUser = asyncHandler(async (req, res) => {
       });
 
       user.refreshToken = refreshToken;
+      user.lastLogin = new Date();
       await user.save({ validateBeforeSave: false });
 
       return res.json({
@@ -39,6 +39,7 @@ export const authUser = asyncHandler(async (req, res) => {
         emailAddress: user.emailAddress,
         profileImg: user.profileImg,
         role: user.role,
+        lastLogin: user.lastLogin,
       });
     } else {
       res.status(401).json({ message: "Invalid email or password" });
@@ -208,7 +209,7 @@ export const requestResetPassword = asyncHandler(async (req, res) => {
     if (tokenObj) await tokenObj.deleteOne();
 
     // Generate a new reset token
-    const resetToken = crypto.randomBytes(32).toString("hex");
+    const resetToken = uuidv1();
     const hashToken = await bcrypt.hash(resetToken, 10);
 
     // Save the new token in the database

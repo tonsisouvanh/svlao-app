@@ -1,12 +1,15 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import {
   deleteImage,
   extractImageId,
   uploadSingleImage,
 } from "../utils/imageUpload.js";
 import generateToken from "../utils/generateToken.js";
+import { userSchema } from "../validators/userValidators.js";
+import { hashPassword } from "../../frontend/src/utils/utils.js";
+import Joi from "joi";
 
 const opts = {
   overwrite: true,
@@ -15,6 +18,13 @@ const opts = {
   folder: "/laostudenthcm/users",
   transformation: { quality: "50" },
 };
+
+const registerSchema = Joi.object({
+  fullname: Joi.string().required(),
+  emailAddress: Joi.string().email().required(),
+  password: Joi.string().min(8).required(),
+  confirmPassword: Joi.string().valid(Joi.ref("password")).required().strict(),
+});
 
 const handleSingleImageUpload = async (image) => {
   if (
@@ -33,11 +43,17 @@ const handleSingleImageUpload = async (image) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { fullname, emailAddress, password } = req.body;
+  const { fullname, emailAddress, password, confirmPassword } = req.body;
 
-  // Validate input data
-  if (!fullname || !emailAddress || !password) {
-    return res.status(400).json({ message: "All fields are required" });
+  const { error } = registerSchema.validate({
+    fullname,
+    emailAddress,
+    password,
+    confirmPassword,
+  });
+  if (error) {
+    res.status(400);
+    throw new Error(error.details[0].message);
   }
 
   // Check if the user already exists
@@ -48,8 +64,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   // Hash the password
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
+  const hashedPassword = await hashPassword(password);
 
   // Create a new user
   const user = await User.create({
@@ -85,22 +100,29 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/create
 // @access  private
 const createUser = asyncHandler(async (req, res) => {
-  const { emailAddress, profileImg } = req.body;
-
+  const { error } = userSchema.validate(req.body);
+  if (error) {
+    res.status(400);
+    throw new Error(error.details[0].message);
+  }
+  const { emailAddress, profileImg, dob } = req.body;
   const userExists = await User.findOne({ emailAddress });
 
   if (userExists) {
     res.status(400);
-    throw new Error("User already exists");
+    throw new Error("User or Email already exists");
   }
-
   let addImage = await handleSingleImageUpload(profileImg);
+  const defaultPasswordByDob = dob.toString().replace(/-/g, "");
+  const hashedPassword = await hashPassword(
+    defaultPasswordByDob || import.meta.VITE_DEFAULT_USER_PASSWORD
+  );
   const user = await User.create({
     ...req.body,
+    password: hashedPassword,
     profileImg:
       Array.isArray(profileImg) && profileImg.length > 0 ? addImage : "",
   });
-
   if (user) {
     res.status(201).json({
       _id: user._id,
@@ -162,10 +184,13 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @route   PUT /api/users/profile
 // * @access  Private
 const updateUserProfile = asyncHandler(async (req, res) => {
-  const userId = req.user._id;
-
+  const { error } = userSchema.validate(req.body);
+  if (error) {
+    res.status(400);
+    throw new Error(error.details[0].message);
+  }
+  const userId = req.params.id;
   const { profileImg, role, ...updatedUserData } = req.body;
-
   const existingUser = await User.findById(userId);
 
   if (!existingUser) {
@@ -174,7 +199,12 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 
   // delete existing image
-  if (profileImg[0].startsWith("data:")) {
+  // if (profileImg[0].startsWith("data:")) {
+  if (
+    profileImg &&
+    Array.isArray(profileImg) &&
+    profileImg[0].startsWith("data:")
+  ) {
     const imageId = extractImageId(existingUser.profileImg);
     if (imageId) {
       await deleteImage(imageId);
@@ -293,6 +323,11 @@ const getUserById = asyncHandler(async (req, res) => {
 // @route   PUT /api/users/:id
 //* @access  Private/Admin
 const updateUser = asyncHandler(async (req, res) => {
+  const { error } = userSchema.validate(req.body);
+  if (error) {
+    res.status(400);
+    throw new Error(error.details[0].message);
+  }
   const userId = req.params.id;
   const { profileImg, ...updatedUserData } = req.body;
 

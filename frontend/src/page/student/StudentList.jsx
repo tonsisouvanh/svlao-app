@@ -1,54 +1,45 @@
-import { Link, useLocation, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import Unauthorized from "../public/Unauthorized";
-import StudentTable from "../../components/table/student/StudentTable";
-import { BsGridFill, BsTable } from "react-icons/bs";
-import { AiFillPlusCircle } from "react-icons/ai";
-import { listUsers } from "../../feature/user/UserSlice";
-import Paginate from "../../components/paginate/Paginate";
-import Spinner from "../../components/ui/Spinner";
-import PageHeading from "../../components/PageHeading";
-import { useAuth } from "../../context/AuthContext";
+import { Link, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import StudentTable from '../../components/table/student/StudentTable';
+import { BsGridFill, BsTable } from 'react-icons/bs';
+import { AiFillPlusCircle } from 'react-icons/ai';
+import Paginate from '../../components/paginate/Paginate';
+import Spinner from '../../components/ui/Spinner';
+import PageHeading from '../../components/PageHeading';
+import { useAuth } from '../../context/AuthContext';
+import { useUser } from '../../hooks/useUser';
+import ErrorLoadingData from '../../components/ui/ErrorLoadingData';
 
 const StudentList = () => {
   const { pageNumber, keyword } = useParams();
-  const dispatch = useDispatch();
-  const {
-    status: userStatus,
-    users,
-    page,
-    pages,
-  } = useSelector((state) => state.user);
+  const { useGetAllUsers } = useUser();
+  const { data: users, isLoading: isUserLoading, error: userError } = useGetAllUsers(keyword, pageNumber);
   const { user: auth } = useAuth();
   const [editToggle, setEditToggle] = useState(false);
 
-  const [view, setView] = useState("table");
+  const [view, setView] = useState('table');
   const toggleView = () => {
-    setView((prevView) => (prevView === "table" ? "grid" : "table"));
+    setView((prevView) => (prevView === 'table' ? 'grid' : 'table'));
   };
 
   useEffect(() => {
-    const savedView = localStorage.getItem("viewPreference");
+    const savedView = localStorage.getItem('viewPreference');
     if (savedView) {
       setView(savedView);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("viewPreference", view);
+    localStorage.setItem('viewPreference', view);
   }, [view]);
 
-  useEffect(() => {
-    dispatch(listUsers({ pageNumber, keyword }));
-  }, [dispatch, pageNumber, keyword]);
-  if (userStatus.fetchAll === "loading") {
+  if (isUserLoading) {
     return <Spinner />;
   }
-  if (userStatus.fetchAll === "failed") {
-    return <Unauthorized />;
+  if (userError) {
+    return <ErrorLoadingData />;
   }
-  return auth?.role === "admin" ? (
+  return (
     <>
       <section className="relative">
         <div className="container mx-auto p-4">
@@ -59,16 +50,10 @@ const StudentList = () => {
                 <div className="mb-10 flex w-full items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     <div className="">
-                      <Link
-                        to={
-                          auth.role !== "admin"
-                            ? "#"
-                            : "/dashboard/student-list/add"
-                        }
-                      >
+                      <Link to={auth.role !== 'admin' ? '#' : '/dashboard/student-list/add'}>
                         <button
                           className={`tooltipp btn btn-primary font-notosanslao text-white ${
-                            auth.role !== "admin" && "btn-disabled"
+                            auth.role !== 'admin' && 'btn-disabled'
                           }`}
                         >
                           ເພີ່ມນັກຮຽນ
@@ -78,7 +63,7 @@ const StudentList = () => {
                     </div>
                     {editToggle ? null : (
                       <div className="">
-                        {view === "table" ? (
+                        {view === 'table' ? (
                           <button onClick={toggleView} className="btn btn-md">
                             <BsGridFill />
                           </button>
@@ -99,20 +84,13 @@ const StudentList = () => {
             editToggle={editToggle}
             setEditToggle={setEditToggle}
             users={users}
-            userStatus={userStatus}
-            userError={userStatus}
+            isLoading={isUserLoading}
+            error={userError}
           />
-          <Paginate
-            path="/dashboard/student-list/page/"
-            style="mt-10"
-            page={page}
-            pages={pages}
-          />
+          <Paginate path="/dashboard/student-list/page/" style="mt-10" page={users.page} pages={users.pages} />
         </div>
       </section>
     </>
-  ) : (
-    <Unauthorized />
   );
 };
 

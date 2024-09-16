@@ -19,7 +19,7 @@ const PageHeading = ({ title = 'Page title', className, path = null }) => {
           </button>
         )}
       </div>
-      <h1 className="title-font text-base-contentd text-md text-center font-notosanslao font-bold underline md:text-3xl">
+      <h1 className="title-font text-base-contentd text-md text-center font-notosanslao font-bold md:text-3xl">
         {title}
       </h1>
     </div>

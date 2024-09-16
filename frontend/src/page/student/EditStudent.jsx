@@ -1,96 +1,89 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { BiUserCircle } from "react-icons/bi";
-import { BsPencilSquare } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  degreeList,
-  provinceList,
-  roleList,
-  statusList,
-} from "../../data/data";
-import { getYearOptions } from "../../utils/utils";
-import { getUserById } from "../../feature/user/SingleUserSlice";
-import { useParams } from "react-router-dom";
-import { updateUser, userReset } from "../../feature/user/UserSlice";
-import altImage from "../../assets/img/profile.png";
-import ResetPasswordModal from "../../components/modal/ResetPasswordModal";
-import Spinner from "../../components/ui/Spinner";
-import { FaCopy, FaPencilAlt, FaSave } from "react-icons/fa";
-import PageHeading from "../../components/PageHeading";
-import ImageUpload from "../../components/input/ImageUpload";
-import { inputStyle, selectStyle } from "../../style/global.value";
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { BiUserCircle } from 'react-icons/bi';
+import { BsPencilSquare } from 'react-icons/bs';
+import { degreeList, provinceList, roleList, statusList } from '../../data/data';
+import { formatDate, getYearOptions } from '../../utils/utils';
+import { useParams } from 'react-router-dom';
+import altImage from '../../assets/img/profile.png';
+import ResetPasswordModal from '../../components/modal/ResetPasswordModal';
+import Spinner from '../../components/ui/Spinner';
+import { FaCopy, FaPencilAlt, FaSave } from 'react-icons/fa';
+import PageHeading from '../../components/PageHeading';
+import ImageUpload from '../../components/input/ImageUpload';
+import { inputStyle, selectStyle } from '../../style/global.value';
+import { useUser } from '../../hooks/useUser';
+import ErrorLoadingData from '../../components/ui/ErrorLoadingData';
+import { useUniversity } from '../../hooks/useUniversity';
+import { useMajor } from '../../hooks/useMajor';
+import { useResidenceAddress } from '../../hooks/useResidenceAddress';
 
 const EditStudent = () => {
+  const { id } = useParams();
   const [base64, setBase64] = useState(null);
+  const { useGetUser, useUpdateUser } = useUser();
+  const userUpdateMutate = useUpdateUser();
+  const { data: singleUser, isLoading: isSingleUserLoading, error: isLoadingUserError } = useGetUser(id);
+
   const [uploadImageToggle, setuploadImageToggle] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const dispatch = useDispatch();
-  const { id } = useParams();
   const yearOptions = getYearOptions();
 
   //state
   const [toggleEdit, setToggleEdit] = useState(false);
 
-  // Slice
+  const { useGetAllUniversities } = useUniversity();
+  const { data: universities, isLoading: isUniversityLoading, error: isUniversityError } = useGetAllUniversities();
+
+  const { useGetAllMajors } = useMajor();
+  const { data: majors, isLoading: isMajorLoading, error: isMajorError } = useGetAllMajors();
+
+  const { useGetAllResidenceAddresses } = useResidenceAddress();
   const {
-    singleUser,
-    status: singleUserStatus,
-    error,
-  } = useSelector((state) => state.singleUser);
-  const { status: userStatus, error: userError } = useSelector(
-    (state) => state.user,
-  );
-  const { universities } = useSelector((state) => state.university);
-  const { residenceAddresses } = useSelector((state) => state.residenceAddress);
-  const { majors } = useSelector((state) => state.major);
+    data: residenceAddresses,
+    isLoading: isResidenceAddressLoading,
+    error: isResidenceAddressError,
+  } = useGetAllResidenceAddresses();
+
   // react hook form
-  const { register, handleSubmit, setValue, reset } = useForm({
-    defaultValues: { singleUser },
-  });
+  const { register, handleSubmit, setValue, reset } = useForm();
 
   const handleSelectDegree = (value) => {
     const vietDegree = degreeList.find((d) => d.laoDegree === value);
-    setValue("degree.vietDegree", vietDegree.vietDegree);
+    setValue('degree.vietDegree', vietDegree.vietDegree);
   };
   const handleSelectMajor = (value) => {
     const major = majors.find((d) => d.laoMajor === value);
-    setValue("major.vietMajor", major.vietMajor);
+    setValue('major.vietMajor', major.vietMajor);
   };
   const handleSelectUniversity = (value) => {
     const university = universities.find((d) => d.shortcut === value);
-    setValue("university.universityId", university._id);
-    setValue("university.shortcut", university.shortcut);
+    setValue('university.universityId', university._id);
+    setValue('university.shortcut', university.shortcut);
   };
   const handleSelectResidenceAddress = (value) => {
-    const residenceAddress = residenceAddresses.find(
-      (d) => d.location === value,
-    );
-    setValue("residenceAddress.address", residenceAddress.address);
+    const residenceAddress = residenceAddresses.find((d) => d.location === value);
+    setValue('residenceAddress.address', residenceAddress.address);
   };
 
-  useEffect(() => {
-    if (userStatus.update === "succeeded") {
-      toast.success("Update Successfully");
-      dispatch(userReset());
-    } else if (userStatus.update === "failed") {
-      toast.error(userError);
-      dispatch(userReset());
-    }
-  }, [userStatus.update, dispatch, userError]);
-
   const handleEditSubmit = (data) => {
-    if (data) {
-      const addImage = base64 ? [base64] : null;
-      const formattedData = {
-        ...data,
-        profileImg: addImage ? addImage : singleUser.profileImg,
-      };
-      dispatch(updateUser({ ...formattedData }));
-      setToggleEdit(false);
-      setuploadImageToggle(false);
-    } else toast.warning("Input data not valid");
+    const addImage = base64 ? [base64] : null;
+    const formattedData = {
+      ...data,
+      dob: new Date(data.dob),
+      visa: {
+        from: new Date(data.visa.from),
+        to: new Date(data.visa.to),
+      },
+      passport: {
+        ...singleUser.passport,
+        expired: new Date(singleUser?.passport.expired),
+      },
+      profileImg: addImage ? addImage : singleUser.profileImg,
+    };
+    userUpdateMutate.mutate({ id: singleUser._id, data: formattedData });
+    setToggleEdit(false);
+    setuploadImageToggle(false);
   };
 
   const replaceImage = (error) => {
@@ -98,33 +91,35 @@ const EditStudent = () => {
   };
 
   useEffect(() => {
-    if (userStatus.reset === "succeeded") {
-      toast.success("Reset Successfully");
-      dispatch(userReset());
-      reset({});
-    } else if (userStatus.reset === "failed") {
-      toast.error(error);
-      dispatch(userReset());
+    if (singleUser) {
+      reset({
+        ...singleUser,
+        dob: formatDate(singleUser?.dob),
+        visa: {
+          from: formatDate(singleUser?.visa.from),
+          to: formatDate(singleUser?.visa.to),
+        },
+        passport: {
+          ...singleUser.passport,
+          expired: formatDate(singleUser?.passport.expired),
+        },
+      });
     }
-  }, [userStatus.reset, dispatch, error, reset]);
+  }, [reset, singleUser]);
 
-  useEffect(() => {
-    dispatch(getUserById(id));
-  }, [dispatch, id]);
+  if (isSingleUserLoading) {
+    return <Spinner />;
+  }
 
-  useEffect(() => {
-    if (singleUserStatus.fetchOne === "succeeded") {
-      reset(singleUser);
-    } else if (singleUserStatus.fetchOne === "failed") {
-      toast.error(error);
-    }
-  }, [singleUserStatus.fetchOne, reset, singleUser, error]);
+  if (isLoadingUserError) {
+    return <ErrorLoadingData />;
+  }
 
   return (
     <>
       {isModalOpen && (
         <ResetPasswordModal
-          title={"Reset user password"}
+          title={'Reset user password'}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
           userData={{
@@ -134,7 +129,7 @@ const EditStudent = () => {
         />
       )}
       <section className="relative">
-        {singleUser && userStatus.update !== "loading" ? (
+        {singleUser ? (
           <div className="container mx-auto px-5 py-14">
             <div className="mb-12 flex w-full flex-col text-center">
               <PageHeading title="ຂໍ້ມູນນັກຮຽນ" />
@@ -144,11 +139,7 @@ const EditStudent = () => {
                 <div className="avatar relative">
                   {base64 ? (
                     <div className=" w-48 rounded-full">
-                      <img
-                        src={base64}
-                        alt={"avatar"}
-                        onError={(error) => replaceImage(error, altImage)}
-                      />
+                      <img src={base64} alt={'avatar'} onError={(error) => replaceImage(error, altImage)} />
                     </div>
                   ) : (
                     <div className=" w-48 rounded-full">
@@ -188,14 +179,9 @@ const EditStudent = () => {
                 <div className="flex w-[30rem] items-center gap-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className={`label-text text-lg font-semibold `}>
-                        Status
-                      </span>
+                      <span className={`label-text text-sm font-semibold `}>Status</span>
                     </div>
-                    <select
-                      {...register("userStatus", {})}
-                      className={selectStyle}
-                    >
+                    <select {...register('userStatus', {})} className={selectStyle}>
                       {statusList.map((item, index) => (
                         <option key={index} value={item.status}>
                           {item.status}
@@ -205,11 +191,9 @@ const EditStudent = () => {
                   </label>
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className={`label-text text-lg font-semibold `}>
-                        Role
-                      </span>
+                      <span className={`label-text text-sm font-semibold `}>Role</span>
                     </div>
-                    <select {...register("role", {})} className={selectStyle}>
+                    <select {...register('role', {})} className={selectStyle}>
                       {roleList.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
@@ -221,12 +205,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        English Firstname
-                      </span>
+                      <span className="label-text text-sm font-semibold">English Firstname</span>
                     </div>
                     <input
-                      {...register("fullname.englishFirstname", {})}
+                      {...register('fullname.englishFirstname', {})}
                       type="text"
                       // placeholder="Enter English Firstname"
                       className={inputStyle}
@@ -236,12 +218,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Nickname
-                      </span>
+                      <span className="label-text text-sm font-semibold">Nickname</span>
                     </div>
                     <input
-                      {...register("fullname.nickName", {})}
+                      {...register('fullname.nickName', {})}
                       type="text"
                       // placeholder="Enter Nickname"
                       className={inputStyle}
@@ -251,12 +231,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Lao Name
-                      </span>
+                      <span className="label-text text-sm font-semibold">Lao Name</span>
                     </div>
                     <input
-                      {...register("fullname.laoName", {})}
+                      {...register('fullname.laoName', {})}
                       type="text"
                       // placeholder="Enter Lao Name"
                       className={inputStyle}
@@ -266,12 +244,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        English Lastname
-                      </span>
+                      <span className="label-text text-sm font-semibold">English Lastname</span>
                     </div>
                     <input
-                      {...register("fullname.englishLastname", {})}
+                      {...register('fullname.englishLastname', {})}
                       type="text"
                       // placeholder="Enter English Lastname"
                       className={inputStyle}
@@ -281,12 +257,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        University
-                      </span>
+                      <span className="label-text text-sm font-semibold">University</span>
                     </div>
                     <select
-                      {...register("university.shortcut", {})}
+                      {...register('university.shortcut', {})}
                       onChange={(e) => handleSelectUniversity(e.target.value)}
                       className={selectStyle}
                     >
@@ -301,14 +275,9 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Duration (From)
-                      </span>
+                      <span className="label-text text-sm font-semibold">Duration (From)</span>
                     </div>
-                    <select
-                      {...register("duration.from", {})}
-                      className={selectStyle}
-                    >
+                    <select {...register('duration.from', {})} className={selectStyle}>
                       {yearOptions.map((year) => (
                         <option key={year} value={year}>
                           {year}
@@ -320,14 +289,9 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Duration (To)
-                      </span>
+                      <span className="label-text text-sm font-semibold">Duration (To)</span>
                     </div>
-                    <select
-                      {...register("duration.to", {})}
-                      className={selectStyle}
-                    >
+                    <select {...register('duration.to', {})} className={selectStyle}>
                       {yearOptions.map((year) => (
                         <option key={year} value={year}>
                           {year}
@@ -339,12 +303,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Phone Number
-                      </span>
+                      <span className="label-text text-sm font-semibold">Phone Number</span>
                     </div>
                     <input
-                      {...register("phone.phoneNumber", {})}
+                      {...register('phone.phoneNumber', {})}
                       type="text"
                       // placeholder="Enter Phone Number"
                       className={inputStyle}
@@ -354,12 +316,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Emergency
-                      </span>
+                      <span className="label-text text-sm font-semibold">Emergency</span>
                     </div>
                     <input
-                      {...register("phone.emergency", {})}
+                      {...register('phone.emergency', {})}
                       type="text"
                       // placeholder="Enter Emergency"
                       className={inputStyle}
@@ -369,12 +329,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Relationship
-                      </span>
+                      <span className="label-text text-sm font-semibold">Relationship</span>
                     </div>
                     <input
-                      {...register("phone.relationship", {})}
+                      {...register('phone.relationship', {})}
                       type="text"
                       // placeholder="Enter Relationship"
                       className={inputStyle}
@@ -385,12 +343,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Lao Degree
-                      </span>
+                      <span className="label-text text-sm font-semibold">Lao Degree</span>
                     </div>
                     <select
-                      {...register("degree.laoDegree", {})}
+                      {...register('degree.laoDegree', {})}
                       onChange={(e) => handleSelectDegree(e.target.value)}
                       className={selectStyle}
                     >
@@ -405,12 +361,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Visa From
-                      </span>
+                      <span className="label-text text-sm font-semibold">Visa From</span>
                     </div>
                     <input
-                      {...register("visa.from", {})}
+                      {...register('visa.from', {})}
                       type="date"
                       // placeholder="Enter Visa From"
                       className={inputStyle}
@@ -420,12 +374,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Visa To
-                      </span>
+                      <span className="label-text text-sm font-semibold">Visa To</span>
                     </div>
                     <input
-                      {...register("visa.to", {})}
+                      {...register('visa.to', {})}
                       type="date"
                       // placeholder="Enter Visa To"
                       className={inputStyle}
@@ -435,15 +387,11 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Residence Address
-                      </span>
+                      <span className="label-text text-sm font-semibold">Residence Address</span>
                     </div>
                     <select
-                      {...register("residenceAddress.location", {})}
-                      onChange={(e) =>
-                        handleSelectResidenceAddress(e.target.value)
-                      }
+                      {...register('residenceAddress.location', {})}
+                      onChange={(e) => handleSelectResidenceAddress(e.target.value)}
                       className={selectStyle}
                     >
                       {residenceAddresses.map((item, index) => (
@@ -457,12 +405,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Passport No
-                      </span>
+                      <span className="label-text text-sm font-semibold">Passport No</span>
                     </div>
                     <input
-                      {...register("passport.passportNo", {})}
+                      {...register('passport.passportNo', {})}
                       type="text"
                       // placeholder="Enter Passport No"
                       className={inputStyle}
@@ -473,12 +419,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Passport Expired
-                      </span>
+                      <span className="label-text text-sm font-semibold">Passport Expired</span>
                     </div>
                     <input
-                      {...register("passport.expired", {})}
+                      {...register('passport.expired', {})}
                       type="date"
                       // placeholder="Enter Passport Expired"
                       className={inputStyle}
@@ -488,12 +432,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Lao Major
-                      </span>
+                      <span className="label-text text-sm font-semibold">Lao Major</span>
                     </div>
                     <select
-                      {...register("major.laoMajor", {})}
+                      {...register('major.laoMajor', {})}
                       onChange={(e) => handleSelectMajor(e.target.value)}
                       className={selectStyle}
                     >
@@ -508,12 +450,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Student ID
-                      </span>
+                      <span className="label-text text-sm font-semibold">Student ID</span>
                     </div>
                     <input
-                      {...register("studentId", {})}
+                      {...register('studentId', {})}
                       type="text"
                       // placeholder="Enter Student ID"
                       className={inputStyle}
@@ -523,12 +463,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Date of Birth
-                      </span>
+                      <span className="label-text text-sm font-semibold">Date of Birth</span>
                     </div>
                     <input
-                      {...register("dob", {})}
+                      {...register('dob', {})}
                       type="date"
                       // placeholder="Enter Date of Birth"
                       className={inputStyle}
@@ -538,26 +476,22 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Gender
-                      </span>
+                      <span className="label-text text-sm font-semibold">Gender</span>
                     </div>
-                    <select {...register("gender", {})} className={selectStyle}>
-                      <option value={"male"}>Male</option>
-                      <option value={"female"}>Female</option>
-                      <option value={"other"}>Other</option>
+                    <select {...register('gender', {})} className={selectStyle}>
+                      <option value={'male'}>Male</option>
+                      <option value={'female'}>Female</option>
+                      <option value={'other'}>Other</option>
                     </select>
                   </label>
                 </div>
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Facebook URL
-                      </span>
+                      <span className="label-text text-sm font-semibold">Facebook URL</span>
                     </div>
                     <input
-                      {...register("facebookUrl", {})}
+                      {...register('facebookUrl', {})}
                       type="text"
                       // placeholder="Enter Facebook URL"
                       className={inputStyle}
@@ -567,14 +501,9 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Permanent Address
-                      </span>
+                      <span className="label-text text-sm font-semibold">Permanent Address</span>
                     </div>
-                    <select
-                      {...register("province", {})}
-                      className={selectStyle}
-                    >
+                    <select {...register('province', {})} className={selectStyle}>
                       {provinceList.map((item, index) => (
                         <option key={index} value={item.laoName}>
                           {item.laoName}
@@ -586,12 +515,10 @@ const EditStudent = () => {
                 <div className="w-[30rem] p-2">
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text text-lg font-semibold">
-                        Email Address
-                      </span>
+                      <span className="label-text text-sm font-semibold">Email Address</span>
                     </div>
                     <input
-                      {...register("emailAddress", {})}
+                      {...register('emailAddress', {})}
                       type="text"
                       // placeholder="Enter Email Address"
                       className={inputStyle}
@@ -600,11 +527,7 @@ const EditStudent = () => {
                 </div>
                 <div className="flex w-full items-center justify-center space-x-4 p-2">
                   {!toggleEdit && (
-                    <button
-                      type="button"
-                      onClick={() => setToggleEdit(true)}
-                      className="btn btn-primary btn-wide"
-                    >
+                    <button type="button" onClick={() => setToggleEdit(true)} className="btn btn-primary btn-wide">
                       <FaPencilAlt />
                       ແກ້ໄຂ
                     </button>
@@ -614,31 +537,21 @@ const EditStudent = () => {
                       <button
                         type="submit"
                         className="btn btn-primary"
-                        disabled={
-                          userStatus.update === "loading" ? true : false
-                        }
+                        disabled={userUpdateMutate.isPending ? true : false}
                       >
                         <FaSave />
-                        {userStatus.update === "loading" ? (
+                        {userUpdateMutate.isPending ? (
                           <span className="loading loading-spinner loading-xs"></span>
                         ) : (
-                          "ບັນທຶກ"
+                          'ບັນທຶກ'
                         )}
                       </button>
-                      <button
-                        onClick={() => setToggleEdit(false)}
-                        type="button"
-                        className="btn btn-error btn-outline"
-                      >
+                      <button onClick={() => setToggleEdit(false)} type="button" className="btn btn-error btn-outline">
                         ຍົກເລີກ
                       </button>
                     </>
                   )}
-                  <button
-                    type="button"
-                    onClick={() => setIsModalOpen(true)}
-                    className="btn btn-neutral btn-outline"
-                  >
+                  <button type="button" onClick={() => setIsModalOpen(true)} className="btn btn-neutral btn-outline">
                     Reset password
                   </button>
                 </div>

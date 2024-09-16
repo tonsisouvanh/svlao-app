@@ -8,7 +8,7 @@ import { useAuth } from '../../context/AuthContext';
 import { BiExit } from 'react-icons/bi';
 
 const dropdownLiStyle = 'hover:opacity-60 hover:bg-white/10 rounded-md';
-const dropdownNavlinkStyle = 'group relative flex items-center gap-2 px-4 py-2 font-semibold duration-300 ease-in-out';
+const dropdownNavlinkStyle = 'group relative flex items-center gap-2 px-4 py-2 duration-300 ease-in-out';
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const [t] = useTranslation('global');
@@ -93,7 +93,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         <nav className="mt-5 px-4 py-4 text-base-100 lg:mt-9 lg:px-6">
           {/* <!-- Menu Group --> */}
           <div className="font-notosanslao">
-            <h3 className="text-bodydark2 mb-4 ml-4 text-sm font-semibold">MENU</h3>
+            <h3 className="text-bodydark2 mb-4 ml-4 text-sm">MENU</h3>
             <ul className="mb-6 flex flex-col gap-2">
               {/* <!-- Menu Item Dashboard --> */}
               {auth?.role === 'admin' && (
@@ -104,7 +104,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         <React.Fragment>
                           <NavLink
                             to="#"
-                            className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-notosanslao font-semibold duration-300 ease-in-out ${
+                            className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-notosanslao duration-300 ease-in-out ${
                               pathname.includes('dashboard') && 'rounded-md bg-primary-focus text-white'
                             }`}
                             onClick={(e) => {
@@ -162,7 +162,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         <React.Fragment>
                           <NavLink
                             to="#"
-                            className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-notosanslao font-semibold duration-300 ease-in-out ${
+                            className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-notosanslao duration-300 ease-in-out ${
                               pathname.includes('manage-others-data') && 'rounded-md bg-primary-focus text-white'
                             }`}
                             onClick={(e) => {
@@ -243,7 +243,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <li>
                 <NavLink
                   to="/formal-organization"
-                  className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60 ${
+                  className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 duration-300 ease-in-out hover:opacity-60 ${
                     pathname === '/formal-organization' && 'rounded-md bg-primary-focus text-white'
                   }`}
                 >
@@ -257,14 +257,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
           {/* <!-- Others Group --> */}
           <div className="font-notosanslao">
-            <h3 className="text-bodydark2 mb-4 ml-4 text-sm font-semibold">OTHERS</h3>
+            <h3 className="text-bodydark2 mb-4 ml-4 text-sm">OTHERS</h3>
 
             <ul className="mb-6 flex flex-col gap-2">
               {/* <!-- Menu Item Chart --> */}
               <li>
                 <NavLink
                   to="/document-form-list"
-                  className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60 ${
+                  className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 duration-300 ease-in-out hover:opacity-60 ${
                     pathname === '/document-form-list' && 'rounded-md bg-primary-focus text-white'
                   }`}
                 >
@@ -276,7 +276,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <li>
                 <NavLink
                   to="/"
-                  className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60 ${
+                  className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 duration-300 ease-in-out hover:opacity-60 ${
                     pathname === '/' && 'rounded-md bg-primary-focus text-white'
                   }`}
                 >
@@ -289,7 +289,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 <button
                   onClick={handleSignOut}
                   type="button"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60`}
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 duration-300 ease-in-out hover:opacity-60`}
                 >
                   <img src={logout} className="w-6" alt="" />
                   ອອກຈາກລະບົບ
@@ -305,7 +305,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           <button
             onClick={handleSignOut}
             type="button"
-            className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-semibold duration-300 ease-in-out hover:opacity-60`}
+            className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 duration-300 ease-in-out hover:opacity-60`}
           >
             <BiExit />
             <span className="text-base-100">ອອກຈາກລະບົບ</span>

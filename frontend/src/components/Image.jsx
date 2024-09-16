@@ -1,16 +1,14 @@
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
-const Image = ({ classname, image }) => {
+const Image = ({ className, image, alt = '' }) => {
   return (
     <>
       <LazyLoadImage
-        className={classname}
+        className={className}
         src={image}
-        alt="Image description"
-        placeholder={
-          <div className="h-full w-full animate-pulse bg-gray-300"></div>
-        }
+        alt={alt}
+        placeholder={<div className="h-full w-full animate-pulse bg-gray-300"></div>}
         effect="blur" // Apply blur effect
         threshold={50} // Load image when 50px within viewport
       />

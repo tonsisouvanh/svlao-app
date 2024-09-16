@@ -135,12 +135,55 @@ function App() {
               {/* ================================================================== */}
 
               {/* ======================= Student ======================================== */}
-              <Route path="/dashboard/student-list/page/:pageNumber" element={<StudentList />} />
-              <Route path="/dashboard/student-list/search/:keyword" element={<StudentList />} />
-              <Route path="/dashboard/student-list/search/:keyword/page/:pageNumber" element={<StudentList />} />
-              <Route path="/dashboard/student-list" element={<StudentList />} />
-              <Route path="/dashboard/student-list/student/:id" element={<EditStudent />} />
-              <Route path="/dashboard/student-list/add" element={<AddStudent />} />
+
+              <Route
+                path="/dashboard/student-list/page/:pageNumber"
+                element={
+                  <RbacRoute roles={[ROLE.Admin]}>
+                    <StudentList />
+                  </RbacRoute>
+                }
+              />
+              <Route
+                path="/dashboard/student-list/search/:keyword"
+                element={
+                  <RbacRoute roles={[ROLE.Admin]}>
+                    <StudentList />
+                  </RbacRoute>
+                }
+              />
+              <Route
+                path="/dashboard/student-list/search/:keyword/page/:pageNumber"
+                element={
+                  <RbacRoute roles={[ROLE.Admin]}>
+                    <StudentList />
+                  </RbacRoute>
+                }
+              />
+              <Route
+                path="/dashboard/student-list"
+                element={
+                  <RbacRoute roles={[ROLE.Admin]}>
+                    <StudentList />
+                  </RbacRoute>
+                }
+              />
+              <Route
+                path="/dashboard/student-list/student/:id"
+                element={
+                  <RbacRoute roles={[ROLE.Admin]}>
+                    <EditStudent />
+                  </RbacRoute>
+                }
+              />
+              <Route
+                path="/dashboard/student-list/add"
+                element={
+                  <RbacRoute roles={[ROLE.Admin]}>
+                    <AddStudent />
+                  </RbacRoute>
+                }
+              />
               {/* ================================================================== */}
               {/* ======================= University ======================================== */}
               <Route path="/manage-others-data/university-list/add" element={<AddUniversity />} />

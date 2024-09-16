@@ -14,4 +14,5 @@ Note:
 3. add multiple image upload for announcement
 
 TODO:
-completely remove react redux
+
+- do sign up page

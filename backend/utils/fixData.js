@@ -1,8 +1,7 @@
 import generateToken from "./generateToken.js";
 import { usersData } from "./users.js";
 import { universityData } from "./universityData.js";
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import fs from "fs";
 
 const univerData = [

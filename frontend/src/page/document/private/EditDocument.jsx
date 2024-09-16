@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   documentReset,
@@ -15,10 +14,9 @@ const inputStyle = 'input input-bordered w-full text-base-description/80';
 
 const EditDocument = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { id } = useParams();
-
-  const { status, error, documents } = useSelector((state) => state.document);
+  // Implement document feature
+  // const { status, error, documents } = useSelector((state) => state.document);
 
   const {
     register,

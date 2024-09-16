@@ -49,7 +49,7 @@ router.post(
 );
 router.get("/profile", verifyJWT, getUserProfile);
 router.get("/session", verifyJWT, getUserSession);
-router.put("/profile", verifyJWT, updateUserProfile);
+router.put("/profile/:id", verifyJWT, updateUserProfile);
 
 // Admin routes
 router

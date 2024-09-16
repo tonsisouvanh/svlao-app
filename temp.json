@@ -1,0 +1,32 @@
+{
+  "degree": {
+    "laoDegree": "ປະລິນຍາຕີ",
+    "vietDegree": "Cử Nhân"
+  },
+  "visa": {
+    "to": "2024-01-22T00:00:00.000Z",
+    "from": "2020-11-21T00:00:00.000Z"
+  },
+  "residenceAddress": {
+    "address": "KTX khu B đại học quốc gia, Tô Vĩnh Diện, Đông Hoà, Dĩ An, Bình Dương",
+    "location": "KTX Khu B ĐHQG"
+  },
+  "passport": {
+    "img": "",
+    "passportNo": "P2699792",
+    "expired": "2033-07-09T00:00:00.000Z"
+  },
+  "major": {
+    "vietMajor": "Công nghệ thông tin",
+    "laoMajor": "ເຕັກໂນໂລຊີຂໍ້ມູນຂ່າວສານ"
+  },
+  "studentId": "20110L02",
+  "dob": "2001-11-15",
+  "gender": "male",
+  "facebookUrl": "https://www.facebook.com/BounmyDola",
+  "userStatus": "active",
+  "userId": "ye4sMKspOQSnohJBAPhzJLrm2Rq2",
+  "province": "ຊຽງຂວາງ",
+  "profileImg": "https://drive.google.com/uc?export=view&id=1-1FfpB3iLD63MsjsVCr61Z6pdVPUKa16",
+  "emailAddress": "test@gmail.com"
+}

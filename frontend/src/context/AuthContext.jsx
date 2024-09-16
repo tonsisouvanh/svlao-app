@@ -1,7 +1,7 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { apiRequestPrivate } from '../utils/axiosConfig';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import queryClient from '../lib/queryClient';
 
@@ -9,9 +9,6 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   const {
     data: currentUser,
     isLoading: isLoadingUser,
@@ -35,7 +32,6 @@ export const AuthProvider = ({ children }) => {
         toast.error(error.response?.data?.message || 'Failed to fetch user profile');
       }
     },
-    enabled: location.pathname === '/sign-in' && isAuthenticated ? false : true,
   });
 
   const loginMutation = useMutation({
@@ -50,7 +46,6 @@ export const AuthProvider = ({ children }) => {
     onSuccess: () => {
       navigate('/');
       queryClient.invalidateQueries('authStatus');
-      setIsAuthenticated(true);
     },
     onError: (error) => {
       toast.error(error.response?.data?.message || 'Login failed');
@@ -65,12 +60,10 @@ export const AuthProvider = ({ children }) => {
     onSuccess: () => {
       queryClient.removeQueries('authStatus');
       navigate('/sign-in');
-      setIsAuthenticated(false);
     },
     onError: () => {
       queryClient.removeQueries('authStatus');
       navigate('/sign-in');
-      setIsAuthenticated(false);
     },
   });
 

@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { authReset, signUp } from "../../feature/auth/AuthSlice";
-import ErrorMessage from "../../components/typography/ErrorMessage";
-import { useAuth } from "../../context/AuthContext";
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { signUp } from '../../feature/auth/AuthSlice';
+import ErrorMessage from '../../components/typography/ErrorMessage';
+import { useAuth } from '../../context/AuthContext';
 const initialState = {
-  firstname: "",
-  lastname: "",
-  emailAddress: "",
-  password: "",
+  firstname: '',
+  lastname: '',
+  emailAddress: '',
+  password: '',
 };
 const Signup = () => {
   const navigate = useNavigate();
@@ -49,7 +48,7 @@ const Signup = () => {
 
   useEffect(() => {
     if (auth) {
-      navigate("/");
+      navigate('/');
     }
   }, [navigate, auth]);
 
@@ -58,97 +57,108 @@ const Signup = () => {
       <div className="absolute h-full w-full bg-gradient-to-b from-black via-black/70 to-transparent"></div>
       <div className="z-[1] mx-auto w-96 rounded bg-white p-8 shadow-md">
         <h1 className="mb-4 text-2xl font-bold">Student Signup</h1>
-        <form onSubmit={handleSubmit(handleSignup)}>
-          <div className="mb-4">
+        <form onSubmit={handleSubmit(handleSignup)} className="space-y-2">
+          <div className="">
             <div className="form-control w-full max-w-xs">
               <label className="label">
                 <span className="label-text">First Name</span>
               </label>
               <input
-                {...register("firstname", {
-                  required: "Firstname is required",
+                {...register('firstname', {
+                  required: 'Firstname is required',
                 })}
                 type="text"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered input-sm w-full max-w-xs"
               />
-              <ErrorMessage
-                styling="mt-3 sm:text-md"
-                error={errors?.firstname}
-              />
+              <ErrorMessage styling="mt-3 sm:text-md" error={errors?.firstname} />
             </div>
           </div>
-          <div className="mb-4">
+          <div className="">
             <div className="form-control w-full max-w-xs">
               <label className="label">
                 <span className="label-text">Last Name</span>
               </label>
               <input
-                {...register("lastname", {
-                  required: "Lastname is required",
+                {...register('lastname', {
+                  required: 'Lastname is required',
                 })}
                 type="text"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered input-sm w-full max-w-xs"
               />
-              <ErrorMessage
-                styling="mt-3 sm:text-md"
-                error={errors?.lastname}
-              />
+              <ErrorMessage styling="mt-3 sm:text-md" error={errors?.lastname} />
             </div>
           </div>
-          <div className="mb-4">
+          <div className="">
             <div className="form-control w-full max-w-xs">
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
               <input
-                {...register("emailAddress", {
-                  required: "Email is required",
+                {...register('emailAddress', {
+                  required: 'Email is required',
                   pattern: {
                     value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-                    message: "Invalid emailAddress format",
+                    message: 'Invalid emailAddress format',
                   },
                 })}
                 type="text"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered input-sm w-full max-w-xs"
               />
-              <ErrorMessage
-                styling="mt-3 sm:text-md"
-                error={errors?.emailAddress}
-              />
+              <ErrorMessage styling="mt-3 sm:text-md" error={errors?.emailAddress} />
             </div>
           </div>
-          <div className="mb-4">
+          <div className="">
             <div className="form-control w-full max-w-xs">
               <label className="label">
                 <span className="label-text">Password</span>
-                <span
-                  onClick={() => setShowPass(!showPass)}
-                  className="cursor-pointer"
-                >
+                <span onClick={() => setShowPass(!showPass)} className="cursor-pointer">
                   {showPass ? <AiFillEye /> : <AiFillEyeInvisible />}
                 </span>
               </label>
               <input
-                {...register("password", {
-                  required: "Password is required",
+                {...register('password', {
+                  required: 'Password is required',
                   minLength: 6,
                 })}
-                type={showPass ? "text" : "password"}
-                className="input input-bordered w-full max-w-xs"
+                type={showPass ? 'text' : 'password'}
+                className="input input-bordered input-sm w-full max-w-xs"
               />
               {/* <ErrorMessage
                 styling="mt-3 sm:text-md"
                 error={errors?.password}
               /> */}
               {errors.password && (
-                <span className="mt-3 text-xs italic text-red-400">
-                  Password must be at least 6 character
+                <span className="mt-3 text-xs italic text-red-400">Password must be at least 6 character</span>
+              )}
+            </div>
+          </div>
+          <div className="">
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Confirm password</span>
+                <span onClick={() => setShowPass(!showPass)} className="cursor-pointer">
+                  {showPass ? <AiFillEye /> : <AiFillEyeInvisible />}
                 </span>
+              </label>
+              <input
+                {...register('password', {
+                  required: 'Password is required',
+                  minLength: 6,
+                })}
+                type={showPass ? 'text' : 'password'}
+                className="input input-bordered input-sm w-full max-w-xs"
+              />
+              {/* <ErrorMessage
+                styling="mt-3 sm:text-md"
+                error={errors?.password}
+              /> */}
+              {errors.password && (
+                <span className="mt-3 text-xs italic text-red-400">Password must be at least 6 character</span>
               )}
             </div>
           </div>
           <div className="mb-4 flex justify-end gap-3">
-            {status.signup === "loading" ? (
+            {status.signup === 'loading' ? (
               <button className="btn flex-grow">
                 <span className="loading loading-spinner"></span>
                 loading
