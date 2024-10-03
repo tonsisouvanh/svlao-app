@@ -27,6 +27,8 @@ export const fetchUniversityById = async (id) => {
 
 export const updateUniversity = async (values) => {
   const { id, ...inputValues } = values;
+  console.log('🚀 ~ updateUniversity ~ inputValues:', inputValues);
+  console.log('🚀 ~ updateUniversity ~ id:', id);
   const res = await apiRequestPrivate.put(`/universities/${id}`, inputValues, {
     headers: {
       'Content-Type': 'application/json',

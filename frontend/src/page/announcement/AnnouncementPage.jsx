@@ -20,7 +20,7 @@ const AnnouncementPage = () => {
 
   const { useGetAllAnnouncements } = useAnnouncement();
   const {
-    data,
+    data: announcements,
     isLoading: isAnnouncementLoading,
     isSuccess: isAnnoucementSuccess,
     refetch: refetchAnnouncement,
@@ -59,9 +59,9 @@ const AnnouncementPage = () => {
                 ]}
               />
               <div className="mt-10">
-                {isAnnoucementSuccess && data.announcements && data.announcements.length > 0 ? (
+                {isAnnoucementSuccess && announcements.data && announcements?.data.length > 0 ? (
                   <>
-                    {data.announcements.map((announcement) => (
+                    {announcements.data.map((announcement) => (
                       <div key={announcement._id} className="mb-6 flex flex-wrap">
                         <div className="mb-6 ml-auto w-full shrink-0 grow-0 basis-auto px-3 md:mb-0 md:w-3/12">
                           <div
@@ -117,7 +117,12 @@ const AnnouncementPage = () => {
                         </div>
                       </div>
                     ))}
-                    <Paginate path="/announcement-list/page/" style="mt-10" page={data.page} pages={data.pages} />
+                    <Paginate
+                      path="/announcement-list/page/"
+                      style="mt-10"
+                      page={announcements.page}
+                      pages={announcements.pages}
+                    />
                   </>
                 ) : (
                   <EmptyState message="ບໍ່ມີຂໍ້ມູນແຈ້ງການ" />

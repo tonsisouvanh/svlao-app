@@ -6,6 +6,7 @@ import ResidenceAddressTable from '../../components/table/residenceAddress/Resid
 import PageHeading from '../../components/PageHeading';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
+import { Button } from 'antd';
 
 const ResidenceAddressList = () => {
   const [t] = useTranslation('global');
@@ -24,14 +25,14 @@ const ResidenceAddressList = () => {
                   <div className="flex items-center gap-2">
                     <div className="">
                       <Link to={auth.role !== 'admin' ? '#' : '/manage-others-data/residence-address-list/add'}>
-                        <button
-                          className={`tooltipp btn btn-primary font-notosanslao text-white ${
+                        <Button
+                          className={`bg-color-1 font-notosanslao text-white ${
                             auth.role !== 'admin' && 'btn-disabled'
                           }`}
                         >
                           {t('AddButton')}
                           <AiFillPlusCircle size={20} />
-                        </button>
+                        </Button>
                       </Link>
                     </div>
                   </div>

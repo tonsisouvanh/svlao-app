@@ -6,6 +6,7 @@ import MajorTable from '../../components/table/major/MajorTable';
 import PageHeading from '../../components/PageHeading';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
+import { Button } from 'antd';
 
 const MajorList = () => {
   const [t] = useTranslation('global');
@@ -24,14 +25,14 @@ const MajorList = () => {
                   <div className="flex items-center gap-2">
                     <div className="">
                       <Link to={auth.role !== 'admin' ? '#' : '/manage-others-data/major-list/add'}>
-                        <button
-                          className={`tooltipp btn btn-primary font-notosanslao text-white ${
-                            auth.role !== 'admin' && 'btn-disabled'
-                          }`}
+                        <Button
+                          icon={<AiFillPlusCircle size={20} />}
+                          disabled={auth.role !== 'admin'}
+                          type="primary"
+                          className="bg-color-1 font-notosanslao text-white"
                         >
                           {t('AddButton')}
-                          <AiFillPlusCircle size={20} />
-                        </button>
+                        </Button>
                       </Link>
                     </div>
                   </div>

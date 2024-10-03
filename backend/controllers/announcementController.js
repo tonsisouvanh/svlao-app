@@ -152,7 +152,7 @@ const getAnnouncements = asyncHandler(async (req, res) => {
       : await Announcement.find({ ...keyword })
           .limit(pageSize)
           .skip(pageSize * (page - 1));
-  res.json({ announcements, page, pages: Math.ceil(count / pageSize) });
+  res.json({ data: announcements, page, pages: Math.ceil(count / pageSize) });
 });
 
 // @desc    Get all announcements

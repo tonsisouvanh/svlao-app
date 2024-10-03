@@ -1,44 +1,33 @@
-import { useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Spinner from "../../ui/Spinner";
-import { useGlobalFilter, useSortBy, useTable, useFilters } from "react-table";
-import {
-  AiFillCaretDown,
-  AiFillCaretUp,
-  AiFillDelete,
-  AiFillEdit,
-  AiOutlineMore,
-} from "react-icons/ai";
-import { Link } from "react-router-dom";
-import InfoModal from "../../modal/InfoModal";
-import Searchbox from "../../input/student/Searchbox";
-import {
-  documentReset,
-  removeDocument,
-} from "../../../feature/document/DocumentSlice";
-import { formatDateDDMMYYYY } from "../../../utils/utils";
-import { DOCUMENT_COLUMNS } from "../../../data/data";
-import toast from "react-hot-toast";
-import EmptyState from "../../EmptyState";
-const cellStyle = "whitespace-nowrap truncate font-light";
+// TODO: Create document table component using antd
+import { useEffect, useMemo, useState } from 'react';
+import toast from 'react-hot-toast';
+import { AiFillCaretDown, AiFillCaretUp, AiFillDelete, AiFillEdit } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useFilters, useGlobalFilter, useSortBy, useTable } from 'react-table';
+import { DOCUMENT_COLUMNS } from '../../../data/data';
+import { documentReset, removeDocument } from '../../../feature/document/DocumentSlice';
+import { formatDateDDMMYYYY } from '../../../utils/utils';
+import EmptyState from '../../EmptyState';
+import Searchbox from '../../input/student/Searchbox';
+import InfoModal from '../../modal/InfoModal';
+import Spinner from '../../ui/Spinner';
+const cellStyle = 'whitespace-nowrap truncate font-light';
 
 const DocumentTable = ({ editToggle }) => {
   const { documents, status } = useSelector((state) => state.document);
 
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
-  const [deletedDocumentId, setDeletedDocumentId] = useState("");
+  const [deletedDocumentId, setDeletedDocumentId] = useState('');
   const data = useMemo(() => documents, [documents]);
   const columns = useMemo(() => DOCUMENT_COLUMNS, []);
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    state,
-    setGlobalFilter,
-  } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow, state, setGlobalFilter } = useTable(
+    { columns, data },
+    useFilters,
+    useGlobalFilter,
+    useSortBy
+  );
 
   const { globalFilter } = state;
   const handleOpenModal = (id) => {
@@ -47,41 +36,39 @@ const DocumentTable = ({ editToggle }) => {
   };
   const handleDeletDocument = () => {
     dispatch(removeDocument(deletedDocumentId));
-    setDeletedDocumentId("");
+    setDeletedDocumentId('');
     setOpenModal(false);
   };
 
   useEffect(() => {
-    if (status.remove === "succeeded") {
-      toast.success("Deleted document");
+    if (status.remove === 'succeeded') {
+      toast.success('Deleted document');
       dispatch(documentReset());
-    } else if (status.remove === "failed") {
-      toast.error("Failed to delete");
+    } else if (status.remove === 'failed') {
+      toast.error('Failed to delete');
       dispatch(documentReset());
     }
   }, [status.remove, dispatch]);
 
-  if (status.fetchAll === "loading") {
+  if (status.fetchAll === 'loading') {
     return <Spinner />;
   }
   return (
     <>
       {editToggle ? (
         <span>Edit document component here</span>
-      ) : status.fetchAll === "loading" || status.remove === "loading" ? (
+      ) : status.fetchAll === 'loading' || status.remove === 'loading' ? (
         <Spinner />
       ) : (
         <>
           {openModal && (
             <InfoModal
-              title={"Delete document"}
-              modaltype={"question"}
-              desc={
-                "This document data will be perminently delete, are you sure?"
-              }
+              title={'Delete document'}
+              modaltype={'question'}
+              desc={'This document data will be perminently delete, are you sure?'}
               initialValue={true}
               isOnclickEvent={true}
-              confirmLabel={"Delete"}
+              confirmLabel={'Delete'}
               handleClick={handleDeletDocument}
             />
           )}
@@ -96,28 +83,17 @@ const DocumentTable = ({ editToggle }) => {
           </div>
           {documents && documents.length > 0 ? (
             <div className="overflow-x-auto">
-              <table
-                {...getTableProps()}
-                className="table table-md font-notosanslao"
-              >
+              <table {...getTableProps()} className="table table-md font-notosanslao">
                 <thead>
                   {documents &&
                     headerGroups?.map((headerGroup) => (
-                      <tr
-                        key={headerGroup.id}
-                        {...headerGroup.getHeaderGroupProps()}
-                      >
+                      <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
                         <th></th>
                         {headerGroup &&
                           headerGroup?.headers?.map((column, index) => (
-                            <th
-                              key={index}
-                              {...column.getHeaderProps(
-                                column.getSortByToggleProps(),
-                              )}
-                            >
+                            <th key={index} {...column.getHeaderProps(column.getSortByToggleProps())}>
                               <div className="flex items-center">
-                                {column.render("Header")}
+                                {column.render('Header')}
                                 <span>
                                   {column.isSorted ? (
                                     column.isSortedDesc ? (
@@ -150,9 +126,7 @@ const DocumentTable = ({ editToggle }) => {
                                 </Link>
                                 <button
                                   type="button"
-                                  onClick={() =>
-                                    handleOpenModal(row.original._id)
-                                  }
+                                  onClick={() => handleOpenModal(row.original._id)}
                                   className="btn btn-error btn-outline btn-xs sm:btn-sm"
                                 >
                                   <AiFillDelete size={15} />
@@ -162,21 +136,15 @@ const DocumentTable = ({ editToggle }) => {
                           </td>
                           {documents &&
                             row?.cells?.map((cell, index) => (
-                              <td
-                                className={cellStyle}
-                                key={index}
-                                {...cell.getCellProps()}
-                              >
-                                {cell.column.id === "timestamp" ? (
+                              <td className={cellStyle} key={index} {...cell.getCellProps()}>
+                                {cell.column.id === 'timestamp' ? (
                                   <>{formatDateDDMMYYYY(cell.value)}</>
-                                ) : cell.column.id === "content" ? (
+                                ) : cell.column.id === 'content' ? (
                                   <>
-                                    <span className="truncate">
-                                      {cell.value}
-                                    </span>
+                                    <span className="truncate">{cell.value}</span>
                                   </>
                                 ) : (
-                                  cell.render("Cell")
+                                  cell.render('Cell')
                                 )}
                               </td>
                             ))}

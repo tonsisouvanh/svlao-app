@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import Spinner from '../../components/ui/Spinner';
-import { degreeList, provinceList, statusList } from '../../data/data';
-import { formatDate, getYearOptions } from '../../utils/utils';
-import ErrorMessage from '../../components/typography/ErrorMessage';
+import { FaSave } from 'react-icons/fa';
 import ImageUpload from '../../components/input/ImageUpload';
 import PageHeading from '../../components/PageHeading';
-import { FaSave } from 'react-icons/fa';
-import { inputStyle, selectStyle } from '../../style/global.value';
-import { useUser } from '../../hooks/useUser';
+import ErrorMessage from '../../components/typography/ErrorMessage';
+import Spinner from '../../components/ui/Spinner';
+import { degreeList, provinceList, statusList } from '../../data/data';
 import { userTestData } from '../../data/TestData';
-import { useUniversity } from '../../hooks/useUniversity';
-import { useResidenceAddress } from '../../hooks/useResidenceAddress';
 import { useMajor } from '../../hooks/useMajor';
+import { useResidenceAddress } from '../../hooks/useResidenceAddress';
+import { useUniversity } from '../../hooks/useUniversity';
+import { useUser } from '../../hooks/useUser';
+import { inputStyle, selectStyle } from '../../style/global.value';
+import { formatDate, getYearOptions } from '../../utils/utils';
+
 const AddStudent = () => {
   const [base64, setBase64] = useState(null);
   const yearOptions = getYearOptions();
@@ -422,3 +423,129 @@ const AddStudent = () => {
 };
 
 export default AddStudent;
+
+// const { Option } = Select;
+
+// const AddStudent = () => {
+//   const [base64, setBase64] = useState(null);
+//   const navigate = useNavigate();
+
+//   const { useAddNewUser } = useUser();
+//   const userAddMutation = useAddNewUser();
+//   const { useGetAllUniversities } = useUniversity();
+//   const { data: universities } = useGetAllUniversities();
+//   const { useGetAllMajors } = useMajor();
+//   const { data: majorList } = useGetAllMajors();
+//   const { useGetAllResidenceAddresses } = useResidenceAddress();
+//   const { data: residenceAddressList } = useGetAllResidenceAddresses();
+
+//   const [form] = Form.useForm();
+
+//   useEffect(() => {
+//     if (userAddMutation.isSuccess) {
+//       form.resetFields();
+//       navigate('/student-list');
+//     }
+//   }, [navigate, form, userAddMutation.isSuccess]);
+
+//   const handleSave = (values) => {
+//     console.log('🚀 ~ handleSave ~ values:', values);
+//     // const addImage = base64 ? [base64] : null;
+//     // const formattedData = {
+//     //   ...values,
+//     //   dob: formatDate(values?.dob),
+//     //   visa: {
+//     //     from: formatDate(values?.visa.from),
+//     //     to: formatDate(values?.visa.to),
+//     //   },
+//     //   passport: {
+//     //     ...values.passport,
+//     //     expired: formatDate(values?.passport.expired),
+//     //   },
+//     //   profileImg: addImage ? addImage : [],
+//     // };
+//     // const confirmed = window.confirm('Are you sure you want to update the user?');
+//     // if (confirmed) {
+//     //   userAddMutation.mutate(formattedData);
+//     // } else {
+//     //   console.log('Update canceled');
+//     // }
+//   };
+
+//   if (userAddMutation.isPending) {
+//     return <Spin />;
+//   }
+
+//   return (
+//     <>
+//       <section className="relative">
+//         <div className="container mx-auto px-5 py-8">
+//           <div className="mb-12 flex w-full flex-col text-center">
+//             <PageHeading title="ເພີ່ມຂໍ້ມູນນັກຮຽນ" />
+//             <div className="flex items-center justify-center gap-4">
+//               <ImageUpload setBase64={setBase64} />
+//               {base64 && <img className="h-36 w-36 rounded-md object-cover" src={base64} alt="Profile" />}
+//             </div>
+//           </div>
+//           <div className="mx-auto">
+//             <Form layout="vertical" form={form} onFinish={handleSave} initialValues={{}}>
+//               <div className="grid grid-cols-2 gap-4">
+//                 <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Name is required' }]}>
+//                   <Input />
+//                 </Form.Item>
+//                 <Form.Item name="email" label="Email" rules={[{ required: true, message: 'Email is required' }]}>
+//                   <Input />
+//                 </Form.Item>
+//                 <Form.Item
+//                   name="university"
+//                   label="University"
+//                   rules={[{ required: true, message: 'University is required' }]}
+//                 >
+//                   <Select
+//                     loading={universities === undefined}
+//                     options={universities?.map((university) => ({
+//                       value: university._id,
+//                       label: university.englishName,
+//                     }))}
+//                   />
+//                 </Form.Item>
+//                 <Form.Item name="major" label="Major" rules={[{ required: true, message: 'Major is required' }]}>
+//                   <Select
+//                     options={majorList?.map((major) => ({
+//                       value: major._id,
+//                       label: major.laoMajor,
+//                     }))}
+//                   ></Select>
+//                 </Form.Item>
+//               </div>
+//               <Form.Item
+//                 name="residenceAddress"
+//                 label="Residence Address"
+//                 rules={[{ required: true, message: 'Residence Address is required' }]}
+//               >
+//                 <Select
+//                   options={residenceAddressList?.map((item) => ({
+//                     value: item._id,
+//                     label: item.location,
+//                   }))}
+//                 ></Select>
+//               </Form.Item>
+//               <Form.Item className="mx-auto max-w-fit">
+//                 <Button
+//                   type="primary"
+//                   className="w-24 bg-color-1 text-white"
+//                   htmlType="submit"
+//                   disabled={userAddMutation.isPending}
+//                 >
+//                   {userAddMutation.isPending ? <Spin size="small" /> : 'Save'}
+//                 </Button>
+//               </Form.Item>
+//             </Form>
+//           </div>
+//         </div>
+//       </section>
+//     </>
+//   );
+// };
+
+// export default AddStudent;
