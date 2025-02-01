@@ -1,3 +1,4 @@
+import { Button } from 'antd';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,13 +11,13 @@ const PageHeading = ({ title = 'Page title', className, path = null }) => {
     >
       <div className="absolute left-2">
         {path ? (
-          <button onClick={() => navigate(path)} className="btn btn-ghost">
+          <Button type="text" onClick={() => navigate(path)}>
             <FaArrowLeft />
-          </button>
+          </Button>
         ) : (
-          <button onClick={() => navigate(-1)} className="btn btn-ghost">
+          <Button type="text" onClick={() => navigate(-1)}>
             <FaArrowLeft />
-          </button>
+          </Button>
         )}
       </div>
       <h1 className="title-font text-base-contentd text-md text-center font-notosanslao font-bold md:text-3xl">

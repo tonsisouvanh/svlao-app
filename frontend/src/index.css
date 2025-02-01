@@ -12,24 +12,24 @@ body {
 .ql-container {
   @apply min-h-[10em];
   font-size: 18px;
-  font-family: "notosanslao", sans-serif;
+  font-family: 'notosanslao', sans-serif;
 }
 
 .btn {
   text-transform: none;
 }
 @font-face {
-  font-family: "notosanslao";
+  font-family: 'notosanslao';
   font-style: normal;
   font-weight: 400;
-  src: url("./fonts/NotoSansLao/NotoSansLao-Regular.ttf") format("truetype");
+  src: url('./fonts/NotoSansLao/NotoSansLao-Regular.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "notosanslao";
+  font-family: 'notosanslao';
   font-style: normal;
   font-weight: 800;
-  src: url("./fonts/NotoSansLao/NotoSansLao-Bold.ttf") format("truetype");
+  src: url('./fonts/NotoSansLao/NotoSansLao-Bold.ttf') format('truetype');
 }
 
 /* width */

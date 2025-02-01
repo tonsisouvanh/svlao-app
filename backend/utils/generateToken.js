@@ -28,7 +28,6 @@ const generateToken = (res, { userId, emailAddress, role }) => {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000 * 3), // 3h
       // expires: new Date(Date.now() + 5 * 1000),
       sameSite: "Strict", // or "Lax" depending on your requirements
-      path: "/", // specify the path if needed
     });
 
     // Set refresh token cookie (consider HttpOnly flag and secure storage based on your security needs)

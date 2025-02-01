@@ -40,10 +40,10 @@ export const useUser = () => {
   // ====================================================== //
   // ==================== Get all users =================== //
   // =======================ADMIN======================== //
-  const useGetAllUsers = (keyword, pageNumber) => {
+  const useGetAllUsers = (page, pageSize, search) => {
     return useQuery({
-      queryKey: ['users', keyword, pageNumber],
-      queryFn: () => fetchAllUsers(keyword, pageNumber),
+      queryKey: ['users', page, pageSize, search],
+      queryFn: () => fetchAllUsers(page, pageSize, search),
       select: (data) => data,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,

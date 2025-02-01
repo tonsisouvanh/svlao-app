@@ -1,19 +1,13 @@
-import { Link, useParams } from 'react-router-dom';
+import { Button } from 'antd';
 import { useEffect, useState } from 'react';
-import StudentTable from '../../components/table/student/StudentTable';
-import { BsGridFill, BsTable } from 'react-icons/bs';
 import { AiFillPlusCircle } from 'react-icons/ai';
-import Paginate from '../../components/paginate/Paginate';
-import Spinner from '../../components/ui/Spinner';
+import { BsGridFill, BsTable } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 import PageHeading from '../../components/PageHeading';
+import StudentTable from '../../components/table/student/StudentTable';
 import { useAuth } from '../../context/AuthContext';
-import { useUser } from '../../hooks/useUser';
-import ErrorLoadingData from '../../components/ui/ErrorLoadingData';
 
 const StudentList = () => {
-  const { pageNumber, keyword } = useParams();
-  const { useGetAllUsers } = useUser();
-  const { data: users, isLoading: isUserLoading, error: userError } = useGetAllUsers(keyword, pageNumber);
   const { user: auth } = useAuth();
   const [editToggle, setEditToggle] = useState(false);
 
@@ -33,12 +27,6 @@ const StudentList = () => {
     localStorage.setItem('viewPreference', view);
   }, [view]);
 
-  if (isUserLoading) {
-    return <Spinner />;
-  }
-  if (userError) {
-    return <ErrorLoadingData />;
-  }
   return (
     <>
       <section className="relative">
@@ -51,26 +39,33 @@ const StudentList = () => {
                   <div className="flex items-center gap-2">
                     <div className="">
                       <Link to={auth.role !== 'admin' ? '#' : '/dashboard/student-list/add'}>
-                        <button
-                          className={`tooltipp btn btn-primary font-notosanslao text-white ${
+                        <Button
+                          type="primary"
+                          icon={<AiFillPlusCircle size={20} />}
+                          className={`bg-color-1 font-notosanslao text-white ${
                             auth.role !== 'admin' && 'btn-disabled'
                           }`}
                         >
                           ເພີ່ມນັກຮຽນ
-                          <AiFillPlusCircle size={20} />
-                        </button>
+                        </Button>
                       </Link>
                     </div>
                     {editToggle ? null : (
                       <div className="">
                         {view === 'table' ? (
-                          <button onClick={toggleView} className="btn btn-md">
-                            <BsGridFill />
-                          </button>
+                          <Button
+                            type="primary"
+                            icon={<BsGridFill />}
+                            onClick={toggleView}
+                            className="bg-color-1 text-white"
+                          ></Button>
                         ) : (
-                          <button onClick={toggleView} className="btn btn-md">
-                            <BsTable />
-                          </button>
+                          <Button
+                            type="primary"
+                            icon={<BsTable />}
+                            onClick={toggleView}
+                            className="bg-color-1 text-white"
+                          ></Button>
                         )}
                       </div>
                     )}
@@ -79,15 +74,8 @@ const StudentList = () => {
               </>
             )}
           </div>
-          <StudentTable
-            view={view}
-            editToggle={editToggle}
-            setEditToggle={setEditToggle}
-            users={users}
-            isLoading={isUserLoading}
-            error={userError}
-          />
-          <Paginate path="/dashboard/student-list/page/" style="mt-10" page={users.page} pages={users.pages} />
+          <StudentTable view={view} editToggle={editToggle} setEditToggle={setEditToggle} />
+          {/* <Paginate path="/dashboard/student-list/page/" style="mt-10" page={users.page} pages={users.pages} /> */}
         </div>
       </section>
     </>

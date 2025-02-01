@@ -233,8 +233,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 });
 
 const getUsers = asyncHandler(async (req, res) => {
-  const pageSize = 10;
-  const page = Number(req.query.pageNumber) || 1;
+  const pageSize = Number(req.query.pageSize) || 50;
+  const page = Number(req.query.page) || 1;
   const searchFields = [
     "studentId",
     "emailAddress",
@@ -262,7 +262,7 @@ const getUsers = asyncHandler(async (req, res) => {
           .populate("university.universityId")
           .limit(pageSize)
           .skip(pageSize * (page - 1));
-  res.json({ users, page, pages: Math.ceil(count / pageSize) });
+  res.json({ users, page, pages: Math.ceil(count / pageSize), total: count });
 });
 
 // @desc    Get filtered users

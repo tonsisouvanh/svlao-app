@@ -1,10 +1,11 @@
 import { apiRequestPrivate } from '../utils/axiosConfig';
 
-export const fetchAllUsers = async (keyword, pageNumber) => {
+export const fetchAllUsers = async (page, pageSize, search) => {
   const res = await apiRequestPrivate.get('/users', {
     params: {
-      keyword,
-      pageNumber,
+      page,
+      pageSize,
+      search,
     },
   });
   return res.data;

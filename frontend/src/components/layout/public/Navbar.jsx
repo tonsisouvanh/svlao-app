@@ -3,7 +3,6 @@ import { AiFillBell, AiFillInfoCircle } from 'react-icons/ai';
 import { BiUserCircle } from 'react-icons/bi';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import altImage from '../../../assets/img/profile.png';
 import { replaceImage } from '../../../utils/utils';
 import LanguageSelect from '../../LanguageSelect';
 import Breadcrumbs from '../../Breadcrumbs';
@@ -62,7 +61,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                         <img
                           src={auth?.profileImg}
                           alt={auth.profileImg}
-                          onError={(error) => replaceImage(error, altImage)}
+                          onError={(error) => replaceImage(error, '/assets/images/avatar-placeholder.png')}
                         />
                       ) : (
                         <BiUserCircle className="h-full w-full text-primary" />
