@@ -1,15 +1,13 @@
-import Unauthorized from "../public/Unauthorized";
-import StatUsers from "../../components/stat/StatUsers";
-import FilterSelection from "./FilterSelection";
-import Charts from "./Charts";
-import AnnouncementList from "./AnnouncementList";
-import PageHeading from "../../components/PageHeading";
-import UserList from "./UserList";
-import { useAuth } from "../../context/AuthContext";
+import PageHeading from '../../components/PageHeading';
+import StatUsers from '../../components/stat/StatUsers';
+import { useAuth } from '../../context/AuthContext';
+import Unauthorized from '../public/Unauthorized';
+import Charts from './Charts';
+import FilterSelection from './FilterSelection';
 const Dashboard = () => {
   const { user: auth } = useAuth();
 
-  if (auth.role !== "admin") return <Unauthorized />;
+  if (auth.role !== 'admin') return <Unauthorized />;
   return (
     <>
       <section className="body-font">
@@ -19,10 +17,10 @@ const Dashboard = () => {
             <FilterSelection />
             <StatUsers />
             <Charts />
-            <div className="flex items-start gap-6">
+            {/* <div className="flex items-start gap-6">
               <UserList />
               <AnnouncementList />
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

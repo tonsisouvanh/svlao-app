@@ -120,8 +120,8 @@ const createUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     ...req.body,
     password: hashedPassword,
-    profileImg:
-      Array.isArray(profileImg) && profileImg.length > 0 ? addImage : "",
+    profileImg: "",
+    // Array.isArray(profileImg) && profileImg.length > 0 ? addImage : "",
   });
   if (user) {
     res.status(201).json({

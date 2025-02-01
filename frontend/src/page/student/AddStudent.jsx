@@ -59,7 +59,7 @@ const AddStudent = () => {
 
   const handleEditSubmit = (data) => {
     if (data) {
-      const addImage = base64 ? [base64] : null;
+      // const addImage = base64 ? [base64] : null;
       const formattedData = {
         ...data,
         dob: formatDate(data?.dob),
@@ -71,7 +71,8 @@ const AddStudent = () => {
           ...data.passport,
           expired: formatDate(data?.passport.expired),
         },
-        profileImg: addImage ? addImage : [],
+        // profileImg: addImage ? addImage : [],
+        profileImg: '',
       };
       const confirmed = window.confirm('Are you sure you want to update the user?');
       if (confirmed) {
@@ -449,7 +450,6 @@ export default AddStudent;
 //   }, [navigate, form, userAddMutation.isSuccess]);
 
 //   const handleSave = (values) => {
-//     console.log('🚀 ~ handleSave ~ values:', values);
 //     // const addImage = base64 ? [base64] : null;
 //     // const formattedData = {
 //     //   ...values,

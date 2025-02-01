@@ -56,6 +56,7 @@ export const useUser = () => {
   const useAddNewUser = () => {
     const mutation = useMutation({
       mutationFn: async (values) => {
+        console.log(values);
         const res = await addUser(values);
         return res;
       },
@@ -80,7 +81,7 @@ export const useUser = () => {
       mutationFn: async (values) => {
         await updateUserProfile(values);
       },
-      onSuccess: (data, variables) => {
+      onSuccess: () => {
         toast.success('User updated successfully');
         // queryClient.invalidateQueries({ queryKey: ['users'] });
         // queryClient.invalidateQueries({ queryKey: ['user', variables.id] });

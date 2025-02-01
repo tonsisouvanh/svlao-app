@@ -62,7 +62,7 @@ export const userSchema = Joi.object({
     laoMajor: Joi.string().optional(),
     vietMajor: Joi.string().optional(),
   }).optional(),
-  profileImg: Joi.string().optional(),
+  profileImg: Joi.string().optional().empty(""),
   emailAddress: Joi.string().email().required(),
   role: Joi.string().valid("user", "admin").optional(),
   studentId: Joi.string().optional(),

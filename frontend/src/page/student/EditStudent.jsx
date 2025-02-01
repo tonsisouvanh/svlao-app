@@ -5,7 +5,7 @@ import { BsPencilSquare } from 'react-icons/bs';
 import { degreeList, provinceList, roleList, statusList } from '../../data/data';
 import { formatDate, getYearOptions } from '../../utils/utils';
 import { useParams } from 'react-router-dom';
-import altImage from '../../assets/img/profile.png';
+import image from '../../assets/img/index';
 import ResetPasswordModal from '../../components/modal/ResetPasswordModal';
 import Spinner from '../../components/ui/Spinner';
 import { FaCopy, FaPencilAlt, FaSave } from 'react-icons/fa';
@@ -87,7 +87,7 @@ const EditStudent = () => {
   };
 
   const replaceImage = (error) => {
-    error.target.src = altImage;
+    error.target.src = image.altImage;
   };
 
   useEffect(() => {
@@ -139,7 +139,7 @@ const EditStudent = () => {
                 <div className="avatar relative">
                   {base64 ? (
                     <div className=" w-48 rounded-full">
-                      <img src={base64} alt={'avatar'} onError={(error) => replaceImage(error, altImage)} />
+                      <img src={base64} alt={'avatar'} onError={(error) => replaceImage(error, image.defaultImage)} />
                     </div>
                   ) : (
                     <div className=" w-48 rounded-full">
@@ -147,7 +147,7 @@ const EditStudent = () => {
                         <img
                           src={singleUser?.profileImg}
                           alt={singleUser?.profileImg}
-                          onError={(error) => replaceImage(error, altImage)}
+                          onError={(error) => replaceImage(error, image.defaultImage)}
                         />
                       ) : (
                         <BiUserCircle className="h-full w-full text-primary" />
